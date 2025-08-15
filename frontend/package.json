@@ -16,11 +16,11 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node generate-sitemap.js",
-    "build": "npm run prebuild && vite build",
+    "build": "npm run prebuild && vite build && node spa-fallback.js",
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "build:prod": "npm run prebuild && NODE_ENV=production vite build",
-    "analyze": "npm run prebuild && vite build --mode analyze",
+    "build:prod": "npm run prebuild && NODE_ENV=production vite build && node spa-fallback.js",
+    "analyze": "npm run prebuild && vite build --mode analyze && node spa-fallback.js",
     "generate-sitemap": "node generate-sitemap.js"
   },
   "dependencies": {
