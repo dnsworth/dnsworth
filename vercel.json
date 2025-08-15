@@ -8,6 +8,7 @@
       "config": { "distDir": "frontend/dist" }
     }
   ],
+  "outputDirectory": "frontend/dist",
   "headers": [
     {
       "source": "/sitemap.xml",
