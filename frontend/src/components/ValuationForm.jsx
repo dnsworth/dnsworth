@@ -96,15 +96,15 @@ export default function ValuationForm({ onResult }) {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 mb-4">
+    <div className="w-full max-w-3xl mx-auto px-2 sm:px-0">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4">
         <div className="flex-1">
           <input
             type="text"
             value={domain}
             onChange={(e) => setDomain(e.target.value)}
             placeholder="Enter domain to value..."
-            className="w-full px-6 py-4 text-xl border-2 border-gray-700 bg-surface text-text rounded-xl focus:border-primary focus:outline-none transition-all duration-300 placeholder-gray-500 shadow-lg"
+            className="w-full px-4 sm:px-6 py-3 sm:py-4 text-lg sm:text-xl border-2 border-gray-700 bg-surface text-text rounded-xl focus:border-primary focus:outline-none transition-all duration-300 placeholder-gray-500 shadow-lg"
             disabled={loading}
             maxLength={253}
             pattern="[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*"
@@ -113,12 +113,12 @@ export default function ValuationForm({ onResult }) {
         </div>
         <button
           type="submit"
-          className="btn-primary text-lg px-8 py-4 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap min-w-[160px]"
+          className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap min-w-[140px] sm:min-w-[160px]"
           disabled={loading || !domain.trim()}
         >
           {loading ? (
-            <div className="flex items-center gap-3">
-              <div className="w-5 h-5 border-2 border-background border-t-transparent rounded-full animate-spin"></div>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-background border-t-transparent rounded-full animate-spin"></div>
               <span>Loading...</span>
             </div>
           ) : (
@@ -129,7 +129,7 @@ export default function ValuationForm({ onResult }) {
 
       {/* Search Statistics */}
       <div className="text-center mb-4">
-        <p className="text-sm text-text-muted">
+        <p className="text-xs sm:text-sm text-text-muted">
           Total searches performed: <span className="text-primary font-semibold">{totalSearches}</span>
         </p>
       </div>
@@ -143,7 +143,7 @@ export default function ValuationForm({ onResult }) {
 
       {error && (
         <div className="w-full text-center mt-4">
-          <p className="text-red-400 text-sm bg-red-900/20 px-4 py-2 rounded-lg border border-red-800">
+          <p className="text-red-400 text-xs sm:text-sm bg-red-900/20 px-3 sm:px-4 py-2 rounded-lg border border-red-800">
             {error}
           </p>
         </div>
