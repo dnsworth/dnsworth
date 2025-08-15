@@ -26,11 +26,9 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://dnsworth.onrender.com/api/$1" },
-    { "source": "/health", "destination": "https://dnsworth.onrender.com/health" }
-  ],
-  "routes": [
-    { "src": "/dnsworth-logo.ico", "dest": "/dnsworth-logo.ico" },
-    { "src": "/mountain-background.jpg", "dest": "/mountain-background.jpg" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "source": "/health", "destination": "https://dnsworth.onrender.com/health" },
+    { "source": "/dnsworth-logo.ico", "destination": "/dnsworth-logo.ico" },
+    { "source": "/mountain-background.jpg", "destination": "/mountain-background.jpg" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
