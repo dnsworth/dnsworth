@@ -25,6 +25,12 @@
     }
   ],
   "routes": [
+    { "src": "/bulk-valuation", "dest": "/index.html" },
+    { "src": "/privacy-policy", "dest": "/index.html" },
+    { "src": "/terms-of-service", "dest": "/index.html" },
+    { "src": "/cookie-policy", "dest": "/index.html" },
+    { "src": "/dnsworth-logo.ico", "dest": "/dnsworth-logo.ico" },
+    { "src": "/mountain-background.jpg", "dest": "/mountain-background.jpg" },
     { "src": "/api/(.*)", "dest": "https://dnsworth-backend.onrender.com/api/$1" },
     { "src": "/health", "dest": "https://dnsworth-backend.onrender.com/health" },
     { "handle": "filesystem" },
