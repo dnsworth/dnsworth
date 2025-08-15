@@ -5,7 +5,7 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "frontend/dist" }
+      "config": { "distDir": "dist" }
     }
   ],
   "headers": [
@@ -28,6 +28,6 @@
     { "src": "/api/(.*)", "dest": "https://dnsworth-backend.onrender.com/api/$1" },
     { "src": "/health", "dest": "https://dnsworth-backend.onrender.com/health" },
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/frontend/dist/index.html" }
   ]
 }
