@@ -28,4 +28,4 @@ Disallow: /_next
 Disallow: /node_modules
 
 # Sitemap location
-Sitemap: https://dnsworth.com/sitemap.xml
+Sitemap: https://www.dnsworth.com/sitemap.xml
