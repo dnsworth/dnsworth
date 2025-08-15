@@ -26,6 +26,11 @@ function main() {
     process.exit(1)
   }
   const indexContent = fs.readFileSync(indexPath, 'utf8')
+
+  // Create 404.html as SPA fallback (Vercel will serve this for unknown routes)
+  const notFoundPath = path.join(distDir, '404.html')
+  fs.writeFileSync(notFoundPath, indexContent, 'utf8')
+  console.log(`Created SPA 404 fallback: ${notFoundPath}`)
   routes.forEach((route) => {
     const targetDir = path.join(distDir, route)
     ensureDirSync(targetDir)
