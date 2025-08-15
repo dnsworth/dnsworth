@@ -12,24 +12,24 @@
   ],
   "routes": [
     {
-      "source": "/sitemap.xml",
-      "destination": "/frontend/public/sitemap.xml",
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml",
       "headers": {
         "Content-Type": "application/xml",
         "Cache-Control": "public, max-age=3600"
       }
     },
     {
-      "source": "/robots.txt",
-      "destination": "/frontend/public/robots.txt",
+      "src": "/robots.txt",
+      "dest": "/robots.txt",
       "headers": {
         "Content-Type": "text/plain",
         "Cache-Control": "public, max-age=3600"
       }
     },
     {
-      "source": "/(.*)",
-      "destination": "/$1"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
