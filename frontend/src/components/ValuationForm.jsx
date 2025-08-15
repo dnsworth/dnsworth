@@ -49,16 +49,21 @@ export default function ValuationForm({ onResult }) {
       // Record the search
       SearchTracker.recordSearch(cleanDomain);
 
-      const res = await fetch(`${API_CONFIG.baseURL}/api/value`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Client-Version': '2.0.0'
-        },
-        body: JSON.stringify({ domain: cleanDomain }),
-        signal: AbortSignal.timeout(API_CONFIG.timeout)
-      });
+              const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeout);
+        
+        const res = await fetch(`${API_CONFIG.baseURL}/api/value`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-Client-Version': '2.0.0'
+          },
+          body: JSON.stringify({ domain: cleanDomain }),
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
 
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
