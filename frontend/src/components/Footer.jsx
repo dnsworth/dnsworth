@@ -146,3 +146,4 @@ const Footer = ({ onBulkValuation, onNavigateHome }) => {
 };
 
 export default Footer;
+
