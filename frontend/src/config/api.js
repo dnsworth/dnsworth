@@ -12,7 +12,8 @@ const API_CONFIG = {
 
 // Production API configuration
 if (import.meta.env.PROD) {
-  API_CONFIG.baseURL = import.meta.env.VITE_API_BASE_URL || 'https://api.dnsworth.com';
+  // Prefer same-origin relative API with Vercel rewrites to backend
+  API_CONFIG.baseURL = import.meta.env.VITE_API_BASE_URL || '';
 }
 
 export default API_CONFIG;
