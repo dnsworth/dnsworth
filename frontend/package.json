@@ -15,11 +15,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "prebuild": "node generate-sitemap.js",
+    "build": "npm run prebuild && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "build:prod": "NODE_ENV=production vite build",
-    "analyze": "vite build --mode analyze"
+    "build:prod": "npm run prebuild && NODE_ENV=production vite build",
+    "analyze": "npm run prebuild && vite build --mode analyze",
+    "generate-sitemap": "node generate-sitemap.js"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.0.0",
