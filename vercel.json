@@ -8,27 +8,25 @@
       "config": { "distDir": "frontend/dist" }
     }
   ],
-  "routes": [
+  "headers": [
     {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap.xml",
-      "headers": {
-        "Content-Type": "application/xml",
-        "Cache-Control": "public, max-age=3600"
-      }
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
     },
     {
-      "src": "/robots.txt",
-      "dest": "/robots.txt",
-      "headers": {
-        "Content-Type": "text/plain",
-        "Cache-Control": "public, max-age=3600"
-      }
-    },
-    { "handle": "filesystem" },
-    {
-      "src": "/.*",
-      "dest": "/frontend/dist/index.html"
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
     }
+  ],
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://dnsworth-backend.onrender.com/api/:path*" },
+    { "source": "/health", "destination": "https://dnsworth-backend.onrender.com/health" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
