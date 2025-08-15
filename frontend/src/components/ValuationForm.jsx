@@ -107,7 +107,6 @@ export default function ValuationForm({ onResult }) {
             className="w-full px-4 sm:px-6 py-3 sm:py-4 text-lg sm:text-xl border-2 border-gray-700 bg-surface text-text rounded-xl focus:border-primary focus:outline-none transition-all duration-300 placeholder-gray-500 shadow-lg"
             disabled={loading}
             maxLength={253}
-            pattern="[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*"
             title="Please enter a valid domain name (e.g., example.com)"
           />
         </div>
