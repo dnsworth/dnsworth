@@ -46,6 +46,9 @@ const BulkValuationPage = ({ onBack, onResults }) => {
     setResults(null);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeout);
+      
       const res = await fetch(`${API_CONFIG.baseURL}/api/bulk-value`, {
         method: 'POST',
         headers: { 
@@ -56,8 +59,10 @@ const BulkValuationPage = ({ onBack, onResults }) => {
           domains: validation.validDomains,
           totalDomains: validation.totalValid
         }),
-        signal: AbortSignal.timeout(API_CONFIG.timeout)
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
 
       if (!res.ok) {
         if (res.status === 429) {
