@@ -24,9 +24,10 @@
       ]
     }
   ],
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "https://dnsworth-backend.onrender.com/api/:path*" },
-    { "source": "/health", "destination": "https://dnsworth-backend.onrender.com/health" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "routes": [
+    { "src": "/api/(.*)", "dest": "https://dnsworth-backend.onrender.com/api/$1" },
+    { "src": "/health", "dest": "https://dnsworth-backend.onrender.com/health" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
