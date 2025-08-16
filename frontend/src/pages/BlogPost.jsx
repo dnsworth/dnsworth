@@ -276,61 +276,61 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       content: `
         <h1>Top 10 Most Valuable Dropped Domains This Week</h1>
         
-        <p class="text-lg text-gray-600 mb-8">Every week, thousands of domains expire and become available for registration. While most are worthless, some hidden gems can be worth thousands or even millions. Our expert analysis reveals the most promising dropped domains that savvy investors should consider.</p>
+        <p className="text-lg text-gray-900 mb-8 leading-relaxed">Every week, thousands of domains expire and become available for registration. While most are worthless, some hidden gems can be worth thousands or even millions. Our expert analysis reveals the most promising dropped domains that savvy investors should consider.</p>
         
-        <h2>What Are Dropped Domains?</h2>
-        <p>Dropped domains are previously registered domain names that have expired and become available for new registration. This happens when domain owners fail to renew their registrations, often due to:</p>
-        <ul>
-          <li>Forgetting renewal dates</li>
-          <li>Financial difficulties</li>
-          <li>Business closures</li>
-          <li>Administrative oversights</li>
-          <li>Strategic abandonment</li>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">What Are Dropped Domains?</h2>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Dropped domains are previously registered domain names that have expired and become available for new registration. This happens when domain owners fail to renew their registrations, often due to:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Forgetting renewal dates</li>
+          <li className="text-lg">Financial difficulties</li>
+          <li className="text-lg">Business closures</li>
+          <li className="text-lg">Administrative oversights</li>
+          <li className="text-lg">Strategic abandonment</li>
         </ul>
         
-        <h2>Why Dropped Domains Are Investment Opportunities</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Why Dropped Domains Are Investment Opportunities</h2>
         
-        <h3>1. Hidden Value Discovery</h3>
-        <p>Many dropped domains have hidden value that previous owners didn't recognize. This includes:</p>
-        <ul>
-          <li>Strong keyword combinations</li>
-          <li>Brandable names with potential</li>
-          <li>Established backlink profiles</li>
-          <li>Historical traffic data</li>
-          <li>Industry relevance</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Hidden Value Discovery</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Many dropped domains have hidden value that previous owners didn't recognize. This includes:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Strong keyword combinations</li>
+          <li className="text-lg">Brandable names with potential</li>
+          <li className="text-lg">Established backlink profiles</li>
+          <li className="text-lg">Historical traffic data</li>
+          <li className="text-lg">Industry relevance</li>
         </ul>
         
-        <h3>2. Cost-Effective Acquisition</h3>
-        <p>Dropped domains can be acquired at registration cost (typically $10-15/year) instead of paying premium prices on the aftermarket. This creates significant profit potential.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Cost-Effective Acquisition</h3>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">Dropped domains can be acquired at registration cost (typically $10-15/year) instead of paying premium prices on the aftermarket. This creates significant profit potential.</p>
         
-        <h3>3. Quick Turnaround Potential</h3>
-        <p>Some dropped domains can be flipped quickly for substantial profits, especially if you identify emerging trends before others.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Quick Turnaround Potential</h3>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">Some dropped domains can be flipped quickly for substantial profits, especially if you identify emerging trends before others.</p>
         
-        <h2>Our Methodology for Identifying Valuable Dropped Domains</h2>
-        <p>We use a comprehensive approach combining multiple factors to identify the most promising dropped domains:</p>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Our Methodology for Identifying Valuable Dropped Domains</h2>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">We use a comprehensive approach combining multiple factors to identify the most promising dropped domains:</p>
         
-        <h3>1. Keyword Analysis</h3>
-        <ul>
-          <li>Search volume and trends</li>
-          <li>Commercial intent</li>
-          <li>Competition level</li>
-          <li>Seasonal patterns</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Keyword Analysis</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Search volume and trends</li>
+          <li className="text-lg">Commercial intent</li>
+          <li className="text-lg">Competition level</li>
+          <li className="text-lg">Seasonal patterns</li>
         </ul>
         
-        <h3>2. Market Research</h3>
-        <ul>
-          <li>Industry growth trends</li>
-          <li>Competitor analysis</li>
-          <li>Market demand assessment</li>
-          <li>Future potential evaluation</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Market Research</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Industry growth trends</li>
+          <li className="text-lg">Competitor analysis</li>
+          <li className="text-lg">Market demand assessment</li>
+          <li className="text-lg">Future potential evaluation</li>
         </ul>
         
-        <h3>3. Technical Assessment</h3>
-        <ul>
-          <li>Domain age and history</li>
-          <li>Previous usage patterns</li>
-          <li>Backlink profile analysis</li>
-          <li>Traffic history</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Technical Assessment</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Domain age and history</li>
+          <li className="text-lg">Previous usage patterns</li>
+          <li className="text-lg">Backlink profile analysis</li>
+          <li className="text-lg">Traffic history</li>
         </ul>
         
         <h2>Top 10 Most Valuable Dropped Domains This Week</h2>
@@ -595,38 +595,38 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       content: `
         <h1>DNSWorth vs Other Domain Valuation Tools: Why Free Wins</h1>
         
-        <p class="text-lg text-gray-600 mb-8">In the competitive world of domain valuation, you have dozens of options ranging from free tools to expensive professional services. But does paying more actually get you better results? We've done the research to show you why DNSWorth's free AI-powered tool delivers the same accuracy as paid services, making expensive alternatives unnecessary.</p>
+        <p className="text-lg text-gray-900 mb-8 leading-relaxed">In the competitive world of domain valuation, you have dozens of options ranging from free tools to expensive professional services. But does paying more actually get you better results? We've done the research to show you why DNSWorth's free AI-powered tool delivers the same accuracy as paid services, making expensive alternatives unnecessary.</p>
         
-        <h2>The Domain Valuation Market Landscape</h2>
-        <p>The domain valuation industry has evolved significantly over the past decade, with tools ranging from basic estimators to enterprise-grade solutions. Understanding the different tiers helps you make informed decisions about which tools to use for your domain investments.</p>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">The Domain Valuation Market Landscape</h2>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">The domain valuation industry has evolved significantly over the past decade, with tools ranging from basic estimators to enterprise-grade solutions. Understanding the different tiers helps you make informed decisions about which tools to use for your domain investments.</p>
         
-        <h3>Market Segments</h3>
-        <ul>
-          <li><strong>Free Tools:</strong> Basic estimators with limited functionality</li>
-          <li><strong>Freemium Services:</strong> Free basic features, paid premium tiers</li>
-          <li><strong>Professional Services:</strong> Paid tools with advanced features</li>
-          <li><strong>Enterprise Solutions:</strong> High-cost corporate tools</li>
-          <li><strong>Manual Appraisals:</strong> Human expert evaluations</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Market Segments</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">Free Tools:</strong> Basic estimators with limited functionality</li>
+          <li className="text-lg"><strong className="text-gray-900">Freemium Services:</strong> Free basic features, paid premium tiers</li>
+          <li className="text-lg"><strong className="text-gray-900">Professional Services:</strong> Paid tools with advanced features</li>
+          <li className="text-lg"><strong className="text-gray-900">Enterprise Solutions:</strong> High-cost corporate tools</li>
+          <li className="text-lg"><strong className="text-gray-900">Manual Appraisals:</strong> Human expert evaluations</li>
         </ul>
         
-        <h2>DNSWorth: The Free Game-Changer</h2>
-        <p>DNSWorth represents a paradigm shift in domain valuation by offering professional-grade accuracy completely free. Our AI-powered platform combines the best features of paid services without the cost barriers.</p>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">DNSWorth: The Free Game-Changer</h2>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">DNSWorth represents a paradigm shift in domain valuation by offering professional-grade accuracy completely free. Our AI-powered platform combines the best features of paid services without the cost barriers.</p>
         
-        <h3>What Makes DNSWorth Special</h3>
-        <ul>
-          <li><strong>100% Free:</strong> No hidden costs, no premium tiers, no limitations</li>
-          <li><strong>AI-Powered Accuracy:</strong> Machine learning algorithms trained on millions of domain sales</li>
-          <li><strong>Real-time Data:</strong> Current market conditions and trends</li>
-          <li><strong>Unlimited Use:</strong> Value as many domains as you want</li>
-          <li><strong>Professional Grade:</strong> Same accuracy as expensive paid services</li>
-          <li><strong>Bulk Valuation:</strong> Portfolio analysis for serious investors</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">What Makes DNSWorth Special</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">100% Free:</strong> No hidden costs, no premium tiers, no limitations</li>
+          <li className="text-lg"><strong className="text-gray-900">AI-Powered Accuracy:</strong> Machine learning algorithms trained on millions of domain sales</li>
+          <li className="text-lg"><strong className="text-gray-900">Real-time Data:</strong> Current market conditions and trends</li>
+          <li className="text-lg"><strong className="text-gray-900">Unlimited Use:</strong> Value as many domains as you want</li>
+          <li className="text-lg"><strong className="text-gray-900">Professional Grade:</strong> Same accuracy as expensive paid services</li>
+          <li className="text-lg"><strong className="text-gray-900">Bulk Valuation:</strong> Portfolio analysis for serious investors</li>
         </ul>
         
-        <h2>Detailed Comparison: DNSWorth vs Paid Alternatives</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Detailed Comparison: DNSWorth vs Paid Alternatives</h2>
         
-        <h3>1. DNSWorth vs Estibot</h3>
-        <p><strong>Estibot Pricing:</strong> Free basic, $99/month for premium features</p>
-        <p><strong>DNSWorth:</strong> 100% free with all features included</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. DNSWorth vs Estibot</h3>
+        <p className="text-lg text-gray-800 mb-4"><strong className="text-gray-900">Estibot Pricing:</strong> Free basic, $99/month for premium features</p>
+        <p className="text-lg text-gray-800 mb-6"><strong className="text-gray-900">DNSWorth:</strong> 100% free with all features included</p>
         
         <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
@@ -681,11 +681,11 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
           </tbody>
         </table>
         
-        <p><strong>Winner:</strong> DNSWorth - Same features, zero cost</p>
+        <p className="text-lg text-gray-800 mb-6"><strong className="text-gray-900">Winner:</strong> DNSWorth - Same features, zero cost</p>
         
-        <h3>2. DNSWorth vs GoDaddy Domain Appraisal</h3>
-        <p><strong>GoDaddy Pricing:</strong> Free basic, $99/year for premium features</p>
-        <p><strong>DNSWorth:</strong> 100% free with all features included</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. DNSWorth vs GoDaddy Domain Appraisal</h3>
+        <p className="text-lg text-gray-800 mb-4"><strong className="text-gray-900">GoDaddy Pricing:</strong> Free basic, $99/year for premium features</p>
+        <p className="text-lg text-gray-800 mb-6"><strong className="text-gray-900">DNSWorth:</strong> 100% free with all features included</p>
         
         <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
