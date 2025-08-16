@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const AboutUs = () => {
+const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
   const [typedText, setTypedText] = useState('');
   const ownerVision = "My vision is to democratize domain intelligence and make professional-grade valuations accessible to everyone. Every domain investor deserves the tools they need to compete and succeed.";
 
@@ -75,7 +75,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <Header />
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section - Black Background */}
       <section className="relative py-20 overflow-hidden bg-black">
@@ -349,24 +349,105 @@ const AboutUs = () => {
             >
               Who We Serve
             </motion.h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            {/* Features with Creative Comic Portraits */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {[
-                'First time domain buyers looking for guidance.',
-                'Seasoned investors managing large portfolios.',
-                'Entrepreneurs and startups exploring brand identity through domains.',
-                'Agencies and brokers seeking fast, bulk insights for clients.'
-              ].map((item, index) => (
+                {
+                  id: 1,
+                  title: "First Time Domain Buyers",
+                  description: "Looking for guidance and understanding in the complex world of domain investing. We provide clear, actionable insights to help you make informed decisions.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Newbie&backgroundColor=b6e3f4,c0aede,d1d4f9",
+                  name: "Domain Newbie",
+                  role: "First Time Buyer",
+                  icon: "🔍",
+                  color: "from-blue-500 to-purple-600"
+                },
+                {
+                  id: 2,
+                  title: "Seasoned Investors",
+                  description: "Managing large portfolios and need fast, accurate valuations for hundreds or thousands of domains. Our bulk tools save you hours of research.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Investor&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
+                  name: "Portfolio Master",
+                  role: "Seasoned Investor",
+                  icon: "💼",
+                  color: "from-yellow-500 to-orange-500"
+                },
+                {
+                  id: 3,
+                  title: "Entrepreneurs & Startups",
+                  description: "Exploring brand identity through domains. We help you understand the market value and potential of your brand names before making crucial decisions.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Startup&backgroundColor=d4f4dd,ffd5dc,ffdfbf",
+                  name: "Startup Visionary",
+                  role: "Entrepreneur",
+                  icon: "🚀",
+                  color: "from-green-500 to-teal-500"
+                },
+                {
+                  id: 4,
+                  title: "Agencies & Brokers",
+                  description: "Seeking fast, bulk insights for clients. Our professional-grade tools help you provide accurate valuations and build trust with your client base.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Broker&backgroundColor=c0aede,b6e3f4,d1d4f9",
+                  name: "Agency Pro",
+                  role: "Domain Broker",
+                  icon: "🤝",
+                  color: "from-purple-500 to-pink-500"
+                }
+              ].map((feature) => (
                 <motion.div
-                  key={index}
-                  className="bg-gray-100 p-6 rounded-2xl border border-gray-200 text-center"
+                  key={feature.id}
+                  className="group relative"
                   variants={cardVariants}
-                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="text-gray-700 text-sm leading-relaxed">{item}</p>
+                  <div className="bg-white border-4 border-black rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
+                    
+                    {/* Background Gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                    
+                    {/* Header with Avatar */}
+                    <div className="relative z-10 flex items-center gap-6 mb-6">
+                      {/* Comic Portrait */}
+                      <div className="relative">
+                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                          <img 
+                            src={feature.avatar} 
+                            alt={feature.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Character Info */}
+                      <div className="flex-1">
+                        <h4 className="text-xl font-bold text-black">
+                          {feature.name}
+                        </h4>
+                        <p className="text-sm text-gray-600 font-medium">{feature.role}</p>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10">
+                      <h3 className="text-2xl font-bold text-black mb-4">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed text-lg">
+                        {feature.description}
+                      </p>
+                    </div>
+
+                    {/* Hover Effect Ring */}
+                    <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
+                    
+                    {/* Corner Decoration */}
+                    <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${feature.color} opacity-10 rounded-bl-3xl`}></div>
+                  </div>
                 </motion.div>
               ))}
             </div>
+            
             <motion.p
               className="text-center text-lg text-gray-700 mt-8"
               variants={itemVariants}
@@ -397,37 +478,105 @@ const AboutUs = () => {
             >
               DNSWorth is more than a valuation tool it is a growing ecosystem. Our roadmap is built on innovation, accessibility, and community:
             </motion.p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            {/* Features with Creative Comic Portraits */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {[
                 {
-                  title: 'Smarter AI Insights',
-                  description: 'Soon, valuations will go beyond numbers, offering deeper predictive analytics on domain trends, brandability, and long term potential.'
+                  id: 1,
+                  title: "Smarter AI Insights",
+                  description: "Soon, valuations will go beyond numbers, offering deeper predictive analytics on domain trends, brandability, and long term potential.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=AI-Future&backgroundColor=b6e3f4,c0aede,d1d4f9",
+                  name: "AI Prophet",
+                  role: "Future AI Specialist",
+                  icon: "🧠",
+                  color: "from-blue-500 to-purple-600"
                 },
                 {
-                  title: 'Seamless Integrations',
-                  description: 'APIs and plug ins will let brokers, marketplaces, and portfolio managers connect directly with DNSWorth for faster workflows.'
+                  id: 2,
+                  title: "Seamless Integrations",
+                  description: "APIs and plug ins will let brokers, marketplaces, and portfolio managers connect directly with DNSWorth for faster workflows.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Integration&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
+                  name: "Integration Master",
+                  role: "API Developer",
+                  icon: "🔌",
+                  color: "from-yellow-500 to-orange-500"
                 },
                 {
-                  title: 'Marketplace Readiness',
-                  description: 'We aim to simplify the buying and selling process, helping you not only evaluate your domains but also bring them to market with confidence.'
+                  id: 3,
+                  title: "Marketplace Readiness",
+                  description: "We aim to simplify the buying and selling process, helping you not only evaluate your domains but also bring them to market with confidence.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Marketplace&backgroundColor=d4f4dd,ffd5dc,ffdfbf",
+                  name: "Market Maker",
+                  role: "Marketplace Expert",
+                  icon: "🏪",
+                  color: "from-green-500 to-teal-500"
                 },
                 {
-                  title: 'Global Accessibility',
-                  description: 'As domain investing grows worldwide, DNSWorth will scale to support multiple languages, currencies, and localized insights.'
+                  id: 4,
+                  title: "Global Accessibility",
+                  description: "As domain investing grows worldwide, DNSWorth will scale to support multiple languages, currencies, and localized insights.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Global&backgroundColor=c0aede,b6e3f4,d1d4f9",
+                  name: "Global Ambassador",
+                  role: "International Expert",
+                  icon: "🌍",
+                  color: "from-purple-500 to-pink-500"
                 }
-              ].map((item, index) => (
+              ].map((feature) => (
                 <motion.div
-                  key={index}
-                  className="bg-gray-900/70 p-6 rounded-2xl border border-gray-700/40 backdrop-blur-sm"
+                  key={feature.id}
+                  className="group relative"
                   variants={cardVariants}
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h3 className="text-xl font-bold mb-3 text-primary">{item.title}</h3>
-                  <p className="text-text-muted text-sm leading-relaxed">{item.description}</p>
+                  <div className="bg-gray-900/70 border-4 border-gray-700 rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(255,255,255,0.1)] transition-all duration-500 hover:animate-giggle relative overflow-hidden backdrop-blur-sm">
+                    
+                    {/* Background Gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-10 group-hover:opacity-20 transition-opacity duration-500`}></div>
+                    
+                    {/* Header with Avatar */}
+                    <div className="relative z-10 flex items-center gap-6 mb-6">
+                      {/* Comic Portrait */}
+                      <div className="relative">
+                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-gray-600 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                          <img 
+                            src={feature.avatar} 
+                            alt={feature.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Character Info */}
+                      <div className="flex-1">
+                        <h4 className="text-xl font-bold text-white">
+                          {feature.name}
+                        </h4>
+                        <p className="text-sm text-gray-300 font-medium">{feature.role}</p>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10">
+                      <h3 className="text-2xl font-bold text-primary mb-4">
+                        {feature.title}
+                      </h3>
+                      <p className="text-text-muted text-lg leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+
+                    {/* Hover Effect Ring */}
+                    <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/30 transition-all duration-500"></div>
+                    
+                    {/* Corner Decoration */}
+                    <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${feature.color} opacity-20 rounded-bl-3xl`}></div>
+                  </div>
                 </motion.div>
               ))}
             </div>
+            
             <motion.p
               className="text-center text-lg text-text-muted mt-8"
               variants={itemVariants}
@@ -438,53 +587,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Call to Action Section - White Background */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <motion.div
-            className="text-center"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-6 text-gray-900"
-              variants={itemVariants}
-            >
-              Unlock the Value of Your Domains with DNSWorth
-            </motion.h2>
-            <motion.p
-              className="text-lg text-gray-700 leading-relaxed mb-8 max-w-3xl mx-auto"
-              variants={itemVariants}
-            >
-              Your domains are more than just names they are digital real estate. With DNSWorth, you can finally understand their true worth without the guesswork, the limits, or the costs.
-            </motion.p>
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              variants={itemVariants}
-            >
-              <Link
-                to="/"
-                className="btn-primary text-lg px-8 py-4"
-              >
-                Start Valuing Domains
-              </Link>
-              <Link
-                to="/bulk-valuation"
-                className="btn-secondary text-lg px-8 py-4"
-              >
-                Bulk Valuation
-              </Link>
-            </motion.div>
-            <motion.p
-              className="text-center text-lg text-primary mt-8 font-semibold"
-              variants={itemVariants}
-            >
-              Start exploring your portfolio today with DNSWorth your trusted partner in free, unlimited domain valuations.
-            </motion.p>
-          </motion.div>
-        </div>
-      </section>
+
 
       {/* Owner Section - Black Background, Last Section Before Footer */}
       <section className="py-20 bg-black">
