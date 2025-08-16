@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const navigate = useNavigate();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const blogPosts = [
     {
@@ -115,7 +122,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-white text-black">
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
@@ -131,7 +138,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             DNSWorth Blog
           </motion.h1>
           <motion.p
-            className="text-xl text-text-muted mb-4 max-w-3xl mx-auto"
+            className="text-xl text-gray-700 mb-4 max-w-3xl mx-auto"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -140,7 +147,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             Expert insights on domain investing, valuation strategies, and market trends
           </motion.p>
           <motion.p
-            className="text-lg text-text-muted/80"
+            className="text-lg text-gray-600"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -152,7 +159,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Category Filter */}
-      <section className="py-12 bg-surface border-b border-gray-800">
+      <section className="py-12 bg-gray-50 border-b border-gray-200">
         <div className="container mx-auto px-6">
           <motion.div
             className="flex flex-wrap justify-center gap-4"
@@ -166,8 +173,8 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
                   selectedCategory === category.id
-                    ? 'bg-primary text-background shadow-lg'
-                    : 'bg-gray-800 text-text-muted hover:bg-gray-700 hover:text-white'
+                    ? 'bg-primary text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                 }`}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
@@ -181,7 +188,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Blog Posts */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -192,13 +199,15 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             {filteredPosts.map((post) => (
               <motion.article
                 key={post.id}
-                className="bg-surface border border-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                className="group relative bg-white border-4 border-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105"
                 variants={cardVariants}
                 whileHover={{ y: -5 }}
               >
-                {/* Post Image Placeholder */}
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <div className="text-4xl text-primary/60">📝</div>
+                {/* Post Image Placeholder - Same style as About Us */}
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-5 group-hover:opacity-10 transition-opacity duration-500"></div>
+                  <div className="relative z-10 text-4xl text-primary/60">📝</div>
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-bl-3xl"></div>
                 </div>
 
                 {/* Post Content */}
@@ -211,7 +220,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                   </div>
 
                   {/* Post Meta */}
-                  <div className="flex items-center gap-4 text-sm text-text-muted mb-3">
+                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                     <span>{new Date(post.date).toLocaleDateString('en-US', { 
                       year: 'numeric', 
                       month: 'long', 
@@ -222,20 +231,29 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                   </div>
 
                   {/* Post Title */}
-                  <h2 className="text-xl font-bold text-white mb-3 line-clamp-2">
+                  <h2 className="text-xl font-bold text-black mb-3 line-clamp-2">
                     {post.title}
                   </h2>
 
                   {/* Post Excerpt */}
-                  <p className="text-text-muted mb-4 line-clamp-3">
+                  <p className="text-gray-600 mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
 
-                  {/* Read More Button */}
-                  <button className="text-primary hover:text-primary/80 font-medium transition-colors duration-200">
-                    Read More →
+                  {/* Read More Button - Black arrow */}
+                  <button 
+                    onClick={() => navigate(`/blog/${post.slug}`)}
+                    className="text-black hover:text-gray-700 font-medium transition-colors duration-200 flex items-center gap-2"
+                  >
+                    Read More 
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </button>
                 </div>
+
+                {/* Hover Effect Ring */}
+                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
               </motion.article>
             ))}
           </motion.div>
@@ -249,8 +267,8 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
               animate="visible"
             >
               <div className="text-6xl mb-4">📚</div>
-              <h3 className="text-2xl font-bold text-white mb-2">No posts found</h3>
-              <p className="text-text-muted">Try selecting a different category or check back later for new content.</p>
+              <h3 className="text-2xl font-bold text-black mb-2">No posts found</h3>
+              <p className="text-gray-600">Try selecting a different category or check back later for new content.</p>
             </motion.div>
           )}
         </div>
@@ -267,13 +285,13 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             viewport={{ once: true }}
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold text-white mb-6"
+              className="text-3xl md:text-4xl font-bold text-black mb-6"
               variants={itemVariants}
             >
               Stay Updated with Domain Insights
             </motion.h2>
             <motion.p
-              className="text-lg text-text-muted mb-8"
+              className="text-lg text-gray-700 mb-8"
               variants={itemVariants}
               transition={{ delay: 0.2 }}
             >
@@ -287,7 +305,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
               <input
                 type="email"
                 placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 bg-surface border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-primary focus:outline-none transition-colors duration-200"
+                className="flex-1 px-6 py-4 bg-white border border-gray-300 rounded-xl text-black placeholder-gray-500 focus:border-primary focus:outline-none transition-colors duration-200"
               />
               <button className="btn-primary px-8 py-4 whitespace-nowrap">
                 Subscribe
