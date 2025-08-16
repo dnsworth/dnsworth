@@ -19,7 +19,12 @@ const Header = ({ onBulkValuation, onNavigateHome }) => {
           <button
             onClick={() => {
               console.log('Bulk valuation button clicked');
-              onBulkValuation();
+              console.log('onBulkValuation function:', onBulkValuation);
+              if (typeof onBulkValuation === 'function') {
+                onBulkValuation();
+              } else {
+                console.error('onBulkValuation is not a function:', onBulkValuation);
+              }
             }}
             className="btn-accent-mobile sm:btn-accent animate-glow text-sm sm:text-base px-3 py-2 sm:px-6 sm:py-3"
           >

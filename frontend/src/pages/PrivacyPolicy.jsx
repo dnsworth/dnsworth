@@ -194,6 +194,24 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                   <p className="text-text-muted mt-4">
                     <strong>All third-party providers are contractually bound to maintain the same level of data protection as outlined in this Policy.</strong>
                   </p>
+                  
+                  <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
+                    <h4 className="text-lg font-semibold text-white mb-3">4.2.1 Google Analytics Notice</h4>
+                    <p className="text-text-muted mb-3">
+                      We use Google Analytics to better understand how visitors interact with our website. This tool may collect data such as your IP address and usage behavior during your visit.
+                    </p>
+                    <p className="text-text-muted mb-3">
+                      For more information on how Google Analytics collects and processes data, please visit: 
+                      <a 
+                        href="https://www.google.com/policies/privacy/partners/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-primary hover:text-secondary underline ml-1"
+                      >
+                        https://www.google.com/policies/privacy/partners/
+                      </a>
+                    </p>
+                  </div>
                 </div>
 
                 <div>

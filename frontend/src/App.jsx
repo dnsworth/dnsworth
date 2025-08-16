@@ -14,7 +14,10 @@ function AppContent() {
 
   const navigateToBulk = () => {
     console.log('Navigating to bulk valuation...');
+    console.log('Current location:', location.pathname);
+    console.log('Attempting to navigate to /bulk-valuation');
     navigate('/bulk-valuation');
+    console.log('Navigation function completed');
   };
 
   const navigateToHome = () => {
