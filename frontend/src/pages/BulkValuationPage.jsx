@@ -11,6 +11,11 @@ const BulkValuationPage = ({ onBack, onResults }) => {
   const [results, setResults] = useState(null);
   const [activeTab, setActiveTab] = useState('input');
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');

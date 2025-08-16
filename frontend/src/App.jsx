@@ -13,6 +13,7 @@ function AppContent() {
   const location = useLocation();
 
   const navigateToBulk = () => {
+    console.log('Navigating to bulk valuation...');
     navigate('/bulk-valuation');
   };
 

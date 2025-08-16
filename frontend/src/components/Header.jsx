@@ -17,7 +17,10 @@ const Header = ({ onBulkValuation, onNavigateHome }) => {
         {/* Bulk Valuation Button */}
         <div className="flex-shrink-0">
           <button
-            onClick={onBulkValuation}
+            onClick={() => {
+              console.log('Bulk valuation button clicked');
+              onBulkValuation();
+            }}
             className="btn-accent-mobile sm:btn-accent animate-glow text-sm sm:text-base px-3 py-2 sm:px-6 sm:py-3"
           >
             <span className="hidden sm:inline">Bulk Valuation</span>
