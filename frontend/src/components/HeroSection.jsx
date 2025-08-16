@@ -25,45 +25,8 @@ const HeroSection = ({ onResult, loading }) => {
             <ValuationForm onResult={onResult} />
           </div>
 
-          {/* Descriptive Text List - Restored from Original Design */}
-          <div className="mb-8 sm:mb-12 max-w-2xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-text mb-1">AI-Powered Accuracy</h3>
-                  <p className="text-sm text-text-muted">Advanced machine learning algorithms provide market-accurate valuations</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-text mb-1">Instant Results</h3>
-                  <p className="text-sm text-text-muted">Get professional-grade appraisals in under 3 seconds</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-text mb-1">Market-Based Pricing</h3>
-                  <p className="text-sm text-text-muted">Real-time data from active domain sales and auctions</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-text mb-1">Professional Grade</h3>
-                  <p className="text-sm text-text-muted">Industry-standard valuation methods used by domain brokers</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Trust Indicators */}
-          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-text-muted text-xs sm:text-sm px-2">
+          {/* Simple Trust Indicators - Right under input field as requested */}
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-text-muted text-xs sm:text-sm px-2 mb-8">
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full animate-pulse"></div>
               <span className="font-medium">AI-Powered</span>
