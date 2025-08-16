@@ -8,7 +8,7 @@ const AboutUs = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.3
       }
     }
   };
@@ -19,19 +19,20 @@ const AboutUs = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.6,
+        duration: 0.8,
         ease: "easeOut"
       }
     }
   };
 
   const cardVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
+    hidden: { scale: 0.9, opacity: 0, y: 30 },
     visible: {
       scale: 1,
       opacity: 1,
+      y: 0,
       transition: {
-        duration: 0.5,
+        duration: 0.6,
         ease: "easeOut"
       }
     }
@@ -39,9 +40,9 @@ const AboutUs = () => {
 
   const floatingVariants = {
     animate: {
-      y: [-10, 10, -10],
+      y: [-15, 15, -15],
       transition: {
-        duration: 3,
+        duration: 4,
         repeat: Infinity,
         ease: "easeInOut"
       }
@@ -50,22 +51,46 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Back Arrow to Home */}
+      <motion.div
+        className="fixed top-8 left-8 z-50"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Link
+          to="/"
+          className="flex items-center gap-3 text-primary hover:text-secondary transition-colors duration-300 group"
+        >
+          <motion.div
+            className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center border border-primary/30 group-hover:bg-primary/30 transition-all duration-300"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </motion.div>
+          <span className="font-medium text-sm">Back to Home</span>
+        </Link>
+      </motion.div>
+
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
-        {/* Animated Background Elements */}
+        {/* Animated Background Elements - Comic Style */}
         <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-primary/20 rounded-full blur-xl"
+          className="absolute top-20 left-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl"
           variants={floatingVariants}
           animate="animate"
         />
         <motion.div
-          className="absolute top-40 right-20 w-32 h-32 bg-secondary/20 rounded-full blur-xl"
+          className="absolute top-40 right-20 w-32 h-32 bg-secondary/10 rounded-full blur-2xl"
           variants={floatingVariants}
           animate="animate"
           style={{ animationDelay: '1s' }}
         />
         <motion.div
-          className="absolute bottom-20 left-1/4 w-16 h-16 bg-accent/20 rounded-full blur-xl"
+          className="absolute bottom-20 left-1/4 w-20 h-20 bg-accent/10 rounded-full blur-2xl"
           variants={floatingVariants}
           animate="animate"
           style={{ animationDelay: '2s' }}
@@ -163,7 +188,7 @@ const AboutUs = () => {
             </motion.p>
           </motion.div>
 
-          {/* What Makes Us Different */}
+          {/* What Makes Us Different - Comic Style Cards */}
           <motion.div
             className="mb-20"
             variants={itemVariants}
@@ -176,63 +201,43 @@ const AboutUs = () => {
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <motion.div
-                className="bg-gray-900/50 p-8 rounded-2xl border border-gray-800"
+                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
                 variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, y: -8 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-3">Unlimited Valuations, Always Free</h3>
-                <p className="text-text-muted">No caps. No subscriptions. Run as many valuations as you need, without restrictions.</p>
+                <h3 className="text-2xl font-bold mb-4 text-primary">Unlimited Valuations, Always Free</h3>
+                <p className="text-text-muted text-lg leading-relaxed">No caps. No subscriptions. Run as many valuations as you need, without restrictions.</p>
               </motion.div>
 
               <motion.div
-                className="bg-gray-900/50 p-8 rounded-2xl border border-gray-800"
+                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
                 variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, y: -8 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-3">Bulk Domain Analysis</h3>
-                <p className="text-text-muted">Save time by evaluating up to 2,000 domains at once. Perfect for large portfolio holders and professional traders.</p>
+                <h3 className="text-2xl font-bold mb-4 text-secondary">Bulk Domain Analysis</h3>
+                <p className="text-text-muted text-lg leading-relaxed">Save time by evaluating up to 2,000 domains at once. Perfect for large portfolio holders and professional traders.</p>
               </motion.div>
 
               <motion.div
-                className="bg-gray-900/50 p-8 rounded-2xl border border-gray-800"
+                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
                 variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, y: -8 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-3">AI-Driven Accuracy</h3>
-                <p className="text-text-muted">Our algorithms combine auction history, search trends, domain length, extensions, and comparable sales data to give you fair, transparent valuations.</p>
+                <h3 className="text-2xl font-bold mb-4 text-accent">AI-Driven Accuracy</h3>
+                <p className="text-text-muted text-lg leading-relaxed">Our algorithms combine auction history, search trends, domain length, extensions, and comparable sales data to give you fair, transparent valuations.</p>
               </motion.div>
 
               <motion.div
-                className="bg-gray-900/50 p-8 rounded-2xl border border-gray-800"
+                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
                 variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, y: -8 }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-3">Daily Dropped Domain Insights</h3>
-                <p className="text-text-muted">Every day, we update a curated list of valuable expired and dropped domains — helping investors spot hidden opportunities early.</p>
+                <h3 className="text-2xl font-bold mb-4 text-primary">Daily Dropped Domain Insights</h3>
+                <p className="text-text-muted text-lg leading-relaxed">Every day, we update a curated list of valuable expired and dropped domains — helping investors spot hidden opportunities early.</p>
               </motion.div>
             </div>
           </motion.div>
@@ -256,7 +261,7 @@ const AboutUs = () => {
             </motion.p>
           </motion.div>
 
-          {/* Who We Serve */}
+          {/* Who We Serve - Comic Style Grid */}
           <motion.div
             className="mb-20"
             variants={itemVariants}
@@ -276,12 +281,12 @@ const AboutUs = () => {
               ].map((item, index) => (
                 <motion.div
                   key={index}
-                  className="bg-gray-900/30 p-6 rounded-xl border border-gray-800 text-center"
+                  className="bg-gradient-to-br from-gray-900/60 to-gray-800/40 p-6 rounded-2xl border border-gray-700/30 text-center backdrop-blur-sm"
                   variants={cardVariants}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <p className="text-text-muted">{item}</p>
+                  <p className="text-text-muted text-sm leading-relaxed">{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -293,7 +298,7 @@ const AboutUs = () => {
             </motion.p>
           </motion.div>
 
-          {/* Future Vision */}
+          {/* Future Vision - Comic Style Cards */}
           <motion.div
             className="mb-20"
             variants={itemVariants}
@@ -331,13 +336,13 @@ const AboutUs = () => {
               ].map((item, index) => (
                 <motion.div
                   key={index}
-                  className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 p-6 rounded-xl border border-gray-700"
+                  className="bg-gradient-to-br from-gray-900/70 to-gray-800/50 p-6 rounded-2xl border border-gray-700/40 backdrop-blur-sm"
                   variants={cardVariants}
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
                   <h3 className="text-xl font-bold mb-3 text-primary">{item.title}</h3>
-                  <p className="text-text-muted">{item.description}</p>
+                  <p className="text-text-muted text-sm leading-relaxed">{item.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -347,6 +352,25 @@ const AboutUs = () => {
             >
               We're not just building a tool — we're building the future of domain intelligence.
             </motion.p>
+          </motion.div>
+
+          {/* Owner Section */}
+          <motion.div
+            className="max-w-2xl mx-auto mb-20 text-center"
+            variants={itemVariants}
+          >
+            <motion.div
+              className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
+              variants={cardVariants}
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-primary">Azeez A.</h3>
+              <p className="text-lg text-text-muted mb-4">Technical Support & Founder</p>
+              <p className="text-xs text-text-muted/70 leading-relaxed max-w-md mx-auto">
+                "My vision is to democratize domain intelligence and make professional-grade valuations accessible to everyone. Every domain investor deserves the tools to make informed decisions without barriers or costs."
+              </p>
+            </motion.div>
           </motion.div>
 
           {/* Call to Action */}
