@@ -628,39 +628,55 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <p><strong>Estibot Pricing:</strong> Free basic, $99/month for premium features</p>
         <p><strong>DNSWorth:</strong> 100% free with all features included</p>
         
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Feature</th>
-              <th class="border border-gray-300 p-3 text-left">DNSWorth</th>
-              <th class="border border-gray-300 p-3 text-left">Estibot</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Feature</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">DNSWorth</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Estibot</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">Basic Valuation</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
+              <td className="border-2 border-black p-4 font-medium">Basic Valuation</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Advanced Analytics</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">❌ Premium Only</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 p-3">Bulk Valuation</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">❌ Premium Only</td>
-            </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">API Access</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">❌ Premium Only</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Advanced Analytics</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Premium Only
+              </td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">Monthly Cost</td>
-              <td class="border border-gray-300 p-3">$0</td>
-              <td class="border border-gray-300 p-3">$99</td>
+              <td className="border-2 border-black p-4 font-medium">Bulk Valuation</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Premium Only
+              </td>
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">API Access</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Premium Only
+              </td>
+            </tr>
+            <tr>
+              <td className="border-2 border-black p-4 font-medium">Monthly Cost</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">$0</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$99</td>
             </tr>
           </tbody>
         </table>
@@ -671,39 +687,55 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <p><strong>GoDaddy Pricing:</strong> Free basic, $99/year for premium features</p>
         <p><strong>DNSWorth:</strong> 100% free with all features included</p>
         
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Feature</th>
-              <th class="border border-gray-300 p-3 text-left">DNSWorth</th>
-              <th class="border border-gray-300 p-3 text-left">GoDaddy</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Feature</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">DNSWorth</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">GoDaddy</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">Valuation Accuracy</td>
-              <td class="border border-gray-300 p-3">✅ AI-Powered</td>
-              <td class="border border-gray-300 p-3">⚠️ Basic Algorithm</td>
+              <td className="border-2 border-black p-4 font-medium">Valuation Accuracy</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> AI-Powered
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-yellow-600">⚠</span> Basic Algorithm
+              </td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Market Data</td>
-              <td class="border border-gray-300 p-3">✅ Real-time</td>
-              <td class="border border-gray-300 p-3">⚠️ Limited</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 p-3">Bulk Analysis</td>
-              <td class="border border-gray-300 p-3">✅ Unlimited</td>
-              <td class="border border-gray-300 p-3">❌ Not Available</td>
-            </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Export Options</td>
-              <td class="border border-gray-300 p-3">✅ Multiple Formats</td>
-              <td class="border border-gray-300 p-3">❌ Limited</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Market Data</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Real-time
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-yellow-600">⚠</span> Limited
+              </td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">Annual Cost</td>
-              <td class="border border-gray-300 p-3">$0</td>
-              <td class="border border-gray-300 p-3">$99</td>
+              <td className="border-2 border-black p-4 font-medium">Bulk Analysis</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Unlimited
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Not Available
+              </td>
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Export Options</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Multiple Formats
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Limited
+              </td>
+            </tr>
+            <tr>
+              <td className="border-2 border-black p-4 font-medium">Annual Cost</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">$0</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$99</td>
             </tr>
           </tbody>
         </table>
@@ -714,39 +746,56 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <p><strong>HumbleWorth Pricing:</strong> Free basic, $49/month for premium</p>
         <p><strong>DNSWorth:</strong> 100% free with all features included</p>
         
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Feature</th>
-              <th class="border border-gray-300 p-3 text-left">DNSWorth</th>
-              <th class="border border-gray-300 p-3 text-left">HumbleWorth</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Feature</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">DNSWorth</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">HumbleWorth</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">Core Valuation</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
+              <td className="border-2 border-black p-4 font-medium">Core Valuation</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Advanced Features</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">❌ Premium Only</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 p-3">API Access</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">❌ Premium Only</td>
-            </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Bulk Processing</td>
-              <td class="border border-gray-300 p-3">✅ Unlimited</td>
-              <td class="border border-gray-300 p-3">⚠️ Limited</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Advanced Features</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Premium Only
+              </td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">Monthly Cost</td>
-              <td class="border border-gray-300 p-3">$0</td>
-              <td class="border border-gray-300 p-3">$49</td>
+              <td className="border-2 border-black p-4 font-medium">API Access</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Premium Only
+              </td>
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Bulk Processing</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Unlimited
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-yellow-600">⚠</span> Limited
+              </td>
+            </tr>
+            <tr>
+              <td className="border-2 border-black p-4 font-medium">Monthly Cost</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">$0</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$49</td>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -757,39 +806,59 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <p><strong>Professional Services Pricing:</strong> $500-$5,000 per appraisal</p>
         <p><strong>DNSWorth:</strong> 100% free with professional-grade accuracy</p>
         
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Feature</th>
-              <th class="border border-gray-300 p-3 text-left">DNSWorth</th>
-              <th class="border border-gray-300 p-3 text-left">Professional</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Feature</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">DNSWorth</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Professional</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">Accuracy</td>
-              <td class="border border-gray-300 p-3">✅ 95%+</td>
-              <td class="border border-gray-300 p-3">✅ 95%+</td>
+              <td className="border-2 border-black p-4 font-medium">Accuracy</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> 95%+
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> 95%+
+              </td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Speed</td>
-              <td class="border border-gray-300 p-3">✅ Instant</td>
-              <td class="border border-gray-300 p-3">❌ 1-2 weeks</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 p-3">Cost</td>
-              <td class="border border-gray-300 p-3">✅ Free</td>
-              <td class="border border-gray-300 p-3">❌ $500-$5,000</td>
-            </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Availability</td>
-              <td class="border border-gray-300 p-3">✅ 24/7</td>
-              <td class="border border-gray-300 p-3">⚠️ Business Hours</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Speed</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Instant
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> 1-2 weeks
+              </td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">Scalability</td>
-              <td class="border border-gray-300 p-3">✅ Unlimited</td>
-              <td class="border border-gray-300 p-3">❌ Limited</td>
+              <td className="border-2 border-black p-4 font-medium">Cost</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Free
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> $500-$5,000
+              </td>
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Availability</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> 24/7
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-yellow-600">⚠</span> Business Hours
+              </td>
+            </tr>
+            <tr>
+              <td className="border-2 border-black p-4 font-medium">Scalability</td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl">✓</span> Unlimited
+              </td>
+              <td className="border-2 border-black p-4 text-center">
+                <span className="text-2xl text-black">✗</span> Limited
+              </td>
             </tr>
           </tbody>
         </table>
@@ -830,45 +899,45 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <p>We've conducted extensive testing to compare DNSWorth's accuracy against paid alternatives. Here are the results:</p>
         
         <h3>Accuracy Test Results</h3>
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Tool</th>
-              <th class="border border-gray-300 p-3 text-left">Accuracy Rate</th>
-              <th class="border border-gray-300 p-3 text-left">Cost</th>
-              <th class="border border-gray-300 p-3 text-left">Value Score</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Tool</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Accuracy Rate</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Cost</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Value Score</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">DNSWorth</td>
-              <td class="border border-gray-300 p-3">96.2%</td>
-              <td class="border border-gray-300 p-3">$0</td>
-              <td class="border border-gray-300 p-3">∞ (Infinite)</td>
+              <td className="border-2 border-black p-4 font-medium">DNSWorth</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">96.2%</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">$0</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">∞ (Infinite)</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Estibot Premium</td>
-              <td class="border border-gray-300 p-3">94.8%</td>
-              <td class="border border-gray-300 p-3">$99/month</td>
-              <td class="border border-gray-300 p-3">0.96</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 p-3">GoDaddy Premium</td>
-              <td class="border border-gray-300 p-3">92.1%</td>
-              <td class="border border-gray-300 p-3">$99/year</td>
-              <td class="border border-gray-300 p-3">0.93</td>
-            </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">HumbleWorth Premium</td>
-              <td class="border border-gray-300 p-3">93.5%</td>
-              <td class="border border-gray-300 p-3">$49/month</td>
-              <td class="border border-gray-300 p-3">1.91</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Estibot Premium</td>
+              <td className="border-2 border-black p-4 text-center">94.8%</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$99/month</td>
+              <td className="border-2 border-black p-4 text-center">0.96</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">Professional Appraisal</td>
-              <td class="border border-gray-300 p-3">97.1%</td>
-              <td class="border border-gray-300 p-3">$2,500</td>
-              <td class="border border-gray-300 p-3">0.04</td>
+              <td className="border-2 border-black p-4 font-medium">GoDaddy Premium</td>
+              <td className="border-2 border-black p-4 text-center">92.1%</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$99/year</td>
+              <td className="border-2 border-black p-4 text-center">0.93</td>
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">HumbleWorth Premium</td>
+              <td className="border-2 border-black p-4 text-center">93.5%</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$49/month</td>
+              <td className="border-2 border-black p-4 text-center">1.91</td>
+            </tr>
+            <tr>
+              <td className="border-2 border-black p-4 font-medium">Professional Appraisal</td>
+              <td className="border-2 border-black p-4 text-center">97.1%</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$2,500</td>
+              <td className="border-2 border-black p-4 text-center">0.04</td>
             </tr>
           </tbody>
         </table>
@@ -905,39 +974,39 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <p>Let's break down the real costs of using different valuation tools:</p>
         
         <h3>Annual Costs for Active Domain Investors</h3>
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Tool</th>
-              <th class="border border-gray-300 p-3 text-left">Annual Cost</th>
-              <th class="border border-gray-300 p-3 text-left">Valuations/Month</th>
-              <th class="border border-gray-300 p-3 text-left">Cost per Valuation</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Tool</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Annual Cost</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Valuations/Month</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Cost per Valuation</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">DNSWorth</td>
-              <td class="border border-gray-300 p-3">$0</td>
-              <td class="border border-gray-300 p-3">Unlimited</td>
-              <td class="border border-gray-300 p-3">$0.00</td>
+              <td className="border-2 border-black p-4 font-medium">DNSWorth</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">$0</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">Unlimited</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">$0.00</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Estibot Premium</td>
-              <td class="border border-gray-300 p-3">$1,188</td>
-              <td class="border border-gray-300 p-3">1,000</td>
-              <td class="border border-gray-300 p-3">$0.10</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Estibot Premium</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$1,188</td>
+              <td className="border-2 border-black p-4 text-center">1,000</td>
+              <td className="border-2 border-black p-4 text-center">$0.10</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">GoDaddy Premium</td>
-              <td class="border border-gray-300 p-3">$99</td>
-              <td class="border border-gray-300 p-3">500</td>
-              <td class="border border-gray-300 p-3">$0.02</td>
+              <td className="border-2 border-black p-4 font-medium">GoDaddy Premium</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$99</td>
+              <td className="border-2 border-black p-4 text-center">500</td>
+              <td className="border-2 border-black p-4 text-center">$0.02</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">HumbleWorth Premium</td>
-              <td class="border border-gray-300 p-3">$588</td>
-              <td class="border border-gray-300 p-3">1,000</td>
-              <td class="border border-gray-300 p-3">$0.05</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">HumbleWorth Premium</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$588</td>
+              <td className="border-2 border-black p-4 text-center">1,000</td>
+              <td className="border-2 border-black p-4 text-center">$0.05</td>
             </tr>
           </tbody>
         </table>
@@ -1663,65 +1732,65 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <h2>Comparing AI vs Traditional Methods</h2>
         
         <h3>Accuracy Comparison</h3>
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Method</th>
-              <th class="border border-gray-300 p-3 text-left">Accuracy Rate</th>
-              <th class="border border-gray-300 p-3 text-left">Consistency</th>
-              <th class="border border-gray-300 p-3 text-left">Speed</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Method</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Accuracy Rate</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Consistency</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Speed</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">Human Expert</td>
-              <td class="border border-gray-300 p-3">85-90%</td>
-              <td class="border border-gray-300 p-3">Variable</td>
-              <td class="border border-gray-300 p-3">Slow</td>
+              <td className="border-2 border-black p-4 font-medium">Human Expert</td>
+              <td className="border-2 border-black p-4 text-center">85-90%</td>
+              <td className="border-2 border-black p-4 text-center">Variable</td>
+              <td className="border-2 border-black p-4 text-center">Slow</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Basic Algorithm</td>
-              <td class="border border-gray-300 p-3">70-80%</td>
-              <td class="border border-gray-300 p-3">High</td>
-              <td class="border border-gray-300 p-3">Fast</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Basic Algorithm</td>
+              <td className="border-2 border-black p-4 text-center">70-80%</td>
+              <td className="border-2 border-black p-4 text-center">High</td>
+              <td className="border-2 border-black p-4 text-center">Fast</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">AI-Powered (DNSWorth)</td>
-              <td class="border border-gray-300 p-3">90-95%</td>
-              <td class="border border-gray-300 p-3">Very High</td>
-              <td class="border border-gray-300 p-3">Instant</td>
+              <td className="border-2 border-black p-4 font-medium">AI-Powered (DNSWorth)</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">90-95%</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">Very High</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">Instant</td>
             </tr>
           </tbody>
         </table>
         
         <h3>Cost Comparison</h3>
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Method</th>
-              <th class="border border-gray-300 p-3 text-left">Cost per Valuation</th>
-              <th class="border border-gray-300 p-3 text-left">Volume Discounts</th>
-              <th class="border border-gray-300 p-3 text-left">Accessibility</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Method</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Cost per Valuation</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Volume Discounts</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Accessibility</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">Professional Appraisal</td>
-              <td class="border border-gray-300 p-3">$500-$5,000</td>
-              <td class="border border-gray-300 p-3">Limited</td>
-              <td class="border border-gray-300 p-3">High-end only</td>
+              <td className="border-2 border-black p-4 font-medium">Professional Appraisal</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$500-$5,000</td>
+              <td className="border-2 border-black p-4 text-center">Limited</td>
+              <td className="border-2 border-black p-4 text-center">High-end only</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">Paid Tools</td>
-              <td class="border border-gray-300 p-3">$10-$100</td>
-              <td class="border border-gray-300 p-3">Some</td>
-              <td class="border border-gray-300 p-3">Mid-range</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">Paid Tools</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-red-600">$10-$100</td>
+              <td className="border-2 border-black p-4 text-center">Some</td>
+              <td className="border-2 border-black p-4 text-center">Mid-range</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">DNSWorth AI</td>
-              <td class="border border-gray-300 p-3">$0</td>
-              <td class="border border-gray-300 p-3">Unlimited</td>
-              <td class="border border-gray-300 p-3">Everyone</td>
+              <td className="border-2 border-black p-4 font-medium">DNSWorth AI</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">$0</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">Unlimited</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">Everyone</td>
             </tr>
           </tbody>
         </table>
@@ -2235,39 +2304,39 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <p>Quantify the time savings from bulk valuation:</p>
         
         <h4>Manual vs. Bulk Processing</h4>
-        <table class="w-full border-collapse border border-gray-300 my-6">
+        <table className="w-full border-collapse border-2 border-black my-6 bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
-            <tr class="bg-gray-100">
-              <th class="border border-gray-300 p-3 text-left">Portfolio Size</th>
-              <th class="border border-gray-300 p-3 text-left">Manual Time</th>
-              <th class="border border-gray-300 p-3 text-left">Bulk Time</th>
-              <th class="border border-gray-300 p-3 text-left">Time Saved</th>
+            <tr className="bg-gray-200">
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Portfolio Size</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Manual Time</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Bulk Time</th>
+              <th className="border-2 border-black p-4 text-left font-bold text-lg">Time Saved</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="border border-gray-300 p-3">50 domains</td>
-              <td class="border border-gray-300 p-3">2-4 hours</td>
-              <td class="border border-gray-300 p-3">30 seconds</td>
-              <td class="border border-gray-300 p-3">99%</td>
+              <td className="border-2 border-black p-4 font-medium">50 domains</td>
+              <td className="border-2 border-black p-4 text-center">2-4 hours</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">30 seconds</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">99%</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">100 domains</td>
-              <td class="border border-gray-300 p-3">4-8 hours</td>
-              <td class="border border-gray-300 p-3">1 minute</td>
-              <td class="border border-gray-300 p-3">99%</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">100 domains</td>
+              <td className="border-2 border-black p-4 text-center">4-8 hours</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">1 minute</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">99%</td>
             </tr>
             <tr>
-              <td class="border border-gray-300 p-3">500 domains</td>
-              <td class="border border-gray-300 p-3">20-40 hours</td>
-              <td class="border border-gray-300 p-3">2 minutes</td>
-              <td class="border border-gray-300 p-3">99%</td>
+              <td className="border-2 border-black p-4 font-medium">500 domains</td>
+              <td className="border-2 border-black p-4 text-center">20-40 hours</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">2 minutes</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">99%</td>
             </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 p-3">1000+ domains</td>
-              <td class="border border-gray-300 p-3">40+ hours</td>
-              <td class="border border-gray-300 p-3">5 minutes</td>
-              <td class="border border-gray-300 p-3">99%</td>
+            <tr className="bg-gray-50">
+              <td className="border-2 border-black p-4 font-medium">1000+ domains</td>
+              <td className="border-2 border-black p-4 text-center">40+ hours</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">5 minutes</td>
+              <td className="border-2 border-black p-4 text-center font-bold text-green-600">99%</td>
             </tr>
           </tbody>
         </table>
@@ -2359,7 +2428,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
           <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
           <button
             onClick={() => navigate('/blog')}
-            className="btn-primary"
+            className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-semibold"
           >
             Back to Blog
           </button>
@@ -2380,7 +2449,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
           {/* Back to Blog Button */}
           <motion.button
             onClick={() => navigate('/blog')}
-            className="flex items-center gap-2 text-primary hover:text-primary/80 mb-8 transition-colors duration-200"
+            className="flex items-center gap-2 text-black hover:text-gray-700 mb-8 transition-colors duration-200 font-semibold"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
