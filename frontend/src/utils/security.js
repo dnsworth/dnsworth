@@ -157,4 +157,3 @@ export function validateProToken(token) {
   const tokenRegex = /^[a-f0-9]{64}$/;
   return tokenRegex.test(token);
 }
-

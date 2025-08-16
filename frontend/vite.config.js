@@ -4,10 +4,14 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  define: {
+    'import.meta.env.PROD': JSON.stringify(true),
+    'import.meta.env.DEV': JSON.stringify(false)
+  },
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'esbuild',
+    minify: 'terser',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -15,6 +19,12 @@ export default defineConfig({
           router: ['react-router-dom'],
           query: ['@tanstack/react-query']
         }
+      }
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
       }
     }
   },

@@ -12,7 +12,7 @@ const API_CONFIG = {
 
 // Production API configuration
 if (import.meta.env.PROD) {
-  // Use the correct backend URL that matches the actual deployment
+  // Temporary direct backend call while Vercel routing is fixed
   API_CONFIG.baseURL = import.meta.env.VITE_API_BASE_URL || 'https://dnsworth.onrender.com';
 }
 
