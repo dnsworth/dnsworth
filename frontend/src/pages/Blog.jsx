@@ -196,12 +196,16 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             animate="visible"
           >
             {filteredPosts.map((post) => (
-              <motion.article
+              <Link 
+                to={`/blog/${post.slug}`}
                 key={post.id}
-                className="group relative bg-white border-4 border-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                variants={cardVariants}
-                whileHover={{ y: -5 }}
+                className="block"
               >
+                <motion.article
+                  className="group relative bg-white border-4 border-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                  variants={cardVariants}
+                  whileHover={{ y: -5 }}
+                >
                 {/* Post Image Placeholder - Same style as About Us */}
                 <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-5 group-hover:opacity-10 transition-opacity duration-500"></div>
@@ -238,22 +242,12 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                   <p className="text-gray-600 mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
-
-                  {/* Read More Button - Black arrow */}
-                  <Link 
-                    to={`/blog/${post.slug}`}
-                    className="text-black hover:text-gray-700 font-medium transition-colors duration-200 flex items-center gap-2 cursor-pointer"
-                  >
-                    Read More 
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
                 </div>
 
-                {/* Hover Effect Ring */}
-                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
-              </motion.article>
+                                  {/* Hover Effect Ring */}
+                  <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
+                </motion.article>
+              </Link>
             ))}
           </motion.div>
 
