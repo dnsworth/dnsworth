@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const AboutUs = () => {
   const [typedText, setTypedText] = useState('');
-  const ownerVision = "My vision is to democratize domain intelligence and make professional-grade valuations accessible to everyone. Every domain investor deserves the tools to make informed decisions without barriers or costs.";
+  const ownerVision = "My vision is to democratize domain intelligence and make professional-grade valuations accessible to everyone. Every domain investor deserves the tools they need to compete and succeed.";
 
   useEffect(() => {
     let index = 0;
@@ -67,29 +69,8 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Back Arrow to Home */}
-      <motion.div
-        className="fixed top-8 left-8 z-50"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <Link
-          to="/"
-          className="flex items-center gap-3 text-primary hover:text-secondary transition-colors duration-300 group"
-        >
-          <motion.div
-            className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center border border-primary/30 group-hover:bg-primary/30 transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </motion.div>
-          <span className="font-medium text-sm">Back to Home</span>
-        </Link>
-      </motion.div>
+      {/* Header */}
+      <Header />
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
@@ -129,7 +110,7 @@ const AboutUs = () => {
               className="text-xl md:text-2xl text-text-muted mb-8 leading-relaxed"
               variants={itemVariants}
             >
-              Free, Unlimited Domain Valuations — Powered by Intelligence, Built for You
+              Free, Unlimited Domain Valuations Powered by Intelligence, Built for You
             </motion.p>
             <motion.div
               className="flex justify-center"
@@ -154,13 +135,13 @@ const AboutUs = () => {
         animate="visible"
       >
         <div className="container mx-auto px-6">
-          {/* Mission Statement */}
+          {/* Mission Statement Section */}
           <motion.div
             className="max-w-4xl mx-auto mb-20"
             variants={itemVariants}
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-6 text-center"
+              className="text-3xl md:text-4xl font-bold mb-8 text-center"
               variants={itemVariants}
             >
               Our Mission
@@ -169,7 +150,7 @@ const AboutUs = () => {
               className="text-lg text-text-muted leading-relaxed mb-6"
               variants={itemVariants}
             >
-              At DNSWorth, we believe knowledge should be accessible to everyone. The domain world is fast-moving, competitive, and often clouded by guesswork. We exist to remove that barrier by giving domain investors — from beginners to professionals — a clear, reliable, and completely free way to understand the true value of their digital assets.
+              At DNSWorth, we believe knowledge should be accessible to everyone. The domain world is fast moving, competitive, and often clouded by guesswork. We exist to remove that barrier by giving domain investors from beginners to professionals a clear, reliable, and completely free way to understand the true value of their digital assets.
             </motion.p>
             <motion.p
               className="text-lg text-text-muted leading-relaxed"
@@ -179,13 +160,13 @@ const AboutUs = () => {
             </motion.p>
           </motion.div>
 
-          {/* Why DNSWorth Exists */}
+          {/* Why DNSWorth Exists Section */}
           <motion.div
             className="max-w-4xl mx-auto mb-20"
             variants={itemVariants}
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-6 text-center"
+              className="text-3xl md:text-4xl font-bold mb-8 text-center"
               variants={itemVariants}
             >
               Why DNSWorth Exists
@@ -194,7 +175,7 @@ const AboutUs = () => {
               className="text-lg text-text-muted leading-relaxed mb-6"
               variants={itemVariants}
             >
-              Domain names are the building blocks of the internet. For investors, entrepreneurs, and businesses alike, knowing the value of a domain is critical to making the right decisions — whether it's buying, selling, or building.
+              Domain names are the building blocks of the internet. For investors, entrepreneurs, and businesses alike, knowing the value of a domain is critical to making the right decisions whether it is buying, selling, or building.
             </motion.p>
             <motion.p
               className="text-lg text-text-muted leading-relaxed"
@@ -204,7 +185,7 @@ const AboutUs = () => {
             </motion.p>
           </motion.div>
 
-          {/* What Makes Us Different - Comic Style Cards */}
+          {/* What Makes Us Different Section - Comic Style Cards */}
           <motion.div
             className="mb-20"
             variants={itemVariants}
@@ -217,78 +198,98 @@ const AboutUs = () => {
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <motion.div
-                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
                 variants={cardVariants}
-                whileHover={{ scale: 1.03, y: -8 }}
-                transition={{ duration: 0.4 }}
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-3xl">🚀</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-blue-300 rounded-full"></div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Unlimited Valuations</h3>
-                  <p className="text-sm text-text-muted">Always Free</p>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1">Dr. Smart</h3>
+                    <p className="text-sm text-gray-600 mb-3">AI Specialist</p>
+                    <h4 className="text-lg font-bold text-gray-900 mb-3">AI Powered Intelligence</h4>
+                    <p className="text-gray-700 leading-relaxed">Our advanced AI analyzes millions of domain sales, market trends, and industry data to provide you with the most accurate valuations possible.</p>
+                  </div>
                 </div>
-                <p className="text-text-muted text-center leading-relaxed">No caps. No subscriptions. Run as many valuations as you need, without restrictions.</p>
               </motion.div>
 
               <motion.div
-                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
                 variants={cardVariants}
-                whileHover={{ scale: 1.03, y: -8 }}
-                transition={{ duration: 0.4 }}
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-3xl">⚡</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-orange-200 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-orange-300 rounded-full"></div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-secondary mb-2">Bulk Analysis</h3>
-                  <p className="text-sm text-text-muted">Speed Expert</p>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1">Flash Runner</h3>
+                    <p className="text-sm text-gray-600 mb-3">Speed Expert</p>
+                    <h4 className="text-lg font-bold text-gray-900 mb-3">Lightning Fast Results</h4>
+                    <p className="text-gray-700 leading-relaxed">Get instant valuations in seconds, not minutes. Our optimized system delivers results faster than any other tool in the market.</p>
+                  </div>
                 </div>
-                <p className="text-text-muted text-center leading-relaxed">Save time by evaluating up to 2,000 domains at once. Perfect for large portfolio holders.</p>
               </motion.div>
 
               <motion.div
-                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
                 variants={cardVariants}
-                whileHover={{ scale: 1.03, y: -8 }}
-                transition={{ duration: 0.4 }}
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-3xl">🧠</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-green-300 rounded-full"></div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-accent mb-2">AI-Driven Accuracy</h3>
-                  <p className="text-sm text-text-muted">AI Specialist</p>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1">Market Master</h3>
+                    <p className="text-sm text-gray-600 mb-3">Data Analyst</p>
+                    <h4 className="text-lg font-bold text-gray-900 mb-3">Market Based Accuracy</h4>
+                    <p className="text-gray-700 leading-relaxed">Real time market data from actual domain sales ensures your valuations reflect current market conditions and trends.</p>
+                  </div>
                 </div>
-                <p className="text-text-muted text-center leading-relaxed">Our algorithms combine auction history, search trends, and market data for accurate valuations.</p>
               </motion.div>
 
               <motion.div
-                className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
                 variants={cardVariants}
-                whileHover={{ scale: 1.03, y: -8 }}
-                transition={{ duration: 0.4 }}
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-3xl">📊</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-purple-300 rounded-full"></div>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Market Insights</h3>
-                  <p className="text-sm text-text-muted">Data Analyst</p>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1">Free Spirit</h3>
+                    <p className="text-sm text-gray-600 mb-3">Freedom Advocate</p>
+                    <h4 className="text-lg font-bold text-gray-900 mb-3">100% Free Forever</h4>
+                    <p className="text-gray-700 leading-relaxed">No hidden fees, no subscriptions, no limits. DNSWorth is completely free and will always remain that way.</p>
+                  </div>
                 </div>
-                <p className="text-text-muted text-center leading-relaxed">Daily updates on valuable expired and dropped domains to spot hidden opportunities early.</p>
               </motion.div>
             </div>
           </motion.div>
 
-          {/* Our Commitment */}
+          {/* Our Commitment Section */}
           <motion.div
             className="max-w-4xl mx-auto mb-20"
             variants={itemVariants}
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-6 text-center"
+              className="text-3xl md:text-4xl font-bold mb-8 text-center"
               variants={itemVariants}
             >
               Our Commitment
@@ -297,11 +298,11 @@ const AboutUs = () => {
               className="text-lg text-text-muted leading-relaxed mb-6"
               variants={itemVariants}
             >
-              At DNSWorth, we are committed to keeping domain valuations free, accurate, and accessible for everyone. We don't believe in limiting knowledge or charging gatekeeping fees. Our role is to empower you — whether you're testing your first domain idea or managing thousands.
+              At DNSWorth, we are committed to keeping domain valuations free, accurate, and accessible for everyone. We do not believe in limiting knowledge or charging gatekeeping fees. Our role is to empower you whether you are testing your first domain idea or managing thousands.
             </motion.p>
           </motion.div>
 
-          {/* Who We Serve - Comic Style Grid */}
+          {/* Who We Serve Section */}
           <motion.div
             className="mb-20"
             variants={itemVariants}
@@ -314,10 +315,10 @@ const AboutUs = () => {
             </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                'First-time domain buyers looking for guidance.',
+                'First time domain buyers looking for guidance.',
                 'Seasoned investors managing large portfolios.',
-                'Entrepreneurs & startups exploring brand identity through domains.',
-                'Agencies & brokers seeking fast, bulk insights for clients.'
+                'Entrepreneurs and startups exploring brand identity through domains.',
+                'Agencies and brokers seeking fast, bulk insights for clients.'
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -338,7 +339,7 @@ const AboutUs = () => {
             </motion.p>
           </motion.div>
 
-          {/* Future Vision - Comic Style Cards */}
+          {/* Future Vision Section */}
           <motion.div
             className="mb-20"
             variants={itemVariants}
@@ -353,17 +354,17 @@ const AboutUs = () => {
               className="text-lg text-text-muted leading-relaxed mb-8 text-center"
               variants={itemVariants}
             >
-              DNSWorth is more than a valuation tool — it's a growing ecosystem. Our roadmap is built on innovation, accessibility, and community:
+              DNSWorth is more than a valuation tool it is a growing ecosystem. Our roadmap is built on innovation, accessibility, and community:
             </motion.p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
                   title: 'Smarter AI Insights',
-                  description: 'Soon, valuations will go beyond numbers, offering deeper predictive analytics on domain trends, brandability, and long-term potential.'
+                  description: 'Soon, valuations will go beyond numbers, offering deeper predictive analytics on domain trends, brandability, and long term potential.'
                 },
                 {
                   title: 'Seamless Integrations',
-                  description: 'APIs and plug-ins will let brokers, marketplaces, and portfolio managers connect directly with DNSWorth for faster workflows.'
+                  description: 'APIs and plug ins will let brokers, marketplaces, and portfolio managers connect directly with DNSWorth for faster workflows.'
                 },
                 {
                   title: 'Marketplace Readiness',
@@ -390,40 +391,13 @@ const AboutUs = () => {
               className="text-center text-lg text-text-muted mt-8"
               variants={itemVariants}
             >
-              We're not just building a tool — we're building the future of domain intelligence.
+              We are not just building a tool we are building the future of domain intelligence.
             </motion.p>
           </motion.div>
 
-          {/* Owner Section - Comic Style with Typing Animation */}
+          {/* Call to Action Section */}
           <motion.div
-            className="max-w-2xl mx-auto mb-20 text-center"
-            variants={itemVariants}
-          >
-            <motion.div
-              className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-8 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
-              variants={cardVariants}
-              whileHover={{ scale: 1.02, y: -5 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="text-center mb-6">
-                <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">👨‍💻</span>
-                </div>
-                <h3 className="text-2xl font-bold text-primary mb-2">Azeez A.</h3>
-                <p className="text-lg text-text-muted">Technical Support & Founder</p>
-              </div>
-              <div className="bg-gray-800/50 p-4 rounded-xl border border-gray-600/30">
-                <p className="text-sm text-text-muted/90 leading-relaxed max-w-md mx-auto">
-                  "{typedText}
-                  <span className="animate-pulse">|</span>"
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Call to Action */}
-          <motion.div
-            className="text-center"
+            className="text-center mb-20"
             variants={itemVariants}
           >
             <motion.h2
@@ -436,7 +410,7 @@ const AboutUs = () => {
               className="text-lg text-text-muted leading-relaxed mb-8 max-w-3xl mx-auto"
               variants={itemVariants}
             >
-              Your domains are more than just names — they're digital real estate. With DNSWorth, you can finally understand their true worth without the guesswork, the limits, or the costs.
+              Your domains are more than just names they are digital real estate. With DNSWorth, you can finally understand their true worth without the guesswork, the limits, or the costs.
             </motion.p>
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -459,11 +433,43 @@ const AboutUs = () => {
               className="text-center text-lg text-primary mt-8 font-semibold"
               variants={itemVariants}
             >
-              Start exploring your portfolio today with DNSWorth — your trusted partner in free, unlimited domain valuations.
+              Start exploring your portfolio today with DNSWorth your trusted partner in free, unlimited domain valuations.
             </motion.p>
+          </motion.div>
+
+          {/* Owner Section - Last Section Before Footer */}
+          <motion.div
+            className="max-w-3xl mx-auto mb-20 text-center"
+            variants={itemVariants}
+          >
+            <motion.div
+              className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-10 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
+              variants={cardVariants}
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="text-center mb-8">
+                <div className="w-32 h-32 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-24 h-24 bg-primary/30 rounded-full flex items-center justify-center">
+                    <div className="w-16 h-16 bg-primary/40 rounded-full"></div>
+                  </div>
+                </div>
+                <h3 className="text-3xl font-bold text-primary mb-3">Azeez A.</h3>
+                <p className="text-xl text-text-muted">Technical Support and Founder</p>
+              </div>
+              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-600/30">
+                <p className="text-lg text-text-muted/90 leading-relaxed max-w-2xl mx-auto">
+                  "{typedText}
+                  <span className="animate-pulse text-primary">|</span>"
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
