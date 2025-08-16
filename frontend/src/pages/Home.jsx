@@ -5,6 +5,7 @@ import ValuationResults from '../components/ValuationResults';
 import SectionFeatures from '../components/SectionFeatures';
 import SectionWhyUs from '../components/SectionWhyUs';
 import SectionBulkSearch from '../components/SectionBulkSearch';
+import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import { SearchTracker } from '../utils/searchTracker';
 
@@ -82,6 +83,7 @@ const Home = ({ onNavigateToBulk }) => {
       <SectionFeatures />
       <SectionWhyUs />
       <SectionBulkSearch onBulkValuation={handleBulkValuation} />
+      <FAQSection />
       <Footer onBulkValuation={handleBulkValuation} onNavigateHome={handleNewSearch} />
     </div>
   );
