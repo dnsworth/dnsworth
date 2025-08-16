@@ -10,6 +10,7 @@ const Footer = ({ onBulkValuation, onNavigateHome }) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => navigate('/bulk-valuation'), 300);
     }},
+    { name: 'About Us', action: () => navigate('/about') },
     { name: 'Features', action: () => {
       const whyChooseSection = document.getElementById('why-choose-section');
       if (whyChooseSection) {
