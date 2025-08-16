@@ -127,7 +127,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
+      <section className="py-20 bg-black">
         <div className="container mx-auto px-6 text-center">
           <motion.h1
             className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
@@ -138,7 +138,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             DNSWorth Blog
           </motion.h1>
           <motion.p
-            className="text-xl text-gray-700 mb-4 max-w-3xl mx-auto"
+            className="text-xl text-gray-300 mb-4 max-w-3xl mx-auto"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -147,7 +147,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             Expert insights on domain investing, valuation strategies, and market trends
           </motion.p>
           <motion.p
-            className="text-lg text-gray-600"
+            className="text-lg text-gray-400"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -271,47 +271,6 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
               <p className="text-gray-600">Try selecting a different category or check back later for new content.</p>
             </motion.div>
           )}
-        </div>
-      </section>
-
-      {/* Newsletter Signup */}
-      <section className="py-20 bg-gradient-to-br from-secondary/20 to-accent/20">
-        <div className="container mx-auto px-6 text-center">
-          <motion.div
-            className="max-w-2xl mx-auto"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <motion.h2
-              className="text-3xl md:text-4xl font-bold text-black mb-6"
-              variants={itemVariants}
-            >
-              Stay Updated with Domain Insights
-            </motion.h2>
-            <motion.p
-              className="text-lg text-gray-700 mb-8"
-              variants={itemVariants}
-              transition={{ delay: 0.2 }}
-            >
-              Get the latest domain investing tips, market analysis, and valuation strategies delivered to your inbox.
-            </motion.p>
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              variants={itemVariants}
-              transition={{ delay: 0.4 }}
-            >
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 bg-white border border-gray-300 rounded-xl text-black placeholder-gray-500 focus:border-primary focus:outline-none transition-colors duration-200"
-              />
-              <button className="btn-primary px-8 py-4 whitespace-nowrap">
-                Subscribe
-              </button>
-            </motion.div>
-          </motion.div>
         </div>
       </section>
 
