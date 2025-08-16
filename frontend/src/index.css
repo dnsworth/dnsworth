@@ -31,6 +31,24 @@
     @apply bg-accent text-background rounded-lg font-bold hover:bg-orange-light transition-all duration-200 shadow-lg shadow-accent/25;
   }
   
+  /* Mobile-optimized button sizing */
+  .btn-mobile {
+    @apply text-sm px-3 py-2;
+  }
+  
+  .btn-desktop {
+    @apply text-base px-6 py-3;
+  }
+  
+  /* Mobile-optimized text sizing */
+  .text-mobile {
+    @apply text-sm;
+  }
+  
+  .text-desktop {
+    @apply text-2xl lg:text-3xl;
+  }
+  
   .container-custom {
     @apply max-w-container mx-auto px-4 sm:px-6 lg:px-12;
   }
@@ -41,6 +59,15 @@
   
   .text-gradient {
     @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
+  }
+  
+  /* Mobile-specific spacing utilities */
+  .mobile-padding {
+    @apply px-3 py-2;
+  }
+  
+  .desktop-padding {
+    @apply px-0 py-0;
   }
 }
 
@@ -60,6 +87,18 @@
   .animate-glow {
     animation: glow 2s ease-in-out infinite alternate;
   }
+  
+  /* Mobile-specific animations */
+  .animate-mobile-scale {
+    animation: mobileScale 0.2s ease-out;
+  }
+}
+
+/* Mobile-specific animations */
+@keyframes mobileScale {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 /* Blog content visibility fixes */
@@ -97,6 +136,24 @@
 .blog-content strong {
   color: #111827 !important; /* text-gray-900 */
   font-weight: bold;
+}
+
+/* Mobile-specific responsive improvements */
+@media (max-width: 640px) {
+  .mobile-optimized {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .mobile-button-size {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .mobile-logo-size {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+  }
 }
 
 @keyframes fadeIn {

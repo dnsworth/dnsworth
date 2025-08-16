@@ -4,11 +4,11 @@ const Header = ({ onBulkValuation, onNavigateHome }) => {
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-gray-800 shadow-2xl shadow-primary/10">
       <div className="flex items-center justify-between py-3 px-4 sm:py-4 sm:px-6 lg:px-8">
-        {/* Logo */}
+        {/* Logo - Mobile optimized sizing */}
         <div className="flex-shrink-0">
           <button
             onClick={onNavigateHome}
-            className="text-2xl sm:text-3xl font-bold text-gradient hover:scale-105 transition-transform duration-200 cursor-pointer"
+            className="mobile-logo-size sm:text-2xl lg:text-3xl font-bold text-gradient hover:scale-105 transition-transform duration-200 cursor-pointer sm:px-0 sm:py-0"
           >
             DNSWorth
           </button>
