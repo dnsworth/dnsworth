@@ -46,6 +46,7 @@
     { "source": "/health", "destination": "https://dnsworth.onrender.com/health" },
     { "source": "/dnsworth-logo.ico", "destination": "/dnsworth-logo.ico" },
     { "source": "/about", "destination": "/index.html" },
+    { "source": "/blog", "destination": "/index.html" },
     { "source": "/bulk-valuation", "destination": "/index.html" },
     { "source": "/privacy-policy", "destination": "/index.html" },
     { "source": "/terms-of-service", "destination": "/index.html" },

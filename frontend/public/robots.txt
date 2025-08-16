@@ -1,31 +1,30 @@
 User-agent: *
 Allow: /
 
-# Block AI training bots
-User-agent: GPTBot
-Disallow: /
+# Sitemap
+Sitemap: https://dnsworth.com/sitemap.xml
 
-User-agent: CCBot
-Disallow: /
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
 
-User-agent: ChatGPT-User
-Disallow: /
+# Allow all important pages
+Allow: /about
+Allow: /blog
+Allow: /bulk-valuation
+Allow: /privacy-policy
+Allow: /terms-of-service
+Allow: /cookie-policy
 
-User-agent: anthropic-ai
-Disallow: /
+# Disallow admin or private areas (if any in the future)
+# Disallow: /admin/
+# Disallow: /private/
 
-User-agent: Claude-Web
-Disallow: /
-
-User-agent: Omgilibot
-Disallow: /
-
-# Block private/admin areas
-Disallow: /admin
-Disallow: /api
-Disallow: /private
-Disallow: /_next
-Disallow: /node_modules
-
-# Sitemap location
-Sitemap: https://www.dnsworth.com/sitemap.xml
+# Allow CSS, JS, and images
+Allow: /assets/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.ico

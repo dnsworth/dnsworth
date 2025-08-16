@@ -11,6 +11,7 @@ const Footer = ({ onBulkValuation, onNavigateHome }) => {
       setTimeout(() => navigate('/bulk-valuation'), 300);
     }},
     { name: 'About Us', action: () => navigate('/about') },
+    { name: 'Blog', action: () => navigate('/blog') },
     { name: 'Features', action: () => {
       const whyChooseSection = document.getElementById('why-choose-section');
       if (whyChooseSection) {

@@ -1,0 +1,306 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
+const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const blogPosts = [
+    {
+      id: 1,
+      title: "How to Value a Domain for Free: Complete Guide 2024",
+      excerpt: "Learn the secrets of professional domain valuation without spending a dime. Discover how to assess domain worth using market data, trends, and AI-powered tools.",
+      category: "guides",
+      readTime: "8 min read",
+      date: "2024-01-15",
+      slug: "how-to-value-domain-free-guide-2024",
+      keywords: ["domain valuation", "free domain appraisal", "domain worth", "domain investing guide"]
+    },
+    {
+      id: 2,
+      title: "Top 10 Most Valuable Dropped Domains This Week",
+      excerpt: "Discover the hottest dropped domains that could be worth thousands. Our weekly analysis reveals the most promising opportunities for domain investors.",
+      category: "market-analysis",
+      readTime: "5 min read",
+      date: "2024-01-14",
+      slug: "top-10-valuable-dropped-domains-week",
+      keywords: ["dropped domains", "domain opportunities", "valuable domains", "domain investing"]
+    },
+    {
+      id: 3,
+      title: "DNSWorth vs Other Domain Valuation Tools: Why Free Wins",
+      excerpt: "Compare DNSWorth with paid domain valuation services. See why our free AI-powered tool provides the same accuracy without the hefty price tag.",
+      category: "comparisons",
+      readTime: "6 min read",
+      date: "2024-01-13",
+      slug: "dnsworth-vs-other-valuation-tools",
+      keywords: ["domain valuation tools", "free vs paid", "DNSWorth review", "AI domain valuation"]
+    },
+    {
+      id: 4,
+      title: "Domain Investing 101: Building Your First Portfolio",
+      excerpt: "Start your domain investing journey with this comprehensive beginner's guide. Learn the fundamentals of domain selection, valuation, and portfolio management.",
+      category: "guides",
+      readTime: "12 min read",
+      date: "2024-01-12",
+      slug: "domain-investing-101-portfolio-building",
+      keywords: ["domain investing", "portfolio building", "domain selection", "beginner guide"]
+    },
+    {
+      id: 5,
+      title: "AI in Domain Valuation: How Technology is Revolutionizing the Industry",
+      excerpt: "Explore how artificial intelligence is transforming domain valuation from guesswork to science. Learn about the algorithms and data that power modern appraisals.",
+      category: "technology",
+      readTime: "7 min read",
+      date: "2024-01-11",
+      slug: "ai-domain-valuation-revolution",
+      keywords: ["AI domain valuation", "machine learning", "domain technology", "valuation algorithms"]
+    },
+    {
+      id: 6,
+      title: "Bulk Domain Valuation: Save Hours with Portfolio Analysis",
+      excerpt: "Learn how to value hundreds of domains simultaneously using DNSWorth's bulk valuation tool. Perfect for serious investors and portfolio managers.",
+      category: "tools",
+      readTime: "4 min read",
+      date: "2024-01-10",
+      slug: "bulk-domain-valuation-portfolio-analysis",
+      keywords: ["bulk valuation", "portfolio analysis", "domain portfolio", "efficient valuation"]
+    }
+  ];
+
+  const categories = [
+    { id: 'all', name: 'All Posts', count: blogPosts.length },
+    { id: 'guides', name: 'Guides', count: blogPosts.filter(post => post.category === 'guides').length },
+    { id: 'market-analysis', name: 'Market Analysis', count: blogPosts.filter(post => post.category === 'market-analysis').length },
+    { id: 'comparisons', name: 'Comparisons', count: blogPosts.filter(post => post.category === 'comparisons').length },
+    { id: 'technology', name: 'Technology', count: blogPosts.filter(post => post.category === 'technology').length },
+    { id: 'tools', name: 'Tools', count: blogPosts.filter(post => post.category === 'tools').length }
+  ];
+
+  const filteredPosts = selectedCategory === 'all' 
+    ? blogPosts 
+    : blogPosts.filter(post => post.category === selectedCategory);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.4
+      }
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-white">
+      {/* Header */}
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
+        <div className="container mx-auto px-6 text-center">
+          <motion.h1
+            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            DNSWorth Blog
+          </motion.h1>
+          <motion.p
+            className="text-xl text-text-muted mb-4 max-w-3xl mx-auto"
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.2 }}
+          >
+            Expert insights on domain investing, valuation strategies, and market trends
+          </motion.p>
+          <motion.p
+            className="text-lg text-text-muted/80"
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.4 }}
+          >
+            Stay ahead of the curve with our comprehensive domain industry coverage
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Category Filter */}
+      <section className="py-12 bg-surface border-b border-gray-800">
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="flex flex-wrap justify-center gap-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {categories.map((category) => (
+              <motion.button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
+                  selectedCategory === category.id
+                    ? 'bg-primary text-background shadow-lg'
+                    : 'bg-gray-800 text-text-muted hover:bg-gray-700 hover:text-white'
+                }`}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {category.name} ({category.count})
+              </motion.button>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Blog Posts */}
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {filteredPosts.map((post) => (
+              <motion.article
+                key={post.id}
+                className="bg-surface border border-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                variants={cardVariants}
+                whileHover={{ y: -5 }}
+              >
+                {/* Post Image Placeholder */}
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                  <div className="text-4xl text-primary/60">📝</div>
+                </div>
+
+                {/* Post Content */}
+                <div className="p-6">
+                  {/* Category Badge */}
+                  <div className="mb-4">
+                    <span className="inline-block px-3 py-1 text-xs font-medium bg-primary/20 text-primary rounded-full">
+                      {post.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    </span>
+                  </div>
+
+                  {/* Post Meta */}
+                  <div className="flex items-center gap-4 text-sm text-text-muted mb-3">
+                    <span>{new Date(post.date).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}</span>
+                    <span>•</span>
+                    <span>{post.readTime}</span>
+                  </div>
+
+                  {/* Post Title */}
+                  <h2 className="text-xl font-bold text-white mb-3 line-clamp-2">
+                    {post.title}
+                  </h2>
+
+                  {/* Post Excerpt */}
+                  <p className="text-text-muted mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+
+                  {/* Read More Button */}
+                  <button className="text-primary hover:text-primary/80 font-medium transition-colors duration-200">
+                    Read More →
+                  </button>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+
+          {/* No Posts Message */}
+          {filteredPosts.length === 0 && (
+            <motion.div
+              className="text-center py-20"
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <div className="text-6xl mb-4">📚</div>
+              <h3 className="text-2xl font-bold text-white mb-2">No posts found</h3>
+              <p className="text-text-muted">Try selecting a different category or check back later for new content.</p>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* Newsletter Signup */}
+      <section className="py-20 bg-gradient-to-br from-secondary/20 to-accent/20">
+        <div className="container mx-auto px-6 text-center">
+          <motion.div
+            className="max-w-2xl mx-auto"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold text-white mb-6"
+              variants={itemVariants}
+            >
+              Stay Updated with Domain Insights
+            </motion.h2>
+            <motion.p
+              className="text-lg text-text-muted mb-8"
+              variants={itemVariants}
+              transition={{ delay: 0.2 }}
+            >
+              Get the latest domain investing tips, market analysis, and valuation strategies delivered to your inbox.
+            </motion.p>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              variants={itemVariants}
+              transition={{ delay: 0.4 }}
+            >
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="flex-1 px-6 py-4 bg-surface border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-primary focus:outline-none transition-colors duration-200"
+              />
+              <button className="btn-primary px-8 py-4 whitespace-nowrap">
+                Subscribe
+              </button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+    </div>
+  );
+};
+
+export default Blog;
