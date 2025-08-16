@@ -1,87 +1,79 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import ValuationForm from './ValuationForm';
 
-const HeroSection = () => {
+const HeroSection = ({ onResult, loading }) => {
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center bg-background overflow-hidden">
-      {/* Beautiful Gradient Background instead of missing image */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20"></div>
-      
-      {/* Enhanced Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/40 to-background/20"></div>
+      {/* Background Image with Fade Overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('/mountain-background.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+        onError={(e) => {
+          // Fallback to gradient background if image fails to load
+          e.target.style.backgroundImage = 'none';
+          e.target.style.backgroundColor = 'transparent';
+        }}
+      />
+
+      {/* Lighter Dark Overlay for Better Image Visibility */}
+      <div className="absolute inset-0 bg-black/30"></div>
+
+      {/* Subtle Gradient Overlay - Reduced Opacity */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background/40 via-background/20 to-background/10"></div>
       
       {/* Radial Glow Effect */}
-      <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent"></div>
-      
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        {/* Main Heading */}
-        <h1 className="text-4xl md:text-6xl font-bold text-text mb-6 leading-tight">
-          Instant Domain
-          <span className="text-gradient block">Valuations</span>
-        </h1>
-        
-        {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-text-muted mb-8 max-w-3xl mx-auto leading-relaxed">
-          Get professional-grade domain appraisals powered by AI technology. 
-          <span className="text-primary font-semibold"> 100% Free Forever</span> - 
-          no hidden costs, no premium tiers.
-        </p>
-        
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Link
-            to="/"
-            className="btn-primary text-lg px-8 py-4"
-          >
-            Value Your Domain
-          </Link>
-          <Link
-            to="/bulk-valuation"
-            className="btn-secondary text-lg px-8 py-4"
-          >
-            Bulk Valuation
-          </Link>
-        </div>
-        
-        {/* Trust Indicators */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
-              <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="font-semibold text-text mb-1">Lightning Fast</h3>
-            <p className="text-sm text-text-muted">Results in under 3 seconds</p>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,215,0,0.15),transparent_60%)]"></div>
+
+      <div className="relative z-10 container-custom text-center px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto">
+          {/* Main Heading */}
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 sm:mb-8 leading-tight animate-fade-in">
+            <span className="text-gradient">Instant Domain Valuations</span>
+            <br />
+            <span className="text-text">100% Free Forever</span>
+          </h1>
+
+          {/* Subheading */}
+          <p className="text-lg sm:text-xl md:text-2xl text-text-muted mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
+            Discover your domain's <span className="text-primary font-semibold">true market value</span> in seconds with our advanced AI technology.
+          </p>
+
+          {/* Search Form */}
+          <div className="mb-8 sm:mb-12">
+            <ValuationForm onResult={onResult} />
           </div>
-          
-          <div className="text-center">
-            <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-3">
-              <svg className="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+
+          {/* Trust Indicators */}
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-text-muted text-xs sm:text-sm px-2">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full animate-pulse"></div>
+              <span className="font-medium">AI-Powered</span>
             </div>
-            <h3 className="font-semibold text-text mb-1">AI-Powered</h3>
-            <p className="text-sm text-text-muted">Advanced algorithms for accuracy</p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3">
-              <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-              </svg>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-secondary rounded-full animate-pulse"></div>
+              <span className="font-medium">Instant Results</span>
             </div>
-            <h3 className="font-semibold text-text mb-1">Always Free</h3>
-            <p className="text-sm text-text-muted">No subscriptions or hidden fees</p>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-accent rounded-full animate-pulse"></div>
+              <span className="font-medium">Market-Based</span>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full animate-pulse"></div>
+              <span className="font-medium">Professional Grade</span>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-secondary rounded-full animate-pulse"></div>
+              <span className="font-medium">100% Free Forever</span>
+            </div>
           </div>
         </div>
-      </div>
-      
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl"></div>
-      <div className="absolute bottom-20 right-10 w-32 h-32 bg-secondary/10 rounded-full blur-xl"></div>
-      <div className="absolute top-1/2 left-20 w-16 h-16 bg-accent/10 rounded-full blur-lg"></div>
+
+        {/* Decorative Elements */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent"></div>
+      </section>
     </section>
   );
 };
