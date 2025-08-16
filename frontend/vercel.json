@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/bulk-valuation", "destination": "/index.html" },
+    { "source": "/privacy-policy", "destination": "/index.html" },
+    { "source": "/terms-of-service", "destination": "/index.html" },
+    { "source": "/cookie-policy", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
