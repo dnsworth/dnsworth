@@ -70,8 +70,8 @@ Create a `.env` file based on `env.template`:
 
 ```bash
 # Critical Security Variables
-SESSION_SECRET=your_32_character_secret
-JWT_SECRET=your_32_character_secret
+APP_SECRET_1=your_32_character_secret
+APP_SECRET_2=your_32_character_secret
 
 # API Configuration
 HUMBLEWORTH_API_URL=https://valuation.humbleworth.com/api/valuation

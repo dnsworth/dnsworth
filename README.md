@@ -32,7 +32,7 @@ DNSWorth is a cutting-edge web application that provides instant, accurate domai
 ## **Live Demo**
 
 🌐 **Website**: [https://dnsworth.com](https://dnsworth.com)  
-🔧 **API**: [https://dnsworth.onrender.com](https://dnsworth.onrender.com)
+🔧 **API**: [https://dnsworth.onrender.com](https://dnsworth.onrender.com) *(Protected with rate limits - Do not abuse or rely on for production use)*
 
 ---
 
@@ -115,6 +115,8 @@ X-Client-Version: 2.0.0
 - **Bulk Valuation**: 50 requests per 15 minutes per IP
 - **Maximum Domains**: 100 domains per bulk request
 
+> **⚠️ Important**: Please respect these rate limits and secure your API usage. This endpoint is protected and monitored for abuse.
+
 ---
 
 ## **Deployment**
@@ -141,9 +143,9 @@ Copy `env.template` to `.env` and configure:
 # Required
 NODE_ENV=production
 PORT=8000
-SESSION_SECRET=your-32-character-secret
-JWT_SECRET=your-32-character-secret
-ENCRYPTION_KEY=your-32-character-key
+APP_SECRET_1=your-32-character-secret
+APP_SECRET_2=your-32-character-secret
+APP_SECRET_3=your-32-character-key
 
 # API Configuration
 HUMBLEWORTH_API_URL=https://valuation.humbleworth.com/api/valuation
@@ -167,6 +169,8 @@ REQUEST_TIMEOUT=10000
 - ✅ **CSRF Protection**: Built-in CSRF protection
 - ✅ **SQL Injection Prevention**: Parameterized API calls
 - ✅ **Error Handling**: Secure error messages without information leakage
+
+> **⚠️ Security Disclaimer**: While DNSWorth implements industry-standard security practices, it has not undergone a third-party audit. Use at your own discretion.
 
 ### **Security Audit**
 Run automated security scanning:

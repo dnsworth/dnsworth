@@ -18,9 +18,9 @@ export const config = {
   // =============================================================================
   
   security: {
-    sessionSecret: process.env.SESSION_SECRET || 'your-super-secret-session-key-here',
-    jwtSecret: process.env.JWT_SECRET || 'your-jwt-secret-key-here',
-    encryptionKey: process.env.ENCRYPTION_KEY || 'your-32-character-encryption-key',
+    sessionSecret: process.env.APP_SECRET_1 || 'your-super-secret-session-key-here',
+    jwtSecret: process.env.APP_SECRET_2 || 'your-jwt-secret-key-here',
+    encryptionKey: process.env.APP_SECRET_3 || 'your-32-character-encryption-key',
     
     // Rate limiting
     rateLimit: {

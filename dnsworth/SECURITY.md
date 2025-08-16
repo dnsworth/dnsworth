@@ -119,9 +119,9 @@ PORT=8000
 HOST=0.0.0.0
 
 # Security Configuration
-SESSION_SECRET=your-32-character-secret
-JWT_SECRET=your-32-character-secret
-ENCRYPTION_KEY=your-32-character-key
+APP_SECRET_1=your-32-character-secret
+APP_SECRET_2=your-32-character-secret
+APP_SECRET_3=your-32-character-key
 
 # Rate Limiting
 RATE_LIMIT_WINDOW_MS=900000

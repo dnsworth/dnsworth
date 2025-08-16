@@ -119,9 +119,9 @@ PORT=8000
 HOST=0.0.0.0
 
 # Security Configuration
-SESSION_SECRET=your-32-character-secret
-JWT_SECRET=your-32-character-secret
-ENCRYPTION_KEY=your-32-character-key
+APP_SECRET_1=your-32-character-secret
+APP_SECRET_2=your-32-character-secret
+APP_SECRET_3=your-32-character-key
 
 # Rate Limiting
 RATE_LIMIT_WINDOW_MS=900000
@@ -392,11 +392,13 @@ node security-audit.js
 3. **Include**: Steps to reproduce, impact assessment
 4. **Response**: Within 24 hours guaranteed
 
-### **Security Disclosure Policy**
-- **Responsible disclosure** encouraged
-- **No legal action** against security researchers
-- **Recognition** for valid security reports
-- **Timeline**: 90 days for critical issues
+### **Responsible Disclosure Policy**
+- **Responsible disclosure** encouraged and appreciated
+- **No legal action** against security researchers acting in good faith
+- **Recognition** for valid security reports in our security acknowledgments
+- **Timeline**: 90 days for critical issues, 30 days for high priority
+- **Coordination**: We will coordinate with researchers on disclosure timing
+- **Safe Harbor**: Security research conducted in accordance with this policy will not result in legal action
 
 ---
 
