@@ -8,13 +8,6 @@ const HeroSection = ({ onResult, loading }) => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/mountain-background.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-        onError={(e) => {
-          // Fallback to gradient background if image fails to load
-          e.target.style.backgroundImage = 'none';
-          e.target.style.backgroundColor = 'transparent';
         }}
       />
 
