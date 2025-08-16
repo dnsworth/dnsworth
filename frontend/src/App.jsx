@@ -23,7 +23,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home onNavigateToBulk={navigateToBulk} />} />
         <Route path="/bulk-valuation" element={<BulkValuationPage onBack={navigateToHome} />} />
-        <Route path="/about" element={<AboutUs />} />
+        <Route path="/about" element={<AboutUs onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
