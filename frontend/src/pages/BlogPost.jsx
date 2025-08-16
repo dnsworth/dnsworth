@@ -26,227 +26,227 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       content: `
         <h1>How to Value a Domain for Free: Complete Guide 2024</h1>
         
-        <p class="text-lg text-gray-600 mb-8">Domain valuation is both an art and a science. Whether you're looking to buy, sell, or invest in domains, understanding their true worth is crucial for making informed decisions. In this comprehensive guide, we'll show you how to value domains for free using professional techniques and tools that rival paid services.</p>
+        <p className="text-lg text-gray-900 mb-8 leading-relaxed">Domain valuation is both an art and a science. Whether you're looking to buy, sell, or invest in domains, understanding their true worth is crucial for making informed decisions. In this comprehensive guide, we'll show you how to value domains for free using professional techniques and tools that rival paid services.</p>
         
-        <h2>Why Domain Valuation Matters in 2024</h2>
-        <p>Domains are digital real estate, and like physical property, their value can fluctuate significantly based on market conditions, trends, and intrinsic factors. A proper valuation helps you:</p>
-        <ul>
-          <li>Make informed buying decisions and avoid overpaying</li>
-          <li>Set realistic selling prices that maximize your returns</li>
-          <li>Build a profitable domain portfolio with strategic acquisitions</li>
-          <li>Negotiate better deals with buyers and sellers</li>
-          <li>Understand the true worth of your digital assets</li>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Why Domain Valuation Matters in 2024</h2>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">Domains are digital real estate, and like physical property, their value can fluctuate significantly based on market conditions, trends, and intrinsic factors. A proper valuation helps you:</p>
+        <ul className="list-disc list-inside space-y-2 mb-8 text-gray-800">
+          <li className="text-lg">Make informed buying decisions and avoid overpaying</li>
+          <li className="text-lg">Set realistic selling prices that maximize your returns</li>
+          <li className="text-lg">Build a profitable domain portfolio with strategic acquisitions</li>
+          <li className="text-lg">Negotiate better deals with buyers and sellers</li>
+          <li className="text-lg">Understand the true worth of your digital assets</li>
         </ul>
         
-        <h2>Key Factors That Determine Domain Value</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Key Factors That Determine Domain Value</h2>
         
-        <h3>1. Domain Length and Memorability</h3>
-        <p>Shorter domains are generally more valuable because they're easier to remember and type. Single-word domains are particularly valuable, especially if they're descriptive of a business or industry. For example:</p>
-        <ul>
-          <li><strong>Premium:</strong> insurance.com, cars.com, money.com</li>
-          <li><strong>Good:</strong> myinsurance.com, buycars.com, investmoney.com</li>
-          <li><strong>Average:</strong> myinsurancecompany.com, buycarsonline.com</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Domain Length and Memorability</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Shorter domains are generally more valuable because they're easier to remember and type. Single-word domains are particularly valuable, especially if they're descriptive of a business or industry. For example:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">Premium:</strong> insurance.com, cars.com, money.com</li>
+          <li className="text-lg"><strong className="text-gray-900">Good:</strong> myinsurance.com, buycars.com, investmoney.com</li>
+          <li className="text-lg"><strong className="text-gray-900">Average:</strong> myinsurancecompany.com, buycarsonline.com</li>
         </ul>
         
-        <h3>2. Keyword Relevance and Search Volume</h3>
-        <p>Domains containing popular, relevant keywords tend to be more valuable. Use tools like Google Keyword Planner, Ahrefs, or SEMrush to research keyword search volume. High-value keyword domains include:</p>
-        <ul>
-          <li>Financial terms: loans, insurance, banking, investment</li>
-          <li>Technology terms: software, apps, cloud, digital</li>
-          <li>Health terms: medical, health, fitness, wellness</li>
-          <li>Business terms: business, company, enterprise, solutions</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Keyword Relevance and Search Volume</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Domains containing popular, relevant keywords tend to be more valuable. Use tools like Google Keyword Planner, Ahrefs, or SEMrush to research keyword search volume. High-value keyword domains include:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Financial terms: loans, insurance, banking, investment</li>
+          <li className="text-lg">Technology terms: software, apps, cloud, digital</li>
+          <li className="text-lg">Health terms: medical, health, fitness, wellness</li>
+          <li className="text-lg">Business terms: business, company, enterprise, solutions</li>
         </ul>
         
-        <h3>3. Extension (.com, .org, .net) and TLD Value</h3>
-        <p>.com domains are the most valuable and widely recognized. Other extensions can also be valuable but typically command lower prices:</p>
-        <ul>
-          <li><strong>.com:</strong> Most valuable, universal recognition</li>
-          <li><strong>.org:</strong> Good for organizations and nonprofits</li>
-          <li><strong>.net:</strong> Suitable for technology and networking</li>
-          <li><strong>.co:</strong> Popular alternative to .com</li>
-          <li><strong>.io:</strong> Trending for tech startups</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Extension (.com, .org, .net) and TLD Value</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">.com domains are the most valuable and widely recognized. Other extensions can also be valuable but typically command lower prices:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">.com:</strong> Most valuable, universal recognition</li>
+          <li className="text-lg"><strong className="text-gray-900">.org:</strong> Good for organizations and nonprofits</li>
+          <li className="text-lg"><strong className="text-gray-900">.net:</strong> Suitable for technology and networking</li>
+          <li className="text-lg"><strong className="text-gray-900">.co:</strong> Popular alternative to .com</li>
+          <li className="text-lg"><strong className="text-gray-900">.io:</strong> Trending for tech startups</li>
         </ul>
         
-        <h3>4. Brand Potential and Marketability</h3>
-        <p>Domains that could become strong brands are highly valuable. This includes domains that are:</p>
-        <ul>
-          <li>Catchy and memorable</li>
-          <li>Unique and distinctive</li>
-          <li>Have marketing potential</li>
-          <li>Can be trademarked</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">4. Brand Potential and Marketability</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Domains that could become strong brands are highly valuable. This includes domains that are:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Catchy and memorable</li>
+          <li className="text-lg">Unique and distinctive</li>
+          <li className="text-lg">Have marketing potential</li>
+          <li className="text-lg">Can be trademarked</li>
         </ul>
         
-        <h2>Free Domain Valuation Methods</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Free Domain Valuation Methods</h2>
         
-        <h3>1. Comparative Market Analysis (CMA)</h3>
-        <p>Research similar domains that have recently sold. Look at marketplaces like Sedo, Flippa, Afternic, and GoDaddy Auctions to find comparable sales. This gives you a baseline for pricing.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Comparative Market Analysis (CMA)</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Research similar domains that have recently sold. Look at marketplaces like Sedo, Flippa, Afternic, and GoDaddy Auctions to find comparable sales. This gives you a baseline for pricing.</p>
         
-        <p><strong>How to do CMA:</strong></p>
-        <ol>
-          <li>Find 5-10 similar domains that sold recently</li>
-          <li>Note their sale prices and characteristics</li>
-          <li>Adjust for differences in length, keywords, and extension</li>
-          <li>Calculate an average price range</li>
+        <p className="text-lg text-gray-800 mb-4"><strong className="text-gray-900">How to do CMA:</strong></p>
+        <ol className="list-decimal list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Find 5-10 similar domains that sold recently</li>
+          <li className="text-lg">Note their sale prices and characteristics</li>
+          <li className="text-lg">Adjust for differences in length, keywords, and extension</li>
+          <li className="text-lg">Calculate an average price range</li>
         </ol>
         
-        <h3>2. Traffic and Revenue Analysis</h3>
-        <p>If the domain has existing traffic or generates revenue, this significantly increases its value. Use tools like:</p>
-        <ul>
-          <li><strong>SimilarWeb:</strong> Analyze traffic patterns and sources</li>
-          <li><strong>Alexa:</strong> Check domain ranking and engagement</li>
-          <li><strong>Google Analytics:</strong> If you own the domain</li>
-          <li><strong>Wayback Machine:</strong> Check historical content and traffic</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Traffic and Revenue Analysis</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">If the domain has existing traffic or generates revenue, this significantly increases its value. Use tools like:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">SimilarWeb:</strong> Analyze traffic patterns and sources</li>
+          <li className="text-lg"><strong className="text-gray-900">Alexa:</strong> Check domain ranking and engagement</li>
+          <li className="text-lg"><strong className="text-gray-900">Google Analytics:</strong> If you own the domain</li>
+          <li className="text-lg"><strong className="text-gray-900">Wayback Machine:</strong> Check historical content and traffic</li>
         </ul>
         
-        <h3>3. Industry Trends and Market Timing</h3>
-        <p>Stay updated on industry trends. Domains related to emerging technologies or growing industries often increase in value over time. Current trending sectors include:</p>
-        <ul>
-          <li>Artificial Intelligence and Machine Learning</li>
-          <li>Cryptocurrency and Blockchain</li>
-          <li>E-commerce and Online Shopping</li>
-          <li>Remote Work and Digital Nomadism</li>
-          <li>Sustainability and Green Technology</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Industry Trends and Market Timing</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Stay updated on industry trends. Domains related to emerging technologies or growing industries often increase in value over time. Current trending sectors include:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Artificial Intelligence and Machine Learning</li>
+          <li className="text-lg">Cryptocurrency and Blockchain</li>
+          <li className="text-lg">E-commerce and Online Shopping</li>
+          <li className="text-lg">Remote Work and Digital Nomadism</li>
+          <li className="text-lg">Sustainability and Green Technology</li>
         </ul>
         
-        <h2>Using DNSWorth for Free Valuations</h2>
-        <p>DNSWorth provides instant, AI-powered domain valuations completely free. Our advanced algorithms analyze millions of data points to give you professional-grade accuracy without the cost of traditional appraisal services.</p>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Using DNSWorth for Free Valuations</h2>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">DNSWorth provides instant, AI-powered domain valuations completely free. Our advanced algorithms analyze millions of data points to give you professional-grade accuracy without the cost of traditional appraisal services.</p>
         
-        <h3>How DNSWorth Works</h3>
-        <ol>
-          <li><strong>Enter the domain name</strong> you want to value in our search box</li>
-          <li><strong>AI analysis</strong> processes market data, sales history, and industry trends</li>
-          <li><strong>Instant results</strong> with detailed breakdown and confidence score</li>
-          <li><strong>Use insights</strong> to make informed investment decisions</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">How DNSWorth Works</h3>
+        <ol className="list-decimal list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">Enter the domain name</strong> you want to value in our search box</li>
+          <li className="text-lg"><strong className="text-gray-900">AI analysis</strong> processes market data, sales history, and industry trends</li>
+          <li className="text-lg"><strong className="text-gray-900">Instant results</strong> with detailed breakdown and confidence score</li>
+          <li className="text-lg"><strong className="text-gray-900">Use insights</strong> to make informed investment decisions</li>
         </ol>
         
-        <h3>What Makes DNSWorth Different</h3>
-        <ul>
-          <li><strong>100% Free:</strong> No hidden costs or premium tiers</li>
-          <li><strong>AI-Powered:</strong> Machine learning algorithms for accuracy</li>
-          <li><strong>Real-time Data:</strong> Current market conditions and trends</li>
-          <li><strong>Unlimited Use:</strong> Value as many domains as you want</li>
-          <li><strong>Professional Grade:</strong> Same accuracy as paid services</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">What Makes DNSWorth Different</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">100% Free:</strong> No hidden costs or premium tiers</li>
+          <li className="text-lg"><strong className="text-gray-900">AI-Powered:</strong> Machine learning algorithms for accuracy</li>
+          <li className="text-lg"><strong className="text-gray-900">Real-time Data:</strong> Current market conditions and trends</li>
+          <li className="text-lg"><strong className="text-gray-900">Unlimited Use:</strong> Value as many domains as you want</li>
+          <li className="text-lg"><strong className="text-gray-900">Professional Grade:</strong> Same accuracy as paid services</li>
         </ul>
         
-        <h2>Advanced Valuation Techniques</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Advanced Valuation Techniques</h2>
         
-        <h3>1. Bulk Domain Valuation</h3>
-        <p>If you're managing a portfolio, use DNSWorth's bulk valuation tool to assess multiple domains simultaneously. This saves time and provides portfolio-wide insights for better decision-making.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Bulk Domain Valuation</h3>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">If you're managing a portfolio, use DNSWorth's bulk valuation tool to assess multiple domains simultaneously. This saves time and provides portfolio-wide insights for better decision-making.</p>
         
-        <h3>2. Historical Price Tracking</h3>
-        <p>Monitor how domain values change over time. This helps identify trends and make better investment decisions. Track factors like:</p>
-        <ul>
-          <li>Seasonal fluctuations in domain prices</li>
-          <li>Impact of industry news and developments</li>
-          <li>Changes in search engine algorithms</li>
-          <li>Market sentiment and economic conditions</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Historical Price Tracking</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Monitor how domain values change over time. This helps identify trends and make better investment decisions. Track factors like:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Seasonal fluctuations in domain prices</li>
+          <li className="text-lg">Impact of industry news and developments</li>
+          <li className="text-lg">Changes in search engine algorithms</li>
+          <li className="text-lg">Market sentiment and economic conditions</li>
         </ul>
         
-        <h3>3. Market Timing and Cycles</h3>
-        <p>Domain values can fluctuate based on market conditions. Understanding these cycles helps you buy low and sell high. Common patterns include:</p>
-        <ul>
-          <li><strong>Q4 Surge:</strong> Many businesses buy domains before year-end</li>
-          <li><strong>New Year Rush:</strong> Entrepreneurs start new ventures</li>
-          <li><strong>Tech Boom Periods:</strong> Increased demand for tech-related domains</li>
-          <li><strong>Economic Downturns:</strong> Opportunities to buy undervalued domains</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Market Timing and Cycles</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Domain values can fluctuate based on market conditions. Understanding these cycles helps you buy low and sell high. Common patterns include:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">Q4 Surge:</strong> Many businesses buy domains before year-end</li>
+          <li className="text-lg"><strong className="text-gray-900">New Year Rush:</strong> Entrepreneurs start new ventures</li>
+          <li className="text-lg"><strong className="text-gray-900">Tech Boom Periods:</strong> Increased demand for tech-related domains</li>
+          <li className="text-lg"><strong className="text-gray-900">Economic Downturns:</strong> Opportunities to buy undervalued domains</li>
         </ul>
         
-        <h2>Common Valuation Mistakes to Avoid</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Common Valuation Mistakes to Avoid</h2>
         
-        <h3>1. Emotional Pricing</h3>
-        <p>Don't let personal attachment cloud your judgment. A domain you love might not have the same appeal to potential buyers. Always base pricing on objective factors.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Emotional Pricing</h3>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">Don't let personal attachment cloud your judgment. A domain you love might not have the same appeal to potential buyers. Always base pricing on objective factors.</p>
         
-        <h3>2. Ignoring Market Trends</h3>
-        <p>Stay updated on industry developments. What was valuable yesterday might not be valuable tomorrow. Regular market research is essential.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Ignoring Market Trends</h3>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">Stay updated on industry developments. What was valuable yesterday might not be valuable tomorrow. Regular market research is essential.</p>
         
-        <h3>3. Overvaluing Personal Brand</h3>
-        <p>Your personal connection to a domain doesn't always translate to market value. Focus on universal appeal and market demand.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Overvaluing Personal Brand</h3>
+        <p className="text-lg text-gray-800 mb-6 leading-relaxed">Your personal connection to a domain doesn't always translate to market value. Focus on universal appeal and market demand.</p>
         
-        <h3>4. Neglecting Due Diligence</h3>
-        <p>Always research the domain's history and potential issues. Check for:</p>
-        <ul>
-          <li>Trademark conflicts</li>
-          <li>Previous penalties or blacklisting</li>
-          <li>Legal disputes or ownership issues</li>
-          <li>Technical problems or limitations</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">4. Neglecting Due Diligence</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Always research the domain's history and potential issues. Check for:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Trademark conflicts</li>
+          <li className="text-lg">Previous penalties or blacklisting</li>
+          <li className="text-lg">Legal disputes or ownership issues</li>
+          <li className="text-lg">Technical problems or limitations</li>
         </ul>
         
-        <h2>Professional Valuation Tools and Resources</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Professional Valuation Tools and Resources</h2>
         
-        <h3>Free Tools (Like DNSWorth)</h3>
-        <ul>
-          <li><strong>DNSWorth:</strong> AI-powered free valuations</li>
-          <li><strong>Estibot:</strong> Basic domain appraisals</li>
-          <li><strong>GoDaddy Domain Appraisal:</strong> Simple estimates</li>
-          <li><strong>HumbleWorth:</strong> Alternative free valuation service</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Free Tools (Like DNSWorth)</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">DNSWorth:</strong> AI-powered free valuations</li>
+          <li className="text-lg"><strong className="text-gray-900">Estibot:</strong> Basic domain appraisals</li>
+          <li className="text-lg"><strong className="text-gray-900">GoDaddy Domain Appraisal:</strong> Simple estimates</li>
+          <li className="text-lg"><strong className="text-gray-900">HumbleWorth:</strong> Alternative free valuation service</li>
         </ul>
         
-        <h3>Paid Professional Services</h3>
-        <ul>
-          <li><strong>Domain Appraisal Group:</strong> Professional appraisers</li>
-          <li><strong>LeapFrog Domain Appraisals:</strong> Expert valuations</li>
-          <li><strong>DomainIQ:</strong> Comprehensive domain intelligence</li>
-          <li><strong>NameBio:</strong> Sales database and analytics</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Paid Professional Services</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">Domain Appraisal Group:</strong> Professional appraisers</li>
+          <li className="text-lg"><strong className="text-gray-900">LeapFrog Domain Appraisals:</strong> Expert valuations</li>
+          <li className="text-lg"><strong className="text-gray-900">DomainIQ:</strong> Comprehensive domain intelligence</li>
+          <li className="text-lg"><strong className="text-gray-900">NameBio:</strong> Sales database and analytics</li>
         </ul>
         
-        <h3>Market Research Resources</h3>
-        <ul>
-          <li><strong>DNJournal:</strong> Domain industry news and sales reports</li>
-          <li><strong>DomainInvesting.com:</strong> Investment strategies and insights</li>
-          <li><strong>NamePros:</strong> Community discussions and marketplace</li>
-          <li><strong>DomainSherpa:</strong> Educational content and interviews</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Market Research Resources</h3>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">DNJournal:</strong> Domain industry news and sales reports</li>
+          <li className="text-lg"><strong className="text-gray-900">DomainInvesting.com:</strong> Investment strategies and insights</li>
+          <li className="text-lg"><strong className="text-gray-900">NamePros:</strong> Community discussions and marketplace</li>
+          <li className="text-lg"><strong className="text-gray-900">DomainSherpa:</strong> Educational content and interviews</li>
         </ul>
         
-        <h2>Building a Domain Investment Strategy</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Building a Domain Investment Strategy</h2>
         
-        <h3>1. Diversification</h3>
-        <p>Don't put all your eggs in one basket. Invest across different:</p>
-        <ul>
-          <li>Industries and sectors</li>
-          <li>Domain lengths and types</li>
-          <li>Extensions and TLDs</li>
-          <li>Investment timeframes</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Diversification</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Don't put all your eggs in one basket. Invest across different:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Industries and sectors</li>
+          <li className="text-lg">Domain lengths and types</li>
+          <li className="text-lg">Extensions and TLDs</li>
+          <li className="text-lg">Investment timeframes</li>
         </ul>
         
-        <h3>2. Long-term vs Short-term</h3>
-        <p>Decide on your investment strategy:</p>
-        <ul>
-          <li><strong>Short-term:</strong> Quick flips and arbitrage opportunities</li>
-          <li><strong>Long-term:</strong> Hold for appreciation and development</li>
-          <li><strong>Hybrid:</strong> Mix of both strategies</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Long-term vs Short-term</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Decide on your investment strategy:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg"><strong className="text-gray-900">Short-term:</strong> Quick flips and arbitrage opportunities</li>
+          <li className="text-lg"><strong className="text-gray-900">Long-term:</strong> Hold for appreciation and development</li>
+          <li className="text-lg"><strong className="text-gray-900">Hybrid:</strong> Mix of both strategies</li>
         </ul>
         
-        <h3>3. Risk Management</h3>
-        <p>Protect your investments by:</p>
-        <ul>
-          <li>Setting maximum investment per domain</li>
-          <li>Diversifying across different risk levels</li>
-          <li>Having exit strategies for each investment</li>
-          <li>Monitoring market conditions regularly</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Risk Management</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Protect your investments by:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">Setting maximum investment per domain</li>
+          <li className="text-lg">Diversifying across different risk levels</li>
+          <li className="text-lg">Having exit strategies for each investment</li>
+          <li className="text-lg">Monitoring market conditions regularly</li>
         </ul>
         
-        <h2>Legal and Ethical Considerations</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Legal and Ethical Considerations</h2>
         
-        <h3>1. Trademark Issues</h3>
-        <p>Always check for trademark conflicts before investing. Use tools like:</p>
-        <ul>
-          <li>USPTO Trademark Search</li>
-          <li>WIPO Global Brand Database</li>
-          <li>EUIPO eSearch plus</li>
-          <li>Local trademark databases</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Trademark Issues</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Always check for trademark conflicts before investing. Use tools like:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">USPTO Trademark Search</li>
+          <li className="text-lg">WIPO Global Brand Database</li>
+          <li className="text-lg">EUIPO eSearch plus</li>
+          <li className="text-lg">Local trademark databases</li>
         </ul>
         
-        <h3>2. Cybersquatting Laws</h3>
-        <p>Understand the legal framework:</p>
-        <ul>
-          <li>UDRP (Uniform Domain-Name Dispute-Resolution Policy)</li>
-          <li>ACPA (Anticybersquatting Consumer Protection Act)</li>
-          <li>Local domain dispute resolution procedures</li>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Cybersquatting Laws</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Understand the legal framework:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
+          <li className="text-lg">UDRP (Uniform Domain-Name Dispute-Resolution Policy)</li>
+          <li className="text-lg">ACPA (Anticybersquatting Consumer Protection Act)</li>
+          <li className="text-lg">Local domain dispute resolution procedures</li>
         </ul>
         
-        <h3>3. Ethical Domain Investing</h3>
-        <p>Follow best practices:</p>
-        <ul>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">3. Ethical Domain Investing</h3>
+        <p className="text-lg text-gray-800 mb-4 leading-relaxed">Follow best practices:</p>
+        <ul className="list-disc list-inside space-y-2 mb-6 text-gray-800">
           <li>Don't register domains with obvious trademark conflicts</li>
           <li>Avoid typosquatting on popular brands</li>
           <li>Focus on generic, descriptive domains</li>
