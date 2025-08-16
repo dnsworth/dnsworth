@@ -3,26 +3,11 @@ import ValuationForm from './ValuationForm';
 const HeroSection = ({ onResult, loading }) => {
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center bg-background overflow-hidden">
-      {/* Background Image with Fade Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/mountain-background.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-        onError={(e) => {
-          // Fallback to gradient background if image fails to load
-          e.target.style.backgroundImage = 'none';
-          e.target.style.backgroundColor = 'transparent';
-        }}
-      />
+      {/* Beautiful Gradient Background instead of missing image */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20"></div>
 
-      {/* Lighter Dark Overlay for Better Image Visibility */}
-      <div className="absolute inset-0 bg-black/30"></div>
-
-      {/* Subtle Gradient Overlay - Reduced Opacity */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background/40 via-background/20 to-background/10"></div>
+      {/* Enhanced Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/40 to-background/20"></div>
       
       {/* Radial Glow Effect */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,215,0,0.15),transparent_60%)]"></div>

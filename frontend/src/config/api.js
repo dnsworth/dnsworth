@@ -1,7 +1,7 @@
 // API configuration for frontend
 const API_CONFIG = {
   baseURL: 'http://localhost:8000', // Default for development
-  timeout: 30000,
+  timeout: 15000, // Reduced from 30s to 15s for better UX
   retries: 3,
   headers: {
     'Content-Type': 'application/json',
