@@ -208,70 +208,103 @@ const AboutUs = () => {
             >
               What Makes Us Different
             </motion.h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.div
-                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
-                variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-4xl">🚀</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">AI Powered Intelligence</h3>
-                  <p className="text-sm text-gray-600">AI Specialist</p>
-                </div>
-                <p className="text-gray-700 text-center leading-relaxed">Our advanced AI analyzes millions of domain sales, market trends, and industry data to provide you with the most accurate valuations possible.</p>
-              </motion.div>
+            
+            {/* Features with Creative Comic Portraits */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {[
+                {
+                  id: 1,
+                  title: "AI-Powered Intelligence",
+                  description: "Our advanced AI analyzes millions of domain sales, market trends, and industry data to provide you with the most accurate valuations possible.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=AI&backgroundColor=b6e3f4,c0aede,d1d4f9",
+                  name: "Dr. Smart",
+                  role: "AI Specialist",
+                  icon: "🧠",
+                  color: "from-blue-500 to-purple-600"
+                },
+                {
+                  id: 2,
+                  title: "Lightning Fast Results",
+                  description: "Get instant valuations in seconds, not minutes. Our optimized system delivers results faster than any other tool in the market.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Speed&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
+                  name: "Flash Runner",
+                  role: "Speed Expert",
+                  icon: "⚡",
+                  color: "from-yellow-500 to-orange-500"
+                },
+                {
+                  id: 3,
+                  title: "Market-Based Accuracy",
+                  description: "Real-time market data from actual domain sales ensures your valuations reflect current market conditions and trends.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Market&backgroundColor=d4f4dd,ffd5dc,ffdfbf",
+                  name: "Market Master",
+                  role: "Data Analyst",
+                  icon: "📊",
+                  color: "from-green-500 to-teal-500"
+                },
+                {
+                  id: 4,
+                  title: "100% Free Forever",
+                  description: "No hidden fees, no subscriptions, no limits. DNSWorth is completely free and will always remain that way.",
+                  avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Free&backgroundColor=c0aede,b6e3f4,d1d4f9",
+                  name: "Free Spirit",
+                  role: "Freedom Advocate",
+                  icon: "💎",
+                  color: "from-purple-500 to-pink-500"
+                }
+              ].map((feature) => (
+                <motion.div
+                  key={feature.id}
+                  className="group relative"
+                  variants={cardVariants}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="bg-white border-4 border-black rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
+                    
+                    {/* Background Gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                    
+                    {/* Header with Avatar */}
+                    <div className="relative z-10 flex items-center gap-6 mb-6">
+                      {/* Comic Portrait */}
+                      <div className="relative">
+                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                          <img 
+                            src={feature.avatar} 
+                            alt={feature.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Character Info */}
+                      <div className="flex-1">
+                        <h4 className="text-xl font-bold text-black">
+                          {feature.name}
+                        </h4>
+                        <p className="text-sm text-gray-600 font-medium">{feature.role}</p>
+                      </div>
+                    </div>
 
-              <motion.div
-                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
-                variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-4xl">⚡</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-secondary mb-2">Lightning Fast Results</h3>
-                  <p className="text-sm text-gray-600">Speed Expert</p>
-                </div>
-                <p className="text-gray-700 text-center leading-relaxed">Get instant valuations in seconds, not minutes. Our optimized system delivers results faster than any other tool in the market.</p>
-              </motion.div>
+                    {/* Content */}
+                    <div className="relative z-10">
+                      <h3 className="text-2xl font-bold text-black mb-4">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed text-lg">
+                        {feature.description}
+                      </p>
+                    </div>
 
-              <motion.div
-                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
-                variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-4xl">📊</span>
+                    {/* Hover Effect Ring */}
+                    <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
+                    
+                    {/* Corner Decoration */}
+                    <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${feature.color} opacity-10 rounded-bl-3xl`}></div>
                   </div>
-                  <h3 className="text-xl font-bold text-accent mb-2">Market Based Accuracy</h3>
-                  <p className="text-sm text-gray-600">Data Analyst</p>
-                </div>
-                <p className="text-gray-700 text-center leading-relaxed">Real time market data from actual domain sales ensures your valuations reflect current market conditions and trends.</p>
-              </motion.div>
-
-              <motion.div
-                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
-                variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="text-center mb-6">
-                  <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-4xl">💎</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Professional Grade</h3>
-                  <p className="text-sm text-gray-600">Quality Expert</p>
-                </div>
-                <p className="text-gray-700 text-center leading-relaxed">Industry standard valuation methods used by domain brokers and professionals worldwide.</p>
-              </motion.div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
