@@ -50,6 +50,9 @@
     { "source": "/privacy-policy", "destination": "/index.html" },
     { "source": "/terms-of-service", "destination": "/index.html" },
     { "source": "/cookie-policy", "destination": "/index.html" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
