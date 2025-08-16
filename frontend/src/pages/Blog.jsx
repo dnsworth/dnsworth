@@ -242,8 +242,11 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
 
                   {/* Read More Button - Black arrow */}
                   <button 
-                    onClick={() => navigate(`/blog/${post.slug}`)}
-                    className="text-black hover:text-gray-700 font-medium transition-colors duration-200 flex items-center gap-2"
+                    onClick={() => {
+                      console.log('Navigating to:', `/blog/${post.slug}`);
+                      navigate(`/blog/${post.slug}`);
+                    }}
+                    className="text-black hover:text-gray-700 font-medium transition-colors duration-200 flex items-center gap-2 cursor-pointer"
                   >
                     Read More 
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -346,7 +346,12 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
 
   useEffect(() => {
     if (slug && blogPosts[slug]) {
+      console.log('BlogPost: Received slug:', slug);
+      console.log('BlogPost: Found post:', blogPosts[slug]);
       setPost(blogPosts[slug]);
+    } else {
+      console.log('BlogPost: Slug not found or invalid:', slug);
+      console.log('BlogPost: Available slugs:', Object.keys(blogPosts));
     }
   }, [slug]);
 
