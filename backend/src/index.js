@@ -26,6 +26,24 @@ const PORT = process.env.PORT || 8000;
 app.use(helmet(helmetConfig));
 app.use(cors(corsOptions));
 
+// Additional security middleware
+app.use((req, res, next) => {
+  // Remove server information
+  res.removeHeader('X-Powered-By');
+  
+  // Add security headers
+  res.set('X-Content-Type-Options', 'nosniff');
+  res.set('X-Frame-Options', 'DENY');
+  res.set('X-XSS-Protection', '1; mode=block');
+  res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  
+  // Add request ID for tracking
+  req.requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  next();
+});
+
 // Body parsing middleware with enhanced security
 app.use(express.json({ 
   limit: apiSecurityConfig.maxRequestSize,

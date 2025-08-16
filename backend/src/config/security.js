@@ -13,11 +13,11 @@ export const SECURITY_CONFIG = {
   RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
   RATE_LIMIT_MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || (isProduction ? 50 : 500),
   
-  // CORS origins
+  // CORS origins - use environment variables
   ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS?.split(',') || [
     'http://localhost:3000',
-    'https://dnsworth.com',
-    'https://www.dnsworth.com'
+    process.env.FRONTEND_URL || 'https://dnsworth.com',
+    process.env.FRONTEND_WWW_URL || 'https://www.dnsworth.com'
   ],
   
   // Request limits
@@ -104,11 +104,11 @@ export const helmetConfig = {
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'", "https:"],
+      imgSrc: ["'self'", "data:", "https:", "https://api.dicebear.com"],
+      connectSrc: ["'self'", "https://dnsworth.onrender.com", "https://valuation.humbleworth.com"],
+      fontSrc: ["'self'", "https:", "https://fonts.gstatic.com"],
       objectSrc: ["'none'"],
       mediaSrc: ["'self'"],
       frameSrc: ["'none'"],
