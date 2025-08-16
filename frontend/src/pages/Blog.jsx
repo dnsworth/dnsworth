@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useNavigate } from 'react-router-dom';
 
 const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const navigate = useNavigate();
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -241,18 +240,15 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                   </p>
 
                   {/* Read More Button - Black arrow */}
-                  <button 
-                    onClick={() => {
-                      console.log('Navigating to:', `/blog/${post.slug}`);
-                      navigate(`/blog/${post.slug}`);
-                    }}
+                  <Link 
+                    to={`/blog/${post.slug}`}
                     className="text-black hover:text-gray-700 font-medium transition-colors duration-200 flex items-center gap-2 cursor-pointer"
                   >
                     Read More 
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                  </button>
+                  </Link>
                 </div>
 
                 {/* Hover Effect Ring */}
