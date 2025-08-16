@@ -587,39 +587,77 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
         </div>
       </section>
 
-
-
-      {/* Owner Section - Black Background, Last Section Before Footer */}
-      <section className="py-20 bg-black">
+      {/* Owner Section - Orange Background with Comic Portrait Style */}
+      <section className="py-20 bg-gradient-to-br from-secondary to-secondary/90">
         <div className="container mx-auto px-6">
           <motion.div
-            className="max-w-3xl mx-auto text-center"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            <motion.div
-              className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 p-10 rounded-3xl border border-gray-700/50 backdrop-blur-sm"
-              variants={cardVariants}
-              whileHover={{ scale: 1.02, y: -5 }}
-              transition={{ duration: 0.3 }}
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold mb-12 text-center text-black"
+              variants={itemVariants}
             >
-              <div className="text-center mb-8">
-                <div className="w-32 h-32 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <div className="w-24 h-24 bg-primary/30 rounded-full flex items-center justify-center">
-                    <div className="w-16 h-16 bg-primary/40 rounded-full"></div>
+              Meet Our Founder
+            </motion.h2>
+            
+            {/* Founder with Creative Comic Portrait */}
+            <div className="max-w-4xl mx-auto">
+              <motion.div
+                className="group relative"
+                variants={cardVariants}
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="bg-white border-4 border-black rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
+                  
+                  {/* Background Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-5 group-hover:opacity-10 transition-opacity duration-500"></div>
+                  
+                  {/* Header with Avatar */}
+                  <div className="relative z-10 flex items-center gap-6 mb-6">
+                    {/* Comic Portrait */}
+                    <div className="relative">
+                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                        <img 
+                          src="https://api.dicebear.com/7.x/adventurer/svg?seed=Azeez&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                          alt="Azeez A."
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Character Info */}
+                    <div className="flex-1">
+                      <h4 className="text-2xl font-bold text-black">
+                        Azeez A.
+                      </h4>
+                      <p className="text-lg text-gray-600 font-medium">Technical Support and Founder</p>
+                    </div>
                   </div>
+
+                  {/* Content */}
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-bold text-black mb-4">
+                      Vision for DNSWorth
+                    </h3>
+                    <div className="bg-gray-100 p-6 rounded-xl border border-gray-200">
+                      <p className="text-gray-700 text-lg leading-relaxed max-w-2xl mx-auto">
+                        "{typedText}
+                        <span className="animate-pulse text-primary">|</span>"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Hover Effect Ring */}
+                  <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
+                  
+                  {/* Corner Decoration */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-bl-3xl"></div>
                 </div>
-                <h3 className="text-3xl font-bold text-primary mb-3">Azeez A.</h3>
-                <p className="text-xl text-text-muted">Technical Support and Founder</p>
-              </div>
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-600/30">
-                <p className="text-lg text-text-muted/90 leading-relaxed max-w-2xl mx-auto">
-                  "{typedText}
-                  <span className="animate-pulse text-primary">|</span>"
-                </p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>
