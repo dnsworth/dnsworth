@@ -621,8 +621,8 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                     <div className="relative">
                       <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                         <img 
-                          src="https://api.dicebear.com/7.x/adventurer/svg?seed=Azeez&backgroundColor=b6e3f4,c0aede,d1d4f9"
-                          alt="Azeez A."
+                          src="https://api.dicebear.com/7.x/adventurer/svg?seed=Adee&backgroundColor=b6e3f4,c0aede,d1d4f9"
+                          alt="Adeé A."
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -631,7 +631,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                     {/* Character Info */}
                     <div className="flex-1">
                       <h4 className="text-2xl font-bold text-black">
-                        Azeez A.
+                        Adeé A.
                       </h4>
                       <p className="text-lg text-gray-600 font-medium">Technical Support and Founder</p>
                     </div>
@@ -639,9 +639,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
 
                   {/* Content */}
                   <div className="relative z-10">
-                    <h3 className="text-2xl font-bold text-black mb-4">
-                      Vision for DNSWorth
-                    </h3>
+
                     <div className="bg-gray-100 p-6 rounded-xl border border-gray-200">
                       <p className="text-gray-700 text-lg leading-relaxed max-w-2xl mx-auto">
                         "{typedText}
