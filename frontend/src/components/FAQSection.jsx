@@ -44,12 +44,12 @@ const FAQSection = () => {
   };
 
   return (
-    <section id="faq-section" className="py-20 bg-white">
+    <section id="faq-section" className="py-16 bg-white">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -57,7 +57,7 @@ const FAQSection = () => {
             Frequently Asked Questions
           </motion.h2>
           <motion.p
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-lg text-gray-600 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -71,27 +71,27 @@ const FAQSection = () => {
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
-              className="mb-6"
+              className="mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
+              <div className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
                 {/* Question */}
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-100 transition-colors duration-200"
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 transition-colors duration-200"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-900 pr-4">
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 pr-4">
                     {faq.question}
                   </h3>
                   <div className="flex-shrink-0">
                     <motion.div
                       animate={{ rotate: openIndex === index ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
-                      className="w-6 h-6 text-primary"
+                      className="w-5 h-5 text-primary"
                     >
                       <svg
                         fill="none"
@@ -121,8 +121,8 @@ const FAQSection = () => {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-8 pb-6">
-                        <p className="text-gray-700 leading-relaxed text-lg">
+                      <div className="px-6 pb-4">
+                        <p className="text-sm text-gray-700 leading-relaxed">
                           {faq.answer}
                         </p>
                       </div>
@@ -133,32 +133,6 @@ const FAQSection = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* CTA Section */}
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <p className="text-lg text-gray-600 mb-6">
-            Still have questions? Our domain experts are here to help!
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/"
-              className="btn-primary text-lg px-8 py-4"
-            >
-              Start Valuing Domains
-            </a>
-            <a
-              href="/bulk-valuation"
-              className="btn-secondary text-lg px-8 py-4"
-            >
-              Bulk Valuation
-            </a>
-          </div>
-        </motion.div>
       </div>
 
       {/* Structured Data for SEO */}

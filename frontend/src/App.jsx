@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import BulkValuationPage from './pages/BulkValuationPage';
 import AboutUs from './pages/AboutUs';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookiePolicy from './pages/CookiePolicy';
@@ -26,6 +27,7 @@ function AppContent() {
         <Route path="/bulk-valuation" element={<BulkValuationPage onBack={navigateToHome} />} />
         <Route path="/about" element={<AboutUs onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
+        <Route path="/blog/:slug" element={<BlogPost onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/terms-of-service" element={<TermsOfService onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/cookie-policy" element={<CookiePolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
