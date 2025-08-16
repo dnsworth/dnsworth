@@ -2,15 +2,9 @@ import ValuationForm from './ValuationForm';
 
 const HeroSection = ({ onResult, loading }) => {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center bg-background overflow-hidden">
-      {/* Beautiful Gradient Background instead of missing image */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20"></div>
-
-      {/* Enhanced Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background/60 via-background/40 to-background/20"></div>
-      
-      {/* Radial Glow Effect */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,215,0,0.15),transparent_60%)]"></div>
+    <section className="relative min-h-[80vh] flex items-center justify-center bg-black overflow-hidden">
+      {/* Pure Black Background - Original Design */}
+      <div className="absolute inset-0 bg-black"></div>
 
       <div className="relative z-10 container-custom text-center px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
@@ -29,6 +23,43 @@ const HeroSection = ({ onResult, loading }) => {
           {/* Search Form */}
           <div className="mb-8 sm:mb-12">
             <ValuationForm onResult={onResult} />
+          </div>
+
+          {/* Descriptive Text List - Restored from Original Design */}
+          <div className="mb-8 sm:mb-12 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-text mb-1">AI-Powered Accuracy</h3>
+                  <p className="text-sm text-text-muted">Advanced machine learning algorithms provide market-accurate valuations</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-text mb-1">Instant Results</h3>
+                  <p className="text-sm text-text-muted">Get professional-grade appraisals in under 3 seconds</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-text mb-1">Market-Based Pricing</h3>
+                  <p className="text-sm text-text-muted">Real-time data from active domain sales and auctions</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-text mb-1">Professional Grade</h3>
+                  <p className="text-sm text-text-muted">Industry-standard valuation methods used by domain brokers</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Trust Indicators */}
@@ -55,9 +86,6 @@ const HeroSection = ({ onResult, loading }) => {
             </div>
           </div>
         </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent"></div>
       </div>
     </section>
   );
