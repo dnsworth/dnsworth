@@ -1,6 +1,6 @@
 // API configuration for frontend
 const API_CONFIG = {
-  baseURL: 'https://dnsworth.onrender.com', // TEMPORARILY HARDCODED TO FIX THE ISSUE
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
   timeout: 30000,
   retries: 3,
   headers: {
@@ -9,6 +9,12 @@ const API_CONFIG = {
     'X-Client-Version': '2.0.0'
   }
 };
+
+// Production API configuration
+if (import.meta.env.PROD) {
+  // Use environment variable or fallback to production backend
+  API_CONFIG.baseURL = import.meta.env.VITE_API_BASE_URL || 'https://dnsworth.onrender.com';
+}
 
 // Debug logging to see what URL is being used
 console.log('🔧 API_CONFIG.baseURL:', API_CONFIG.baseURL);
