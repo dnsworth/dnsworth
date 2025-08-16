@@ -217,7 +217,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                 <div className="p-6">
                   {/* Category Badge */}
                   <div className="mb-4">
-                    <span className="inline-block px-3 py-1 text-xs font-medium bg-primary/20 text-primary rounded-full">
+                    <span className="inline-block px-3 py-1 text-xs font-medium bg-black text-white rounded-full font-semibold">
                       {post.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </span>
                   </div>
