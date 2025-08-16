@@ -1,320 +1,337 @@
-# DNSWorth.com
+# DNSWorth - Instant Domain Valuation Tool
 
-A **enterprise-grade secure, production-ready** full-stack web application that provides free domain valuations using the HumbleWorth API.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Security](https://img.shields.io/badge/Security-Audited-green.svg)](https://github.com/dnsworth/dnsworth/security)
+[![Deployment](https://img.shields.io/badge/Deployment-Vercel-blue.svg)](https://vercel.com)
+[![API](https://img.shields.io/badge/API-HumbleWorth-orange.svg)](https://hubleworth.com)
 
-**🔒 Security Status**: ✅ **SECURE** - Security Score: 95/100
+> **Professional-grade domain valuations powered by AI technology - 100% Free Forever**
 
-## 🚀 Features
+## **Overview**
 
-- **Instant Domain Valuation** - Get domain values in seconds
-- **Bulk Valuation** - Check up to 100 domains at once
-- **AI-Powered Results** - Accurate valuations using HumbleWorth API
-- **100% Free Forever** - No subscriptions or hidden fees
-- **Responsive Design** - Works perfectly on all devices
-- **Enterprise-Grade Security** - Comprehensive security measures and best practices
+DNSWorth is a cutting-edge web application that provides instant, accurate domain valuations using advanced AI algorithms and market data analysis. Built with modern web technologies and enterprise-grade security, DNSWorth democratizes domain investment by offering professional-grade estimates at no cost.
 
-## 🏗️ Architecture
+### **Key Features**
+- 🚀 **Instant Valuations**: Get domain appraisals in under 3 seconds
+- 📊 **Bulk Portfolio Analysis**: Evaluate up to 100 domains simultaneously
+- 🤖 **AI-Powered Accuracy**: Advanced algorithms for precise estimates
+- 💰 **100% Free Forever**: No hidden costs or premium tiers
+- 🔒 **Enterprise Security**: Comprehensive security implementation
+- 📱 **Mobile-First Design**: Responsive design for all devices
+- 📈 **CSV Export**: Download results for portfolio management
 
-### Frontend (React + Tailwind CSS)
-- **Port**: 3000
-- **Framework**: React.js with Vite
-- **Styling**: Tailwind CSS with custom design system
-- **Components**: Modular, reusable UI components
+### **Technology Stack**
+- **Frontend**: React.js 18+, Tailwind CSS, Vite
+- **Backend**: Node.js 18+, Express.js, Helmet.js
+- **Deployment**: Vercel (Frontend), Render (Backend)
+- **Security**: Comprehensive security headers, rate limiting, CORS protection
+- **API Integration**: HumbleWorth API for domain valuations
 
-### Backend (Node.js + Express)
-- **Port**: 5000
-- **Framework**: Express.js
-- **Security**: Helmet.js, CORS, Rate Limiting
-- **API Integration**: HumbleWorth API proxy
+---
 
-## 📁 Project Structure
+## **Live Demo**
 
-```
-dnsworth/
-├── frontend/                 # React frontend application
-│   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── pages/          # Page components
-│   │   └── index.css       # Tailwind CSS + custom styles
-│   ├── package.json
-│   └── tailwind.config.js
-├── backend/                  # Node.js backend API
-│   ├── src/
-│   │   ├── routes/         # API route handlers
-│   │   └── index.js        # Main server file
-│   └── package.json
-└── README.md
-```
+🌐 **Website**: [https://dnsworth.com](https://dnsworth.com)  
+🔧 **API**: [https://dnsworth.onrender.com](https://dnsworth.onrender.com)
 
-## 🛠️ Tech Stack
+---
 
-### Frontend
-- **React.js** - UI framework
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **Axios** - HTTP client (for future enhancements)
+## **Quick Start**
 
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **Helmet.js** - Security headers
-- **CORS** - Cross-origin resource sharing
-- **express-rate-limit** - Rate limiting
-- **node-fetch** - HTTP client
+### **Prerequisites**
+- Node.js 18+ 
+- npm or yarn
+- Git
 
-## 🚀 Quick Start
+### **Local Development Setup**
 
-### 1. Clone and Setup
-```bash
-git clone <repository-url>
-cd dnsworth
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/dnsworth/dnsworth.git
+   cd dnsworth
+   ```
 
-### 2. Backend Setup
+2. **Start both servers (Frontend + Backend)**
+   ```bash
+   chmod +x start-servers.sh
+   ./start-servers.sh
+   ```
+
+3. **Access the application**
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - Backend: [http://localhost:8000](http://localhost:8000)
+
+### **Manual Setup**
+
+#### **Backend Setup**
 ```bash
 cd backend
 npm install
 npm run dev
 ```
 
-The backend will run on `http://localhost:5000`
-
-### 3. Frontend Setup
+#### **Frontend Setup**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-The frontend will run on `http://localhost:3000`
+---
 
-### 4. Access the Application
-Open your browser and navigate to `http://localhost:3000`
+## **API Endpoints**
 
-## 🔒 Security Features
-
-### **Core Security Measures**
-- **Rate Limiting**: Configurable rate limiting with IP fingerprinting
-- **CORS Protection**: Strict origin validation with configurable allowed domains
-- **Helmet.js**: Comprehensive HTTP security headers
-- **Input Validation**: Advanced domain name validation with security checks
-- **No API Keys on Frontend**: All external API calls go through secure backend
-- **Request Timeouts**: Configurable timeouts for all API requests
-
-### **Advanced Security Features**
-- **Content Security Policy (CSP)**: Prevents XSS and injection attacks
-- **Strict Transport Security (HSTS)**: Enforces HTTPS in production
-- **XSS Protection**: Multiple layers of XSS prevention
-- **CSRF Protection**: Built-in CSRF token validation
-- **SQL Injection Prevention**: Parameterized queries and input sanitization
-- **Directory Traversal Protection**: Path validation and sanitization
-
-### **Security Headers**
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: DENY`
-- `X-XSS-Protection: 1; mode=block`
-- `Referrer-Policy: strict-origin-when-cross-origin`
-- `Permissions-Policy`: Restricts browser features
-
-### **Environment Security**
-- **No Hardcoded Secrets**: All sensitive data in environment variables
-- **Secure Configuration**: Template-based configuration management
-- **Secret Rotation**: Support for regular secret rotation
-- **Production Hardening**: Enhanced security in production environments
-
-### **Security Auditing**
-- **Automated Security Scans**: Built-in security audit script
-- **Dependency Monitoring**: Regular vulnerability checks
-- **Security Logging**: Comprehensive security event logging
-- **Incident Response**: Built-in security incident handling
-
-## 🌐 API Endpoints
-
-### Backend API (Port 5000)
-
-#### Health Check
-```
-GET /api/health
+### **Health Check**
+```bash
+GET /health
 ```
 
-#### Single Domain Valuation
-```
+### **Single Domain Valuation**
+```bash
 POST /api/value
-Body: { "domain": "example.com" }
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+X-Client-Version: 2.0.0
+
+{
+  "domain": "example.com"
+}
 ```
 
-#### Bulk Domain Valuation
-```
+### **Bulk Domain Valuation**
+```bash
 POST /api/bulk-value
-Body: { "domains": ["example.com", "test.com"] }
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+X-Client-Version: 2.0.0
+
+{
+  "domains": ["example.com", "test.com"]
+}
 ```
 
-### External API
-- **HumbleWorth API**: `https://valuation.humbleworth.com/api/valuation`
+### **Rate Limits**
+- **Single Domain**: 50 requests per 15 minutes per IP
+- **Bulk Valuation**: 50 requests per 15 minutes per IP
+- **Maximum Domains**: 100 domains per bulk request
 
-## 🎨 Design System
+---
 
-### Color Palette
-- **Primary**: Emerald Green (#00D47E)
-- **Secondary**: Dark Slate (#1E293B)
-- **Accent**: Mint (#AFF9C7)
-- **Background**: White (#FFFFFF)
+## **Deployment**
 
-### Typography
-- **Headings**: Inter/Poppins, Bold
-- **Body**: Inter, Regular (16-18px)
+### **Frontend Deployment (Vercel)**
+1. Connect your GitHub repository to Vercel
+2. Configure build settings:
+   - Build Command: `cd frontend && npm run build`
+   - Output Directory: `frontend/dist`
+3. Deploy automatically on push to main branch
 
-### Components
-- **Buttons**: Rounded corners, hover effects, shadows
-- **Inputs**: Clean borders, focus states
-- **Cards**: Subtle shadows, rounded corners
+### **Backend Deployment (Render)**
+1. Create a new Web Service on Render
+2. Connect your GitHub repository
+3. Set environment variables:
+   - `NODE_ENV=production`
+   - `PORT=8000`
+   - `ALLOWED_ORIGINS=https://yourdomain.com`
+4. Deploy and get your backend URL
 
-## 🔐 Security Setup
-
-### **1. Environment Configuration**
+### **Environment Variables**
+Copy `env.template` to `.env` and configure:
 ```bash
-# Copy the configuration template
-cp config.example.js config.js
-
-# Create environment file (NEVER commit this)
-cp .env.example .env
-
-# Fill in your actual values
-nano .env
-```
-
-### **2. Security Audit**
-```bash
-# Run comprehensive security audit
-node security-audit.js
-
-# Check for vulnerabilities in dependencies
-npm audit
-
-# Run security scan
-npm run security:scan
-```
-
-### **3. Production Security Checklist**
-- [ ] HTTPS enabled with valid SSL certificates
-- [ ] Environment variables properly configured
-- [ ] Rate limiting configured for production
-- [ ] Security headers enabled
-- [ ] CORS origins restricted to production domains
-- [ ] Logging and monitoring enabled
-- [ ] Regular security updates scheduled
-
-### **4. Security Best Practices**
-- **Never commit `.env` files or `config.js`**
-- **Use strong, unique secrets for each environment**
-- **Rotate secrets regularly (every 90 days)**
-- **Monitor security logs and alerts**
-- **Keep dependencies updated**
-- **Regular security audits and penetration testing**
-
-## 🚨 Security Incident Response
-
-### **Immediate Actions**
-1. **Isolate the issue** - Stop affected services if necessary
-2. **Assess the impact** - Determine scope and severity
-3. **Contain the threat** - Prevent further damage
-4. **Document everything** - Log all actions and findings
-5. **Notify stakeholders** - Inform relevant parties
-
-### **Recovery Steps**
-1. **Remove the threat** - Eliminate security vulnerabilities
-2. **Restore services** - Bring systems back online safely
-3. **Verify security** - Ensure no backdoors remain
-4. **Update procedures** - Improve security based on lessons learned
-5. **Monitor for recurrence** - Watch for similar attacks
-
-## 📱 Responsive Design
-
-- **Mobile First**: Optimized for mobile devices
-- **Breakpoints**: Tailwind CSS responsive utilities
-- **Touch Friendly**: Proper touch targets and spacing
-- **Cross Browser**: Works on all modern browsers
-
-## 🚀 Deployment
-
-### Frontend (Vercel)
-1. Push to GitHub
-2. Connect repository to Vercel
-3. Deploy automatically
-
-### Backend (Render/Heroku)
-1. Set environment variables
-2. Deploy using platform CLI or dashboard
-3. Update CORS origin in production
-
-## 🔧 Environment Variables
-
-### Backend (.env)
-```bash
+# Required
 NODE_ENV=production
-PORT=5000
+PORT=8000
+SESSION_SECRET=your-32-character-secret
+JWT_SECRET=your-32-character-secret
+ENCRYPTION_KEY=your-32-character-key
+
+# API Configuration
+HUMBLEWORTH_API_URL=https://valuation.humbleworth.com/api/valuation
+ALLOWED_ORIGINS=https://yourdomain.com
+
+# Rate Limiting
+RATE_LIMIT_MAX_REQUESTS=50
+REQUEST_TIMEOUT=10000
 ```
 
-### Frontend
-- Backend URL: Update in `ValuationForm.jsx` for production
+---
 
-## 📊 Performance
+## **Security Features**
 
-- **Lazy Loading**: Components load as needed
-- **Optimized Images**: WebP format with fallbacks
-- **Minified CSS/JS**: Production builds
-- **CDN Ready**: Static assets optimized for CDN
+### **Comprehensive Protection**
+- ✅ **Input Validation**: Advanced domain name validation
+- ✅ **Rate Limiting**: IP-based request limiting with fingerprinting
+- ✅ **CORS Protection**: Strict origin validation
+- ✅ **Security Headers**: Full security header implementation
+- ✅ **XSS Prevention**: Content Security Policy (CSP)
+- ✅ **CSRF Protection**: Built-in CSRF protection
+- ✅ **SQL Injection Prevention**: Parameterized API calls
+- ✅ **Error Handling**: Secure error messages without information leakage
 
-## 🧪 Testing
-
-### Frontend
+### **Security Audit**
+Run automated security scanning:
 ```bash
-cd frontend
-npm run test
+node security-audit.js
 ```
 
-### Backend
+---
+
+## **Contributing**
+
+We welcome contributions from the community! Here's how you can help:
+
+### **Development Guidelines**
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### **Code Standards**
+- Follow existing code style and patterns
+- Add tests for new functionality
+- Ensure all tests pass
+- Update documentation as needed
+- Follow security best practices
+
+### **Areas for Contribution**
+- 🐛 Bug fixes and improvements
+- ✨ New features and enhancements
+- 📚 Documentation updates
+- 🧪 Test coverage improvements
+- 🔒 Security enhancements
+- 🎨 UI/UX improvements
+
+### **Getting Help**
+- 📖 Check existing documentation
+- 🐛 Report bugs via GitHub Issues
+- 💬 Discuss features via GitHub Discussions
+- 📧 Contact: support@dnsworth.com
+
+---
+
+## **Project Structure**
+
+```
+DNSWORTH/
+├── 📁 frontend/                 # React.js frontend application
+├── 📁 backend/                  # Node.js backend API server
+├── 📄 PRD.md                   # Product Requirements Document
+├── 📄 PROJECT_STRUCTURE.md     # Detailed project structure
+├── 📄 vercel.json              # Vercel deployment configuration
+├── 📄 env.template             # Environment variables template
+└── 📄 start-servers.sh         # Development server startup script
+```
+
+For detailed project structure, see [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
+
+---
+
+## **Performance & Monitoring**
+
+### **Performance Metrics**
+- **Response Time**: <3 seconds for single domain
+- **Bulk Processing**: <60 seconds for 100 domains
+- **Page Load**: <2 seconds initial page load
+- **Uptime Target**: 99.9% availability
+
+### **Monitoring**
+- **Health Check**: `/health` endpoint
+- **Performance Tracking**: Request duration logging
+- **Error Monitoring**: Comprehensive error logging
+- **Security Events**: Rate limit and security violation tracking
+
+---
+
+## **Troubleshooting**
+
+### **Common Issues**
+
+#### **Frontend Not Loading**
+- Check if backend is running on port 8000
+- Verify environment variables are set correctly
+- Clear browser cache and hard refresh
+
+#### **API Calls Failing**
+- Ensure backend is accessible
+- Check CORS configuration
+- Verify rate limiting settings
+
+#### **Build Failures**
+- Ensure Node.js 18+ is installed
+- Clear `node_modules` and reinstall
+- Check for environment variable conflicts
+
+### **Debug Mode**
+Enable debug logging:
 ```bash
-cd backend
-npm test
+# Frontend
+NODE_ENV=development npm run dev
+
+# Backend
+NODE_ENV=development npm run dev
 ```
 
-## 📈 Monitoring
+---
 
-- **Health Checks**: `/api/health` endpoint
-- **Error Logging**: Console logging for debugging
-- **Rate Limit Monitoring**: Built-in rate limiting metrics
+## **Roadmap**
 
-## 🤝 Contributing
+### **Version 2.1 (Q4 2025)**
+- 🔄 User accounts and search history
+- 🔄 Advanced analytics dashboard
+- 🔄 Domain monitoring alerts
+- 🔄 Enhanced bulk processing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+### **Version 3.0 (Q1 2026)**
+- 🔄 API access for developers
+- 🔄 Multiple valuation sources
+- 🔄 Advanced portfolio management
+- 🔄 Mobile application
 
-## 📄 License
+---
 
-This project is open source and available under the MIT License.
+## **Support & Community**
 
-## 🆘 Support
+### **Resources**
+- 📖 **Documentation**: [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/dnsworth/dnsworth/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/dnsworth/dnsworth/discussions)
+- 📧 **Email**: support@dnsworth.com
 
-- **Documentation**: Check this README
-- **Issues**: Create a GitHub issue
-- **API Support**: Contact HumbleWorth for API issues
+### **Community Guidelines**
+- Be respectful and inclusive
+- Help others learn and grow
+- Share knowledge and experiences
+- Report issues promptly
+- Suggest improvements constructively
 
-## 🔮 Future Enhancements
+---
 
-- [ ] User authentication and history
-- [ ] Advanced analytics dashboard
-- [ ] Domain monitoring alerts
-- [ ] Export functionality (CSV, PDF)
-- [ ] Mobile app (React Native)
-- [ ] API rate limit management
-- [ ] Caching layer (Redis)
-- [ ] WebSocket real-time updates
+## **Acknowledgements**
 
-## 🔒 Security Contact
+This project uses the free API provided by **[HumbleWorth](https://hubleworth.com)**. Special thanks to them for making domain valuation capabilities available to developers and users worldwide!
+
+### **Open Source Libraries**
+- **React.js**: UI framework by Meta
+- **Tailwind CSS**: Utility-first CSS framework
+- **Express.js**: Web framework for Node.js
+- **Helmet.js**: Security middleware for Express
+- **Vite**: Build tool and development server
+
+### **Infrastructure**
+- **Vercel**: Frontend hosting and CDN
+- **Render**: Backend hosting and auto-scaling
+- **GitHub**: Version control and collaboration
+
+---
+
+## **License**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## **Security**
 
 For security issues, please contact:
 - **Email**: security@dnsworth.com
@@ -324,3 +341,5 @@ For security issues, please contact:
 ---
 
 **Built with ❤️ by the DNSWorth Team**
+
+[Website](https://dnsworth.com) • [API](https://dnsworth.onrender.com) • [GitHub](https://github.com/dnsworth/dnsworth)
