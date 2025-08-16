@@ -45,6 +45,11 @@
     { "source": "/api/(.*)", "destination": "https://dnsworth.onrender.com/api/$1" },
     { "source": "/health", "destination": "https://dnsworth.onrender.com/health" },
     { "source": "/dnsworth-logo.ico", "destination": "/dnsworth-logo.ico" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/bulk-valuation", "destination": "/index.html" },
+    { "source": "/privacy-policy", "destination": "/index.html" },
+    { "source": "/terms-of-service", "destination": "/index.html" },
+    { "source": "/cookie-policy", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

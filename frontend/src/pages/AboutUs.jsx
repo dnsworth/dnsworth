@@ -1,36 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const AboutUs = () => {
+  const [typedText, setTypedText] = useState('');
+  const ownerVision = "My vision is to democratize domain intelligence and make professional-grade valuations accessible to everyone. Every domain investor deserves the tools to make informed decisions without barriers or costs.";
+
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index <= ownerVision.length) {
+        setTypedText(ownerVision.slice(0, index));
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 50);
+    return () => clearInterval(timer);
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3
+        staggerChildren: 0.2
       }
     }
   };
 
   const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { scale: 0.9, opacity: 0, y: 30 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      y: 0,
       transition: {
         duration: 0.6,
         ease: "easeOut"
@@ -38,11 +41,24 @@ const AboutUs = () => {
     }
   };
 
+  const cardVariants = {
+    hidden: { scale: 0.9, opacity: 0, y: 20 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   const floatingVariants = {
     animate: {
-      y: [-15, 15, -15],
+      y: [-10, 10, -10],
       transition: {
-        duration: 4,
+        duration: 3,
         repeat: Infinity,
         ease: "easeInOut"
       }
@@ -77,7 +93,7 @@ const AboutUs = () => {
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
-        {/* Animated Background Elements - Comic Style */}
+        {/* Animated Background Elements */}
         <motion.div
           className="absolute top-20 left-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl"
           variants={floatingVariants}
@@ -206,8 +222,14 @@ const AboutUs = () => {
                 whileHover={{ scale: 1.03, y: -8 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="text-2xl font-bold mb-4 text-primary">Unlimited Valuations, Always Free</h3>
-                <p className="text-text-muted text-lg leading-relaxed">No caps. No subscriptions. Run as many valuations as you need, without restrictions.</p>
+                <div className="text-center mb-6">
+                  <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-3xl">🚀</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-2">Unlimited Valuations</h3>
+                  <p className="text-sm text-text-muted">Always Free</p>
+                </div>
+                <p className="text-text-muted text-center leading-relaxed">No caps. No subscriptions. Run as many valuations as you need, without restrictions.</p>
               </motion.div>
 
               <motion.div
@@ -216,8 +238,14 @@ const AboutUs = () => {
                 whileHover={{ scale: 1.03, y: -8 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="text-2xl font-bold mb-4 text-secondary">Bulk Domain Analysis</h3>
-                <p className="text-text-muted text-lg leading-relaxed">Save time by evaluating up to 2,000 domains at once. Perfect for large portfolio holders and professional traders.</p>
+                <div className="text-center mb-6">
+                  <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-3xl">⚡</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-secondary mb-2">Bulk Analysis</h3>
+                  <p className="text-sm text-text-muted">Speed Expert</p>
+                </div>
+                <p className="text-text-muted text-center leading-relaxed">Save time by evaluating up to 2,000 domains at once. Perfect for large portfolio holders.</p>
               </motion.div>
 
               <motion.div
@@ -226,8 +254,14 @@ const AboutUs = () => {
                 whileHover={{ scale: 1.03, y: -8 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="text-2xl font-bold mb-4 text-accent">AI-Driven Accuracy</h3>
-                <p className="text-text-muted text-lg leading-relaxed">Our algorithms combine auction history, search trends, domain length, extensions, and comparable sales data to give you fair, transparent valuations.</p>
+                <div className="text-center mb-6">
+                  <div className="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-3xl">🧠</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-accent mb-2">AI-Driven Accuracy</h3>
+                  <p className="text-sm text-text-muted">AI Specialist</p>
+                </div>
+                <p className="text-text-muted text-center leading-relaxed">Our algorithms combine auction history, search trends, and market data for accurate valuations.</p>
               </motion.div>
 
               <motion.div
@@ -236,8 +270,14 @@ const AboutUs = () => {
                 whileHover={{ scale: 1.03, y: -8 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="text-2xl font-bold mb-4 text-primary">Daily Dropped Domain Insights</h3>
-                <p className="text-text-muted text-lg leading-relaxed">Every day, we update a curated list of valuable expired and dropped domains — helping investors spot hidden opportunities early.</p>
+                <div className="text-center mb-6">
+                  <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-3xl">📊</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-2">Market Insights</h3>
+                  <p className="text-sm text-text-muted">Data Analyst</p>
+                </div>
+                <p className="text-text-muted text-center leading-relaxed">Daily updates on valuable expired and dropped domains to spot hidden opportunities early.</p>
               </motion.div>
             </div>
           </motion.div>
@@ -354,7 +394,7 @@ const AboutUs = () => {
             </motion.p>
           </motion.div>
 
-          {/* Owner Section */}
+          {/* Owner Section - Comic Style with Typing Animation */}
           <motion.div
             className="max-w-2xl mx-auto mb-20 text-center"
             variants={itemVariants}
@@ -365,11 +405,19 @@ const AboutUs = () => {
               whileHover={{ scale: 1.02, y: -5 }}
               transition={{ duration: 0.3 }}
             >
-              <h3 className="text-2xl font-bold mb-4 text-primary">Azeez A.</h3>
-              <p className="text-lg text-text-muted mb-4">Technical Support & Founder</p>
-              <p className="text-xs text-text-muted/70 leading-relaxed max-w-md mx-auto">
-                "My vision is to democratize domain intelligence and make professional-grade valuations accessible to everyone. Every domain investor deserves the tools to make informed decisions without barriers or costs."
-              </p>
+              <div className="text-center mb-6">
+                <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-4xl">👨‍💻</span>
+                </div>
+                <h3 className="text-2xl font-bold text-primary mb-2">Azeez A.</h3>
+                <p className="text-lg text-text-muted">Technical Support & Founder</p>
+              </div>
+              <div className="bg-gray-800/50 p-4 rounded-xl border border-gray-600/30">
+                <p className="text-sm text-text-muted/90 leading-relaxed max-w-md mx-auto">
+                  "{typedText}
+                  <span className="animate-pulse">|</span>"
+                </p>
+              </div>
             </motion.div>
           </motion.div>
 
