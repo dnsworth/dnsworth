@@ -20,7 +20,12 @@ const SearchBar = ({ onSearch, loading = false, placeholder = "Enter domain to v
     <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1">
+          <label htmlFor="domain-search" className="sr-only">
+            Domain to value
+          </label>
           <input
+            id="domain-search"
+            name="domain"
             type="text"
             value={domain}
             onChange={(e) => setDomain(e.target.value)}

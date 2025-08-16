@@ -226,10 +226,12 @@ twitter.com`);
                 <form onSubmit={handleSubmit}>
                   {/* Domain Input */}
                   <div className="mb-8">
-                    <label className="block text-text font-bold text-xl mb-4">
+                    <label htmlFor="bulk-domains" className="block text-text font-bold text-xl mb-4">
                       Enter Domain Names (One per line) - Up to 100 domains
                     </label>
                     <textarea
+                      id="bulk-domains"
+                      name="domains"
                       value={domains}
                       onChange={(e) => setDomains(e.target.value)}
                       placeholder="Enter your domains here, one per line...

@@ -104,7 +104,12 @@ export default function ValuationForm({ onResult }) {
     <div className="w-full max-w-3xl mx-auto px-2 sm:px-0">
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4">
         <div className="flex-1">
+          <label htmlFor="domain-valuation" className="sr-only">
+            Domain to value
+          </label>
           <input
+            id="domain-valuation"
+            name="domain"
             type="text"
             value={domain}
             onChange={(e) => setDomain(e.target.value)}
