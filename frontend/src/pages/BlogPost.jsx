@@ -21,7 +21,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Learn the secrets of professional domain valuation without spending a dime. Discover how to assess domain worth using market data, trends, and AI-powered tools.",
       category: "guides",
       readTime: "15 min read",
-      date: "2024-01-15",
+      date: "2024-12-19",
       author: "DNSWorth Team",
       content: `
         <h1>How to Value a Domain for Free: Complete Guide 2024</h1>
@@ -271,7 +271,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Discover the hottest dropped domains that could be worth thousands. Our weekly analysis reveals the most promising opportunities for domain investors.",
       category: "market-analysis",
       readTime: "12 min read",
-      date: "2024-01-14",
+      date: "2024-12-19",
       author: "DNSWorth Team",
       content: `
         <h1>Top 10 Most Valuable Dropped Domains This Week</h1>
@@ -590,7 +590,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Compare DNSWorth with paid domain valuation services. See why our free AI-powered tool provides the same accuracy without the hefty price tag.",
       category: "comparisons",
       readTime: "14 min read",
-      date: "2024-01-13",
+      date: "2024-12-19",
       author: "DNSWorth Team",
       content: `
         <h1>DNSWorth vs Other Domain Valuation Tools: Why Free Wins</h1>
@@ -1124,7 +1124,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Start your domain investing journey with this comprehensive beginner's guide. Learn the fundamentals of domain selection, valuation, and portfolio management.",
       category: "guides",
       readTime: "18 min read",
-      date: "2024-01-12",
+      date: "2024-12-19",
       author: "DNSWorth Team",
       content: `
         <h1>Domain Investing 101: Building Your First Portfolio</h1>
@@ -1559,7 +1559,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Explore how artificial intelligence is transforming domain valuation from guesswork to science. Learn about the algorithms and data that power modern appraisals.",
       category: "technology",
       readTime: "16 min read",
-      date: "2024-01-11",
+      date: "2024-12-19",
       author: "DNSWorth Team",
       content: `
         <h1>AI in Domain Valuation: How Technology is Revolutionizing the Industry</h1>
@@ -1972,7 +1972,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Learn how to value hundreds of domains simultaneously using DNSWorth's bulk valuation tool. Perfect for serious investors and portfolio managers.",
       category: "tools",
       readTime: "13 min read",
-      date: "2024-01-10",
+      date: "2024-12-19",
       author: "DNSWorth Team",
       content: `
         <h1>Bulk Domain Valuation: Save Hours with Portfolio Analysis</h1>
