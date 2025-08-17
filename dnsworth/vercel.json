@@ -5,7 +5,10 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "frontend/dist" }
+      "config": { 
+        "distDir": "frontend/dist",
+        "buildCommand": "cd frontend && npm run build"
+      }
     }
   ],
   "headers": [
@@ -27,14 +30,9 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://dnsworth.onrender.com/api/$1" },
     { "source": "/health", "destination": "https://dnsworth.onrender.com/health" },
-    { "source": "/favicon.ico", "destination": "/favicon.ico" },
-    { "source": "/apple-touch-icon.png", "destination": "/apple-touch-icon.png" },
-    { "source": "/favicon-32x32.png", "destination": "/favicon-32x32.png" },
-    { "source": "/favicon-16x16.png", "destination": "/favicon-16x16.png" },
-    { "source": "/android-chrome-192x192.png", "destination": "/android-chrome-192x192.png" },
-    { "source": "/android-chrome-512x512.png", "destination": "/android-chrome-512x512.png" },
-    { "source": "/site.webmanifest", "destination": "/site.webmanifest" },
-    { "source": "/mountain-background.jpg", "destination": "/mountain-background.jpg" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
