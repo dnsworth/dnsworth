@@ -13,16 +13,34 @@ function AppContent() {
   const location = useLocation();
 
   const navigateToBulk = () => {
-    console.log('Navigating to bulk valuation...');
+    console.log('=== navigateToBulk FUNCTION CALLED ===');
     console.log('Current location:', location.pathname);
     console.log('Attempting to navigate to /bulk-valuation');
     navigate('/bulk-valuation');
+    // Ensure we scroll to top when navigating
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
     console.log('Navigation function completed');
   };
 
   const navigateToHome = () => {
+    console.log('=== navigateToHome FUNCTION CALLED ===');
+    console.log('Current location:', location.pathname);
+    console.log('Attempting to navigate to /');
     navigate('/');
+    // Ensure we scroll to top when navigating to home
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+    console.log('Navigation function completed');
   };
+
+  console.log('AppContent rendered with navigation functions:', {
+    navigateToBulk: typeof navigateToBulk,
+    navigateToHome: typeof navigateToHome,
+    currentLocation: location.pathname
+  });
 
   return (
     <div className="App">

@@ -1,14 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 
-const Footer = ({ onBulkValuation, onNavigateHome }) => {
+const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
+  
+  // Handle both prop names for backward compatibility
+  const handleBulkValuation = onBulkValuation || onNavigateToBulk;
   
   const quickLinks = [
     { name: 'Home', action: () => navigate('/') },
     { name: 'Bulk Valuation', action: () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => navigate('/bulk-valuation'), 300);
+      if (handleBulkValuation) {
+        handleBulkValuation();
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => navigate('/bulk-valuation'), 300);
+      }
     }},
     { name: 'About Us', action: () => navigate('/about') },
     { name: 'Blog', action: () => navigate('/blog') },

@@ -2535,7 +2535,13 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => {
+                  navigate('/');
+                  // Ensure we scroll to top when navigating to home
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }}
                 className="btn-primary text-lg px-8 py-4"
               >
                 Start Valuing Domains
