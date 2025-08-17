@@ -19,6 +19,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
     }},
     { name: 'About Us', action: () => navigate('/about') },
     { name: 'Blog', action: () => navigate('/blog') },
+    { name: 'FAQ', action: () => navigate('/faq') },
     { name: 'Features', action: () => {
       const whyChooseSection = document.getElementById('why-choose-section');
       if (whyChooseSection) {
