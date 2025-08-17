@@ -25,7 +25,7 @@ DNSWorth is a cutting-edge web application that provides instant, accurate domai
 - **Backend**: Node.js 18+, Express.js, Helmet.js
 - **Deployment**: Vercel (Frontend), Render (Backend)
 - **Security**: Comprehensive security headers, rate limiting, CORS protection
-- **API Integration**: HumbleWorth API for domain valuations
+- **API Integration**: HumbleWorth 
 
 ---
 
