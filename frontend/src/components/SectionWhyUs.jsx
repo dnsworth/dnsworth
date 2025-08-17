@@ -1,4 +1,4 @@
-import Avatar from './Avatar';
+import LocalAvatar from './LocalAvatar';
 
 const SectionWhyUs = () => {
   // Testimonial data with comic-style avatars
@@ -7,7 +7,7 @@ const SectionWhyUs = () => {
       id: 1,
       name: "Sarah Chen",
       role: "Domain Investor",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Sarah&backgroundColor=b6e3f4,c0aede,d1d4f9",
+
       quote: "DNSWorth has revolutionized how I evaluate domain portfolios. The accuracy is incredible!"
     },
     {
@@ -168,8 +168,7 @@ const SectionWhyUs = () => {
                 <div key={testimonial.id} className="flex-shrink-0 mx-6 text-center group">
                   <div className="mx-auto mb-4 relative group">
                     <div className="relative">
-                      <Avatar 
-                        src={testimonial.image} 
+                      <LocalAvatar 
                         name={testimonial.name}
                         className="group-hover:border-white/50 transition-all duration-300 shadow-lg group-hover:shadow-xl"
                       />
@@ -202,8 +201,7 @@ const SectionWhyUs = () => {
                                  <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 mx-6 text-center group">
                    <div className="mx-auto mb-4 relative group">
                      <div className="relative">
-                       <Avatar 
-                         src={testimonial.image} 
+                       <LocalAvatar 
                          name={testimonial.name}
                          className="group-hover:border-white/50 transition-all duration-300 shadow-lg group-hover:shadow-xl"
                        />

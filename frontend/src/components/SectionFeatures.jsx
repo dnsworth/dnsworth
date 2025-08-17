@@ -1,13 +1,12 @@
-import Avatar from './Avatar';
+import LocalAvatar from './LocalAvatar';
 
 const SectionFeatures = () => {
-  // Feature data with creative comic portraits
+  // Feature data with local avatars
   const features = [
     {
       id: 1,
       title: "AI-Powered Intelligence",
       description: "Our advanced AI analyzes millions of domain sales, market trends, and industry data to provide you with the most accurate valuations possible.",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=AI&backgroundColor=b6e3f4,c0aede,d1d4f9",
       name: "Dr. Smart",
       role: "AI Specialist",
       icon: "🧠",
@@ -17,7 +16,6 @@ const SectionFeatures = () => {
       id: 2,
       title: "Lightning Fast Results",
       description: "Get instant valuations in seconds, not minutes. Our optimized system delivers results faster than any other tool in the market.",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Speed&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
       name: "Flash Runner",
       role: "Speed Expert",
       icon: "⚡",
@@ -27,7 +25,6 @@ const SectionFeatures = () => {
       id: 3,
       title: "Market-Based Accuracy",
       description: "Real-time market data from actual domain sales ensures your valuations reflect current market conditions and trends.",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Market&backgroundColor=d4f4dd,ffd5dc,ffdfbf",
       name: "Market Master",
       role: "Data Analyst",
       icon: "📊",
@@ -37,7 +34,6 @@ const SectionFeatures = () => {
       id: 4,
       title: "100% Free Forever",
       description: "No hidden fees, no subscriptions, no limits. DNSWorth is completely free and will always remain that way.",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Free&backgroundColor=c0aede,b6e3f4,d1d4f9",
       name: "Free Spirit",
       role: "Freedom Advocate",
       icon: "💎",
@@ -68,10 +64,9 @@ const SectionFeatures = () => {
                 
                                  {/* Header with Avatar */}
                  <div className="relative z-10 flex items-center gap-6 mb-6">
-                   {/* Comic Portrait */}
+                   {/* Local Avatar */}
                    <div className="relative">
-                     <Avatar 
-                       src={feature.avatar} 
+                     <LocalAvatar 
                        name={feature.name}
                        size="w-20 h-20"
                        className="border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300"

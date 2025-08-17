@@ -1,3 +1,5 @@
+import LocalAvatar from './LocalAvatar';
+
 const SectionBulkSearch = ({ onBulkValuation }) => {
   // Creative comic characters for bulk valuation features
   const features = [
@@ -5,7 +7,6 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       id: 1,
       title: "Portfolio Analysis",
       description: "Analyze your entire domain portfolio in one go",
-      comic: "https://api.dicebear.com/7.x/adventurer/svg?seed=Portfolio&backgroundColor=ff6b6b,4ecdc4,45b7d1&radius=50",
       name: "Portfolio Pro",
       role: "Portfolio Manager",
       theme: "from-red-400 to-cyan-400"
@@ -14,7 +15,6 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       id: 2,
       title: "CSV Export",
       description: "Download results for further analysis",
-      comic: "https://api.dicebear.com/7.x/adventurer/svg?seed=Export&backgroundColor=a8e6cf,dcedc1,ffd3b6&radius=50",
       name: "Export Expert",
       role: "Data Specialist",
       theme: "from-green-400 to-yellow-400"
@@ -23,7 +23,6 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       id: 3,
       title: "Lightning Fast",
       description: "Get results in seconds, not minutes",
-      comic: "https://api.dicebear.com/7.x/adventurer/svg?seed=Speed&backgroundColor=ff9ff3,f368e0,54a0ff&radius=50",
       name: "Speed Demon",
       role: "Performance Guru",
       theme: "from-pink-400 to-blue-400"
@@ -32,7 +31,6 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       id: 4,
       title: "Smart Insights",
       description: "Get detailed analysis and recommendations",
-      comic: "https://api.dicebear.com/7.x/adventurer/svg?seed=Analyst&backgroundColor=ffa726,ff7043,8e24aa&radius=50",
       name: "Smart Analyst",
       role: "Data Analyst",
       theme: "from-orange-400 to-purple-400"
@@ -62,10 +60,10 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
                   {/* Comic Character */}
                   <div className="relative z-10 text-center mb-6">
                     <div className="relative mx-auto mb-4">
-                      <img 
-                        src={feature.comic} 
-                        alt={feature.name}
-                        className="w-24 h-24 rounded-full border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300"
+                      <LocalAvatar 
+                        name={feature.name}
+                        size="w-24 h-24"
+                        className="border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300"
                       />
                       {/* Floating Badge */}
                       <div className={`absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br ${feature.theme} rounded-full flex items-center justify-center shadow-lg border-2 border-white`}>
