@@ -7,6 +7,7 @@ import BlogPost from './pages/BlogPost';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookiePolicy from './pages/CookiePolicy';
+import FAQ from './pages/FAQ';
 
 function AppContent() {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ function AppContent() {
         <Route path="/privacy-policy" element={<PrivacyPolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/terms-of-service" element={<TermsOfService onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/cookie-policy" element={<CookiePolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
     </div>
   );
