@@ -27,7 +27,7 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://dnsworth.onrender.com/api/$1" },
     { "source": "/health", "destination": "https://dnsworth.onrender.com/health" },
-    { "source": "/dnsworth-logo.ico", "destination": "/dnsworth-logo.ico" },
+    { "source": "/dnsworth1-logo.ico", "destination": "/dnsworth1-logo.ico" },
     { "source": "/mountain-background.jpg", "destination": "/mountain-background.jpg" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

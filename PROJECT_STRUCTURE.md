@@ -34,7 +34,7 @@ frontend/
 │   ├── 📄 index.html           # Main HTML entry point
 │   ├── 📄 robots.txt           # Search engine robots configuration
 │   ├── 📄 sitemap.xml          # XML sitemap for SEO
-│   ├── 📄 dnsworth-logo.ico    # Favicon and app icon
+│   ├── 📄 dnsworth1-logo.ico    # Favicon and app icon
 │   ├── 📄 sw.js                # Service worker for PWA features
 │   └── 📄 spa-fallback.js      # SPA fallback for static hosting
 ├── 📁 src/                     # Source code directory
