@@ -9,6 +9,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     minify: 'terser',
+    chunkSizeWarningLimit: 1000, // Increase from default 500KB to 1000KB
     rollupOptions: {
       output: {
         // Add hash to filenames for cache busting
