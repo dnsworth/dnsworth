@@ -27,10 +27,13 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://dnsworth.onrender.com/api/$1" },
     { "source": "/health", "destination": "https://dnsworth.onrender.com/health" },
-    { "source": "/dnsworth1-logo.ico", "destination": "/dnsworth1-logo.ico" },
-    { "source": "/dnsworth1-logo.png", "destination": "/dnsworth1-logo.png" },
-    { "source": "/dnsworth1-logo-32x32.png", "destination": "/dnsworth1-logo-32x32.png" },
-    { "source": "/dnsworth1-logo-16x16.png", "destination": "/dnsworth1-logo-16x16.png" },
+    { "source": "/favicon.ico", "destination": "/favicon.ico" },
+    { "source": "/apple-touch-icon.png", "destination": "/apple-touch-icon.png" },
+    { "source": "/favicon-32x32.png", "destination": "/favicon-32x32.png" },
+    { "source": "/favicon-16x16.png", "destination": "/favicon-16x16.png" },
+    { "source": "/android-chrome-192x192.png", "destination": "/android-chrome-192x192.png" },
+    { "source": "/android-chrome-512x512.png", "destination": "/android-chrome-512x512.png" },
+    { "source": "/site.webmanifest", "destination": "/site.webmanifest" },
     { "source": "/mountain-background.jpg", "destination": "/mountain-background.jpg" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
