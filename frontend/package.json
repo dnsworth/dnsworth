@@ -8,6 +8,7 @@
     "build": "vite build",
     "build:prod": "vite build --mode production",
     "vercel-build": "vite build --mode production",
+    "postbuild": "cp -r public/* dist/ 2>/dev/null || echo 'Public files copied'",
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
