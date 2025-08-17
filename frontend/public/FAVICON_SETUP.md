@@ -1,41 +1,46 @@
 # Favicon Setup Instructions
 
-## New Favicon: dnsworth1-logo.ico
+## New Favicon: dnsworth1-logo (Multiple Formats)
 
-Your new favicon `dnsworth1-logo.ico` has been configured throughout the project, but you need to add the actual ICO file.
+Your new favicon has been configured throughout the project with multiple formats for optimal compatibility, but you need to add the actual image files.
 
 ### What's Already Done:
-✅ HTML favicon links updated to reference `/dnsworth1-logo.ico`
+✅ HTML favicon links updated with proper format types
+✅ Multiple favicon sizes configured (16x16, 32x32, 180x180)
 ✅ Open Graph and Twitter image references updated
 ✅ Structured data (JSON-LD) logo references updated
-✅ Vercel configuration updated for routing
+✅ Vercel configuration updated for all favicon formats
+✅ Project structure documentation updated
+✅ Favicon setup instructions added
 
 ### What You Need to Do:
 
-1. **Create the ICO file**: Convert your stylized 3D letter "D" design to ICO format
-2. **Place the file**: Put `dnsworth1-logo.ico` in this directory (`frontend/public/`)
+1. **Create the favicon files**: Convert your stylized 3D letter "D" design to multiple formats
+2. **Place the files**: Put all favicon files in this directory (`frontend/public/`)
 3. **File requirements**: 
-   - Format: ICO (Windows icon format)
-   - Recommended sizes: 16x16, 32x32, 48x48 pixels
-   - File should be accessible at `/dnsworth1-logo.ico` when deployed
+   - `dnsworth1-logo.ico` - ICO format (Windows icon, 16x16, 32x32, 48x48px)
+   - `dnsworth1-logo.png` - PNG format (180x180px for Apple touch icon)
+   - `dnsworth1-logo-32x32.png` - PNG format (32x32px)
+   - `dnsworth1-logo-16x16.png` - PNG format (16x16px)
 
-### ICO Creation Tools:
+### Favicon Creation Tools:
 - **Online converters**: favicon.io, convertio.co
 - **Image editing software**: Photoshop, GIMP, Sketch
 - **Command line**: ImageMagick with `convert` command
 
 ### Testing:
-After adding the file, test by:
+After adding the files, test by:
 1. Running your dev server
 2. Checking browser tab for favicon
 3. Verifying favicon appears in bookmarks
 4. Testing social media previews
 
 ### Current Configuration:
-All references now point to `/dnsworth1-logo.ico`:
-- Standard favicon
-- Apple touch icon
-- Open Graph image
-- Twitter image
-- Structured data logos
-- Vercel routing
+All references now point to the correct favicon files:
+- **Standard favicon**: `/dnsworth1-logo.ico` (ICO format)
+- **Apple touch icon**: `/dnsworth1-logo.png` (180x180px PNG)
+- **PNG favicons**: `/dnsworth1-logo-32x32.png` and `/dnsworth1-logo-16x16.png`
+- **Open Graph image**: `/dnsworth1-logo.ico`
+- **Twitter image**: `/dnsworth1-logo.ico`
+- **Structured data logos**: `/dnsworth1-logo.ico`
+- **Vercel routing**: All favicon files configured
