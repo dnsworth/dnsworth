@@ -28,7 +28,7 @@ function AppContent() {
   const navigateToHome = () => {
     console.log('=== navigateToHome FUNCTION CALLED ===');
     console.log('Current location:', location.pathname);
-    console.log('Attempting to navigate to / (AboutUs page)');
+    console.log('Attempting to navigate to /');
     navigate('/');
     // Ensure we scroll to top when navigating to home
     setTimeout(() => {
@@ -46,8 +46,7 @@ function AppContent() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<AboutUs onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
-        <Route path="/home" element={<Home onNavigateToBulk={navigateToBulk} />} />
+        <Route path="/" element={<Home onNavigateToBulk={navigateToBulk} />} />
         <Route path="/bulk-valuation" element={<BulkValuationPage onBack={navigateToHome} />} />
         <Route path="/about" element={<AboutUs onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
