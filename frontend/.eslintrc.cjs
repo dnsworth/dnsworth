@@ -1,3 +1,4 @@
+// ESLint config for React project
 module.exports = {
   env: {
     browser: true,
