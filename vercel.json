@@ -7,7 +7,7 @@
       "use": "@vercel/static-build",
       "config": { 
         "distDir": "frontend/dist",
-        "buildCommand": "cd frontend && ./build-with-public.sh"
+        "buildCommand": "cd frontend && npm run build:prod"
       }
     }
   ],

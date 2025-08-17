@@ -31,5 +31,7 @@ export default defineConfig({
   preview: {
     port: 3000,
     host: true
-  }
+  },
+  // Ensure public files are copied during build
+  publicDir: 'public'
 })
