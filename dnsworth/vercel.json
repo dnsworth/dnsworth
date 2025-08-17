@@ -33,6 +33,16 @@
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/blog", "destination": "/index.html" },
+    { "source": "/faq", "destination": "/index.html" },
+    { "source": "/bulk-valuation", "destination": "/index.html" },
+    { "source": "/privacy-policy", "destination": "/index.html" },
+    { "source": "/terms-of-service", "destination": "/index.html" },
+    { "source": "/cookie-policy", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
