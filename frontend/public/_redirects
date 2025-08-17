@@ -1,0 +1,11 @@
+# Handle client-side routing
+/about    /index.html   200
+/blog    /index.html   200
+/blog/*    /index.html   200
+/bulk-valuation    /index.html   200
+/privacy-policy    /index.html   200
+/terms-of-service    /index.html   200
+/cookie-policy    /index.html   200
+
+# Catch all other routes and serve index.html
+/*    /index.html   200
