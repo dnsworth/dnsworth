@@ -216,7 +216,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
                           value={formData.name}
                           onChange={handleInputChange}
                           required
-                          className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg"
+                          className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500"
                           placeholder="Enter your full name"
                         />
                         <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -239,7 +239,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
                           value={formData.email}
                           onChange={handleInputChange}
                           required
-                          className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg"
+                          className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500"
                           placeholder="Enter your email address"
                         />
                         <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -263,7 +263,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
                         value={formData.subject}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg"
+                        className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500"
                         placeholder="What's this about?"
                       />
                       <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -286,7 +286,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
                         onChange={handleInputChange}
                         required
                         rows={8}
-                        className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg resize-none"
+                        className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500 resize-none"
                         placeholder="Tell us how we can help you..."
                       />
                       <div className="absolute top-4 right-4">
