@@ -48,19 +48,11 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
   ];
 
   const handleStartValuing = () => {
-    // Scroll to top first, then navigate to home
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => {
-      onNavigateHome();
-    }, 300);
+    onNavigateHome();
   };
 
   const handleBulkValuation = () => {
-    // Scroll to top first, then navigate to bulk valuation
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => {
-      onNavigateToBulk();
-    }, 300);
+    onNavigateToBulk();
   };
 
   return (

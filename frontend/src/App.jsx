@@ -17,18 +17,10 @@ function AppContent() {
 
   const navigateToBulk = () => {
     navigate('/bulk-valuation');
-    // Ensure we scroll to top when navigating
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
   };
 
   const navigateToHome = () => {
     navigate('/');
-    // Ensure we scroll to top when navigating to home
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
   };
 
   return (
