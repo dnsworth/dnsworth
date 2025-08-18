@@ -2,8 +2,8 @@
 import { PRODUCTION_CONFIG } from './production.js';
 
 const API_CONFIG = {
-  // Base URL for API calls
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://dnsworth.onrender.com',
+  // Base URL for API calls - Use local backend for development, production backend for production
+  baseURL: import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com',
   
   // Request timeout in milliseconds
   timeout: PRODUCTION_CONFIG.api.timeout,
