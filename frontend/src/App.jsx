@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home';
 import BulkValuationPage from './pages/BulkValuationPage';
 import AboutUs from './pages/AboutUs';
@@ -50,9 +51,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </HelmetProvider>
   );
 }
 

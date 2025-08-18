@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import { SearchTracker } from '../utils/searchTracker';
 import { validateDomainList, sanitizeInput } from '../utils/security.js';
@@ -171,6 +172,10 @@ twitter.com`);
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <meta name="robots" content="noindex" />
+        <title>Bulk Domain Valuation - DNSWorth</title>
+      </Helmet>
       {/* Header */}
       <Header onBulkValuation={() => {}} onNavigateHome={onBack} />
 

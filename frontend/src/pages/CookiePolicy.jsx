@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
@@ -44,6 +45,10 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-background text-white">
+      <Helmet>
+        <title>Cookie Policy - DNSWorth</title>
+        <meta name="description" content="DNSWorth Cookie Policy - Understand how we use cookies and similar technologies to enhance your experience on our domain valuation platform." />
+      </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 

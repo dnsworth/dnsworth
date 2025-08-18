@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
@@ -44,8 +45,12 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-background text-white">
+      <Helmet>
+        <title>Terms of Service - DNSWorth</title>
+        <meta name="description" content="DNSWorth Terms of Service - Read our terms and conditions for using our domain valuation platform and services." />
+      </Helmet>
       {/* Header */}
-      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Header onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">

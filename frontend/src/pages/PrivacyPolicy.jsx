@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
@@ -44,6 +45,10 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-background text-white">
+      <Helmet>
+        <title>Privacy Policy - DNSWorth</title>
+        <meta name="description" content="DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy while using our domain valuation services." />
+      </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
