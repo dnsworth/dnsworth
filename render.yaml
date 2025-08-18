@@ -8,27 +8,16 @@ services:
     plan: free
     region: oregon
     buildCommand: |
-      echo "Cleaning and installing backend dependencies..."
-      cd backend
-      rm -rf node_modules package-lock.json
-      npm install --force
+      echo "Installing backend dependencies..."
+      npm install
       echo "Backend dependencies installed successfully!"
     startCommand: |
       echo "Starting backend server..."
-      cd backend
       npm start
-    rootDir: backend
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000
+        value: 8000
     healthCheckPath: /health
     autoDeploy: true
-    buildFilter:
-      paths:
-        - backend/**
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /backend/*
