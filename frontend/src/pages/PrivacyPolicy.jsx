@@ -5,6 +5,11 @@ import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
 const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
+  // Force scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [lastUpdated] = useState(new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',

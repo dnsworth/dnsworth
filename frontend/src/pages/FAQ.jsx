@@ -4,6 +4,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
+  // Force scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const faqs = [
     {
       question: "How accurate are DNSWorth's domain valuations?",
