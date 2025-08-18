@@ -4,7 +4,7 @@
 export const PRODUCTION_CONFIG = {
   // API Configuration
   api: {
-    baseURL: 'https://dnsworth.onrender.com', // Working Render backend
+    baseURL: 'https://dnsworth.onrender.com:10000', // Working Render backend with correct port
     timeout: 15000,
     retryAttempts: 3,
   },
@@ -18,7 +18,7 @@ export const PRODUCTION_CONFIG = {
       'style-src': ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       'font-src': ["'self'", "https://fonts.gstatic.com"],
       'img-src': ["'self'", "data:", "https:"],
-      'connect-src': ["'self'", "https://dnsworth.onrender.com", "https://api.dnsworth.com", "http://localhost:8000"],
+      'connect-src': ["'self'", "https://dnsworth.onrender.com:10000", "https://api.dnsworth.com", "http://localhost:8000"],
       'frame-src': ["'none'"],
       'object-src': ["'none'"],
       'base-uri': ["'self'"],
