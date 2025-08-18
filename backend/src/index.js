@@ -100,7 +100,9 @@ app.use((req, res, next) => {
     
     if (res.statusCode >= 400) {
       console.warn('Request completed with error:', logData);
-    } else   // Request completed successfully
+    } else {
+      console.log('Request completed successfully:', logData);
+    }
   });
   
   next();
@@ -426,7 +428,9 @@ app.listen(PORT, () => {
   const audit = performSecurityAudit();
   if (!audit.secure) {
     console.warn(`⚠️  Security audit issues detected: ${audit.issues.join(', ')}`);
-  } else   // Security audit passed successfully
+  } else {
+    console.log('✅ Security audit passed successfully');
+  }
 });
 
 // Enhanced graceful shutdown
