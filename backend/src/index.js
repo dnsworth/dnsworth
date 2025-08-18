@@ -65,9 +65,6 @@ app.use(express.json({
 const limiter = rateLimit(rateLimitConfig);
 app.use(limiter);
 
-// Request validation middleware
-app.use(validateRequest);
-
 // Security headers middleware
 app.use((req, res, next) => {
   // Add security headers
@@ -150,7 +147,7 @@ app.get('/', (req, res) => {
 });
 
 // Single domain valuation endpoint with enhanced security
-app.post('/api/value', async (req, res) => {
+app.post('/api/value', validateRequest, async (req, res) => {
   try {
     const { domain } = req.body;
     
@@ -246,7 +243,7 @@ app.post('/api/value', async (req, res) => {
 });
 
 // Bulk domain valuation endpoint with enhanced security
-app.post('/api/bulk-value', async (req, res) => {
+app.post('/api/bulk-value', validateRequest, async (req, res) => {
   try {
     const { domains, totalDomains } = req.body;
     
