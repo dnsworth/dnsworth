@@ -46,8 +46,43 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
   return (
     <div className="min-h-screen bg-background text-white">
       <Helmet>
-        <title>Terms of Service - DNSWorth</title>
-        <meta name="description" content="DNSWorth Terms of Service - Read our terms and conditions for using our domain valuation platform and services." />
+        <title>Terms of Service - DNSWorth User Agreement & Conditions</title>
+        <meta name="description" content="DNSWorth Terms of Service - Read our comprehensive terms and conditions for using our domain valuation platform and services. Understand your rights and obligations." />
+        <meta name="keywords" content="DNSWorth terms of service, user agreement, domain valuation terms, service conditions, legal terms, user rights" />
+        <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/terms-of-service" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Terms of Service - DNSWorth User Agreement & Conditions" />
+        <meta property="og:description" content="DNSWorth Terms of Service - Read our comprehensive terms and conditions for using our domain valuation platform and services." />
+        <meta property="og:url" content="https://dnsworth.com/terms-of-service" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/terms-of-service-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Terms of Service - DNSWorth User Agreement" />
+        <meta name="twitter:description" content="DNSWorth Terms of Service - Read our comprehensive terms and conditions." />
+        <meta name="twitter:image" content="https://dnsworth.com/terms-of-service-twitter-image.jpg" />
+        
+        {/* JSON-LD Structured Data for Legal Document */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "DNSWorth Terms of Service",
+            "description": "DNSWorth Terms of Service - Read our comprehensive terms and conditions",
+            "url": "https://dnsworth.com/terms-of-service",
+            "publisher": {
+              "@type": "Organization",
+              "name": "DNSWorth"
+            }
+          })}
+        </script>
       </Helmet>
       {/* Header */}
       <Header onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />

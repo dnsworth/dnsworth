@@ -106,6 +106,51 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Get Support - DNSWorth Customer Service & Contact</title>
+        <meta name="description" content="Get premium support from DNSWorth's expert team. Contact us for personalized assistance with domain valuation, technical support, or any questions about our free domain tool." />
+        <meta name="keywords" content="DNSWorth support, domain valuation help, customer service, technical support, contact DNSWorth, domain tool assistance" />
+        <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/support" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Get Support - DNSWorth Customer Service & Contact" />
+        <meta property="og:description" content="Get premium support from DNSWorth's expert team for personalized assistance with domain valuation." />
+        <meta property="og:url" content="https://dnsworth.com/support" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/support-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="DNSWorth Support - Customer Service" />
+        <meta name="twitter:description" content="Get premium support from DNSWorth's expert team." />
+        <meta name="twitter:image" content="https://dnsworth.com/support-twitter-image.jpg" />
+        
+        {/* JSON-LD Structured Data for Contact Page */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "DNSWorth Support",
+            "description": "Get premium support from DNSWorth's expert team",
+            "url": "https://dnsworth.com/support",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "DNSWorth",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "email": "support@dnsworth.com",
+                "availableLanguage": "English"
+              }
+            }
+          })}
+        </script>
+      </Helmet>
       <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
       
       {/* Hero Section */}

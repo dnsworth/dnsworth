@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
@@ -122,6 +123,61 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <Helmet>
+        <title>DNSWorth Blog - Domain Investing Insights & Valuation Strategies</title>
+        <meta name="description" content="Expert insights on domain investing, valuation strategies, and market trends. Stay ahead with comprehensive domain industry coverage from DNSWorth." />
+        <meta name="keywords" content="domain investing blog, domain valuation strategies, domain market trends, domain investing insights, domain industry news" />
+        <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/blog" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="DNSWorth Blog - Domain Investing Insights & Valuation Strategies" />
+        <meta property="og:description" content="Expert insights on domain investing, valuation strategies, and market trends. Stay ahead with comprehensive domain industry coverage." />
+        <meta property="og:url" content="https://dnsworth.com/blog" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/blog-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="DNSWorth Blog - Domain Investing Insights" />
+        <meta name="twitter:description" content="Expert insights on domain investing, valuation strategies, and market trends." />
+        <meta name="twitter:image" content="https://dnsworth.com/blog-twitter-image.jpg" />
+        
+        {/* JSON-LD Structured Data for Blog */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "name": "DNSWorth Blog",
+            "description": "Expert insights on domain investing, valuation strategies, and market trends",
+            "url": "https://dnsworth.com/blog",
+            "publisher": {
+              "@type": "Organization",
+              "name": "DNSWorth",
+              "url": "https://dnsworth.com"
+            },
+            "blogPost": blogPosts.map(post => ({
+              "@type": "BlogPosting",
+              "headline": post.title,
+              "description": post.excerpt,
+              "url": `https://dnsworth.com/blog/${post.slug}`,
+              "datePublished": post.date,
+              "author": {
+                "@type": "Organization",
+                "name": "DNSWorth"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "DNSWorth"
+              }
+            }))
+          })}
+        </script>
+      </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 

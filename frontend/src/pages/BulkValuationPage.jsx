@@ -174,7 +174,27 @@ twitter.com`);
     <div className="min-h-screen bg-background">
       <Helmet>
         <meta name="robots" content="noindex" />
-        <title>Bulk Domain Valuation - DNSWorth</title>
+        <title>Bulk Domain Valuation - DNSWorth Portfolio Analysis Tool</title>
+        <meta name="description" content="Value hundreds of domains simultaneously with DNSWorth's bulk valuation tool. Perfect for serious investors and portfolio managers. Free AI-powered portfolio analysis." />
+        <meta name="keywords" content="bulk domain valuation, portfolio analysis, domain portfolio, multiple domain valuation, domain investor tools" />
+        <meta name="author" content="DNSWorth" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/bulk-valuation" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Bulk Domain Valuation - DNSWorth Portfolio Analysis Tool" />
+        <meta property="og:description" content="Value hundreds of domains simultaneously with DNSWorth's bulk valuation tool. Perfect for serious investors and portfolio managers." />
+        <meta property="og:url" content="https://dnsworth.com/bulk-valuation" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/bulk-valuation-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Bulk Domain Valuation - DNSWorth" />
+        <meta name="twitter:description" content="Value hundreds of domains simultaneously with DNSWorth's bulk valuation tool." />
+        <meta name="twitter:image" content="https://dnsworth.com/bulk-valuation-twitter-image.jpg" />
       </Helmet>
       {/* Header */}
       <Header onBulkValuation={() => {}} onNavigateHome={onBack} />

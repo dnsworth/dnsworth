@@ -46,8 +46,43 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
   return (
     <div className="min-h-screen bg-background text-white">
       <Helmet>
-        <title>Cookie Policy - DNSWorth</title>
-        <meta name="description" content="DNSWorth Cookie Policy - Understand how we use cookies and similar technologies to enhance your experience on our domain valuation platform." />
+        <title>Cookie Policy - DNSWorth Cookie Usage & Tracking</title>
+        <meta name="description" content="DNSWorth Cookie Policy - Understand how we use cookies and similar technologies to enhance your experience on our domain valuation platform. Learn about our cookie practices." />
+        <meta name="keywords" content="DNSWorth cookie policy, cookie usage, tracking technologies, domain valuation cookies, privacy cookies, cookie consent" />
+        <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/cookie-policy" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Cookie Policy - DNSWorth Cookie Usage & Tracking" />
+        <meta property="og:description" content="DNSWorth Cookie Policy - Understand how we use cookies and similar technologies to enhance your experience on our domain valuation platform." />
+        <meta property="og:url" content="https://dnsworth.com/cookie-policy" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/cookie-policy-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Cookie Policy - DNSWorth Cookie Usage" />
+        <meta name="twitter:description" content="DNSWorth Cookie Policy - Understand how we use cookies and similar technologies." />
+        <meta name="twitter:image" content="https://dnsworth.com/cookie-policy-twitter-image.jpg" />
+        
+        {/* JSON-LD Structured Data for Legal Document */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "DNSWorth Cookie Policy",
+            "description": "DNSWorth Cookie Policy - Understand how we use cookies and similar technologies",
+            "url": "https://dnsworth.com/cookie-policy",
+            "publisher": {
+              "@type": "Organization",
+              "name": "DNSWorth"
+            }
+          })}
+        </script>
       </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />

@@ -16,9 +16,9 @@ const HeroSection = ({ onResult, loading }) => {
           </h1>
 
           {/* Subheading - Mobile optimized */}
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-text-muted mb-6 sm:mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl text-text-muted mb-6 sm:mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-2 font-normal">
             Discover your domain's <span className="text-primary font-semibold">true market value</span> in seconds with our advanced AI technology.
-          </p>
+          </h2>
 
           {/* Search Form */}
           <div className="mb-6 sm:mb-8 md:mb-12">

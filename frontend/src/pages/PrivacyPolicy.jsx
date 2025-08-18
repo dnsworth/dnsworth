@@ -46,8 +46,43 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
   return (
     <div className="min-h-screen bg-background text-white">
       <Helmet>
-        <title>Privacy Policy - DNSWorth</title>
-        <meta name="description" content="DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy while using our domain valuation services." />
+        <title>Privacy Policy - DNSWorth Data Protection & Privacy</title>
+        <meta name="description" content="DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy while using our domain valuation services. Read our comprehensive data protection guidelines." />
+        <meta name="keywords" content="DNSWorth privacy policy, data protection, domain valuation privacy, user data security, GDPR compliance, privacy protection" />
+        <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/privacy-policy" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Privacy Policy - DNSWorth Data Protection & Privacy" />
+        <meta property="og:description" content="DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy while using our domain valuation services." />
+        <meta property="og:url" content="https://dnsworth.com/privacy-policy" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/privacy-policy-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Privacy Policy - DNSWorth Data Protection" />
+        <meta name="twitter:description" content="DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy." />
+        <meta name="twitter:image" content="https://dnsworth.com/privacy-policy-twitter-image.jpg" />
+        
+        {/* JSON-LD Structured Data for Legal Document */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "DNSWorth Privacy Policy",
+            "description": "DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy",
+            "url": "https://dnsworth.com/privacy-policy",
+            "publisher": {
+              "@type": "Organization",
+              "name": "DNSWorth"
+            }
+          })}
+        </script>
       </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />

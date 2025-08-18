@@ -64,6 +64,64 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Frequently Asked Questions - DNSWorth Domain Valuation</title>
+        <meta name="description" content="Get answers to the most common questions about DNSWorth's free domain valuation service. Learn how our AI-powered tool works and how to get accurate domain appraisals." />
+        <meta name="keywords" content="DNSWorth FAQ, domain valuation questions, domain appraisal help, free domain tool FAQ, domain valuation guide" />
+        <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/faq" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Frequently Asked Questions - DNSWorth Domain Valuation" />
+        <meta property="og:description" content="Get answers to the most common questions about DNSWorth's free domain valuation service." />
+        <meta property="og:url" content="https://dnsworth.com/faq" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/faq-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="DNSWorth FAQ - Domain Valuation Questions" />
+        <meta name="twitter:description" content="Get answers to common questions about DNSWorth's free domain valuation service." />
+        <meta name="twitter:image" content="https://dnsworth.com/faq-twitter-image.jpg" />
+        
+        {/* JSON-LD Structured Data for FAQ */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How does DNSWorth's domain valuation work?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "DNSWorth uses advanced AI technology to analyze domain characteristics, market trends, and historical sales data to provide accurate valuations in seconds."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is DNSWorth really free to use?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, DNSWorth is 100% free forever. We believe everyone deserves access to professional-grade domain valuation tools."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How accurate are the valuations?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Our AI-powered system provides market-based valuations that are comparable to professional appraisal services, using real market data and trends."
+                }
+              }
+            ]
+          })}
+        </script>
+      </Helmet>
       <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
       
       {/* Hero Section */}

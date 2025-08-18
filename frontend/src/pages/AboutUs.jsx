@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
@@ -74,6 +75,30 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <Helmet>
+        <title>About DNSWorth - Our Mission & Domain Valuation Technology</title>
+        <meta name="description" content="Learn about DNSWorth's mission to democratize domain intelligence. Discover our AI-powered technology and commitment to providing free, professional-grade domain valuations." />
+        <meta name="keywords" content="about DNSWorth, domain valuation company, AI domain technology, domain intelligence platform, free domain tools" />
+        <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://dnsworth.com/about" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="About DNSWorth - Our Mission & Domain Valuation Technology" />
+        <meta property="og:description" content="Learn about DNSWorth's mission to democratize domain intelligence. Discover our AI-powered technology and commitment to providing free, professional-grade domain valuations." />
+        <meta property="og:url" content="https://dnsworth.com/about" />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content="https://dnsworth.com/about-og-image.jpg" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About DNSWorth - Our Mission & Technology" />
+        <meta name="twitter:description" content="Learn about DNSWorth's mission to democratize domain intelligence." />
+        <meta name="twitter:image" content="https://dnsworth.com/about-twitter-image.jpg" />
+      </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 

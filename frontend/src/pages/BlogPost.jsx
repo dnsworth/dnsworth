@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
@@ -2441,6 +2442,61 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>{post.title} - DNSWorth Blog</title>
+        <meta name="description" content={post.excerpt} />
+        <meta name="keywords" content={post.keywords ? post.keywords.join(', ') : 'domain valuation, domain investing, domain appraisal'} />
+        <meta name="author" content={post.author} />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href={`https://dnsworth.com/blog/${post.slug}`} />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:url" content={`https://dnsworth.com/blog/${post.slug}`} />
+        <meta property="og:site_name" content="DNSWorth" />
+        <meta property="og:image" content={`https://dnsworth.com/blog/${post.slug}-og-image.jpg`} />
+        <meta property="article:published_time" content={post.date} />
+        <meta property="article:author" content={post.author} />
+        <meta property="article:section" content={post.category} />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.excerpt} />
+        <meta name="twitter:image" content={`https://dnsworth.com/blog/${post.slug}-twitter-image.jpg`} />
+        
+        {/* JSON-LD Structured Data for Article */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.excerpt,
+            "image": `https://dnsworth.com/blog/${post.slug}-og-image.jpg`,
+            "author": {
+              "@type": "Organization",
+              "name": post.author
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "DNSWorth",
+              "url": "https://dnsworth.com"
+            },
+            "datePublished": post.date,
+            "dateModified": post.date,
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://dnsworth.com/blog/${post.slug}`
+            },
+            "articleSection": post.category,
+            "keywords": post.keywords || ['domain valuation', 'domain investing', 'domain appraisal']
+          })}
+        </script>
+      </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
