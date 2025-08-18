@@ -1,0 +1,28 @@
+# DNSWorth robots.txt
+# This file controls how search engines and web crawlers interact with our site
+
+User-agent: *
+Allow: /
+
+# Disallow API endpoints to prevent automated scraping
+Disallow: /api/
+Disallow: /api/*
+
+# Disallow admin and internal endpoints
+Disallow: /admin/
+Disallow: /internal/
+Disallow: /health
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /blog
+Allow: /privacy
+Allow: /terms
+Allow: /cookies
+
+# Crawl delay to be respectful
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://dnsworth.com/sitemap.xml
