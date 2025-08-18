@@ -380,6 +380,90 @@ app.post('/api/bulk-value', validateRequest, async (req, res) => {
   }
 });
 
+// Contact form submission endpoint
+app.post('/api/contact', validateRequest, async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+    
+    // Basic validation
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({
+        error: 'Missing required fields',
+        message: 'Name, email, subject, and message are required',
+        code: 'MISSING_FIELDS',
+        requestId: req.requestId
+      });
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return res.status(400).json({
+        error: 'Invalid email format',
+        message: 'Please enter a valid email address',
+        code: 'INVALID_EMAIL',
+        requestId: req.requestId
+      });
+    }
+    
+    // Import email functionality
+    const { createTransporter, emailTemplates, sendEmail } = await import('./config/email.js');
+    
+    // Create email transporter
+    const transporter = createTransporter();
+    
+    // Prepare email data
+    const emailData = {
+      name: name.trim(),
+      email: email.trim(),
+      subject: subject.trim(),
+      message: message.trim()
+    };
+    
+    // Get email template
+    const template = emailTemplates.contactForm(emailData);
+    
+    // Send email
+    const mailOptions = {
+      from: 'info@dnsworth.com',
+      to: 'info@dnsworth.com',
+      subject: template.subject,
+      text: template.text,
+      html: template.html,
+      replyTo: emailData.email // So you can reply directly to the sender
+    };
+    
+    const result = await sendEmail(transporter, mailOptions);
+    
+    // Log successful submission
+    console.log('Contact Form Submission:', {
+      timestamp: new Date().toISOString(),
+      requestId: req.requestId,
+      ...emailData,
+      ip: req.ip,
+      userAgent: req.get('User-Agent'),
+      emailResult: result
+    });
+    
+    // Return success response
+    res.status(200).json({
+      success: true,
+      message: 'Contact form submitted successfully',
+      timestamp: new Date().toISOString(),
+      requestId: req.requestId
+    });
+    
+  } catch (error) {
+    console.error('Contact form submission error:', error);
+    res.status(500).json({
+      error: 'Internal server error',
+      message: 'Failed to submit contact form. Please try again later.',
+      code: 'INTERNAL_ERROR',
+      requestId: req.requestId
+    });
+  }
+});
+
 // Enhanced error handling middleware
 app.use((error, req, res, next) => {
       // Secure error logging

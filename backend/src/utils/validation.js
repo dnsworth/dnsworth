@@ -1,206 +1,188 @@
-// Enhanced secure domain validation utilities for backend
-import { domainValidationConfig, requestValidationConfig } from '../config/security.js';
+// Enhanced backend security configuration
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 
-// Enhanced domain validation with advanced security checks
-export function validateDomain(domain) {
-  if (!domain || typeof domain !== 'string') {
-    return { valid: false, error: 'Domain is required' };
-  }
+// Environment configuration
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
-  // Length validation
-  if (domain.length > domainValidationConfig.maxLength) {
-    return { 
-      valid: false, 
-      error: `Domain too long. Maximum ${domainValidationConfig.maxLength} characters allowed.` 
-    };
-  }
-
-  // Check for empty or whitespace-only domains
-  if (domain.trim().length === 0) {
-    return { valid: false, error: 'Domain cannot be empty' };
-  }
-
-  // Advanced security checks
-  if (domainValidationConfig.securityChecks.checkForXSS) {
-    if (domain.includes('<') || domain.includes('>') || domain.includes('"') || domain.includes("'")) {
-      return { valid: false, error: 'Domain contains invalid characters' };
-    }
-  }
-
-  if (domainValidationConfig.securityChecks.checkForProtocols) {
-    if (domain.includes('javascript:') || domain.includes('data:') || domain.includes('vbscript:') || 
-        domain.includes('file:') || domain.includes('ftp:') || domain.includes('mailto:')) {
-      return { valid: false, error: 'Domain contains invalid protocol' };
-    }
-  }
-
-  if (domainValidationConfig.securityChecks.checkForInjection) {
-    if (domain.includes('--') || domain.includes('/*') || domain.includes('*/') || 
-        domain.includes('union') || domain.includes('select') || domain.includes('drop')) {
-      return { valid: false, error: 'Domain contains potentially dangerous content' };
-    }
-  }
-
-  // Stricter regex pattern with additional security
-  const domainRegex = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+// Security constants
+export const SECURITY_CONFIG = {
+  // Rate limiting
+  RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
+  RATE_LIMIT_MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || (isProduction ? 50 : 500),
   
-  if (!domainRegex.test(domain)) {
-    return { valid: false, error: 'Invalid domain format' };
-  }
-
-  // Check individual parts
-  const parts = domain.split('.');
-  if (parts.length < 2) {
-    return { valid: false, error: 'Domain must have at least one TLD' };
-  }
-
-  // Validate each part with enhanced security
-  for (let i = 0; i < parts.length; i++) {
-    const part = parts[i];
-    
-    if (part.length > domainValidationConfig.maxPartLength || part.length === 0) {
-      return { 
-        valid: false, 
-        error: `Domain part too long. Maximum ${domainValidationConfig.maxPartLength} characters per part.` 
-      };
-    }
-    
-    // Check for consecutive hyphens
-    if (part.includes('--')) {
-      return { valid: false, error: 'Domain cannot contain consecutive hyphens' };
-    }
-    
-    // Check for leading/trailing hyphens
-    if (part.startsWith('-') || part.endsWith('-')) {
-      return { valid: false, error: 'Domain parts cannot start or end with hyphens' };
-    }
-    
-    // Check for invalid characters
-    if (!/^[a-zA-Z0-9-]+$/.test(part)) {
-      return { valid: false, error: 'Domain parts can only contain letters, numbers, and hyphens' };
-    }
-
-    // Check for consecutive dots
-    if (part.includes('..')) {
-      return { valid: false, error: 'Domain cannot contain consecutive dots' };
-    }
-  }
-
-  // Check TLD
-  const tld = parts[parts.length - 1].toLowerCase();
+  // CORS origins - use environment variables
+  ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS?.split(',') || [
+    'http://localhost:3000',
+    process.env.FRONTEND_URL || 'https://dnsworth.com',
+    process.env.FRONTEND_WWW_URL || 'https://www.dnsworth.com'
+  ],
   
-  // Block dangerous TLDs
-  if (domainValidationConfig.blockedTLDs.includes(tld)) {
-    return { valid: false, error: `TLD '${tld}' is not allowed` };
-  }
+  // Request limits
+  MAX_REQUEST_SIZE: process.env.MAX_REQUEST_SIZE || '5mb',
+  MAX_DOMAINS_PER_REQUEST: parseInt(process.env.MAX_DOMAINS_PER_REQUEST) || 100,
+  
+  // Timeouts
+  REQUEST_TIMEOUT: parseInt(process.env.REQUEST_TIMEOUT) || (isProduction ? 10000 : 30000),
+  
+  // External API configuration
+  HUMBLEWORTH_API_URL: process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com/api/valuation'
+};
 
-  // Block IP addresses disguised as domains
-  const ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-  if (ipRegex.test(domain)) {
-    return { valid: false, error: 'IP addresses are not allowed as domains' };
-  }
+// Redis configuration for production
+const redisConfig = {
+  host: process.env.REDIS_HOST || 'localhost',
+  port: process.env.REDIS_PORT || 6379,
+  password: process.env.REDIS_PASSWORD,
+  db: process.env.REDIS_DB || 0,
+  retryDelayOnFailover: 100,
+  maxRetriesPerRequest: 3
+};
 
-  // Check for blocked patterns
-  for (const pattern of domainValidationConfig.blockedPatterns) {
-    if (pattern.test(domain)) {
-      return { valid: false, error: 'Domain matches blocked pattern' };
-    }
-  }
+// CORS configuration with enhanced security
+export const corsOptions = {
+  origin: SECURITY_CONFIG.ALLOWED_ORIGINS,
+  credentials: true,
+  methods: ['GET', 'POST'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With',
+    'X-Client-Version',
+    'X-Request-ID'
+  ],
+  maxAge: 86400, // 24 hours
+  optionsSuccessStatus: 200,
+  preflightContinue: false
+};
 
-  // Additional security checks
-  if (domain.includes('admin') || domain.includes('root') || domain.includes('system')) {
-    return { valid: false, error: 'Domain contains restricted keywords' };
-  }
-
-  // Check for suspicious patterns
-  if (domain.match(/[0-9]{4,}/)) {
-    return { valid: false, error: 'Domain contains too many consecutive numbers' };
-  }
-
-  return { valid: true, domain: domain.toLowerCase() };
-}
-
-// Enhanced domain list validation
-export function validateDomainList(domains) {
-  if (!Array.isArray(domains)) {
-    return { valid: false, error: 'Invalid input format. Expected array of domains.' };
-  }
-
-  if (domains.length === 0) {
-    return { valid: false, error: 'No domains provided' };
-  }
-
-  if (domains.length > domainValidationConfig.maxDomainsPerRequest) {
-    return { 
-      valid: false, 
-      error: `Too many domains. Maximum ${domainValidationConfig.maxDomainsPerRequest} allowed per request.` 
-    };
-  }
-
-  const validDomains = [];
-  const invalidDomains = [];
-  const errors = [];
-
-  for (let i = 0; i < domains.length; i++) {
-    const domain = domains[i];
-    const validation = validateDomain(domain);
+// Advanced rate limiting with proper store configuration
+export const rateLimitConfig = {
+  windowMs: SECURITY_CONFIG.RATE_LIMIT_WINDOW_MS,
+  max: SECURITY_CONFIG.RATE_LIMIT_MAX_REQUESTS,
+  message: { 
+    error: 'Rate limit exceeded',
+    retryAfter: Math.ceil(SECURITY_CONFIG.RATE_LIMIT_WINDOW_MS / 1000),
+    code: 'RATE_LIMIT_EXCEEDED'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Use memory store for development, null for production (will use default)
+  store: isProduction ? undefined : undefined,
+  skipSuccessfulRequests: false,
+  skipFailedRequests: false,
+  // Enhanced key generator with fingerprinting
+  keyGenerator: (req) => {
+    const ip = req.ip || req.connection.remoteAddress;
+    const userAgent = req.get('User-Agent') || 'unknown';
+    const requestId = req.get('X-Request-ID') || 'no-id';
     
-    if (validation.valid) {
-      validDomains.push(validation.domain);
-    } else {
-      invalidDomains.push(domain);
-      errors.push(`Domain ${i + 1}: ${validation.error}`);
-    }
+    // Create unique fingerprint
+    return `${ip}-${userAgent.substring(0, 50)}-${requestId}`;
+  },
+  // Enhanced rate limit handler
+  handler: (req, res) => {
+    const retryAfter = Math.ceil(SECURITY_CONFIG.RATE_LIMIT_WINDOW_MS / 1000);
+    
+    res.status(429).json({
+      error: 'Rate limit exceeded',
+      retryAfter,
+      message: 'Too many requests from this IP',
+      code: 'RATE_LIMIT_EXCEEDED',
+      timestamp: new Date().toISOString()
+    });
+    
+    // Log rate limit violation
+    console.warn(`Rate limit exceeded for IP: ${req.ip}, User-Agent: ${req.get('User-Agent')}`);
   }
+};
 
-  return {
-    valid: validDomains.length > 0,
-    validDomains,
-    invalidDomains,
-    totalValid: validDomains.length,
-    totalInvalid: invalidDomains.length,
-    errors,
-    message: invalidDomains.length > 0 
-      ? `${invalidDomains.length} invalid domains found and will be skipped.`
-      : 'All domains are valid.'
-  };
-}
+// Helmet configuration for security headers
+export const helmetConfig = {
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      connectSrc: ["'self'", "https://dnsworth.onrender.com"],
+      frameSrc: ["'none'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"]
+    }
+  },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  },
+  noSniff: true,
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+};
 
-// Enhanced input sanitization with advanced protection
-export function sanitizeInput(input) {
+// API security configuration
+export const apiSecurityConfig = {
+  maxRequestSize: SECURITY_CONFIG.MAX_REQUEST_SIZE,
+  maxDomainsPerRequest: SECURITY_CONFIG.MAX_DOMAINS_PER_REQUEST,
+  timeout: SECURITY_CONFIG.REQUEST_TIMEOUT,
+  securityHeaders: {
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'X-XSS-Protection': '1; mode=block',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'geolocation=(), microphone=(), camera=()'
+  }
+};
+
+// Request validation configuration
+export const requestValidationConfig = {
+  maxBodySize: 5 * 1024 * 1024, // 5MB
+  maxHeaderSize: 16 * 1024, // 16KB
+  allowedContentTypes: ['application/json'],
+  requiredHeaders: ['X-Requested-With'],
+  sanitization: {
+    maxInputLength: 1000,
+    allowedTags: [],
+    allowedAttributes: []
+  }
+};
+
+// Domain validation configuration
+export const domainValidationConfig = {
+  maxLength: 253,
+  minLength: 1,
+  allowedCharacters: /^[a-zA-Z0-9\-\.]+$/,
+  maxLabels: 127,
+  maxLabelLength: 63
+};
+
+// Input sanitization function
+export function sanitizeInput(input, options = {}) {
   if (typeof input !== 'string') {
-    return '';
+    return input;
   }
-
-  let sanitized = input;
-
-  // Remove potentially dangerous characters and patterns
+  
+  let sanitized = input.trim();
+  
+  // Remove potentially dangerous characters
   sanitized = sanitized
     .replace(/[<>]/g, '') // Remove < and >
     .replace(/javascript:/gi, '') // Remove javascript: protocol
     .replace(/data:/gi, '') // Remove data: protocol
     .replace(/vbscript:/gi, '') // Remove vbscript: protocol
-    .replace(/file:/gi, '') // Remove file: protocol
-    .replace(/ftp:/gi, '') // Remove ftp: protocol
-    .replace(/mailto:/gi, '') // Remove mailto: protocol
     .replace(/on\w+=/gi, '') // Remove event handlers
-    .replace(/["']/g, '') // Remove quotes
-    .replace(/--/g, '') // Remove SQL comment markers
-    .replace(/\/\*/g, '') // Remove SQL comment markers
-    .replace(/\*\//g, '') // Remove SQL comment markers
-    .replace(/union/gi, '') // Remove SQL keywords
-    .replace(/select/gi, '') // Remove SQL keywords
-    .replace(/drop/gi, '') // Remove SQL keywords
-    .replace(/insert/gi, '') // Remove SQL keywords
-    .replace(/update/gi, '') // Remove SQL keywords
-    .replace(/delete/gi, '') // Remove SQL keywords
-    .trim();
-
-  // Limit input length
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remove script tags
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, ''); // Remove iframe tags
+  
+  // Apply length limits
   if (sanitized.length > requestValidationConfig.sanitization.maxInputLength) {
     sanitized = sanitized.substring(0, requestValidationConfig.sanitization.maxInputLength);
   }
-
+  
   return sanitized;
 }
 
@@ -294,6 +276,102 @@ export function createRateLimiter(maxRequests = 10, windowMs = 60000) {
     requests.set(identifier, validRequests);
     
     return true; // Request allowed
+  };
+}
+
+// Domain validation function
+export function validateDomain(domain) {
+  if (!domain || typeof domain !== 'string') {
+    return { valid: false, error: 'Domain is required' };
+  }
+
+  // Length validation
+  if (domain.length > domainValidationConfig.maxLength) {
+    return { 
+      valid: false, 
+      error: `Domain too long. Maximum ${domainValidationConfig.maxLength} characters allowed.` 
+    };
+  }
+
+  // Check for empty or whitespace-only domains
+  if (domain.trim().length === 0) {
+    return { valid: false, error: 'Domain cannot be empty' };
+  }
+
+  // Check for invalid characters
+  if (!domainValidationConfig.allowedCharacters.test(domain)) {
+    return { valid: false, error: 'Domain contains invalid characters' };
+  }
+
+  // Check individual parts
+  const parts = domain.split('.');
+  if (parts.length < 2) {
+    return { valid: false, error: 'Domain must have at least one TLD' };
+  }
+
+  // Validate each part
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    
+    if (part.length > domainValidationConfig.maxLabelLength || part.length === 0) {
+      return { 
+        valid: false, 
+        error: `Domain part too long. Maximum ${domainValidationConfig.maxLabelLength} characters per part.` 
+      };
+    }
+    
+    // Check for leading/trailing hyphens
+    if (part.startsWith('-') || part.endsWith('-')) {
+      return { valid: false, error: 'Domain parts cannot start or end with hyphens' };
+    }
+  }
+
+  return { valid: true, domain: domain.toLowerCase() };
+}
+
+// Domain list validation
+export function validateDomainList(domains) {
+  if (!Array.isArray(domains)) {
+    return { valid: false, error: 'Invalid input format. Expected array of domains.' };
+  }
+
+  if (domains.length === 0) {
+    return { valid: false, error: 'No domains provided' };
+  }
+
+  if (domains.length > domainValidationConfig.maxLabels) {
+    return { 
+      valid: false, 
+      error: `Too many domains. Maximum ${domainValidationConfig.maxLabels} allowed per request.` 
+    };
+  }
+
+  const validDomains = [];
+  const invalidDomains = [];
+  const errors = [];
+
+  for (let i = 0; i < domains.length; i++) {
+    const domain = domains[i];
+    const validation = validateDomain(domain);
+    
+    if (validation.valid) {
+      validDomains.push(validation.domain);
+    } else {
+      invalidDomains.push(domain);
+      errors.push(`Domain ${i + 1}: ${validation.error}`);
+    }
+  }
+
+  return {
+    valid: validDomains.length > 0,
+    validDomains,
+    invalidDomains,
+    totalValid: validDomains.length,
+    totalInvalid: invalidDomains.length,
+    errors,
+    message: invalidDomains.length > 0 
+      ? `${invalidDomains.length} invalid domains found and will be skipped.`
+      : 'All domains are valid.'
   };
 }
 

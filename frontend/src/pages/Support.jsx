@@ -38,17 +38,35 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
     setSubmitStatus(null);
 
     try {
-      // Simulate email sending (replace with actual email service)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Get the API base URL from the current environment
+      const apiBaseUrl = import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com';
       
-      // For now, we'll use mailto: link as fallback
-      const mailtoLink = `mailto:info@dnsworth.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+      // Submit the contact form to our backend
+      const response = await fetch(`${apiBaseUrl}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-Client-Version': '2.0.0'
+        },
+        body: JSON.stringify(formData)
+      });
       
-      window.location.href = mailtoLink;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
       
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      const result = await response.json();
+      
+      if (result.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error(result.message || 'Failed to submit contact form');
+      }
     } catch (error) {
+      console.error('Contact form submission error:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
