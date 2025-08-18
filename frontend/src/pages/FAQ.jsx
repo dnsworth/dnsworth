@@ -1,9 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
-const FAQ = () => {
-  const navigate = useNavigate();
-
+const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
   const faqs = [
     {
       question: "How accurate are DNSWorth's domain valuations?",
@@ -47,72 +46,101 @@ const FAQ = () => {
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="container-custom py-6">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => navigate('/')}
-              className="text-primary hover:text-primary-dark transition-colors duration-200"
-            >
-              ← Back to Home
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h1>
-            <div className="w-20"></div> {/* Spacer for centering */}
-          </div>
-        </div>
-      </div>
+  const handleStartValuing = () => {
+    // Scroll to top first, then navigate to home
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      onNavigateHome();
+    }, 300);
+  };
 
-      {/* FAQ Content */}
-      <div className="container-custom py-16">
-        <div className="max-w-4xl mx-auto">
-          {/* Introduction */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              Everything You Need to Know About DNSWorth
-            </h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
+  const handleBulkValuation = () => {
+    // Scroll to top first, then navigate to bulk valuation
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      onNavigateToBulk();
+    }, 300);
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
+      
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
               Get answers to the most common questions about our free domain valuation service
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* FAQ List */}
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                <div className="p-8">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    {faq.question}
+      {/* FAQ Content */}
+      <section className="py-20">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto">
+            {/* FAQ List */}
+            <div className="space-y-6">
+              {faqs.map((faq, index) => (
+                <div key={index} className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <div className="p-8">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-start">
+                      <span className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
+                        {index + 1}
+                      </span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed text-lg ml-12">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Section */}
+            <div className="mt-20 text-center">
+              <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 text-white relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
+                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
+                </div>
+                
+                <div className="relative z-10">
+                  <h3 className="text-4xl font-bold mb-6">
+                    Ready to Get Started?
                   </h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">
-                    {faq.answer}
+                  <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                    Try DNSWorth today and discover the true value of your domains with our AI-powered valuation technology
                   </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button
+                      onClick={handleStartValuing}
+                      className="bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-gray-100 transition-all duration-200 text-lg hover:scale-105 transform"
+                    >
+                      Start Valuing Domains
+                    </button>
+                    <button
+                      onClick={handleBulkValuation}
+                      className="border-2 border-white text-white font-bold px-8 py-4 rounded-2xl hover:bg-white hover:text-primary transition-all duration-200 text-lg hover:scale-105 transform"
+                    >
+                      Bulk Valuation
+                    </button>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* CTA Section */}
-          <div className="mt-16 text-center">
-            <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 text-white">
-              <h3 className="text-3xl font-bold mb-4">
-                Ready to Get Started?
-              </h3>
-              <p className="text-xl mb-8 opacity-90">
-                Try DNSWorth today and discover the true value of your domains
-              </p>
-              <button
-                onClick={() => navigate('/')}
-                className="bg-white text-primary font-bold px-8 py-4 rounded-2xl hover:bg-gray-100 transition-colors duration-200 text-lg"
-              >
-                Start Valuing Domains
-              </button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <Footer onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
     </div>
   );
 };

@@ -54,7 +54,7 @@ function AppContent() {
         <Route path="/privacy-policy" element={<PrivacyPolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/terms-of-service" element={<TermsOfService onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/cookie-policy" element={<CookiePolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
-        <Route path="/faq" element={<FAQ />} />
+        <Route path="/faq" element={<FAQ onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
       </Routes>
     </div>
   );
