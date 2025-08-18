@@ -26,7 +26,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
         whyChooseSection.scrollIntoView({ behavior: 'smooth' });
       }
     }},
-    { name: 'Support', action: () => window.open('mailto:support@dnsworth.com', '_blank') }
+    { name: 'Support', action: () => navigate('/support') }
   ];
 
   const socialLinks = [
@@ -121,8 +121,37 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
             </div>
           </div>
 
+          {/* Support & Donate Section */}
+          <div className="border-t border-gray-800 pt-12 mt-12">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Support DNSWorth's Mission
+              </h3>
+              <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+                Help us keep domain valuation free forever and continue improving our AI technology. 
+                Every contribution makes a difference in making domain investing accessible to everyone.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => navigate('/support')}
+                  className="bg-gradient-to-r from-primary to-secondary text-white font-bold px-8 py-3 rounded-2xl hover:scale-105 transform transition-all duration-200"
+                >
+                  Get Support
+                </button>
+                <a
+                  href="https://www.paypal.com/donate/?hosted_button_id=YOUR_PAYPAL_BUTTON_ID"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-2 border-primary text-primary font-bold px-8 py-3 rounded-2xl hover:bg-primary hover:text-white transition-all duration-200"
+                >
+                  💝 Donate via PayPal
+                </a>
+              </div>
+            </div>
+          </div>
+
           {/* Bottom Bar */}
-          <div className="border-t border-gray-800 pt-8 mt-12">
+          <div className="border-t border-gray-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
                 © {currentYear} DNSWorth. All Rights Reserved.
