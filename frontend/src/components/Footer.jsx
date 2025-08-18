@@ -145,7 +145,16 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
                 </li>
                 <li>
                   <button
-                    onClick={() => navigate('/support')}
+                    onClick={() => {
+                      // Use the navigation prop if available, otherwise fallback to direct navigation
+                      if (onNavigateHome) {
+                        // Navigate to support page
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        setTimeout(() => navigate('/support'), 300);
+                      } else {
+                        navigate('/support');
+                      }
+                    }}
                     className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
                   >
                     Contact
