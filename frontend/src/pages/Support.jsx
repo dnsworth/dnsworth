@@ -42,7 +42,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // For now, we'll use mailto: link as fallback
-      const mailtoLink = `mailto:support@dnsworth.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+      const mailtoLink = `mailto:info@dnsworth.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
       
       window.location.href = mailtoLink;
       
@@ -74,8 +74,8 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
           </svg>
         </div>
       ),
-      action: () => window.open('mailto:support@dnsworth.com', '_blank'),
-      buttonText: 'support@dnsworth.com',
+      action: () => window.open('mailto:info@dnsworth.com', '_blank'),
+      buttonText: 'info@dnsworth.com',
       buttonStyle: 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700'
     },
     {
@@ -150,7 +150,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
-                "email": "support@dnsworth.com",
+                "email": "info@dnsworth.com",
                 "availableLanguage": "English"
               }
             }
@@ -329,7 +329,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
                         </p>
                       </div>
                       <p className="text-red-700">
-                        Please try again or contact us directly at support@dnsworth.com
+                        Please try again or contact us directly at info@dnsworth.com
                       </p>
                     </div>
                   )}
