@@ -10,7 +10,8 @@
     "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
     "install:all": "cd backend && npm install && cd ../frontend && npm install",
     "backend:install": "cd backend && npm install",
-    "frontend:install": "cd frontend && npm install"
+    "frontend:install": "cd frontend && npm install",
+    "postinstall": "cd backend && npm install"
   },
   "keywords": [
     "domain",
@@ -22,6 +23,15 @@
   ],
   "author": "DNSWorth Team",
   "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.2.0",
+    "express-rate-limit": "^7.5.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^7.0.5"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2"
   },
