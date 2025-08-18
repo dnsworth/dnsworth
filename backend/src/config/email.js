@@ -3,15 +3,18 @@ import nodemailer from 'nodemailer';
 
 // Create transporter for Zoho SMTP
 export const createTransporter = () => {
+  const password = process.env.ZOHO_APP_PASSWORD;
+  if (!password) {
+    throw new Error('ZOHO_APP_PASSWORD environment variable is required');
+  }
+  
   return nodemailer.createTransport({
     host: 'smtppro.zoho.eu',  // EU data center
     port: 465,
     secure: true,
     auth: {
       user: 'info@dnsworth.com',
-      pass: process.env.ZOHO_APP_PASSWORD || (() => {
-        throw new Error('ZOHO_APP_PASSWORD environment variable is required');
-      })()
+      pass: password
     }
   });
 };
