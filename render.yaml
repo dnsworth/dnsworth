@@ -1,10 +1,21 @@
+# Render deployment configuration for DNSWorth backend
+# This file tells Render how to deploy the backend service
+
 services:
   - type: web
     name: dnsworth-backend
     env: node
     plan: free
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    region: oregon
+    buildCommand: |
+      echo "Installing backend dependencies..."
+      cd backend
+      npm install
+      echo "Backend dependencies installed successfully!"
+    startCommand: |
+      echo "Starting backend server..."
+      cd backend
+      npm start
     rootDir: backend
     envVars:
       - key: NODE_ENV
@@ -13,4 +24,10 @@ services:
         value: 10000
     healthCheckPath: /health
     autoDeploy: true
-    # Render deployment configuration for backend service
+    buildFilter:
+      paths:
+        - backend/**
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /backend/*
