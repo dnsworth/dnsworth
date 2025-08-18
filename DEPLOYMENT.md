@@ -1,184 +1,76 @@
 # 🚀 DNSWorth Deployment Guide
 
-## Overview
-This guide will help you deploy DNSWorth to production with the domain dnsworth.com.
+## 🔒 **SECURITY FIRST - NO PASSWORDS IN CODE**
 
-## 🏗️ Architecture
-- **Frontend**: React + Vite (deployed to Vercel)
-- **Backend**: Node.js + Express (deployed to Render)
-- **Domain**: dnsworth.com (configured on GoDaddy)
+This repository contains **ZERO real passwords or secrets**. All sensitive data is managed through environment variables.
 
-## 📋 Prerequisites
-1. GitHub repository: https://github.com/dnsworth/dnsworth.git
-2. GoDaddy account with dnsworth.com domain
-3. Vercel account (free)
-4. Render account (free)
+## 📋 **PRE-DEPLOYMENT CHECKLIST**
 
-## 🎯 Step 1: GitHub Setup
+### **✅ Environment Setup**
+- [ ] Copy `env.template` to `.env`
+- [ ] Generate new APP_SECRET values
+- [ ] Add your Zoho app password
+- [ ] Configure production URLs
 
-### Create Repository
-1. Go to https://github.com/dnsworth
-2. Click "New repository"
-3. Name: `dnsworth`
-4. Description: "Free domain valuation website powered by HumbleWorth API"
-5. Make it Public
-6. Don't initialize with README (we already have one)
-
-### Push Code
+### **✅ Generate New Secrets**
 ```bash
-git remote set-url origin https://github.com/dnsworth/dnsworth.git
-git push -u origin main
+# Generate new 32-character secrets
+node -e "console.log('APP_SECRET_1=' + require('crypto').randomBytes(32).toString('hex'))"
+node -e "console.log('APP_SECRET_2=' + require('crypto').randomBytes(32).toString('hex'))"
+node -e "console.log('APP_SECRET_3=' + require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-## 🌐 Step 2: Frontend Deployment (Vercel)
-
-### Deploy to Vercel
-1. Go to [vercel.com](https://vercel.com)
-2. Sign up/Login with GitHub
-3. Click "New Project"
-4. Import `dnsworth/dnsworth` repository
-5. Configure:
-   - **Framework Preset**: Vite
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build:prod`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
-
-### Environment Variables
-Add these in Vercel dashboard:
-```
-VITE_API_BASE_URL=https://api.dnsworth.com
-VITE_DONATION_LINK=https://www.paypal.me/dekunley
-VITE_DONATION_BACKUP=https://www.paypal.me/dekunley
-```
-
-### Custom Domain
-1. In Vercel dashboard, go to your project
-2. Click "Settings" → "Domains"
-3. Add `dnsworth.com`
-4. Add `www.dnsworth.com`
-5. Vercel will provide DNS records to configure
-
-## 🔧 Step 3: Backend Deployment (Render)
-
-### Deploy to Render
-1. Go to [render.com](https://render.com)
-2. Sign up/Login with GitHub
-3. Click "New" → "Web Service"
-4. Connect `dnsworth/dnsworth` repository
-5. Configure:
-   - **Name**: `dnsworth-backend`
-   - **Root Directory**: `backend`
-   - **Environment**: `Node`
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm run start:prod`
-
-### Environment Variables
-Add these in Render dashboard:
-```
+### **✅ Environment Variables Required**
+```bash
+# Server
 NODE_ENV=production
-PORT=10000
+PORT=8000
+
+# Security (Generate new ones!)
+APP_SECRET_1=your_new_32_character_secret
+APP_SECRET_2=your_new_32_character_secret
+APP_SECRET_3=your_new_32_character_secret
+
+# Email
+ZOHO_APP_PASSWORD=your_zoho_app_password
+
+# URLs
 ALLOWED_ORIGINS=https://dnsworth.com,https://www.dnsworth.com
-HUMBLEWORTH_API_URL=https://valuation.humbleworth.com/api/valuation
-RATE_LIMIT_MAX_REQUESTS=50
-REQUEST_TIMEOUT=10000
+VITE_API_BASE_URL=https://dnsworth.onrender.com
 ```
 
-### Custom Domain
-1. In Render dashboard, go to your service
-2. Click "Settings" → "Custom Domains"
-3. Add `api.dnsworth.com`
-4. Render will provide DNS records
+## 🚀 **DEPLOYMENT STEPS**
 
-## 🌍 Step 4: Domain Configuration (GoDaddy)
+### **Backend (Render.com)**
+1. Connect your GitHub repository
+2. Set environment variables in Render dashboard
+3. Deploy
 
-### DNS Records Setup
-In GoDaddy DNS management, add these records:
+### **Frontend (Vercel)**
+1. Connect your GitHub repository
+2. Vercel will auto-deploy
+3. No environment variables needed (frontend is static)
 
-#### A Records
-```
-@ (root) → Vercel IP (from Vercel dashboard)
-www → Vercel IP (from Vercel dashboard)
-api → Render IP (from Render dashboard)
-```
+## 🔒 **SECURITY FEATURES**
 
-#### CNAME Records (Alternative)
-```
-@ → dnsworth.vercel.app
-www → dnsworth.vercel.app
-api → dnsworth-backend.onrender.com
-```
+- ✅ **Helmet.js** - Security headers
+- ✅ **Rate limiting** - DDoS protection
+- ✅ **CORS protection** - Origin validation
+- ✅ **Input sanitization** - XSS prevention
+- ✅ **Environment variables** - No hardcoded secrets
 
-### SSL Certificate
-- **Vercel**: Automatically provides SSL for dnsworth.com
-- **Render**: Automatically provides SSL for api.dnsworth.com
-- **GoDaddy**: Enable SSL in domain settings
+## ⚠️ **IMPORTANT SECURITY NOTES**
 
-## ✅ Step 5: Testing & Verification
+1. **NEVER commit `.env` files**
+2. **NEVER commit real passwords**
+3. **Generate new secrets for production**
+4. **Rotate secrets regularly**
+5. **Use environment variables for all sensitive data**
 
-### Test URLs
-1. **Frontend**: https://dnsworth.com
-2. **Backend**: https://api.dnsworth.com/health
-3. **WWW Redirect**: https://www.dnsworth.com → https://dnsworth.com
+## 🎯 **RESULT**
 
-### Health Checks
-```bash
-# Frontend
-curl -I https://dnsworth.com
-
-# Backend
-curl https://api.dnsworth.com/health
-```
-
-## 🔄 Step 6: Future Deployments
-
-### Automatic Deployments
-- **Vercel**: Automatically deploys on git push to main
-- **Render**: Automatically deploys on git push to main
-
-### Manual Deployments
-```bash
-# Frontend (Vercel)
-git push origin main
-
-# Backend (Render)
-git push origin main
-```
-
-### Environment Variable Updates
-1. Update in hosting provider dashboard
-2. Redeploy service
-3. Test changes
-
-## 🚨 Troubleshooting
-
-### Common Issues
-1. **DNS Propagation**: Wait 24-48 hours for full propagation
-2. **SSL Issues**: Check hosting provider SSL status
-3. **Build Failures**: Check build logs in hosting dashboard
-4. **Environment Variables**: Verify all required vars are set
-
-### Support
-- **Vercel**: [vercel.com/support](https://vercel.com/support)
-- **Render**: [render.com/docs](https://render.com/docs)
-- **GoDaddy**: [godaddy.com/help](https://godaddy.com/help)
-
-## 📊 Monitoring
-
-### Performance
-- **Vercel Analytics**: Built-in performance monitoring
-- **Render Metrics**: CPU, memory, response time
-- **Uptime**: Monitor service health
-
-### Security
-- **SSL Status**: Check certificate validity
-- **Rate Limiting**: Monitor API usage
-- **Security Headers**: Verify security headers
-
-## 🎉 Success!
-Once deployed, your DNSWorth application will be available at:
-- **Main Site**: https://dnsworth.com
-- **API**: https://api.dnsworth.com
-- **WWW**: https://www.dnsworth.com (redirects to main)
-
-Your application is now production-ready with enterprise-grade security! 🚀
+Your repository will be **100% secure** with:
+- ✅ No passwords in code
+- ✅ No secrets in Git history
+- ✅ All sensitive data externalized
+- ✅ Production-ready security
