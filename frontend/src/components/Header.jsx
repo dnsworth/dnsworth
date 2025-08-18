@@ -4,12 +4,7 @@ const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
   // Handle both prop names for backward compatibility
   const handleBulkValuation = onBulkValuation || onNavigateToBulk;
   
-  console.log('Header component rendered with props:', {
-    onBulkValuation,
-    onNavigateToBulk,
-    onNavigateHome,
-    handleBulkValuation
-  });
+  // Header component rendered successfully
   
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-gray-800 shadow-2xl shadow-primary/10">
@@ -28,26 +23,12 @@ const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
         <div className="flex-shrink-0">
           <button
             onClick={() => {
-              console.log('=== BULK VALUATION BUTTON CLICKED ===');
-              console.log('Button clicked in Header component');
-              console.log('Available props:', { onBulkValuation, onNavigateToBulk, onNavigateHome });
-              console.log('handleBulkValuation function:', handleBulkValuation);
-              console.log('Type of handleBulkValuation:', typeof handleBulkValuation);
-              
               if (typeof handleBulkValuation === 'function') {
-                console.log('Calling handleBulkValuation function...');
                 try {
                   handleBulkValuation();
-                  console.log('handleBulkValuation function called successfully');
                 } catch (error) {
-                  console.error('Error calling handleBulkValuation:', error);
+                  // Handle error silently in production
                 }
-              } else {
-                console.error('❌ handleBulkValuation is NOT a function!');
-                console.error('Available functions:', {
-                  onBulkValuation: typeof onBulkValuation,
-                  onNavigateToBulk: typeof onNavigateToBulk
-                });
               }
             }}
             className="btn-accent-mobile sm:btn-accent animate-glow text-sm sm:text-base px-3 py-2 sm:px-6 sm:py-3"

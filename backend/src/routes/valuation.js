@@ -31,9 +31,7 @@ router.post('/value', async (req, res) => {
     // Clean the domain
     const cleanDomain = domain.replace(/^(https?:\/\/)?(www\.)?/, '');
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`Processing valuation request for domain: ${cleanDomain}`);
-    }
+      // Processing valuation request for domain
 
     // Call HumbleWorth API using environment variable
     const response = await fetch(SECURITY_CONFIG.HUMBLEWORTH_API_URL, {
@@ -69,9 +67,7 @@ router.post('/value', async (req, res) => {
     // Return the first valuation result
     const result = data.valuations[0];
     
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`Valuation completed for ${cleanDomain}: $${result?.valuation?.estimatedValue || 'N/A'}`);
-    }
+    // Valuation completed successfully
     
     res.json({
       success: true,
@@ -134,9 +130,7 @@ router.post('/bulk-value', async (req, res) => {
       });
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`Processing bulk valuation for ${validDomains.length} domains`);
-    }
+      // Processing bulk valuation request
 
     // Call HumbleWorth API for bulk valuation using environment variable
     const response = await fetch(SECURITY_CONFIG.HUMBLEWORTH_API_URL, {
@@ -169,9 +163,7 @@ router.post('/bulk-value', async (req, res) => {
       });
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log(`Bulk valuation completed for ${validDomains.length} domains`);
-    }
+    // Bulk valuation completed successfully
 
     res.json({
       success: true,

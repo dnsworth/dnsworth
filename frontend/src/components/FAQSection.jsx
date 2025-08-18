@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { renderSecureHTML } from '../utils/security';
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -138,20 +139,18 @@ const FAQSection = () => {
       {/* Structured Data for SEO */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": faqs.map((faq, index) => ({
-              "@type": "Question",
-              "name": faq.question,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-              }
-            }))
-          })
-        }}
+        dangerouslySetInnerHTML={renderSecureHTML(JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqs.map((faq, index) => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": faq.answer
+            }
+          }))
+        }))}
       />
     </section>
   );

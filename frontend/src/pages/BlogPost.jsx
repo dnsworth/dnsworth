@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { renderSecureHTML } from '../utils/security';
 
 const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
   const { slug } = useParams();
@@ -2517,7 +2518,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={renderSecureHTML(post.content)}
           />
 
           {/* Call to Action */}

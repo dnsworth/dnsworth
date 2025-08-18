@@ -100,9 +100,7 @@ app.use((req, res, next) => {
     
     if (res.statusCode >= 400) {
       console.warn('Request completed with error:', logData);
-    } else if (process.env.NODE_ENV !== 'production') {
-      console.log('Request completed:', logData);
-    }
+    } else   // Request completed successfully
   });
   
   next();
@@ -422,29 +420,13 @@ app.use('*', (req, res) => {
 
 // Start server with enhanced security logging
 app.listen(PORT, () => {
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(`🚀 DNSWorth API server running on port ${PORT}`);
-    console.log(`🔒 Enhanced security features enabled:`);
-    console.log(`   - Helmet.js security headers`);
-    console.log(`   - Enhanced CORS protection`);
-    console.log(`   - Advanced rate limiting: ${rateLimitConfig.max} requests per ${rateLimitConfig.windowMs / 60000} minutes`);
-    console.log(`   - Enhanced request validation`);
-    console.log(`   - Advanced input sanitization`);
-    console.log(`   - Enhanced domain validation`);
-    console.log(`   - Security headers enforcement`);
-    console.log(`   - Request ID tracking`);
-    console.log(`   - Secure error logging`);
-    console.log(`🎉 All features are FREE and UNLIMITED!`);
-    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  }
+  // DNSWorth API server running with enhanced security features
   
   // Perform security audit on startup
   const audit = performSecurityAudit();
   if (!audit.secure) {
     console.warn(`⚠️  Security audit issues detected: ${audit.issues.join(', ')}`);
-  } else if (process.env.NODE_ENV !== 'production') {
-    console.log(`✅ Security audit passed successfully`);
-  }
+  } else   // Security audit passed successfully
 });
 
 // Enhanced graceful shutdown

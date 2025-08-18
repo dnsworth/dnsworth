@@ -1,25 +1,36 @@
-// API configuration for frontend
+// API configuration for DNSWorth frontend
+import { PRODUCTION_CONFIG } from './production.js';
+
 const API_CONFIG = {
-  baseURL: 'http://localhost:8000', // Default for development
-  timeout: 15000, // Reduced from 30s to 15s for better UX
-  retries: 3,
+  // Base URL for API calls
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://dnsworth.onrender.com',
+  
+  // Request timeout in milliseconds
+  timeout: PRODUCTION_CONFIG.api.timeout,
+  
+  // Retry configuration
+  retryAttempts: PRODUCTION_CONFIG.api.retryAttempts,
+  retryDelay: 1000,
+  
+  // Rate limiting
+  rateLimit: {
+    maxRequests: 10,
+    windowMs: 60000, // 1 minute
+  },
+  
+  // Cache configuration
+  cache: {
+    enabled: PRODUCTION_CONFIG.performance.enableCaching,
+    duration: PRODUCTION_CONFIG.performance.maxCacheAge,
+    maxSize: 100,
+  },
+  
+  // Headers
   headers: {
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
     'X-Client-Version': '2.0.0'
   }
 };
-
-// Production API configuration - ALWAYS use the correct backend
-if (import.meta.env.PROD) {
-  // Force the correct backend URL in production
-  API_CONFIG.baseURL = 'https://dnsworth.onrender.com';
-}
-
-// Debug logging to see what URL is being used
-console.log('🔧 API_CONFIG.baseURL:', API_CONFIG.baseURL);
-console.log('🔧 import.meta.env.PROD:', import.meta.env.PROD);
-console.log('🔧 import.meta.env.VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-console.log('🔧 Using backend URL:', API_CONFIG.baseURL);
 
 export default API_CONFIG;

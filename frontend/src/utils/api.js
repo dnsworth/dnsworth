@@ -13,7 +13,7 @@ export const domainValuation = {
     
     // Return cached response if still valid
     if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-      console.log('📦 Returning cached response for:', domain);
+      // Returning cached response for domain
       return cached.data;
     }
     
@@ -76,7 +76,7 @@ export const domainValuation = {
       
       // If all domains are cached, return immediately
       if (uncachedDomains.length === 0) {
-        console.log('📦 All bulk domains served from cache');
+        // All bulk domains served from cache
         return { results: cachedResults };
       }
       
@@ -155,5 +155,5 @@ export const handleApiError = (error) => {
 // Clear cache utility (useful for testing)
 export const clearCache = () => {
   responseCache.clear();
-  console.log('🗑️ API cache cleared');
+      // API cache cleared successfully
 };
