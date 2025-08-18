@@ -15,12 +15,12 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
   const blogPosts = [
     {
       id: 1,
-      title: "How to Value a Domain for Free: Complete Guide 2024",
+      title: "How to Value a Domain for Free: Complete Guide 2025",
       excerpt: "Learn the secrets of professional domain valuation without spending a dime. Discover how to assess domain worth using market data, trends, and AI-powered tools.",
       category: "guides",
       readTime: "8 min read",
-      date: "2024-12-19",
-      slug: "how-to-value-domain-free-guide-2024",
+      date: "2025-08-18",
+      slug: "how-to-value-domain-free-guide-2025",
       keywords: ["domain valuation", "free domain appraisal", "domain worth", "domain investing guide"]
     },
     {
@@ -29,7 +29,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Discover the hottest dropped domains that could be worth thousands. Our weekly analysis reveals the most promising opportunities for domain investors.",
       category: "market-analysis",
       readTime: "5 min read",
-      date: "2024-12-19",
+      date: "2025-08-15",
       slug: "top-10-valuable-dropped-domains-week",
       keywords: ["dropped domains", "domain opportunities", "valuable domains", "domain investing"]
     },
@@ -39,7 +39,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Compare DNSWorth with paid domain valuation services. See why our free AI-powered tool provides the same accuracy without the hefty price tag.",
       category: "comparisons",
       readTime: "6 min read",
-      date: "2024-12-19",
+      date: "2025-08-12",
       slug: "dnsworth-vs-other-valuation-tools",
       keywords: ["domain valuation tools", "free vs paid", "DNSWorth review", "AI domain valuation"]
     },
@@ -49,7 +49,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Start your domain investing journey with this comprehensive beginner's guide. Learn the fundamentals of domain selection, valuation, and portfolio management.",
       category: "guides",
       readTime: "12 min read",
-      date: "2024-12-19",
+      date: "2025-08-10",
       slug: "domain-investing-101-portfolio-building",
       keywords: ["domain investing", "portfolio building", "domain selection", "beginner guide"]
     },
@@ -59,7 +59,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Explore how artificial intelligence is transforming domain valuation from guesswork to science. Learn about the algorithms and data that power modern appraisals.",
       category: "technology",
       readTime: "7 min read",
-      date: "2024-12-19",
+      date: "2025-08-08",
       slug: "ai-domain-valuation-revolution",
       keywords: ["AI domain valuation", "machine learning", "domain technology", "valuation algorithms"]
     },
@@ -69,7 +69,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       excerpt: "Learn how to value hundreds of domains simultaneously using DNSWorth's bulk valuation tool. Perfect for serious investors and portfolio managers.",
       category: "tools",
       readTime: "4 min read",
-      date: "2024-12-19",
+      date: "2025-08-05",
       slug: "bulk-domain-valuation-portfolio-analysis",
       keywords: ["bulk valuation", "portfolio analysis", "domain portfolio", "efficient valuation"]
     }

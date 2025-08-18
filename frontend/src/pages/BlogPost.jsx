@@ -17,19 +17,19 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
 
   // Blog post data - in a real app, this would come from an API or CMS
   const blogPosts = {
-    "how-to-value-domain-free-guide-2024": {
-      title: "How to Value a Domain for Free: Complete Guide 2024",
+    "how-to-value-domain-free-guide-2025": {
+      title: "How to Value a Domain for Free: Complete Guide 2025",
       excerpt: "Learn the secrets of professional domain valuation without spending a dime. Discover how to assess domain worth using market data, trends, and AI-powered tools.",
       category: "guides",
       readTime: "15 min read",
-      date: "2024-12-19",
+      date: "2025-08-18",
       author: "DNSWorth Team",
       content: `
-        <h1>How to Value a Domain for Free: Complete Guide 2024</h1>
+        <h1>How to Value a Domain for Free: Complete Guide 2025</h1>
         
         <p className="text-lg text-gray-900 mb-8 leading-relaxed">Domain valuation is both an art and a science. Whether you're looking to buy, sell, or invest in domains, understanding their true worth is crucial for making informed decisions. In this comprehensive guide, we'll show you how to value domains for free using professional techniques and tools that rival paid services.</p>
         
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Why Domain Valuation Matters in 2024</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 mt-12">Why Domain Valuation Matters in 2025</h2>
         <p className="text-lg text-gray-800 mb-6 leading-relaxed">Domains are digital real estate, and like physical property, their value can fluctuate significantly based on market conditions, trends, and intrinsic factors. A proper valuation helps you:</p>
         <ul className="list-disc list-inside space-y-2 mb-8 text-gray-800">
           <li className="text-lg">Make informed buying decisions and avoid overpaying</li>
