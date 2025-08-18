@@ -1,39 +1,36 @@
 {
-  "name": "dnsworth",
+  "name": "dnsworth-backend",
   "version": "1.0.0",
-  "description": "DNSWorth - Free Domain Valuation Tool",
-  "main": "backend/src/index.js",
+  "description": "DNSWorth Backend API for domain valuations",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "cd backend && npm start",
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
-    "build": "cd backend && rm -rf node_modules package-lock.json && npm install --force",
-    "install:all": "cd backend && npm install && cd ../frontend && npm install",
-    "backend:install": "cd backend && npm install",
-    "frontend:install": "cd frontend && npm install",
-    "postinstall": "cd backend && npm install"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "echo 'No build step required for Node.js'",
+    "start:prod": "NODE_ENV=production node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "domain",
     "valuation",
     "api",
-    "react",
     "express",
     "node"
   ],
   "author": "DNSWorth Team",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^4.21.2",
-    "cors": "^2.8.5",
-    "helmet": "^7.2.0",
     "express-rate-limit": "^7.5.1",
+    "helmet": "^7.2.0",
     "node-fetch": "^3.3.2",
     "nodemailer": "^7.0.5"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "nodemon": "^3.0.2"
   },
   "engines": {
     "node": ">=18.0.0",

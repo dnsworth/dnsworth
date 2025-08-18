@@ -338,12 +338,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## **Security**
 
 For security issues, please contact:
-- **Email**: security@dnsworth.com
+- **Email**: info@dnsworth.com
 - **Response Time**: Within 24 hours
 - **PGP Key**: Available upon request
 
 ---
 
-**Built with ❤️ by the DNSWorth Team**
 
 [Website](https://dnsworth.com) • [API](https://dnsworth.onrender.com) • [GitHub](https://github.com/dnsworth/dnsworth)
