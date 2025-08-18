@@ -13,3 +13,4 @@ services:
         value: 10000
     healthCheckPath: /health
     autoDeploy: true
+    # Render deployment configuration for backend service
