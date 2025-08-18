@@ -178,16 +178,16 @@ app.post('/api/value', async (req, res) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), apiSecurityConfig.timeout);
 
-               const apiResponse = await fetch(SECURITY_CONFIG.HUMBLEWORTH_API_URL, {
-             method: 'POST',
-             headers: {
-               'Content-Type': 'application/json',
-               'User-Agent': 'DNSWorth/2.0.0',
-               'X-Request-ID': req.requestId
-             },
-             body: JSON.stringify({ domains: [validation.domain] }),
-             signal: controller.signal
-           });
+    const apiResponse = await fetch(SECURITY_CONFIG.HUMBLEWORTH_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'DNSWorth/2.0.0',
+        'X-Request-ID': req.requestId
+      },
+      body: JSON.stringify({ domains: [validation.domain] }),
+      signal: controller.signal
+    });
 
     clearTimeout(timeoutId);
 
@@ -195,27 +195,27 @@ app.post('/api/value', async (req, res) => {
       throw new Error(`HumbleWorth API error: ${apiResponse.status}`);
     }
 
-               const data = await apiResponse.json();
+    const data = await apiResponse.json();
 
-           // Transform response to match expected format
-           // HumbleWorth API returns {"valuations": [{"auction": X, "brokerage": Y, "domain": Z, "marketplace": W}]}
-           const result = data.valuations && data.valuations.length > 0 ? data.valuations[0] : {};
-           
-           // Calculate estimated value as average of auction, marketplace, and brokerage
-           const estimatedValue = Math.round((result.auction + result.marketplace + result.brokerage) / 3);
-           
-           const transformedData = {
-             domain: validation.domain,
-             valuation: {
-               estimatedValue: estimatedValue,
-               auctionValue: result.auction || 0,
-               marketplaceValue: result.marketplace || 0,
-               brokerageValue: result.brokerage || 0
-             },
-             confidence: 85, // Default confidence since API doesn't provide it
-             timestamp: new Date().toISOString(),
-             requestId: req.requestId
-           };
+    // Transform response to match expected format
+    // HumbleWorth API returns {"valuations": [{"auction": X, "brokerage": Y, "domain": Z, "marketplace": W}]}
+    const result = data.valuations && data.valuations.length > 0 ? data.valuations[0] : {};
+    
+    // Calculate estimated value as average of auction, marketplace, and brokerage
+    const estimatedValue = Math.round((result.auction + result.marketplace + result.brokerage) / 3);
+    
+    const transformedData = {
+      domain: validation.domain,
+      valuation: {
+        estimatedValue: estimatedValue,
+        auctionValue: result.auction || 0,
+        marketplaceValue: result.marketplace || 0,
+        brokerageValue: result.brokerage || 0
+      },
+      confidence: 85, // Default confidence since API doesn't provide it
+      timestamp: new Date().toISOString(),
+      requestId: req.requestId
+    };
 
     res.json(transformedData);
     
@@ -292,16 +292,16 @@ app.post('/api/bulk-value', async (req, res) => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), apiSecurityConfig.timeout);
 
-                               const apiResponse = await fetch(SECURITY_CONFIG.HUMBLEWORTH_API_URL, {
-                     method: 'POST',
-                     headers: {
-                       'Content-Type': 'application/json',
-                       'User-Agent': 'DNSWorth/2.0.0',
-                       'X-Request-ID': req.requestId
-                     },
-                     body: JSON.stringify({ domains: [domain] }),
-                     signal: controller.signal
-                   });
+            const apiResponse = await fetch(SECURITY_CONFIG.HUMBLEWORTH_API_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'User-Agent': 'DNSWorth/2.0.0',
+                'X-Request-ID': req.requestId
+              },
+              body: JSON.stringify({ domains: [domain] }),
+              signal: controller.signal
+            });
 
             clearTimeout(timeoutId);
 
@@ -309,13 +309,13 @@ app.post('/api/bulk-value', async (req, res) => {
               throw new Error(`API error: ${apiResponse.status}`);
             }
 
-                               const data = await apiResponse.json();
+            const data = await apiResponse.json();
 
-                   // HumbleWorth API returns {"valuations": [{"auction": X, "brokerage": Y, "domain": Z, "marketplace": W}]}
-                   const result = data.valuations && data.valuations.length > 0 ? data.valuations[0] : {};
-                   
-                   // Calculate estimated value as average of auction, marketplace, and brokerage
-                   const estimatedValue = Math.round((result.auction + result.marketplace + result.brokerage) / 3);
+            // HumbleWorth API returns {"valuations": [{"auction": X, "brokerage": Y, "domain": Z, "marketplace": W}]}
+            const result = data.valuations && data.valuations.length > 0 ? data.valuations[0] : {};
+            
+            // Calculate estimated value as average of auction, marketplace, and brokerage
+            const estimatedValue = Math.round((result.auction + result.marketplace + result.brokerage) / 3);
 
                    return {
                      domain,
