@@ -425,7 +425,7 @@ app.post('/api/contact', validateRequest, async (req, res) => {
     
     // Send email
     const mailOptions = {
-      from: 'info@dnsworth.com',
+      from: `"DNSWorth Contact Form" <info@dnsworth.com>`,
       to: 'info@dnsworth.com',
       subject: template.subject,
       text: template.text,
