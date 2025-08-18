@@ -40,13 +40,13 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
       <div className="px-6 lg:px-8">
         <div className="py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Company Info - Mobile optimized sizing */}
-            <div className="md:col-span-2">
-              <h3 className="mobile-logo-size sm:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4 sm:px-0 sm:py-0">
+            {/* DNSWorth Company Info */}
+            <div>
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
                 DNSWorth
               </h3>
-              <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
-              A highly accurate and dependable domain valuation solution, driven by advanced AI. Instantly appraise single domains or evaluate entire portfolios within seconds.
+              <p className="text-gray-300 leading-relaxed mb-6 text-sm">
+                A highly accurate and dependable domain valuation solution, driven by advanced AI. Instantly appraise single domains or evaluate entire portfolios within seconds.
               </p>
               
               {/* Social Media Icons */}
@@ -115,67 +115,62 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
               </ul>
             </div>
 
-            {/* Company & Support Column */}
-            <div className="md:col-span-2">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Company Section */}
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-4">Company</h4>
-                  <ul className="space-y-3">
-                    <li>
-                      <button
-                        onClick={() => navigate('/about')}
-                        className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
-                      >
-                        About
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => navigate('/blog')}
-                        className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
-                      >
-                        Blog
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => navigate('/faq')}
-                        className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
-                      >
-                        FAQ
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => navigate('/support')}
-                        className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
-                      >
-                        Contact
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Support Our Mission Section */}
-                <div>
-                  <h4 className="text-lg font-semibold text-white mb-4">Support Our Mission</h4>
-                  <p className="text-gray-300 leading-relaxed mb-6">
-                    Help us continue providing world-class support and innovative solutions to our growing community.
-                  </p>
-                  <a
-                    href="https://www.paypal.me/dekunley"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold px-6 py-3 rounded-lg hover:scale-105 transform transition-all duration-200"
+            {/* Company Column */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Company</h4>
+              <ul className="space-y-3">
+                <li>
+                  <button
+                    onClick={() => navigate('/about')}
+                    className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    Support & Donate
-                  </a>
-                </div>
-              </div>
+                    About
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/blog')}
+                    className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
+                  >
+                    Blog
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/faq')}
+                    className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
+                  >
+                    FAQ
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/support')}
+                    className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full"
+                  >
+                    Contact
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Support Our Mission Column */}
+            <div>
+              <h4 className="text-lg font-semibold text-white mb-4">Support Our Mission</h4>
+              <p className="text-gray-300 leading-relaxed mb-6 text-sm">
+                Help us continue providing world-class support and innovative solutions to our growing community.
+              </p>
+              <a
+                href="https://www.paypal.me/dekunley"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold px-6 py-3 rounded-lg hover:scale-105 transform transition-all duration-200"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                Support & Donate
+              </a>
             </div>
           </div>
 
