@@ -8,9 +8,10 @@ services:
     plan: free
     region: oregon
     buildCommand: |
-      echo "Installing backend dependencies..."
+      echo "Cleaning and installing backend dependencies..."
       cd backend
-      npm install
+      rm -rf node_modules package-lock.json
+      npm install --force
       echo "Backend dependencies installed successfully!"
     startCommand: |
       echo "Starting backend server..."
