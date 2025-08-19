@@ -210,7 +210,7 @@ We welcome contributions from the community! Here's how you can help:
 - 📖 Check existing documentation
 - 🐛 Report bugs via GitHub Issues
 - 💬 Discuss features via GitHub Discussions
-- 📧 Contact: support@dnsworth.com
+- 📧 Contact: info@dnsworth.com
 
 ---
 
@@ -300,7 +300,7 @@ NODE_ENV=development npm run dev
 - 📖 **Documentation**: [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/dnsworth/dnsworth/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/dnsworth/dnsworth/discussions)
-- 📧 **Email**: support@dnsworth.com
+- 📧 **Email**: info@dnsworth.com
 
 ### **Community Guidelines**
 - Be respectful and inclusive

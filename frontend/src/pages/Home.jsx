@@ -115,7 +115,7 @@ const Home = ({ onNavigateToBulk }) => {
             "contactPoint": {
               "@type": "ContactPoint",
               "contactType": "customer service",
-              "email": "support@dnsworth.com"
+              "email": "info@dnsworth.com"
             }
           })}
         </script>

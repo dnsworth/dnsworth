@@ -564,7 +564,7 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-3">12.2 General Support</h3>
                   <p className="text-text-muted">
-                    For general service questions or technical support, contact us at <strong>support@dnsworth.com</strong>.
+                    For general service questions or technical support, contact us at <strong>info@dnsworth.com</strong>.
                   </p>
                 </div>
               </div>
