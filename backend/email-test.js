@@ -23,3 +23,4 @@ try {
   console.error('❌ Error:', error.message);
   console.error('Stack:', error.stack);
 }
+

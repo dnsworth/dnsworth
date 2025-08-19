@@ -40,3 +40,4 @@ app.listen(PORT, () => {
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`ZOHO_APP_PASSWORD: ${process.env.ZOHO_APP_PASSWORD ? 'SET' : 'NOT SET'}`);
 });
+

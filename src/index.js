@@ -194,7 +194,7 @@ app.post('/api/value', async (req, res) => {
 
     // Call HumbleWorth API with enhanced timeout and security
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // Default timeout to 10 seconds
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // Increased timeout to 30 seconds
 
     const apiResponse = await fetch('https://api.humbleworth.com/valuations', { // Default API URL
       method: 'POST',
@@ -308,7 +308,7 @@ app.post('/api/bulk-value', async (req, res) => {
         const batchPromises = batch.map(async (domain) => {
           try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // Default timeout to 10 seconds
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // Increased timeout to 30 seconds
 
             const apiResponse = await fetch('https://api.humbleworth.com/valuations', { // Default API URL
               method: 'POST',
