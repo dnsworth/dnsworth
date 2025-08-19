@@ -196,7 +196,7 @@ app.post('/api/value', async (req, res) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // Increased timeout to 30 seconds
 
-    const apiResponse = await fetch('https://api.humbleworth.com/valuations', { // Default API URL
+    const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', { // Correct API URL
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -310,7 +310,7 @@ app.post('/api/bulk-value', async (req, res) => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 30000); // Increased timeout to 30 seconds
 
-            const apiResponse = await fetch('https://api.humbleworth.com/valuations', { // Default API URL
+            const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', { // Correct API URL
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

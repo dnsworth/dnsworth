@@ -38,7 +38,19 @@ app.use(express.json());
 
 // Security middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://dnsworth.com',
+    'https://www.dnsworth.com'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-Client-Version']
+}));
 
 // Additional security middleware
 app.use((req, res, next) => {
@@ -205,7 +217,7 @@ app.post('/api/value', async (req, res) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // Default timeout to 10 seconds
 
-    const apiResponse = await fetch('https://api.humbleworth.com/valuations', { // Default API URL
+    const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', { // Correct API URL
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -346,7 +358,7 @@ app.post('/api/bulk-value', async (req, res) => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 10000); // Default timeout to 10 seconds
 
-            const apiResponse = await fetch('https://api.humbleworth.com/valuations', { // Default API URL
+            const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', { // Correct API URL
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
