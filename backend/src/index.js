@@ -181,18 +181,27 @@ app.post('/api/value', async (req, res) => {
       });
     }
 
-    // const cleanDomain = sanitizeInput(domain); // This line was removed
-    // const validation = validateDomain(cleanDomain); // This line was removed
-    
-    // if (!validation.valid) { // This line was removed
-    //   return res.status(400).json({  // This line was removed
-    //     error: validation.error, // This line was removed
-    //     code: 'INVALID_DOMAIN', // This line was removed
-    //     requestId: req.requestId // This line was removed
-    //   }); // This line was removed
-    // } // This line was removed
+    // Development mode: Return mock data instead of calling external API
+    if (process.env.NODE_ENV === 'development') {
+      // Generate mock valuation data for development
+      const mockValuation = {
+        domain: domain,
+        valuation: {
+          estimatedValue: Math.floor(Math.random() * 50000) + 1000,
+          auctionValue: Math.floor(Math.random() * 60000) + 500,
+          marketplaceValue: Math.floor(Math.random() * 45000) + 800,
+          brokerageValue: Math.floor(Math.random() * 55000) + 600
+        },
+        confidence: Math.floor(Math.random() * 30) + 70, // 70-100%
+        timestamp: new Date().toISOString(),
+        requestId: req.requestId,
+        note: 'Development mode - Mock data'
+      };
+      
+      return res.json(mockValuation);
+    }
 
-    // Call HumbleWorth API with enhanced timeout and security
+    // Production mode: Call HumbleWorth API
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // Default timeout to 10 seconds
 
@@ -295,6 +304,33 @@ app.post('/api/bulk-value', async (req, res) => {
     //     requestId: req.requestId // This line was removed
     //   }); // This line was removed
     // } // This line was removed
+
+    // Development mode: Return mock data instead of calling external API
+    if (process.env.NODE_ENV === 'development') {
+      // Generate mock bulk valuation data for development
+      const mockResults = domains.map(domain => ({
+        domain,
+        valuation: {
+          estimatedValue: Math.floor(Math.random() * 50000) + 1000,
+          auctionValue: Math.floor(Math.random() * 60000) + 500,
+          marketplaceValue: Math.floor(Math.random() * 45000) + 800,
+          brokerageValue: Math.floor(Math.random() * 55000) + 600
+        },
+        confidence: Math.floor(Math.random() * 30) + 70 // 70-100%
+      }));
+      
+      const mockResponse = {
+        totalDomains: domains.length,
+        processedDomains: domains.length,
+        failedDomains: 0,
+        valuations: mockResults,
+        timestamp: new Date().toISOString(),
+        message: 'Bulk valuation completed successfully! Development mode - Mock data.',
+        requestId: req.requestId
+      };
+      
+      return res.json(mockResponse);
+    }
 
     // Process domains in batches with enhanced security
     const batchSize = 5; // Reduced for security
@@ -427,6 +463,30 @@ app.post('/api/contact', async (req, res) => {
       });
     }
     
+    // Development mode: Return success without sending email
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Contact Form Submission (Development Mode):', {
+        timestamp: new Date().toISOString(),
+        requestId: req.requestId,
+        name: name.trim(),
+        email: email.trim(),
+        subject: subject.trim(),
+        message: message.trim(),
+        ip: req.ip,
+        userAgent: req.get('User-Agent'),
+        note: 'Development mode - Email not sent'
+      });
+      
+      return res.status(200).json({
+        success: true,
+        message: 'Contact form submitted successfully (Development mode)',
+        timestamp: new Date().toISOString(),
+        requestId: req.requestId,
+        note: 'Development mode - Email not sent'
+      });
+    }
+    
+    // Production mode: Send actual email
     // Import email functionality
     const { createTransporter, emailTemplates, sendEmail } = await import('./config/email.js');
     
