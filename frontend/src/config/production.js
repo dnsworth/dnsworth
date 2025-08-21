@@ -1,5 +1,6 @@
 // Production configuration for DNSWorth frontend
 // This file contains only safe, public configuration values
+// Updated: Fixed backend URLs for production deployment
 
 export const PRODUCTION_CONFIG = {
   // API Configuration
