@@ -29,6 +29,19 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
     
     return (
       <div className="card overflow-hidden animate-fade-in">
+        {/* Affiliate Content */}
+        <div className="bg-green-50 border border-green-200 rounded-t-lg px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-green-800 text-sm font-medium">
+            Interested in <strong className="font-bold">{domain}</strong>? Check availability or make an offer with our trusted partner.
+          </p>
+          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+            GoDaddy.com
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
         {/* Header */}
         <div className="bg-gradient-to-r from-primary via-secondary to-accent px-8 py-6">
           <h2 className="text-3xl font-bold text-background mb-2">{domain}</h2>
@@ -68,13 +81,9 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
 
           {/* Confidence & Details */}
           <div className="border-t border-gray-700 pt-6">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center">
               <span className="text-text-muted text-lg">Confidence Level:</span>
               <span className="font-bold text-primary text-xl">{confidence || 'N/A'}%</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-text-muted text-lg">Last Updated:</span>
-              <span className="font-bold text-secondary text-xl">{formatDate(lastUpdated)}</span>
             </div>
           </div>
 
@@ -184,7 +193,7 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
   };
 
   return (
-    <section className="py-16">
+    <section className="pb-2 -mt-2">
       <div className="container-custom">
         <div className="max-w-5xl mx-auto">
           {results.isBulk ? renderBulkResults(results) : renderSingleResult(results)}

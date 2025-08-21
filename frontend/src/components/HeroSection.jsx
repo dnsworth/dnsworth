@@ -26,7 +26,7 @@ const HeroSection = ({ onResult, loading }) => {
           </div>
 
           {/* Simple Trust Indicators - Mobile optimized spacing */}
-          <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6 text-text-muted text-xs sm:text-sm px-2 mb-6 sm:mb-8">
+          <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6 text-text-muted text-xs sm:text-sm px-2 -mb-2">
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full animate-pulse"></div>
               <span className="font-medium">AI-Powered</span>
