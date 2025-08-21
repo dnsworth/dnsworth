@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,70 +8,6 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [activeTab, setActiveTab] = useState('contact');
-
-  useEffect(() => {
-    // Scroll to top when component mounts
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    try {
-      // Get the API base URL from the current environment
-      const apiBaseUrl = import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com';
-      
-      // Submit the contact form to our backend
-      const response = await fetch(`${apiBaseUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Client-Version': '2.0.0'
-        },
-        body: JSON.stringify(formData)
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-      }
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        throw new Error(result.message || 'Failed to submit contact form');
-      }
-    } catch (error) {
-      console.error('Contact form submission error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const handleBulkValuation = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -202,7 +138,8 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
       <section className="py-20">
         <div className="container-custom">
           <div className="max-w-6xl mx-auto">
-            {/* Contact Form */}
+            
+            {/* Contact Information & Map Section */}
             <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 p-8 md:p-12 mb-20 relative overflow-hidden">
               {/* Form Background Pattern */}
               <div className="absolute inset-0 opacity-5">
@@ -213,170 +150,86 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
               <div className="relative z-10">
                 <div className="text-center mb-12">
                   <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                    Send us a Message
+                    Contact Information
                   </h2>
                   <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                    Fill out the form below and we'll get back to you with personalized assistance as soon as possible
+                    Get in touch with our support team for personalized assistance
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="group">
-                      <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-3 group-hover:text-primary transition-colors duration-200">
-                        Full Name *
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500"
-                          placeholder="Enter your full name"
-                        />
-                        <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
-                          <svg className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="group">
-                      <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3 group-hover:text-primary transition-colors duration-200">
-                        Email Address *
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500"
-                          placeholder="Enter your email address"
-                        />
-                        <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
-                          <svg className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group">
-                    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-3 group-hover:text-primary transition-colors duration-200">
-                      Subject *
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500"
-                        placeholder="What's this about?"
-                      />
-                      <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
-                        <svg className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                {/* Contact Details */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  {/* Contact Info */}
+                  <div className="space-y-8">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Email Support</h3>
+                        <p className="text-gray-600 mb-3">Get direct support from our expert team</p>
+                        <a 
+                          href="mailto:info@dnsworth.com" 
+                          className="text-blue-600 hover:text-blue-700 font-semibold text-lg transition-colors duration-200"
+                        >
+                          info@dnsworth.com
+                        </a>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="group">
-                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-3 group-hover:text-primary transition-colors duration-200">
-                      Message *
-                    </label>
-                    <div className="relative">
-                      <textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        required
-                        rows={8}
-                        className="w-full px-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-lg text-gray-900 placeholder-gray-500 resize-none"
-                        placeholder="Tell us how we can help you..."
-                      />
-                      <div className="absolute top-4 right-4">
-                        <svg className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Response Time</h3>
+                        <p className="text-gray-600 mb-3">We typically respond within 24 hours</p>
+                        <span className="text-green-600 font-semibold">Fast & Reliable</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Office Location</h3>
+                        <p className="text-gray-600 mb-3">Our headquarters</p>
+                        <span className="text-orange-600 font-semibold">San Francisco, CA</span>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Submit Status Messages */}
-                  {submitStatus === 'success' && (
-                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-6 text-center transform scale-105 transition-all duration-300">
-                      <div className="flex items-center justify-center gap-3 mb-3">
-                        <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <p className="text-green-800 font-bold text-lg">
-                          Message sent successfully!
-                        </p>
+                  {/* Map */}
+                  <div className="bg-gray-100 rounded-2xl p-6 h-80 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
                       </div>
-                      <p className="text-green-700">
-                        We'll get back to you soon with personalized assistance.
-                      </p>
-                    </div>
-                  )}
-
-                  {submitStatus === 'error' && (
-                    <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-6 text-center transform scale-105 transition-all duration-300">
-                      <div className="flex items-center justify-center gap-3 mb-3">
-                        <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">Interactive Map</h3>
+                      <p className="text-gray-600 mb-4">San Francisco, California</p>
+                      <div className="bg-white rounded-xl p-4 shadow-lg">
+                        <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-8 h-8 bg-red-500 rounded-full mx-auto mb-2 animate-pulse"></div>
+                            <p className="text-sm text-gray-600">Map placeholder</p>
+                            <p className="text-xs text-gray-500">Location: San Francisco, CA</p>
+                          </div>
                         </div>
-                        <p className="text-red-800 font-bold text-lg">
-                          Something went wrong
-                        </p>
                       </div>
-                      <p className="text-red-700">
-                        Please try again or contact us directly at info@dnsworth.com
-                      </p>
                     </div>
-                  )}
-
-                  <div className="text-center pt-6">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="group relative bg-gradient-to-r from-primary to-secondary text-white font-bold px-12 py-5 rounded-2xl hover:scale-105 transform transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-xl shadow-2xl hover:shadow-primary/25"
-                    >
-                      {isSubmitting ? (
-                        <span className="flex items-center justify-center">
-                          <svg className="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Sending Message...
-                        </span>
-                      ) : (
-                        <span className="flex items-center justify-center">
-                          <svg className="w-6 h-6 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                          </svg>
-                          Send Message
-                        </span>
-                      )}
-                    </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
 
