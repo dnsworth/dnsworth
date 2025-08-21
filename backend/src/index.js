@@ -138,19 +138,26 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check endpoint with security audit
+// Health check endpoint
 app.get('/health', (req, res) => {
-  // const securityAudit = performSecurityAudit(); // This line was removed
-  
-  res.json({ 
-    status: 'healthy', 
+  res.json({
+    status: 'healthy',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
     security: {
-      // audit: securityAudit, // This line was removed
       version: '2.0.0',
       features: ['enhanced-validation', 'rate-limiting', 'security-headers', 'input-sanitization']
     }
+  });
+});
+
+// Test environment variables endpoint
+app.get('/test-env', (req, res) => {
+  res.json({
+    zohoPassword: process.env.ZOHO_APP_PASSWORD ? 'SET' : 'NOT SET',
+    zohoEmail: process.env.ZOHO_EMAIL || 'NOT SET',
+    zohoHost: process.env.ZOHO_SMTP_HOST || 'NOT SET',
+    nodeEnv: process.env.NODE_ENV || 'NOT SET'
   });
 });
 
