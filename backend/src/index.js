@@ -2,36 +2,54 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import http from 'http';
 
-// Load environment variables
+// Load environment variables - Fix the path to look in the correct location
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '..', '..', '.env') });
 
-// Temporarily comment out complex imports
-// import { 
-//   corsOptions, 
-//   rateLimitConfig, 
-//   helmetConfig,
-//   apiSecurityConfig,
-//   requestValidationConfig,
-//   SECURITY_CONFIG
-// } from './config/security.js';
-// import { 
-//   validateDomain, 
-//   validateDomainList, 
-//   sanitizeInput,
-//   validateRequest,
-//   performSecurityAudit 
-// } from './utils/validation.js';
+// Try multiple paths for .env file
+const envPaths = [
+  path.join(__dirname, '..', '.env'),
+  path.join(__dirname, '..', '..', '.env'),
+  path.join(__dirname, '..', '..', 'env.development'),
+  '.env'
+];
+
+let envLoaded = false;
+for (const envPath of envPaths) {
+  try {
+    const result = dotenv.config({ path: envPath });
+    if (result.parsed) {
+      console.log(`✅ Environment loaded from: ${envPath}`);
+      envLoaded = true;
+      break;
+    }
+  } catch (error) {
+    console.log(`⚠️  Could not load from: ${envPath}`);
+  }
+}
+
+if (!envLoaded) {
+  console.log('⚠️  No .env file found, using default values');
+}
+
+// Create HTTP agent with keep-alive for external API calls
+const httpAgent = new http.Agent({
+  keepAlive: true,
+  keepAliveMsec: 1000,
+  maxSockets: 10,
+  maxFreeSockets: 5,
+  timeout: 60000,
+  freeSocketTimeout: 30000
+});
 
 const app = express();
 const PORT = process.env.PORT || 8000;
-const HOST = process.env.HOST || '0.0.0.0'; // Default to 0.0.0.0 for all interfaces
+const HOST = process.env.HOST || '0.0.0.0';
 
 // Basic middleware only
 app.use(express.json());
@@ -43,7 +61,7 @@ app.use(cors({
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost:5173',
-    'http://127.0.0.5173',
+    'http://127.0.0.1:5173',
     'https://dnsworth.com',
     'https://www.dnsworth.com',
     'https://dnsworth.onrender.com'
@@ -139,17 +157,51 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check endpoint
+// Health check endpoint with server warm-up
 app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
     security: {
       version: '2.0.0',
       features: ['enhanced-validation', 'rate-limiting', 'security-headers', 'input-sanitization']
     }
   });
+});
+
+// Warm-up endpoint to prevent cold start issues
+app.get('/warmup', async (req, res) => {
+  try {
+    // Make a test call to external API to warm up the connection
+    const testResponse = await fetch('https://valuation.humbleworth.com/api/valuation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'DNSWorth/2.0.0',
+        'X-Request-ID': req.requestId
+      },
+      body: JSON.stringify({ domains: ['example.com'] }),
+      agent: httpAgent,
+      timeout: 5000
+    });
+    
+    res.json({
+      status: 'warmed up',
+      timestamp: new Date().toISOString(),
+      externalApiStatus: testResponse.status,
+      requestId: req.requestId
+    });
+  } catch (error) {
+    res.json({
+      status: 'warmup failed',
+      timestamp: new Date().toISOString(),
+      error: error.message,
+      requestId: req.requestId
+    });
+  }
 });
 
 // Test environment variables endpoint
@@ -158,7 +210,8 @@ app.get('/test-env', (req, res) => {
     zohoPassword: process.env.ZOHO_APP_PASSWORD ? 'SET' : 'NOT SET',
     zohoEmail: process.env.ZOHO_EMAIL || 'NOT SET',
     zohoHost: process.env.ZOHO_SMTP_HOST || 'NOT SET',
-    nodeEnv: process.env.NODE_ENV || 'NOT SET'
+    nodeEnv: process.env.NODE_ENV || 'NOT SET',
+    humbleworthUrl: process.env.HUMBLEWORTH_API_URL || 'NOT SET'
   });
 });
 
@@ -170,6 +223,7 @@ app.get('/', (req, res) => {
     description: 'Free domain valuation API powered by HumbleWorth - Enhanced security, no restrictions',
     endpoints: {
       health: '/health',
+      warmup: '/warmup',
       singleValuation: '/api/value',
       bulkValuation: '/api/bulk-value'
     },
@@ -187,7 +241,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Single domain valuation endpoint with enhanced security
+// Single domain valuation endpoint with enhanced security and connection pooling
 app.post('/api/value', async (req, res) => {
   try {
     const { domain } = req.body;
@@ -221,19 +275,22 @@ app.post('/api/value', async (req, res) => {
       return res.json(mockValuation);
     }
 
-    // Production mode: Call HumbleWorth API
+    // Production mode: Call HumbleWorth API with connection pooling
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // Default timeout to 10 seconds
+    const timeoutId = setTimeout(() => controller.abort(), 12000); // Increased timeout to 12 seconds
 
-    const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', { // Correct API URL
+    const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'DNSWorth/2.0.0',
-        'X-Request-ID': req.requestId
+        'X-Request-ID': req.requestId,
+        'Connection': 'keep-alive'
       },
       body: JSON.stringify({ domains: [domain] }),
-      signal: controller.signal
+      signal: controller.signal,
+      agent: httpAgent, // Use connection pooling
+      timeout: 12000
     });
 
     clearTimeout(timeoutId);
@@ -292,7 +349,7 @@ app.post('/api/value', async (req, res) => {
   }
 });
 
-// Bulk domain valuation endpoint with enhanced security
+// Bulk domain valuation endpoint with enhanced security and connection pooling
 app.post('/api/bulk-value', async (req, res) => {
   try {
     const { domains, totalDomains } = req.body;
@@ -306,24 +363,14 @@ app.post('/api/bulk-value', async (req, res) => {
       });
     }
 
-    // Enhanced domain list validation
-    // const validation = validateDomainList(domains); // This line was removed
-    // if (!validation.valid) { // This line was removed
-    //   return res.status(400).json({  // This line was removed
-    //     error: validation.error, // This line was removed
-    //     code: 'INVALID_DOMAIN_LIST', // This line was removed
-    //     requestId: req.requestId // This line was removed
-    //   }); // This line was removed
-    // } // This line was removed
-
     // Check domain count limit
-    // if (validation.totalValid > apiSecurityConfig.maxDomainsPerRequest) { // This line was removed
-    //   return res.status(400).json({  // This line was removed
-    //     error: `Too many domains. Maximum ${apiSecurityConfig.maxDomainsPerRequest} allowed.`, // This line was removed
-    //     code: 'DOMAIN_LIMIT_EXCEEDED', // This line was removed
-    //     requestId: req.requestId // This line was removed
-    //   }); // This line was removed
-    // } // This line was removed
+    if (domains.length > 100) {
+      return res.status(400).json({ 
+        error: 'Too many domains. Maximum 100 allowed.',
+        code: 'DOMAIN_LIMIT_EXCEEDED',
+        requestId: req.requestId
+      });
+    }
 
     // Development mode: Return mock data instead of calling external API
     if (process.env.NODE_ENV === 'development') {
@@ -352,7 +399,7 @@ app.post('/api/bulk-value', async (req, res) => {
       return res.json(mockResponse);
     }
 
-    // Process domains in batches with enhanced security
+    // Process domains in batches with enhanced security and connection pooling
     const batchSize = 5; // Reduced for security
     const results = [];
     const errors = [];
@@ -364,17 +411,20 @@ app.post('/api/bulk-value', async (req, res) => {
         const batchPromises = batch.map(async (domain) => {
           try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // Default timeout to 10 seconds
+            const timeoutId = setTimeout(() => controller.abort(), 12000); // Increased timeout to 12 seconds
 
-            const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', { // Correct API URL
+            const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 'User-Agent': 'DNSWorth/2.0.0',
-                'X-Request-ID': req.requestId
+                'X-Request-ID': req.requestId,
+                'Connection': 'keep-alive'
               },
               body: JSON.stringify({ domains: [domain] }),
-              signal: controller.signal
+              signal: controller.signal,
+              agent: httpAgent, // Use connection pooling
+              timeout: 12000
             });
 
             clearTimeout(timeoutId);
@@ -391,16 +441,16 @@ app.post('/api/bulk-value', async (req, res) => {
             // Calculate estimated value as average of auction, marketplace, and brokerage
             const estimatedValue = Math.round((result.auction + result.marketplace + result.brokerage) / 3);
 
-                   return {
-                     domain,
-                     valuation: {
-                       estimatedValue: estimatedValue,
-                       auctionValue: result.auction || 0,
-                       marketplaceValue: result.marketplace || 0,
-                       brokerageValue: result.brokerage || 0
-                     },
-                     confidence: 85 // Default confidence since API doesn't provide it
-                   };
+            return {
+              domain,
+              valuation: {
+                estimatedValue: estimatedValue,
+                auctionValue: result.auction || 0,
+                marketplaceValue: result.marketplace || 0,
+                brokerageValue: result.brokerage || 0
+              },
+              confidence: 85 // Default confidence since API doesn't provide it
+            };
           } catch (error) {
             errors.push({
               domain,

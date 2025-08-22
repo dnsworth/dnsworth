@@ -4,9 +4,31 @@ import API_CONFIG from '../config/api.js';
 const responseCache = new Map();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
+// Warm-up function to prevent cold start issues
+export const warmUpApi = async () => {
+  try {
+    // Call the warmup endpoint to prepare the backend
+    const response = await fetch(`${API_CONFIG.baseURL}/warmup`, {
+      method: 'GET',
+      headers: { 
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-Client-Version': '2.0.0'
+      }
+    });
+    
+    if (response.ok) {
+      console.log('✅ API warmed up successfully');
+      return true;
+    }
+  } catch (error) {
+    console.log('⚠️  API warmup failed:', error.message);
+  }
+  return false;
+};
+
 // API utility functions for domain valuation
 export const domainValuation = {
-  // Single domain valuation with caching
+  // Single domain valuation with caching and warm-up
   async getSingle(domain) {
     const cacheKey = `single_${domain}`;
     const cached = responseCache.get(cacheKey);
@@ -18,7 +40,7 @@ export const domainValuation = {
     }
     
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // Reduced from 30s to 15s
+    const timeoutId = setTimeout(() => controller.abort(), 18000); // Increased timeout to 18s
     
     try {
       const response = await fetch(`${API_CONFIG.baseURL}/api/value`, {
@@ -49,14 +71,57 @@ export const domainValuation = {
       return data;
     } catch (error) {
       clearTimeout(timeoutId);
+      
+      // If it's a timeout error, try to warm up the API and retry once
+      if (error.name === 'AbortError') {
+        console.log('🔄 First request timed out, warming up API and retrying...');
+        await warmUpApi();
+        
+        // Retry the request with a shorter timeout
+        const retryController = new AbortController();
+        const retryTimeoutId = setTimeout(() => retryController.abort(), 15000);
+        
+        try {
+          const retryResponse = await fetch(`${API_CONFIG.baseURL}/api/value`, {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-Client-Version': '2.0.0'
+            },
+            body: JSON.stringify({ domain }),
+            signal: retryController.signal
+          });
+          
+          clearTimeout(retryTimeoutId);
+          
+          if (!retryResponse.ok) {
+            throw new Error(`HTTP error! status: ${retryResponse.status}`);
+          }
+          
+          const retryData = await retryResponse.json();
+          
+          // Cache the successful response
+          responseCache.set(cacheKey, {
+            data: retryData,
+            timestamp: Date.now()
+          });
+          
+          return retryData;
+        } catch (retryError) {
+          clearTimeout(retryTimeoutId);
+          throw retryError;
+        }
+      }
+      
       throw error;
     }
   },
 
-  // Bulk domain valuation with optimized batching
+  // Bulk domain valuation with optimized batching and warm-up
   async getBulk(domains) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 25000); // Reduced from 60s to 25s
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // Increased timeout to 30s
     
     try {
       // Check cache for individual domains first
@@ -118,6 +183,58 @@ export const domainValuation = {
       return { results: allResults };
     } catch (error) {
       clearTimeout(timeoutId);
+      
+      // If it's a timeout error, try to warm up the API and retry once
+      if (error.name === 'AbortError') {
+        console.log('🔄 Bulk request timed out, warming up API and retrying...');
+        await warmUpApi();
+        
+        // Retry the request with a shorter timeout
+        const retryController = new AbortController();
+        const retryTimeoutId = setTimeout(() => retryController.abort(), 25000);
+        
+        try {
+          const retryResponse = await fetch(`${API_CONFIG.baseURL}/api/bulk-value`, {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-Client-Version': '2.0.0'
+            },
+            body: JSON.stringify({ domains: uncachedDomains }),
+            signal: retryController.signal
+          });
+          
+          clearTimeout(retryTimeoutId);
+          
+          if (!retryResponse.ok) {
+            throw new Error(`HTTP error! status: ${retryResponse.status}`);
+          }
+          
+          const retryData = await retryResponse.json();
+          
+          // Cache individual domain results
+          if (retryData.results) {
+            retryData.results.forEach((result, index) => {
+              const domain = uncachedDomains[index];
+              const cacheKey = `single_${domain}`;
+              responseCache.set(cacheKey, {
+                data: result,
+                timestamp: Date.now()
+              });
+            });
+          }
+          
+          // Combine cached and new results
+          const allResults = [...cachedResults, ...(retryData.results || [])];
+          
+          return { results: allResults };
+        } catch (retryError) {
+          clearTimeout(retryTimeoutId);
+          throw retryError;
+        }
+      }
+      
       throw error;
     }
   }
