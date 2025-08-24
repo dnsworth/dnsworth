@@ -174,7 +174,6 @@ twitter.com`);
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <meta name="robots" content="noindex" />
         <title>Bulk Domain Valuation - DNSWorth Portfolio Analysis Tool</title>
         <meta name="description" content="Value hundreds of domains simultaneously with DNSWorth's bulk valuation tool. Perfect for serious investors and portfolio managers. Free AI-powered portfolio analysis." />
         <meta name="keywords" content="bulk domain valuation, portfolio analysis, domain portfolio, multiple domain valuation, domain investor tools" />
