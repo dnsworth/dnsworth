@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { SearchTracker } from '../utils/searchTracker';
 import { validateDomainList, sanitizeInput } from '../utils/security.js';
 import API_CONFIG from '../config/api.js';
@@ -436,6 +437,7 @@ company.net"
           </div>
         </div>
       </section>
+      <Footer onBulkValuation={() => window.scrollTo({ top: 0, behavior: 'smooth' })} onNavigateHome={onBack} />
     </div>
   );
 };
