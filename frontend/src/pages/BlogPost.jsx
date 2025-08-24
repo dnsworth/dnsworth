@@ -349,7 +349,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
               {
                 "@type": "ListItem",
                 "position": 3,
-                "name": title,
+                "name": post.title,
                 "item": `https://dnsworth.com/blog/${slug}`
               }
             ]
