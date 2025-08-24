@@ -46,12 +46,12 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
     },
     {
       id: 4,
-      title: "Domain Investing 101: Building Your First Portfolio",
-      excerpt: "Start your domain investing journey with this comprehensive beginner's guide. Learn the fundamentals of domain selection, valuation, and portfolio management.",
+      title: "Domain Investing Tips for Beginners: Start Your Portfolio Today",
+      excerpt: "New to domain investing? Learn the essential strategies, common pitfalls to avoid, and how to build a profitable domain portfolio from scratch.",
       category: "guides",
       readTime: "12 min read",
       date: "2025-08-10",
-      slug: "domain-investing-101-portfolio-building",
+      slug: "domain-investing-tips-beginners",
       keywords: ["domain investing", "portfolio building", "domain selection", "beginner guide"]
     },
     {
@@ -73,6 +73,16 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       date: "2025-08-05",
       slug: "bulk-domain-valuation-portfolio-analysis",
       keywords: ["bulk valuation", "portfolio analysis", "domain portfolio", "efficient valuation"]
+    },
+    {
+      id: 7,
+      title: "SEO Benefits of Professional Domain Valuation: Boost Your Rankings",
+      excerpt: "Discover how accurate domain valuations can improve your SEO strategy and help you choose domains that perform better in search engines.",
+      category: "seo",
+      readTime: "8 min read",
+      date: "2025-08-08",
+      slug: "seo-benefits-domain-valuation",
+      keywords: ["SEO", "domain valuation", "search rankings", "domain strategy"]
     }
   ];
 
@@ -82,7 +92,8 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
     { id: 'market-analysis', name: 'Market Analysis', count: blogPosts.filter(post => post.category === 'market-analysis').length },
     { id: 'comparisons', name: 'Comparisons', count: blogPosts.filter(post => post.category === 'comparisons').length },
     { id: 'technology', name: 'Technology', count: blogPosts.filter(post => post.category === 'technology').length },
-    { id: 'tools', name: 'Tools', count: blogPosts.filter(post => post.category === 'tools').length }
+    { id: 'tools', name: 'Tools', count: blogPosts.filter(post => post.category === 'tools').length },
+    { id: 'seo', name: 'SEO', count: blogPosts.filter(post => post.category === 'seo').length }
   ];
 
   const filteredPosts = selectedCategory === 'all' 
