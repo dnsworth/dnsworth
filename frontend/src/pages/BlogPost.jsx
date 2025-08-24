@@ -16,6 +16,16 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Load blog post data when slug changes
+  useEffect(() => {
+    if (slug && blogPosts[slug]) {
+      setPost(blogPosts[slug]);
+    } else {
+      // Handle case when slug doesn't exist
+      setPost(null);
+    }
+  }, [slug]);
+
   // Blog post data - in a real app, this would come from an API or CMS
   const blogPosts = {
     "how-to-value-domain-free-guide-2025": {
@@ -2414,12 +2424,6 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       `
     }
   };
-
-  useEffect(() => {
-    if (slug && blogPosts[slug]) {
-      setPost(blogPosts[slug]);
-    }
-  }, [slug]);
 
   if (!post) {
     return (
