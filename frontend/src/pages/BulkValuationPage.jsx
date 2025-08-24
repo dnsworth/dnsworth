@@ -195,6 +195,26 @@ twitter.com`);
         <meta name="twitter:title" content="Bulk Domain Valuation - DNSWorth" />
         <meta name="twitter:description" content="Value hundreds of domains simultaneously with DNSWorth's bulk valuation tool." />
         <meta name="twitter:image" content="https://dnsworth.com/bulk-valuation-twitter-image.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://dnsworth.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Bulk Valuation",
+                "item": "https://dnsworth.com/bulk-valuation"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       {/* Header */}
       <Header onBulkValuation={() => {}} onNavigateHome={onBack} />

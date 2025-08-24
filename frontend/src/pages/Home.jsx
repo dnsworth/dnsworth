@@ -119,6 +119,21 @@ const Home = ({ onNavigateToBulk }) => {
             }
           })}
         </script>
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://dnsworth.com"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       <Header onBulkValuation={handleBulkValuation} onNavigateHome={handleNewSearch} />
       <HeroSection

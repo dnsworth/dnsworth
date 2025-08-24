@@ -88,6 +88,26 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
             }
           })}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://dnsworth.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Terms of Service",
+                "item": "https://dnsworth.com/terms-of-service"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       {/* Header */}
       <Header onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />

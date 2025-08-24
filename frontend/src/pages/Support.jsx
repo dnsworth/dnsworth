@@ -62,6 +62,26 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
             }
           })}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://dnsworth.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Support",
+                "item": "https://dnsworth.com/support"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
       

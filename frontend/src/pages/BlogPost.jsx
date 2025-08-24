@@ -2496,6 +2496,32 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
             "keywords": post.keywords || ['domain valuation', 'domain investing', 'domain appraisal']
           })}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://dnsworth.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://dnsworth.com/blog"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": title,
+                "item": `https://dnsworth.com/blog/${slug}`
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />

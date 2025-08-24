@@ -98,6 +98,27 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="twitter:title" content="About DNSWorth - Our Mission & Technology" />
         <meta name="twitter:description" content="Learn about DNSWorth's mission to democratize domain intelligence." />
         <meta name="twitter:image" content="https://dnsworth.com/about-twitter-image.jpg" />
+
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://dnsworth.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About Us",
+                "item": "https://dnsworth.com/about"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       {/* Header */}
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
