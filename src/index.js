@@ -38,7 +38,23 @@ app.use(express.json());
 
 // Security middleware
 app.use(helmet());
-app.use(cors());
+
+// CORS configuration
+const corsOptions = {
+  origin: [
+    'https://dnsworth.com',
+    'https://www.dnsworth.com',
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:5173'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-Client-Version'],
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 // Additional security middleware
 app.use((req, res, next) => {
