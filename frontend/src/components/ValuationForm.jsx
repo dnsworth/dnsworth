@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { SearchTracker } from '../utils/searchTracker';
 import { validateDomain, sanitizeInput } from '../utils/security.js';
 import { getSecureDonationLink } from '../config/security.js';
-import API_CONFIG from '../config/api.js';
+import { domainValuation, handleApiError } from '../utils/api.js';
 import DonationModal from './DonationModal';
 
 export default function ValuationForm({ onResult }) {
@@ -49,40 +49,18 @@ export default function ValuationForm({ onResult }) {
       // Record the search
       SearchTracker.recordSearch(cleanDomain);
 
-              const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeout);
-        
-        const res = await fetch(`${API_CONFIG.baseURL}/api/value`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-Client-Version': '2.0.0'
-          },
-          body: JSON.stringify({ domain: cleanDomain }),
-          signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json();
+      // Use the robust API utility with retry logic and better error handling
+      const data = await domainValuation.getSingle(cleanDomain);
+      
       if (data.error) {
         setError(data.error);
       } else {
         onResult(data);
       }
     } catch (err) {
-      if (err.name === 'AbortError') {
-        setError('Request timeout. Please try again.');
-      } else if (err.name === 'TypeError' && err.message.includes('fetch')) {
-        setError('Network error. Please check your connection.');
-      } else {
-        setError('Error fetching valuation. Please try again.');
-      }
+      // Use the robust error handling utility
+      const errorInfo = handleApiError(err);
+      setError(errorInfo.message);
     } finally {
       setLoading(false);
     }

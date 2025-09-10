@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { SearchTracker } from '../utils/searchTracker';
 import { validateDomainList, sanitizeInput } from '../utils/security.js';
-import API_CONFIG from '../config/api.js';
+import { domainValuation, handleApiError } from '../utils/api.js';
 
 const BulkValuationPage = ({ onBack, onResults }) => {
   const [domains, setDomains] = useState('');
@@ -53,37 +53,23 @@ const BulkValuationPage = ({ onBack, onResults }) => {
     setResults(null);
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeout);
+      // Use the robust API utility with retry logic and better error handling
+      const data = await domainValuation.getBulk(validation.validDomains);
       
-      const res = await fetch(`${API_CONFIG.baseURL}/api/bulk-value`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify({ 
-          domains: validation.validDomains,
-          totalDomains: validation.totalValid
-        }),
-        signal: controller.signal
-      });
-      
-      clearTimeout(timeoutId);
-
-      if (!res.ok) {
-        if (res.status === 429) {
-          throw new Error('Rate limit exceeded. Please try again later.');
-        } else {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-      }
-
-      const data = await res.json();
       if (data.error) {
         setError(data.error);
       } else {
-        setResults(data);
+        // Transform the data to match expected format
+        const transformedData = {
+          totalDomains: validation.totalValid,
+          processedDomains: data.results?.length || 0,
+          failedDomains: validation.totalValid - (data.results?.length || 0),
+          valuations: data.results || [],
+          timestamp: new Date().toISOString(),
+          message: 'Bulk valuation completed successfully! All features are free and unlimited.'
+        };
+        
+        setResults(transformedData);
         setActiveTab('results');
         // Scroll to results
         setTimeout(() => {
@@ -91,13 +77,9 @@ const BulkValuationPage = ({ onBack, onResults }) => {
         }, 100);
       }
     } catch (err) {
-      if (err.name === 'AbortError') {
-        setError('Request timeout. Please try again.');
-      } else if (err.name === 'TypeError' && err.message.includes('fetch')) {
-        setError('Network error. Please check your connection.');
-      } else {
-        setError(err.message || 'Error fetching bulk valuations. Please try again.');
-      }
+      // Use the robust error handling utility
+      const errorInfo = handleApiError(err);
+      setError(errorInfo.message);
     } finally {
       setLoading(false);
     }

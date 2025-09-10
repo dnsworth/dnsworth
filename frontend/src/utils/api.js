@@ -242,6 +242,7 @@ export const domainValuation = {
 
 // Error handling utility
 export const handleApiError = (error) => {
+  // Timeout errors
   if (error.name === 'AbortError') {
     return {
       message: 'Request timeout. Please try again.',
@@ -249,20 +250,51 @@ export const handleApiError = (error) => {
     };
   }
   
+  // Network connectivity errors
   if (error.name === 'TypeError' && error.message.includes('fetch')) {
     return {
-      message: 'Network error. Please check your connection.',
+      message: 'Network error. Please check your connection and try again.',
       type: 'network'
     };
   }
   
+  // HTTP status errors
   if (error.message && error.message.includes('HTTP error')) {
+    const statusMatch = error.message.match(/status: (\d+)/);
+    const status = statusMatch ? parseInt(statusMatch[1]) : 0;
+    
+    if (status === 429) {
+      return {
+        message: 'Too many requests. Please wait a moment and try again.',
+        type: 'rate_limit'
+      };
+    } else if (status >= 500) {
+      return {
+        message: 'Server error. Please try again later.',
+        type: 'server'
+      };
+    } else if (status >= 400) {
+      return {
+        message: 'Request error. Please check your input and try again.',
+        type: 'client'
+      };
+    }
+    
     return {
       message: 'Server error. Please try again later.',
       type: 'server'
     };
   }
   
+  // Connection refused or similar network issues
+  if (error.message && (error.message.includes('Failed to fetch') || error.message.includes('NetworkError'))) {
+    return {
+      message: 'Unable to connect to server. Please check your internet connection.',
+      type: 'connection'
+    };
+  }
+  
+  // Generic fallback
   return {
     message: 'An unexpected error occurred. Please try again.',
     type: 'unknown'
@@ -272,5 +304,5 @@ export const handleApiError = (error) => {
 // Clear cache utility (useful for testing)
 export const clearCache = () => {
   responseCache.clear();
-      // API cache cleared successfully
+  console.log('✅ API cache cleared successfully');
 };
