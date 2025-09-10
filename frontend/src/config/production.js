@@ -5,7 +5,7 @@
 export const PRODUCTION_CONFIG = {
   // API Configuration
   api: {
-    baseURL: 'https://dnsworth-zoho.onrender.com', // Updated to use correct backend
+    baseURL: 'https://dnsworth.onrender.com', // Updated to use correct backend
     timeout: 15000,
     retryAttempts: 3,
   },
