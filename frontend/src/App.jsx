@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import BulkValuationPage from './pages/BulkValuationPage';
 import AboutUs from './pages/AboutUs';
@@ -14,23 +15,28 @@ import Support from './pages/Support';
 function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [shouldScrollToTop, setShouldScrollToTop] = useState(false);
 
   const navigateToBulk = () => {
     navigate('/bulk-valuation');
   };
 
   const navigateToHome = () => {
+    setShouldScrollToTop(true);
     navigate('/');
-    // Scroll to top to show the valuation form after navigation
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 100);
   };
+
+  // Reset scroll flag when location changes
+  useEffect(() => {
+    if (shouldScrollToTop && location.pathname === '/') {
+      setShouldScrollToTop(false);
+    }
+  }, [location.pathname, shouldScrollToTop]);
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home onNavigateToBulk={navigateToBulk} />} />
+        <Route path="/" element={<Home onNavigateToBulk={navigateToBulk} shouldScrollToTop={shouldScrollToTop} />} />
         <Route path="/bulk-valuation" element={<BulkValuationPage onBack={navigateToHome} />} />
         <Route path="/about" element={<AboutUs onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />

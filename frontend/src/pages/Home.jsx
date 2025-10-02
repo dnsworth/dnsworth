@@ -10,7 +10,7 @@ import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import { SearchTracker } from '../utils/searchTracker';
 
-const Home = ({ onNavigateToBulk }) => {
+const Home = ({ onNavigateToBulk, shouldScrollToTop }) => {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -20,6 +20,16 @@ const Home = ({ onNavigateToBulk }) => {
     // Initialize search count from localStorage
     setSearchCount(SearchTracker.getSearchCount());
   }, []);
+
+  // Handle scroll to top when navigating from other pages
+  useEffect(() => {
+    if (shouldScrollToTop) {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+      });
+    }
+  }, [shouldScrollToTop]);
 
   const handleValuationResult = (data) => {
     setResults(data);
