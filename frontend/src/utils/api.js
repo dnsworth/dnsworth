@@ -166,8 +166,8 @@ export const domainValuation = {
       const bulkData = await response.json();
       
       // Cache individual domain results
-      if (bulkData.results) {
-        bulkData.results.forEach((result, index) => {
+      if (bulkData.valuations) {
+        bulkData.valuations.forEach((result, index) => {
           const domain = uncachedDomains[index];
           const cacheKey = `single_${domain}`;
           responseCache.set(cacheKey, {
@@ -178,7 +178,7 @@ export const domainValuation = {
       }
       
       // Combine cached and new results
-      const allResults = [...cachedResults, ...(bulkData.results || [])];
+      const allResults = [...cachedResults, ...(bulkData.valuations || [])];
       
       return { results: allResults };
     } catch (error) {
@@ -214,8 +214,8 @@ export const domainValuation = {
           const retryData = await retryResponse.json();
           
           // Cache individual domain results
-          if (retryData.results) {
-            retryData.results.forEach((result, index) => {
+          if (retryData.valuations) {
+            retryData.valuations.forEach((result, index) => {
               const domain = uncachedDomains[index];
               const cacheKey = `single_${domain}`;
               responseCache.set(cacheKey, {
@@ -226,7 +226,7 @@ export const domainValuation = {
           }
           
           // Combine cached and new results
-          const allResults = [...cachedResults, ...(retryData.results || [])];
+          const allResults = [...cachedResults, ...(retryData.valuations || [])];
           
           return { results: allResults };
         } catch (retryError) {
