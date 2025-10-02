@@ -1,146 +1,144 @@
-import LocalAvatar from './LocalAvatar';
-
 const SectionWhyUs = () => {
-  // Testimonial data with comic-style avatars
+  // Testimonial data with cartoon-style avatars
   const testimonials = [
     {
       id: 1,
       name: "Sarah Chen",
       role: "Domain Investor",
-
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Sarah&backgroundColor=b6e3f4,c0aede,d1d4f9",
       quote: "DNSWorth has revolutionized how I evaluate domain portfolios. The accuracy is incredible!"
     },
     {
       id: 2,
       name: "Marcus Rodriguez",
       role: "Startup Founder",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Marcus&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Marcus&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
       quote: "Finally, a tool that gives me real market insights without the corporate price tag."
     },
     {
       id: 3,
       name: "Aisha Patel",
       role: "Digital Entrepreneur",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Aisha&backgroundColor=d4f4dd,ffd5dc,ffdfbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Aisha&backgroundColor=d4f4dd,ffd5dc,ffdfbf",
       quote: "Lightning fast and incredibly accurate. This is exactly what the domain industry needed."
     },
     {
       id: 4,
       name: "David Kim",
       role: "Domain Broker",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=David&backgroundColor=c0aede,b6e3f4,d1d4f9",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=David&backgroundColor=c0aede,b6e3f4,d1d4f9",
       quote: "I use DNSWorth daily for client consultations. The results speak for themselves."
     },
     {
       id: 5,
       name: "Emma Thompson",
       role: "Tech Investor",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Emma&backgroundColor=ffdfbf,c9ffbf,ffd5dc",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Emma&backgroundColor=ffdfbf,c9ffbf,ffd5dc",
       quote: "Professional-grade valuations at zero cost. DNSWorth is a game-changer."
     },
     {
       id: 6,
       name: "James Wilson",
       role: "Domain Flipper",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=James&backgroundColor=d1d4f9,b6e3f4,c0aede",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=James&backgroundColor=d1d4f9,b6e3f4,c0aede",
       quote: "The bulk valuation feature saved me hours of research. Absolutely brilliant!"
     },
     {
       id: 7,
       name: "Lisa Zhang",
       role: "Marketing Director",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Lisa&backgroundColor=c9ffbf,ffd5dc,ffdfbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Lisa&backgroundColor=c9ffbf,ffd5dc,ffdfbf",
       quote: "We use DNSWorth for all our domain acquisitions. Reliable and fast."
     },
     {
       id: 8,
       name: "Robert Johnson",
       role: "Domain Consultant",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Robert&backgroundColor=ffd5dc,ffdfbf,c9ffbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Robert&backgroundColor=ffd5dc,ffdfbf,c9ffbf",
       quote: "Finally, a valuation tool that doesn't require a subscription or hidden fees."
     },
     {
       id: 9,
       name: "Maria Garcia",
       role: "E-commerce Owner",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Maria&backgroundColor=b6e3f4,d1d4f9,c0aede",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Maria&backgroundColor=b6e3f4,d1d4f9,c0aede",
       quote: "DNSWorth helped me make informed decisions about my domain investments."
     },
     {
       id: 10,
       name: "Alex Turner",
       role: "Digital Asset Manager",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Alex&backgroundColor=c9ffbf,ffdfbf,ffd5dc",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Alex&backgroundColor=c9ffbf,ffdfbf,ffd5dc",
       quote: "The AI-powered insights are spot-on. This tool has become indispensable."
     },
     {
       id: 11,
       name: "Nina Patel",
       role: "Blockchain Developer",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Nina&backgroundColor=d1d4f9,c0aede,b6e3f4",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Nina&backgroundColor=d1d4f9,c0aede,b6e3f4",
       quote: "As a developer, I appreciate the clean API and accurate results. DNSWorth is my go-to tool."
     },
     {
       id: 12,
       name: "Carlos Mendez",
       role: "Real Estate Investor",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Carlos&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Carlos&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
       quote: "I use DNSWorth to evaluate digital assets alongside my real estate portfolio. Excellent tool!"
     },
     {
       id: 13,
       name: "Sophie Williams",
       role: "Brand Strategist",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Sophie&backgroundColor=c9ffbf,b6e3f4,d1d4f9",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Sophie&backgroundColor=c9ffbf,b6e3f4,d1d4f9",
       quote: "The market insights help me advise clients on domain strategy. DNSWorth is invaluable."
     },
     {
       id: 14,
       name: "Raj Patel",
       role: "E-commerce Consultant",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Raj&backgroundColor=ffd5dc,c9ffbf,ffdfbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Raj&backgroundColor=ffd5dc,c9ffbf,ffdfbf",
       quote: "I recommend DNSWorth to all my e-commerce clients. It's changed how we approach domain decisions."
     },
     {
       id: 15,
       name: "Amanda Foster",
       role: "Digital Marketing Expert",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Amanda&backgroundColor=b6e3f4,d1d4f9,c0aede",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Amanda&backgroundColor=b6e3f4,d1d4f9,c0aede",
       quote: "Fast, accurate, and free. DNSWorth has become an essential part of my marketing toolkit."
     },
     {
       id: 16,
       name: "Michael Chang",
       role: "Venture Capitalist",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Michael&backgroundColor=c9ffbf,ffdfbf,ffd5dc",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Michael&backgroundColor=c9ffbf,ffdfbf,ffd5dc",
       quote: "I use DNSWorth to evaluate startup domain assets. The accuracy is impressive for a free tool."
     },
     {
       id: 17,
       name: "Isabella Silva",
       role: "Content Creator",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Isabella&backgroundColor=d1d4f9,b6e3f4,c0aede",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Isabella&backgroundColor=d1d4f9,b6e3f4,c0aede",
       quote: "DNSWorth helps me understand the value of domains I mention in my content. Great resource!"
     },
     {
       id: 18,
       name: "Kevin O'Brien",
       role: "SEO Specialist",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Kevin&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Kevin&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
       quote: "Domain valuation is crucial for SEO strategy. DNSWorth provides the insights I need instantly."
     },
     {
       id: 19,
       name: "Priya Sharma",
       role: "Business Analyst",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Priya&backgroundColor=c9ffbf,b6e3f4,d1d4f9",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Priya&backgroundColor=c9ffbf,b6e3f4,d1d4f9",
       quote: "The data-driven approach and market insights make DNSWorth perfect for business analysis."
     },
     {
       id: 20,
       name: "Thomas Anderson",
       role: "Tech Entrepreneur",
-      image: "https://api.dicebear.com/7.x/adventurer/svg?seed=Thomas&backgroundColor=ffd5dc,c9ffbf,ffdfbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Thomas&backgroundColor=ffd5dc,c9ffbf,ffdfbf",
       quote: "Building tech companies requires smart domain decisions. DNSWorth makes that process effortless."
     }
   ];
@@ -168,10 +166,13 @@ const SectionWhyUs = () => {
                 <div key={testimonial.id} className="flex-shrink-0 mx-6 text-center group">
                   <div className="mx-auto mb-4 relative group">
                     <div className="relative">
-                      <LocalAvatar 
-                        name={testimonial.name}
-                        className="group-hover:border-white/50 transition-all duration-300 shadow-lg group-hover:shadow-xl"
-                      />
+                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                        <img 
+                          src={testimonial.avatar} 
+                          alt={testimonial.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       {/* Hover effect ring */}
                       <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-white/20 transition-all duration-300"></div>
                       
