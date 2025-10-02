@@ -34,12 +34,17 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
           <p className="text-green-800 text-sm font-medium">
             Interested in <strong className="font-bold">{domain}</strong>? Check availability or make an offer with our trusted partner.
           </p>
-          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
-            GoDaddy.com
+          <a 
+            href="https://dynadot.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
+          >
+            Dynadot.com
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </button>
+          </a>
         </div>
 
         {/* Header */}
