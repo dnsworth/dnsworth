@@ -295,103 +295,104 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       {/* Blog Posts */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {filteredPosts.map((post) => (
-              <Link 
-                to={`/blog/${post.slug}`}
-                key={post.id}
-                className="block"
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Main Content Area for Blog Posts */}
+            <div className="lg:col-span-3">
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
               >
-                <motion.article
-                  className="group relative bg-white border-4 border-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                  variants={cardVariants}
-                  whileHover={{ y: -5 }}
+                {filteredPosts.map((post) => (
+                  <Link 
+                    to={`/blog/${post.slug}`}
+                    key={post.id}
+                    className="block"
+                  >
+                    <motion.article
+                      className="group relative bg-white border-4 border-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                      variants={cardVariants}
+                      whileHover={{ y: -5 }}
+                    >
+                    {/* Post Image Placeholder - Same style as About Us */}
+                    <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-5 group-hover:opacity-10 transition-opacity duration-500"></div>
+                      <div className="relative z-10 text-4xl text-primary/60">📝</div>
+                      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-bl-3xl"></div>
+                    </div>
+
+                    {/* Post Content */}
+                    <div className="p-6">
+                      {/* Category Badge */}
+                      <div className="mb-4">
+                        <span className="inline-block px-3 py-1 text-xs font-semibold bg-black text-white rounded-full">
+                          {post.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        </span>
+                      </div>
+
+                      {/* Post Meta */}
+                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                        <span>{new Date(post.date).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}</span>
+                        <span>•</span>
+                        <span>{post.readTime}</span>
+                      </div>
+
+                      {/* Post Title */}
+                      <h2 className="text-xl font-bold text-black mb-3 line-clamp-2">
+                        {post.title}
+                      </h2>
+
+                      {/* Post Excerpt */}
+                      <p className="text-gray-600 mb-4 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                    </div>
+
+                                      {/* Hover Effect Ring */}
+                      <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
+                    </motion.article>
+                  </Link>
+                ))}
+              </motion.div>
+
+              {/* No Posts Message */}
+              {filteredPosts.length === 0 && (
+                <motion.div
+                  className="text-center py-20"
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
                 >
-                {/* Post Image Placeholder - Same style as About Us */}
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-5 group-hover:opacity-10 transition-opacity duration-500"></div>
-                  <div className="relative z-10 text-4xl text-primary/60">📝</div>
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-bl-3xl"></div>
-                </div>
+                  <div className="text-6xl mb-4">📚</div>
+                  <h3 className="text-2xl font-bold text-black mb-2">No posts found</h3>
+                  <p className="text-gray-600">Try selecting a different category or check back later for new content.</p>
+                </motion.div>
+              )}
+            </div>
 
-                {/* Post Content */}
-                <div className="p-6">
-                  {/* Category Badge */}
-                  <div className="mb-4">
-                    <span className="inline-block px-3 py-1 text-xs font-semibold bg-black text-white rounded-full">
-                      {post.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    </span>
-                  </div>
-
-                  {/* Post Meta */}
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                    <span>{new Date(post.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}</span>
-                    <span>•</span>
-                    <span>{post.readTime}</span>
-                  </div>
-
-                  {/* Post Title */}
-                  <h2 className="text-xl font-bold text-black mb-3 line-clamp-2">
-                    {post.title}
-                  </h2>
-
-                  {/* Post Excerpt */}
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                </div>
-
-                                  {/* Hover Effect Ring */}
-                  <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
-                </motion.article>
-              </Link>
-            ))}
-          </motion.div>
-
-          {/* No Posts Message */}
-          {filteredPosts.length === 0 && (
-            <motion.div
-              className="text-center py-20"
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <div className="text-6xl mb-4">📚</div>
-              <h3 className="text-2xl font-bold text-black mb-2">No posts found</h3>
-              <p className="text-gray-600">Try selecting a different category or check back later for new content.</p>
-            </motion.div>
-          )}
-
-          {/* Dynadot Medium Banner - In Blog Posts Section */}
-          {filteredPosts.length > 0 && (
-            <motion.div
-              className="mt-12 text-center"
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <a href="https://www.jdoqocy.com/click-101518597-12527348" target="_top" rel="noopener noreferrer">
-                <img 
-                  src="https://www.tqlkg.com/image-101518597-12527348" 
-                  width="300" 
-                  height="250" 
-                  alt="Dynadot Domain Services" 
-                  border="0"
-                  className="mx-auto"
-                  loading="lazy"
-                />
-              </a>
-            </motion.div>
-          )}
+            {/* Sidebar Area for Banner */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8 text-center">
+                {/* Dynadot Medium Banner (300x250) */}
+                <a href="https://www.jdoqocy.com/click-101518597-12527348" target="_top" rel="noopener noreferrer">
+                  <img 
+                    src="https://www.tqlkg.com/image-101518597-12527348" 
+                    width="300" 
+                    height="250" 
+                    alt="Dynadot - Build a super-powered online presence" 
+                    border="0"
+                    className="mx-auto max-w-full h-auto"
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
