@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import BulkValuationPage from './pages/BulkValuationPage';
+import DomainGems from './pages/DomainGems';
 import AboutUs from './pages/AboutUs';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
@@ -21,6 +22,10 @@ function AppContent() {
     navigate('/bulk-valuation');
   };
 
+  const navigateToGems = () => {
+    navigate('/domain-gems');
+  };
+
   const navigateToHome = () => {
     setShouldScrollToTop(true);
     navigate('/');
@@ -36,8 +41,9 @@ function AppContent() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home onNavigateToBulk={navigateToBulk} shouldScrollToTop={shouldScrollToTop} />} />
+        <Route path="/" element={<Home onNavigateToBulk={navigateToBulk} onNavigateToGems={navigateToGems} shouldScrollToTop={shouldScrollToTop} />} />
         <Route path="/bulk-valuation" element={<BulkValuationPage onBack={navigateToHome} />} />
+        <Route path="/domain-gems" element={<DomainGems onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/about" element={<AboutUs onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/blog/:slug" element={<BlogPost onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />

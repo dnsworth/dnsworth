@@ -1,6 +1,6 @@
 import SearchBar from './SearchBar';
 
-const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
+const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Handle both prop names for backward compatibility
   const handleBulkValuation = onBulkValuation || onNavigateToBulk;
   
@@ -19,8 +19,26 @@ const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
           </button>
         </div>
 
-        {/* Bulk Valuation Button */}
-        <div className="flex-shrink-0">
+        {/* Action Buttons */}
+        <div className="flex-shrink-0 flex gap-2 sm:gap-3">
+          {/* Domain Gems Button */}
+          <button
+            onClick={() => {
+              if (typeof onNavigateToGems === 'function') {
+                try {
+                  onNavigateToGems();
+                } catch (error) {
+                  // Handle error silently in production
+                }
+              }
+            }}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 hover:scale-105 transform shadow-lg"
+          >
+            <span className="hidden sm:inline">💎 Domain Gems</span>
+            <span className="sm:hidden">💎 Gems</span>
+          </button>
+
+          {/* Bulk Valuation Button */}
           <button
             onClick={() => {
               if (typeof handleBulkValuation === 'function') {

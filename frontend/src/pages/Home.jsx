@@ -10,7 +10,7 @@ import FAQSection from '../components/FAQSection';
 import Footer from '../components/Footer';
 import { SearchTracker } from '../utils/searchTracker';
 
-const Home = ({ onNavigateToBulk, shouldScrollToTop }) => {
+const Home = ({ onNavigateToBulk, shouldScrollToTop, onNavigateToGems }) => {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -150,7 +150,7 @@ const Home = ({ onNavigateToBulk, shouldScrollToTop }) => {
           })}
         </script>
       </Helmet>
-      <Header onBulkValuation={handleBulkValuation} onNavigateHome={handleNewSearch} />
+      <Header onBulkValuation={handleBulkValuation} onNavigateHome={handleNewSearch} onNavigateToGems={onNavigateToGems} />
       <HeroSection
         onResult={handleValuationResult}
         loading={loading}

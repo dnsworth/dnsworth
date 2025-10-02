@@ -9,6 +9,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
   
   const quickLinks = [
     { name: 'Home', action: () => navigate('/') },
+    { name: 'Domain Gems', action: () => navigate('/domain-gems') },
     { name: 'Bulk Valuation', action: () => {
       if (handleBulkValuation) {
         handleBulkValuation();
