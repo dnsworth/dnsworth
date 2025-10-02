@@ -71,10 +71,6 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      {/* Floating Badge */}
-                      <div className={`absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br ${feature.theme} rounded-full flex items-center justify-center shadow-lg border-2 border-white`}>
-                        <span className="text-white text-sm font-bold">{feature.id}</span>
-                      </div>
                     </div>
                     
                     {/* Character Info */}
