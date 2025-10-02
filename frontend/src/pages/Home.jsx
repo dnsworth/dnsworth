@@ -141,6 +141,25 @@ const Home = ({ onNavigateToBulk }) => {
         loading={loading}
       />
 
+      {/* Dynadot Banner - Hero Section */}
+      <section className="py-8">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto text-center">
+            <a href="https://www.tkqlhce.com/click-101518597-12527405" target="_top" rel="noopener noreferrer">
+              <img 
+                src="https://www.tqlkg.com/image-101518597-12527405" 
+                width="728" 
+                height="90" 
+                alt="Dynadot - The best domain registrar you've never met" 
+                border="0"
+                className="mx-auto max-w-full h-auto"
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {results && (
         <div id="results">
           <ValuationResults
@@ -148,6 +167,25 @@ const Home = ({ onNavigateToBulk }) => {
             onNewSearch={handleNewSearch}
             loading={loading}
           />
+          
+          {/* Dynadot Small Banner - After Results */}
+          <section className="py-6">
+            <div className="container-custom">
+              <div className="max-w-2xl mx-auto text-center">
+                <a href="https://www.dpbolvw.net/click-101518597-12533938" target="_top" rel="noopener noreferrer">
+                  <img 
+                    src="https://www.awltovhc.com/image-101518597-12533938" 
+                    width="234" 
+                    height="60" 
+                    alt="Dynadot Domain Services" 
+                    border="0"
+                    className="mx-auto"
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+            </div>
+          </section>
         </div>
       )}
       {error && (
@@ -171,7 +209,39 @@ const Home = ({ onNavigateToBulk }) => {
         </section>
       )}
       <SectionFeatures />
-      <SectionWhyUs />
+      
+      {/* Dynadot Skyscraper Banner - Sidebar Style */}
+      <section className="py-8">
+        <div className="container-custom">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Main content area */}
+              <div className="lg:col-span-3">
+                <SectionWhyUs />
+              </div>
+              
+              {/* Sidebar with banner */}
+              <div className="lg:col-span-1">
+                <div className="sticky top-8">
+                  <div className="text-center">
+                    <a href="https://www.kqzyfj.com/click-101518597-12527387" target="_top" rel="noopener noreferrer">
+                      <img 
+                        src="https://www.tqlkg.com/image-101518597-12527387" 
+                        width="120" 
+                        height="600" 
+                        alt="Dynadot Domain Registrar" 
+                        border="0"
+                        className="mx-auto max-w-full h-auto"
+                        loading="lazy"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <SectionBulkSearch onBulkValuation={handleBulkValuation} />
       <FAQSection />
       <Footer onBulkValuation={handleBulkValuation} onNavigateHome={handleNewSearch} />
