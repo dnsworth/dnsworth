@@ -5,21 +5,21 @@ const SectionWhyUs = () => {
       id: 1,
       name: "Sarah Chen",
       role: "Domain Investor",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Sarah&backgroundColor=b6e3f4,c0aede,d1d4f9",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Sarah&backgroundColor=b6e3f4,c0aede,d1d4f9&t=" + Date.now(),
       quote: "DNSWorth has revolutionized how I evaluate domain portfolios. The accuracy is incredible!"
     },
     {
       id: 2,
       name: "Marcus Rodriguez",
       role: "Startup Founder",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Marcus&backgroundColor=ffdfbf,ffd5dc,c9ffbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Marcus&backgroundColor=ffdfbf,ffd5dc,c9ffbf&t=" + Date.now(),
       quote: "Finally, a tool that gives me real market insights without the corporate price tag."
     },
     {
       id: 3,
       name: "Aisha Patel",
       role: "Digital Entrepreneur",
-      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Aisha&backgroundColor=d4f4dd,ffd5dc,ffdfbf",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Aisha&backgroundColor=d4f4dd,ffd5dc,ffdfbf&t=" + Date.now(),
       quote: "Lightning fast and incredibly accurate. This is exactly what the domain industry needed."
     },
     {
