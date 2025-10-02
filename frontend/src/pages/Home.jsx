@@ -209,39 +209,7 @@ const Home = ({ onNavigateToBulk }) => {
         </section>
       )}
       <SectionFeatures />
-      
-      {/* Dynadot Skyscraper Banner - Sidebar Style */}
-      <section className="py-8">
-        <div className="container-custom">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Main content area */}
-              <div className="lg:col-span-3">
-                <SectionWhyUs />
-              </div>
-              
-              {/* Sidebar with banner */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-8">
-                  <div className="text-center">
-                    <a href="https://www.kqzyfj.com/click-101518597-12527387" target="_top" rel="noopener noreferrer">
-                      <img 
-                        src="https://www.tqlkg.com/image-101518597-12527387" 
-                        width="120" 
-                        height="600" 
-                        alt="Dynadot Domain Registrar" 
-                        border="0"
-                        className="mx-auto max-w-full h-auto"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <SectionWhyUs />
       <SectionBulkSearch onBulkValuation={handleBulkValuation} />
       <FAQSection />
       <Footer onBulkValuation={handleBulkValuation} onNavigateHome={handleNewSearch} />
