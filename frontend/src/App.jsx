@@ -21,6 +21,10 @@ function AppContent() {
 
   const navigateToHome = () => {
     navigate('/');
+    // Scroll to top to show the valuation form after navigation
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
   };
 
   return (
