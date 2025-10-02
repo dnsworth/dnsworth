@@ -202,10 +202,13 @@ const SectionWhyUs = () => {
                                  <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 mx-6 text-center group">
                    <div className="mx-auto mb-4 relative group">
                      <div className="relative">
-                       <LocalAvatar 
-                         name={testimonial.name}
-                         className="group-hover:border-white/50 transition-all duration-300 shadow-lg group-hover:shadow-xl"
-                       />
+                       <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                         <img
+                           src={testimonial.avatar}
+                           alt={testimonial.name}
+                           className="w-full h-full object-cover"
+                         />
+                       </div>
                        {/* Hover effect ring */}
                        <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-white/20 transition-all duration-300"></div>
                        
