@@ -1,4 +1,4 @@
-import LocalAvatar from './LocalAvatar';
+// LocalAvatar import removed - using DiceBear avatars instead
 
 const SectionBulkSearch = ({ onBulkValuation }) => {
   // Creative comic characters for bulk valuation features
@@ -9,7 +9,8 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       description: "Analyze your entire domain portfolio in one go",
       name: "Portfolio Pro",
       role: "Portfolio Manager",
-      theme: "from-red-400 to-cyan-400"
+      theme: "from-red-400 to-cyan-400",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=PortfolioPro&backgroundColor=b6e3f4,c0aede,d1d4f9"
     },
     {
       id: 2,
@@ -17,7 +18,8 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       description: "Download results for further analysis",
       name: "Export Expert",
       role: "Data Specialist",
-      theme: "from-green-400 to-yellow-400"
+      theme: "from-green-400 to-yellow-400",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=ExportExpert&backgroundColor=ffdfbf,c9ffbf,ffd5dc"
     },
     {
       id: 3,
@@ -25,7 +27,8 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       description: "Get results in seconds, not minutes",
       name: "Speed Demon",
       role: "Performance Guru",
-      theme: "from-pink-400 to-blue-400"
+      theme: "from-pink-400 to-blue-400",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=SpeedDemon&backgroundColor=c0aede,b6e3f4,d1d4f9"
     },
     {
       id: 4,
@@ -33,7 +36,8 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
       description: "Get detailed analysis and recommendations",
       name: "Smart Analyst",
       role: "Data Analyst",
-      theme: "from-orange-400 to-purple-400"
+      theme: "from-orange-400 to-purple-400",
+      avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=SmartAnalyst&backgroundColor=d4f4dd,ffd5dc,ffdfbf"
     }
   ];
 
@@ -60,11 +64,13 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
                   {/* Comic Character */}
                   <div className="relative z-10 text-center mb-6">
                     <div className="relative mx-auto mb-4">
-                      <LocalAvatar 
-                        name={feature.name}
-                        size="w-24 h-24"
-                        className="border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300"
-                      />
+                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                        <img
+                          src={feature.avatar}
+                          alt={feature.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       {/* Floating Badge */}
                       <div className={`absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br ${feature.theme} rounded-full flex items-center justify-center shadow-lg border-2 border-white`}>
                         <span className="text-white text-sm font-bold">{feature.id}</span>
