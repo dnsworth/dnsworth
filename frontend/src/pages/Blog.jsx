@@ -244,6 +244,25 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
         </div>
       </section>
 
+      {/* Dynadot Banner - After Hero Section */}
+      <section className="py-8 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <a href="https://www.tkqlhce.com/click-101518597-12527405" target="_top" rel="noopener noreferrer">
+              <img 
+                src="https://www.tqlkg.com/image-101518597-12527405" 
+                width="728" 
+                height="90" 
+                alt="Dynadot - The best domain registrar you've never met" 
+                border="0"
+                className="mx-auto max-w-full h-auto"
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Category Filter */}
       <section className="py-12 bg-gray-50 border-b border-gray-200">
         <div className="container mx-auto px-6">
@@ -304,7 +323,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                 <div className="p-6">
                   {/* Category Badge */}
                   <div className="mb-4">
-                    <span className="inline-block px-3 py-1 text-xs font-medium bg-black text-white rounded-full font-semibold">
+                    <span className="inline-block px-3 py-1 text-xs font-semibold bg-black text-white rounded-full">
                       {post.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </span>
                   </div>
@@ -351,6 +370,47 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
               <p className="text-gray-600">Try selecting a different category or check back later for new content.</p>
             </motion.div>
           )}
+
+          {/* Dynadot Medium Banner - In Blog Posts Section */}
+          {filteredPosts.length > 0 && (
+            <motion.div
+              className="mt-12 text-center"
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <a href="https://www.jdoqocy.com/click-101518597-12527348" target="_top" rel="noopener noreferrer">
+                <img 
+                  src="https://www.tqlkg.com/image-101518597-12527348" 
+                  width="300" 
+                  height="250" 
+                  alt="Dynadot Domain Services" 
+                  border="0"
+                  className="mx-auto"
+                  loading="lazy"
+                />
+              </a>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* Dynadot Small Banner - Before Footer */}
+      <section className="py-8 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-2xl mx-auto text-center">
+            <a href="https://www.dpbolvw.net/click-101518597-12533938" target="_top" rel="noopener noreferrer">
+              <img 
+                src="https://www.awltovhc.com/image-101518597-12533938" 
+                width="234" 
+                height="60" 
+                alt="Dynadot Domain Services" 
+                border="0"
+                className="mx-auto"
+                loading="lazy"
+              />
+            </a>
+          </div>
         </div>
       </section>
 
