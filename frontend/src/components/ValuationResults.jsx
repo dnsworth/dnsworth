@@ -35,8 +35,8 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
             Interested in <strong className="font-bold">{domain}</strong>? Check availability or make an offer with our trusted partner.
           </p>
           <a 
-            href="https://dynadot.com" 
-            target="_blank" 
+            href="https://www.tkqlhce.com/click-101518597-12527405" 
+            target="_top" 
             rel="noopener noreferrer"
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
           >
