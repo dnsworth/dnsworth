@@ -52,7 +52,7 @@ const Home = ({ onNavigateToBulk }) => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>DNSWorth - Free Domain Valuations | AI-Powered Domain Appraisal</title>
+        <title>DNSWorth: Free Domain Valuations</title>
         <meta name="description" content="Get instant, accurate domain valuations for free with DNSWorth's AI-powered tool. Professional-grade domain appraisal technology available 100% free forever. Value single domains or bulk portfolios instantly." />
         <meta name="keywords" content="domain valuation, domain appraisal, domain worth, free domain valuation, AI domain tool, domain pricing, domain market value, bulk domain valuation" />
         <meta name="author" content="DNSWorth" />
@@ -63,7 +63,7 @@ const Home = ({ onNavigateToBulk }) => {
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="DNSWorth - Free Domain Valuations | AI-Powered Domain Appraisal" />
+        <meta property="og:title" content="DNSWorth: Free Domain Valuations" />
         <meta property="og:description" content="Get instant, accurate domain valuations for free with DNSWorth's AI-powered tool. Professional-grade domain appraisal technology available 100% free forever." />
         <meta property="og:url" content="https://dnsworth.com/" />
         <meta property="og:site_name" content="DNSWorth" />
@@ -74,7 +74,7 @@ const Home = ({ onNavigateToBulk }) => {
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="DNSWorth - Free Domain Valuations" />
+        <meta name="twitter:title" content="DNSWorth: Free Domain Valuations" />
         <meta name="twitter:description" content="Get instant, accurate domain valuations for free with DNSWorth's AI-powered tool." />
         <meta name="twitter:image" content="https://dnsworth.com/twitter-image.jpg" />
         
