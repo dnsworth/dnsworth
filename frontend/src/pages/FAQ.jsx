@@ -149,7 +149,7 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
             <h1 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white leading-relaxed max-w-3xl mx-auto">
               Get answers to the most common questions about our free domain valuation service
             </p>
           </div>
