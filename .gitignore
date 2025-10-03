@@ -20,6 +20,10 @@ build/
 .env.production
 .env.*.local
 *.env
+backend/.env
+backend/.env.local
+backend/.env.development
+backend/.env.production
 
 # API keys and secrets
 config/secrets.js
@@ -40,10 +44,12 @@ sessions/
 
 # Logs and debugging
 logs/
+backend/logs/
 *.log
 debug.log
 error.log
 access.log
+audit-*.log
 
 # Runtime data
 pids/

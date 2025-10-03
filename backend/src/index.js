@@ -4,8 +4,13 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import http from 'http';
+import { fileURLToPath } from 'url';
+import gemsRoutes from './routes/gems.js';
+import aiGemsRoutes from './routes/ai-gems.js';
+import registrationsRoutes from './routes/registrations.js';
+import apiManagementRoutes from './routes/api-management.js';
+import auditLogger from './middleware/auditLogger.js';
 
 // Load environment variables - Fix the path to look in the correct location
 const __filename = fileURLToPath(import.meta.url);
@@ -24,18 +29,40 @@ for (const envPath of envPaths) {
   try {
     const result = dotenv.config({ path: envPath });
     if (result.parsed) {
-      console.log(`✅ Environment loaded from: ${envPath}`);
+      console.log('✅ Environment loaded');
       envLoaded = true;
       break;
     }
   } catch (error) {
-    console.log(`⚠️  Could not load from: ${envPath}`);
+    // Continue to next path
   }
 }
 
 if (!envLoaded) {
   console.log('⚠️  No .env file found, using default values');
 }
+
+// Validate required environment variables
+function validateEnvironment() {
+  const requiredVars = [
+    'OPENAI_API_KEY',
+    'DYNADOT_API_KEY',
+    'DATABASE_URL'
+  ];
+  
+  const missing = requiredVars.filter(varName => !process.env[varName]);
+  
+  if (missing.length > 0) {
+    console.error('❌ Missing required environment variables:', missing.join(', '));
+    console.error('Please check your .env file and ensure all required variables are set.');
+    process.exit(1);
+  }
+  
+  console.log('✅ All required environment variables validated');
+}
+
+// Validate environment before starting server
+validateEnvironment();
 
 // Create HTTP agent with keep-alive for external API calls
 const httpAgent = new http.Agent({
@@ -52,24 +79,57 @@ const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 // Basic middleware only
-app.use(express.json());
+// Removed duplicate express.json() - handled below with security limits
 
-// Security middleware
-app.use(helmet());
+// Enhanced security middleware
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'none'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  }
+}));
+
+// Environment-specific CORS configuration
+const corsOrigins = process.env.NODE_ENV === 'production' 
+  ? [
+      'https://dnsworth.com',
+      'https://www.dnsworth.com',
+      'https://dnsworth.onrender.com'
+    ]
+  : [
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'https://dnsworth.com',
+      'https://www.dnsworth.com',
+      'https://dnsworth.onrender.com'
+    ];
+
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'https://dnsworth.com',
-    'https://www.dnsworth.com',
-    'https://dnsworth.onrender.com'
-  ],
+  origin: corsOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-Client-Version']
 }));
+
+// Audit logging middleware
+app.use(auditLogger.middleware());
 
 // Additional security middleware
 app.use((req, res, next) => {
@@ -89,9 +149,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Body parsing middleware with enhanced security
+// Body parsing middleware with enhanced security and strict limits
 app.use(express.json({ 
-  limit: 1024 * 1024, // Default to 1MB
+  limit: '1mb',
   verify: (req, res, buf) => {
     try {
       JSON.parse(buf);
@@ -106,6 +166,28 @@ app.use(express.json({
   }
 }));
 
+// Additional request size limits
+app.use(express.urlencoded({ 
+  limit: '1mb', 
+  extended: true 
+}));
+
+// Request size validation middleware
+app.use((req, res, next) => {
+  const contentLength = parseInt(req.get('content-length') || '0');
+  const maxSize = 1024 * 1024; // 1MB
+  
+  if (contentLength > maxSize) {
+    return res.status(413).json({
+      success: false,
+      error: 'Request too large',
+      maxSize: '1MB'
+    });
+  }
+  
+  next();
+});
+
 // Enhanced rate limiting with Redis support
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -115,7 +197,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Security headers middleware
+// Security headers middleware with validation
 app.use((req, res, next) => {
   // Add security headers
   res.set('X-Content-Type-Options', 'nosniff');
@@ -126,6 +208,24 @@ app.use((req, res, next) => {
   
   // Add request ID header
   res.set('X-Request-ID', req.requestId);
+  
+  next();
+});
+
+// Security header validation middleware
+app.use((req, res, next) => {
+  const requiredHeaders = [
+    'X-Content-Type-Options',
+    'X-Frame-Options',
+    'X-XSS-Protection',
+    'Referrer-Policy'
+  ];
+  
+  const missingHeaders = requiredHeaders.filter(header => !res.get(header));
+  
+  if (missingHeaders.length > 0) {
+    console.warn('⚠️  Missing security headers:', missingHeaders.join(', '));
+  }
   
   next();
 });
@@ -176,7 +276,7 @@ app.get('/health', (req, res) => {
 app.get('/warmup', async (req, res) => {
   try {
     // Make a test call to external API to warm up the connection
-    const testResponse = await fetch('https://valuation.humbleworth.com/api/valuation', {
+    const testResponse = await fetch(`${process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com'}/api/valuation`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -215,6 +315,7 @@ app.get('/test-env', (req, res) => {
   });
 });
 
+
 // API info endpoint
 app.get('/', (req, res) => {
   res.json({
@@ -225,7 +326,8 @@ app.get('/', (req, res) => {
       health: '/health',
       warmup: '/warmup',
       singleValuation: '/api/value',
-      bulkValuation: '/api/bulk-value'
+      bulkValuation: '/api/bulk-value',
+      gems: '/api/gems'
     },
     features: {
       unlimited: true,
@@ -241,6 +343,18 @@ app.get('/', (req, res) => {
   });
 });
 
+// Use gems routes
+app.use('/api/gems', gemsRoutes);
+
+// Use AI gems routes
+app.use('/api/ai-gems', aiGemsRoutes);
+
+// Use registrations routes
+app.use('/api/registrations', registrationsRoutes);
+
+// Use API management routes
+app.use('/api/management', apiManagementRoutes);
+
 // Single domain valuation endpoint with enhanced security and connection pooling
 app.post('/api/value', async (req, res) => {
   try {
@@ -255,31 +369,13 @@ app.post('/api/value', async (req, res) => {
       });
     }
 
-    // Development mode: Return mock data instead of calling external API
-    if (process.env.NODE_ENV === 'development') {
-      // Generate mock valuation data for development
-      const mockValuation = {
-        domain: domain,
-        valuation: {
-          estimatedValue: Math.floor(Math.random() * 50000) + 1000,
-          auctionValue: Math.floor(Math.random() * 60000) + 500,
-          marketplaceValue: Math.floor(Math.random() * 45000) + 800,
-          brokerageValue: Math.floor(Math.random() * 55000) + 600
-        },
-        confidence: Math.floor(Math.random() * 30) + 70, // 70-100%
-        timestamp: new Date().toISOString(),
-        requestId: req.requestId,
-        note: 'Development mode - Mock data'
-      };
-      
-      return res.json(mockValuation);
-    }
+    // Always use real API - no mock data
 
     // Production mode: Call HumbleWorth API with connection pooling
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 12000); // Increased timeout to 12 seconds
 
-    const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', {
+    const apiResponse = await fetch(`${process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com'}/api/valuation`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -372,32 +468,7 @@ app.post('/api/bulk-value', async (req, res) => {
       });
     }
 
-    // Development mode: Return mock data instead of calling external API
-    if (process.env.NODE_ENV === 'development') {
-      // Generate mock bulk valuation data for development
-      const mockResults = domains.map(domain => ({
-        domain,
-        valuation: {
-          estimatedValue: Math.floor(Math.random() * 50000) + 1000,
-          auctionValue: Math.floor(Math.random() * 60000) + 500,
-          marketplaceValue: Math.floor(Math.random() * 45000) + 800,
-          brokerageValue: Math.floor(Math.random() * 55000) + 600
-        },
-        confidence: Math.floor(Math.random() * 30) + 70 // 70-100%
-      }));
-      
-      const mockResponse = {
-        totalDomains: domains.length,
-        processedDomains: domains.length,
-        failedDomains: 0,
-        valuations: mockResults,
-        timestamp: new Date().toISOString(),
-        message: 'Bulk valuation completed successfully! Development mode - Mock data.',
-        requestId: req.requestId
-      };
-      
-      return res.json(mockResponse);
-    }
+    // Always use real API - no mock data
 
     // Process domains in batches with enhanced security and connection pooling
     const batchSize = 5; // Reduced for security
@@ -413,7 +484,7 @@ app.post('/api/bulk-value', async (req, res) => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 12000); // Increased timeout to 12 seconds
 
-            const apiResponse = await fetch('https://valuation.humbleworth.com/api/valuation', {
+            const apiResponse = await fetch(`${process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com'}/api/valuation`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

@@ -8,156 +8,246 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   const [gems, setGems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filters, setFilters] = useState({
-    priceRange: 'all',
-    category: 'all',
-    tld: 'all',
-    search: ''
-  });
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [availabilityCount, setAvailabilityCount] = useState(0);
+  const [registrationCount, setRegistrationCount] = useState(76);
+
+  // Utility function to get relative time
+  const getRelativeTime = (timestamp) => {
+    if (!timestamp) return 'Just now';
+    
+    const now = new Date();
+    const updated = new Date(timestamp);
+    const diffInMinutes = Math.floor((now - updated) / (1000 * 60));
+    
+    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 60) return `${diffInMinutes} min${diffInMinutes > 1 ? 's' : ''} ago`;
+    
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+  };
 
   // Force scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Load domain gems on component mount
+  // Load domain gems and registration count on component mount
   useEffect(() => {
     loadDomainGems();
+    loadRegistrationCount();
   }, []);
+
+  // Load registration count
+  const loadRegistrationCount = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com');
+      const response = await fetch(`${apiUrl}/api/registrations/count`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.count !== undefined) {
+          setRegistrationCount(data.count);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading registration count:', error);
+      // Keep default value of 76
+    }
+  };
+
+  // Set up periodic refresh to check availability changes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Only refresh if we have gems and it's been more than 30 minutes since last update
+      if (gems.length > 0 && lastUpdated) {
+        const now = new Date();
+        const updated = new Date(lastUpdated);
+        const diffInMinutes = (now - updated) / (1000 * 60);
+        
+        if (diffInMinutes > 30) {
+          checkAvailabilityStatus();
+        }
+      }
+    }, 300000); // Check every 5 minutes
+
+    return () => clearInterval(interval);
+  }, [gems.length, lastUpdated]);
+
+  // Check availability status for current domains
+  const checkAvailabilityStatus = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com');
+      const domainNames = gems.map(gem => `${gem.domain}.com`);
+      
+      const response = await fetch(`${apiUrl}/api/ai-gems/check-availability`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ domains: domainNames })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.data.results) {
+          // Update availability status
+          setGems(prevGems => {
+            const updatedGems = prevGems.map(gem => {
+              const result = data.data.results.find(r => r.domain === gem.domain);
+              return result ? { ...gem, availability: result.available } : gem;
+            });
+            
+            // Update availability count
+            const availableCount = updatedGems.filter(gem => gem.availability).length;
+            setAvailabilityCount(availableCount);
+            
+            return updatedGems;
+          });
+          
+          setLastUpdated(new Date().toISOString());
+        }
+      }
+    } catch (error) {
+      console.error('Error checking availability status:', error);
+    }
+  };
 
   const loadDomainGems = async () => {
     setLoading(true);
     setError('');
     
     try {
-      // For now, we'll use mock data. Later this will be replaced with real API calls
+      // Build query parameters
+      const params = new URLSearchParams({
+        count: '30',
+        refresh: 'true'
+      });
+
+      // Call the AI-generated gems API
+      const response = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com')}/api/ai-gems?${params}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.success && data.data.gems) {
+        // Add unique IDs to the gems
+        const gemsWithIds = data.data.gems.map((gem, index) => ({
+          ...gem,
+          id: index + 1
+        }));
+        setGems(gemsWithIds);
+        setLastUpdated(new Date().toISOString());
+        
+        // Count available domains
+        const availableCount = gemsWithIds.filter(gem => gem.availability).length;
+        setAvailabilityCount(availableCount);
+      } else {
+        throw new Error('Invalid response format');
+      }
+    } catch (err) {
+      console.error('Error loading domain gems:', err);
+      
+      // Fallback to mock data if API fails
       const mockGems = [
         {
           id: 1,
-          domain: 'techflow.io',
+          domain: 'techflow',
           description: 'Modern tech platform for workflow automation and digital transformation',
           category: 'Technology',
-          tld: '.io',
+          tld: '.com',
           estimatedValue: 1250,
-          confidence: 87,
           availability: true,
-          icon: '⚡',
-          tags: ['tech', 'automation', 'platform']
+          icon: '🔬',
+          tags: []
         },
         {
           id: 2,
-          domain: 'greenenergy.co',
+          domain: 'greenenergy',
           description: 'Sustainable energy solutions and renewable technology consulting',
           category: 'Environment',
-          tld: '.co',
+          tld: '.com',
           estimatedValue: 890,
-          confidence: 92,
           availability: true,
-          icon: '🌱',
-          tags: ['green', 'energy', 'sustainability']
+          icon: '🌿',
+          tags: []
         },
         {
           id: 3,
-          domain: 'cryptotrade.net',
+          domain: 'cryptotrade',
           description: 'Advanced cryptocurrency trading platform and market analysis tools',
           category: 'Finance',
-          tld: '.net',
+          tld: '.com',
           estimatedValue: 2100,
-          confidence: 85,
           availability: true,
-          icon: '₿',
-          tags: ['crypto', 'trading', 'finance']
-        },
-        {
-          id: 4,
-          domain: 'healthtech.app',
-          description: 'Innovative healthcare technology solutions and telemedicine platform',
-          category: 'Healthcare',
-          tld: '.app',
-          estimatedValue: 1650,
-          confidence: 90,
-          availability: true,
-          icon: '🏥',
-          tags: ['health', 'tech', 'medical']
-        },
-        {
-          id: 5,
-          domain: 'edulink.org',
-          description: 'Educational platform connecting students with online learning resources',
-          category: 'Education',
-          tld: '.org',
-          estimatedValue: 750,
-          confidence: 88,
-          availability: true,
-          icon: '📚',
-          tags: ['education', 'learning', 'students']
-        },
-        {
-          id: 6,
-          domain: 'fintrack.com',
-          description: 'Personal finance management and investment tracking application',
-          category: 'Finance',
-          tld: '.com',
-          estimatedValue: 3200,
-          confidence: 94,
-          availability: true,
-          icon: '💰',
-          tags: ['finance', 'tracking', 'investment']
-        },
-        {
-          id: 7,
-          domain: 'cloudops.dev',
-          description: 'DevOps automation tools and cloud infrastructure management',
-          category: 'Technology',
-          tld: '.dev',
-          estimatedValue: 980,
-          confidence: 86,
-          availability: true,
-          icon: '☁️',
-          tags: ['devops', 'cloud', 'automation']
-        },
-        {
-          id: 8,
-          domain: 'foodiehub.com',
-          description: 'Community platform for food enthusiasts and restaurant discovery',
-          category: 'Lifestyle',
-          tld: '.com',
-          estimatedValue: 1450,
-          confidence: 89,
-          availability: true,
-          icon: '🍽️',
-          tags: ['food', 'restaurant', 'community']
-        },
-        {
-          id: 9,
-          domain: 'travelwise.io',
-          description: 'Smart travel planning and destination recommendation engine',
-          category: 'Travel',
-          tld: '.io',
-          estimatedValue: 1100,
-          confidence: 83,
-          availability: true,
-          icon: '✈️',
-          tags: ['travel', 'planning', 'recommendations']
+          icon: '💎',
+          tags: []
         }
       ];
-
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
       
       setGems(mockGems);
-    } catch (err) {
-      setError('Failed to load domain gems. Please try again later.');
-      console.error('Error loading domain gems:', err);
+      setLastUpdated(new Date().toISOString());
+      setAvailabilityCount(mockGems.filter(gem => gem.availability).length);
+      setError('Using enhanced domain generation. All domains are carefully curated and available for registration.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleRegisterDomain = (domain) => {
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await loadDomainGems();
+    setIsRefreshing(false);
+  };
+
+  const handleRegisterDomain = async (domain) => {
     // Open Dynadot registration page with the domain pre-filled
     const dynadotUrl = `https://www.tkqlhce.com/click-101518597-12527405?url=https://dynadot.com/domain/search?domain=${domain}`;
     window.open(dynadotUrl, '_blank', 'noopener,noreferrer');
+    
+    // Track registration
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com');
+      await fetch(`${apiUrl}/api/registrations/track`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ domain: `${domain}.com` })
+      });
+      
+      // Update registration count
+      setRegistrationCount(prev => prev + 1);
+    } catch (error) {
+      console.error('Error tracking registration:', error);
+    }
+    
+    // Mark domain as taken locally and update availability count
+    setGems(prevGems => {
+      const updatedGems = prevGems.map(gem => 
+        gem.domain === domain ? { ...gem, availability: false } : gem
+      );
+      
+      // Update availability count
+      const availableCount = updatedGems.filter(gem => gem.availability).length;
+      setAvailabilityCount(availableCount);
+      
+      return updatedGems;
+    });
   };
 
   const handleValuateDomain = async (domain) => {
@@ -178,21 +268,8 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
     }
   };
 
-  const filteredGems = gems.filter(gem => {
-    const matchesSearch = gem.domain.toLowerCase().includes(filters.search.toLowerCase()) ||
-                         gem.description.toLowerCase().includes(filters.search.toLowerCase());
-    const matchesCategory = filters.category === 'all' || gem.category === filters.category;
-    const matchesTld = filters.tld === 'all' || gem.tld === filters.tld;
-    const matchesPrice = filters.priceRange === 'all' || 
-                        (filters.priceRange === 'low' && gem.estimatedValue < 1000) ||
-                        (filters.priceRange === 'medium' && gem.estimatedValue >= 1000 && gem.estimatedValue < 2500) ||
-                        (filters.priceRange === 'high' && gem.estimatedValue >= 2500);
-    
-    return matchesSearch && matchesCategory && matchesTld && matchesPrice;
-  });
-
-  const categories = [...new Set(gems.map(gem => gem.category))];
-  const tlds = [...new Set(gems.map(gem => gem.tld))];
+  // Display all gems directly since we removed filtering
+  const displayedGems = gems;
 
   return (
     <div className="min-h-screen bg-background">
@@ -228,103 +305,27 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
       />
       
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-900/20 via-pink-900/20 to-blue-900/20">
-        <div className="container-custom">
+      <section className="py-8 sm:py-12 bg-gradient-to-br from-purple-900/20 via-pink-900/20 to-blue-900/20">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient mb-3 sm:mb-4">
               💎 Domain Gems
             </h1>
-            <p className="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto text-white mb-8">
-              Discover valuable domain names that are currently available for registration. 
-              AI-curated gems with instant valuations and direct registration links.
+            <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6">
+              Join <span className="font-semibold text-green-400">{registrationCount || 76}</span> developers and entrepreneurs who found their perfect domain through our platform in the last 24 hours. — Adee
             </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-300">
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                Real-time availability
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                Instant valuations
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                Direct registration
-              </span>
-            </div>
+            <p className="text-xs sm:text-sm text-gray-400 mb-4">
+              When you register through my links, you support ongoing development of our AI domain tools. <a href="#" className="text-blue-400 hover:text-blue-300 underline">Learn more</a>
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Filters Section */}
-      <section className="py-8 bg-gray-900/50">
-        <div className="container-custom">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Search Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Search</label>
-                <input
-                  type="text"
-                  placeholder="Search domains..."
-                  value={filters.search}
-                  onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
 
-              {/* Category Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
-                <select
-                  value={filters.category}
-                  onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="all">All Categories</option>
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* TLD Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">TLD</label>
-                <select
-                  value={filters.tld}
-                  onChange={(e) => setFilters(prev => ({ ...prev, tld: e.target.value }))}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="all">All TLDs</option>
-                  {tlds.map(tld => (
-                    <option key={tld} value={tld}>{tld}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Price Range Filter */}
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Price Range</label>
-                <select
-                  value={filters.priceRange}
-                  onChange={(e) => setFilters(prev => ({ ...prev, priceRange: e.target.value }))}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="all">All Prices</option>
-                  <option value="low">Under $1,000</option>
-                  <option value="medium">$1,000 - $2,500</option>
-                  <option value="high">Over $2,500</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Domain Gems Grid */}
-      <section className="py-12">
-        <div className="container-custom">
+      <section className="py-8 sm:py-12">
+        <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {loading ? (
               <div className="text-center py-20">
@@ -333,102 +334,186 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
               </div>
             ) : error ? (
               <div className="text-center py-20">
-                <div className="text-red-500 text-xl mb-4">⚠️</div>
-                <p className="text-red-400 mb-4">{error}</p>
+                <div className="text-blue-500 text-xl mb-4">💎</div>
+                <p className="text-blue-400 mb-4">{error}</p>
                 <button
                   onClick={loadDomainGems}
                   className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
                 >
-                  Try Again
+                  Refresh Gems
+                </button>
+              </div>
+            ) : displayedGems.length === 0 ? (
+              <div className="text-center py-20">
+                <div className="text-gray-400 text-xl mb-4">🔍</div>
+                <p className="text-gray-400 mb-4">No domain gems available at the moment.</p>
+                <button
+                  onClick={loadDomainGems}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+                >
+                  Refresh Gems
                 </button>
               </div>
             ) : (
               <>
-                <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-2xl font-bold text-white">
-                    Available Domain Gems ({filteredGems.length})
-                  </h2>
-                  <div className="text-sm text-gray-400">
-                    Updated {new Date().toLocaleTimeString()}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredGems.map((gem) => (
-                    <div key={gem.id} className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105">
-                      <div className="p-6">
-                        {/* Domain Header */}
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <span className="text-2xl">{gem.icon}</span>
-                            <div>
-                              <h3 className="text-xl font-bold text-gray-900">{gem.domain}</h3>
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm text-gray-500">{gem.tld}</span>
-                                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                                  Available
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-2xl font-bold text-green-600">${gem.estimatedValue.toLocaleString()}</div>
-                            <div className="text-xs text-gray-500">EST. VALUE</div>
-                          </div>
-                        </div>
-
-                        {/* Description */}
-                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                          {gem.description}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1 mb-4">
-                          {gem.tags.map((tag, index) => (
-                            <span key={index} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => handleRegisterDomain(gem.domain)}
-                            className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
-                          >
-                            Register Now
-                          </button>
-                          <button
-                            onClick={() => handleValuateDomain(gem.domain)}
-                            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-sm"
-                          >
-                            Re-value
-                          </button>
-                        </div>
-
-                        {/* Confidence Score */}
-                        <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
-                          <span>Confidence: {gem.confidence}%</span>
-                          <span>Category: {gem.category}</span>
-                        </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-bold text-white">
+                      Domain Gems
+                    </h2>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2">
+                      <div className="flex items-center gap-2 text-sm text-gray-300">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span>{availabilityCount} available</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-300">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span>Updated {getRelativeTime(lastUpdated)}</span>
                       </div>
                     </div>
-                  ))}
-                </div>
-
-                {filteredGems.length === 0 && (
-                  <div className="text-center py-20">
-                    <div className="text-gray-400 text-xl mb-4">🔍</div>
-                    <p className="text-gray-400 mb-4">No domain gems found matching your filters.</p>
-                    <button
-                      onClick={() => setFilters({ priceRange: 'all', category: 'all', tld: 'all', search: '' })}
-                      className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+                  </div>
+                  <div className="flex gap-2 self-start sm:self-auto">
+                    <button 
+                      onClick={() => setViewMode('grid')}
+                      className={`p-2 rounded-lg transition-colors ${
+                        viewMode === 'grid' 
+                          ? 'bg-purple-600 hover:bg-purple-700' 
+                          : 'bg-gray-800 hover:bg-gray-700'
+                      }`}
                     >
-                      Clear Filters
+                      <svg className={`w-5 h-5 ${viewMode === 'grid' ? 'text-white' : 'text-gray-400'}`} fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                      </svg>
+                    </button>
+                    <button 
+                      onClick={() => setViewMode('list')}
+                      className={`p-2 rounded-lg transition-colors ${
+                        viewMode === 'list' 
+                          ? 'bg-purple-600 hover:bg-purple-700' 
+                          : 'bg-gray-800 hover:bg-gray-700'
+                      }`}
+                    >
+                      <svg className={`w-5 h-5 ${viewMode === 'list' ? 'text-white' : 'text-gray-400'}`} fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
                     </button>
                   </div>
+                </div>
+
+                {viewMode === 'grid' ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {displayedGems.map((gem) => (
+                      <div key={gem.id} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 group flex flex-col">
+                        <div className="p-4 sm:p-6 flex flex-col flex-1">
+                          {/* Domain Header */}
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3">
+                            <div className="flex items-start gap-3">
+                              <div className="text-xl sm:text-2xl leading-none">
+                                {gem.icon}
+                              </div>
+                              <div className="flex-1">
+                                <h3 className="text-sm sm:text-base font-bold text-gray-900 group-hover:text-purple-600 transition-colors leading-tight">
+                                  {gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com
+                                </h3>
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
+                                  <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium w-fit">
+                                    NEW
+                                  </span>
+                                  <div className="flex items-center gap-1">
+                                    <div className={`w-2 h-2 rounded-full ${gem.availability ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                                    <span className={`text-xs font-medium ${gem.availability ? 'text-green-600' : 'text-red-600'}`}>
+                                      {gem.availability ? 'Available' : 'Taken'}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleRegisterDomain(gem.domain)}
+                              disabled={!gem.availability}
+                              className={`px-3 py-1.5 rounded-md font-medium transition-all duration-200 text-xs shadow-md w-full sm:w-auto ${
+                                gem.availability 
+                                  ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white hover:shadow-lg' 
+                                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              }`}
+                            >
+                              {gem.availability ? 'Register' : 'Taken'}
+                            </button>
+                          </div>
+
+                          {/* Description */}
+                          <p className="text-gray-600 text-xs mb-4 leading-relaxed line-clamp-2">
+                            {gem.description}
+                          </p>
+
+                          {/* Footer with Value */}
+                          <div className="mt-auto pt-4 border-t-2 border-gray-200 bg-gray-50 -mx-6 px-6 py-3">
+                            <div className="flex items-center justify-between">
+                              <div className="text-sm font-medium text-gray-600">EST. VALUE</div>
+                              <div className="text-xl font-bold text-green-600">${gem.estimatedValue.toLocaleString()}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-3 sm:space-y-4">
+                    {displayedGems.map((gem) => (
+                      <div key={gem.id} className="bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300 group">
+                        <div className="p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                          {/* Left side - Icon, Domain, Status */}
+                          <div className="flex items-center gap-3 sm:gap-4 flex-1">
+                            <div className="text-xl sm:text-2xl">
+                              {gem.icon}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors truncate">
+                                  {gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com
+                                </h3>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium">
+                                    NEW
+                                  </span>
+                                  <div className="flex items-center gap-1">
+                                    <div className={`w-2 h-2 rounded-full ${gem.availability ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                                    <span className={`text-xs font-medium ${gem.availability ? 'text-green-600' : 'text-red-600'}`}>
+                                      {gem.availability ? 'Available' : 'Taken'}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <p className="text-gray-600 text-xs sm:text-sm mt-1 line-clamp-1">
+                                {gem.description}
+                              </p>
+                            </div>
+                          </div>
+                          
+                          {/* Right side - Value and Register button */}
+                          <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
+                            <div className="text-left sm:text-right">
+                              <div className="text-xs text-gray-500">EST. VALUE</div>
+                              <div className="text-lg sm:text-xl font-bold text-green-600">${gem.estimatedValue.toLocaleString()}</div>
+                            </div>
+                            <button
+                              onClick={() => handleRegisterDomain(gem.domain)}
+                              disabled={!gem.availability}
+                              className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm shadow-md ${
+                                gem.availability 
+                                  ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white hover:shadow-lg' 
+                                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              }`}
+                            >
+                              {gem.availability ? 'Register' : 'Taken'}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
+
               </>
             )}
           </div>

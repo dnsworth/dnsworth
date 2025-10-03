@@ -11,11 +11,13 @@ This document provides a comprehensive overview of the DNSWorth project structur
 DNSWORTH/
 ├── 📁 frontend/                 # React.js frontend application
 ├── 📁 backend/                  # Node.js backend API server
+├── 📁 tests/                    # Test files and test utilities
 ├── 📁 dnsworth/                 # Legacy project structure (cleanup needed)
 ├── 📄 .gitignore               # Git ignore patterns
 ├── 📄 PRD.md                   # Product Requirements Document
 ├── 📄 PROJECT_STRUCTURE.md     # This file
 ├── 📄 README.md                # Main project documentation
+├── 📄 SECURITY_ENHANCEMENTS.md # Security implementation documentation
 ├── 📄 vercel.json              # Vercel deployment configuration
 ├── 📄 env.template             # Environment variables template
 ├── 📄 production.env.example   # Production environment example
@@ -89,15 +91,60 @@ frontend/
 backend/
 ├── 📁 src/                     # Source code directory
 │   ├── 📁 config/              # Configuration files
+│   │   ├── 📄 email.js         # Email service configuration
 │   │   └── 📄 security.js      # Security configuration and middleware
-│   ├── 📁 middleware/          # Express.js middleware (future use)
+│   ├── 📁 middleware/          # Express.js middleware
+│   │   └── 📄 auditLogger.js   # Comprehensive audit logging middleware
 │   ├── 📁 routes/              # API route handlers
+│   │   ├── 📄 ai-gems.js       # AI domain generation endpoints
+│   │   ├── 📄 api-management.js # API key rotation and management
+│   │   ├── 📄 gems.js          # Domain gems API endpoints
+│   │   ├── 📄 registrations.js # Domain registration tracking
+│   │   ├── 📄 simple-gems.js   # Simple domain gems endpoints
 │   │   └── 📄 valuation.js     # Domain valuation API endpoints
+│   ├── 📁 services/            # Business logic services
+│   │   ├── 📄 adaptiveGenerator.js      # Adaptive domain generation
+│   │   ├── 📄 aiDomainGenerator.js      # AI-powered domain generation
+│   │   ├── 📄 apiKeyManager.js          # API key rotation management
+│   │   ├── 📄 categoryCombinator.js     # Category combination logic
+│   │   ├── 📄 categoryDetector.js       # Intelligent category detection
+│   │   ├── 📄 contextAwarePrompts.js    # Context-aware AI prompts
+│   │   ├── 📄 domainGenerator.js        # Core domain generation
+│   │   ├── 📄 domainScheduler.js        # Scheduled domain generation
+│   │   ├── 📄 enhancedAvailabilityService.js # Dynadot API integration
+│   │   ├── 📄 expertPrompts.js          # Expert-level generation prompts
+│   │   ├── 📄 humbleworthClient.js      # HumbleWorth API client
+│   │   ├── 📄 multiSourceAvailability.js # Multi-source availability checks
+│   │   ├── 📄 personalizationEngine.js  # User personalization
+│   │   ├── 📄 trendService.js           # Real-time trend integration
+│   │   ├── 📄 universalCategories.js    # Universal category system
+│   │   └── 📄 valuationEngine.js        # Advanced domain valuation
 │   ├── 📁 utils/               # Utility functions
 │   │   └── 📄 validation.js    # Input validation and sanitization
 │   └── 📄 index.js             # Main server file
+├── 📁 logs/                    # Audit and application logs
+├── 📄 .env                     # Environment variables (NOT in git)
+├── 📄 env.template             # Environment variables template
 ├── 📄 package.json             # Backend dependencies and scripts
 └── 📄 package-lock.json        # Dependency lock file
+```
+
+---
+
+## **Tests Directory Structure**
+
+```
+tests/
+├── 📄 test-apis.js              # API connection testing
+├── 📄 test-dynadot-correct.js   # Dynadot API testing (correct endpoint)
+├── 📄 test-dynadot-individual.js # Dynadot individual domain testing
+├── 📄 test-dynadot-simple.js    # Simple Dynadot API testing
+├── 📄 test-dynadot-wait.js      # Dynadot API testing with wait
+├── 📄 test-dynadot.js           # General Dynadot API testing
+├── 📄 test-env.js               # Environment variable testing
+├── 📄 test-gems-api.js          # Domain gems API testing
+├── 📄 test-server.js            # Server testing
+└── 📄 test-timeout-fix.js       # Timeout testing utilities
 ```
 
 ---

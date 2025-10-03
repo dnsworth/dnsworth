@@ -10,6 +10,7 @@ import BlogPost from './pages/BlogPost';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookiePolicy from './pages/CookiePolicy';
+import AffiliateDisclosure from './pages/AffiliateDisclosure';
 import FAQ from './pages/FAQ';
 import Support from './pages/Support';
 
@@ -50,6 +51,7 @@ function AppContent() {
         <Route path="/privacy-policy" element={<PrivacyPolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/terms-of-service" element={<TermsOfService onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/cookie-policy" element={<CookiePolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
+        <Route path="/affiliate-disclosure" element={<AffiliateDisclosure onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/faq" element={<FAQ onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
         <Route path="/support" element={<Support onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} />} />
       </Routes>

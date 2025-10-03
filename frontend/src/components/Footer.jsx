@@ -51,7 +51,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
               </p>
               
               {/* Social Media Icons */}
-              <div className="flex gap-4">
+              <div className="flex gap-4 mb-4">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
@@ -78,6 +78,16 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
                     )}
                   </a>
                 ))}
+              </div>
+
+              {/* Affiliate Disclosure Link */}
+              <div className="mt-4">
+                <button
+                  onClick={() => navigate('/affiliate-disclosure')}
+                  className="text-gray-400 hover:text-primary transition-colors duration-200 text-sm underline"
+                >
+                  Affiliate Disclosure
+                </button>
               </div>
             </div>
 
