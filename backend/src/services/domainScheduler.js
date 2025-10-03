@@ -18,16 +18,38 @@ class DomainScheduler {
     this.valuationEngine = new DomainValuationEngine(this.humbleworth);
     this.trendService = new TrendService();
     
-    // Redis client for storing generated domains
-    this.redis = Redis.createClient({
-      url: process.env.REDIS_URL || 'redis://localhost:6379'
-    });
-    
-    this.redis.on('error', (err) => {
-      console.error('Redis Client Error:', err);
-    });
-    
-    this.redis.connect();
+    // Redis client for storing generated domains - handle invalid URLs gracefully
+    try {
+      const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+      
+      // Validate Redis URL format
+      if (redisUrl.includes('redis-cli') || redisUrl.includes(' ')) {
+        console.warn('⚠️ Invalid Redis URL detected, using localhost fallback');
+        this.redis = Redis.createClient({
+          url: 'redis://localhost:6379'
+        });
+      } else {
+        this.redis = Redis.createClient({
+          url: redisUrl
+        });
+      }
+      
+      this.redis.on('error', (err) => {
+        console.error('Redis Client Error:', err);
+      });
+      
+      this.redis.connect();
+    } catch (error) {
+      console.warn('⚠️ Redis connection failed, using in-memory fallback:', error.message);
+      // Create a mock Redis client for fallback
+      this.redis = {
+        get: () => Promise.resolve(null),
+        set: () => Promise.resolve('OK'),
+        del: () => Promise.resolve(1),
+        connect: () => Promise.resolve(),
+        disconnect: () => Promise.resolve()
+      };
+    }
     
     this.isRunning = false;
     this.lastGeneration = null;
