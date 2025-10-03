@@ -13,15 +13,26 @@ dotenv.config();
 
 const router = express.Router();
 
-// Initialize services
-const aiGenerator = new AIDomainGenerator();
-const dynadotService = new EnhancedDynadotService();
-const scheduler = new DomainScheduler();
-const personalizationEngine = new PersonalizationEngine();
-const multiSourceAvailability = new MultiSourceAvailability();
+// Lazy service initialization to avoid issues during module loading
+let aiGenerator = null;
+let dynadotService = null;
+let scheduler = null;
+let personalizationEngine = null;
+let multiSourceAvailability = null;
 
-// Start the scheduler
-scheduler.start();
+function getServices() {
+  if (!aiGenerator) {
+    aiGenerator = new AIDomainGenerator();
+    dynadotService = new EnhancedDynadotService();
+    scheduler = new DomainScheduler();
+    personalizationEngine = new PersonalizationEngine();
+    multiSourceAvailability = new MultiSourceAvailability();
+    
+    // Start the scheduler
+    scheduler.start();
+  }
+  return { aiGenerator, dynadotService, scheduler, personalizationEngine, multiSourceAvailability };
+}
 
 /**
  * GET /api/ai-gems - Get AI-generated domain gems
@@ -29,6 +40,7 @@ scheduler.start();
 router.get('/', async (req, res) => {
   try {
     const { count = 30, refresh = false, keywords, style = 'tech', length = 'medium', userId } = req.query;
+    const { scheduler, personalizationEngine } = getServices();
     
     let domains = [];
     
@@ -373,6 +385,7 @@ function isBrandable(domain) {
 router.post('/check-availability', async (req, res) => {
   try {
     const { domains } = req.body;
+    const { dynadotService } = getServices();
     
     if (!domains || !Array.isArray(domains)) {
       return res.status(400).json({
@@ -451,6 +464,7 @@ router.get('/test-dynadot', async (req, res) => {
  */
 router.post('/trigger-generation', async (req, res) => {
   try {
+    const { scheduler } = getServices();
     console.log('🔄 Manual domain generation triggered');
     await scheduler.generateFreshBatch();
     res.json({

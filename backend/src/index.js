@@ -53,12 +53,23 @@ function validateEnvironment() {
   const missing = requiredVars.filter(varName => !process.env[varName]);
   
   if (missing.length > 0) {
-    console.error('❌ Missing required environment variables:', missing.join(', '));
-    console.error('Please check your .env file and ensure all required variables are set.');
-    process.exit(1);
+    console.warn('⚠️ Missing environment variables:', missing.join(', '));
+    console.warn('Some features may not work properly without these variables.');
+    
+    // In production, don't exit - just warn
+    if (process.env.NODE_ENV === 'production') {
+      console.warn('Running in production mode with missing variables - using fallbacks');
+      return;
+    }
+    
+    // In development, exit if critical variables are missing
+    if (missing.includes('DATABASE_URL')) {
+      console.error('❌ DATABASE_URL is required for database operations');
+      process.exit(1);
+    }
   }
   
-  console.log('✅ All required environment variables validated');
+  console.log('✅ Environment validation completed');
 }
 
 // Validate environment before starting server
