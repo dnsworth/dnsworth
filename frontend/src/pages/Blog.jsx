@@ -213,10 +213,10 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section */}
-      <section className="py-20 bg-black">
-        <div className="container mx-auto px-6 text-center">
+      <section className="py-12 md:py-20 bg-black">
+        <div className="container mx-auto px-4 md:px-6 text-center">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            className="text-2xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -224,7 +224,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             DNSWorth Blog
           </motion.h1>
           <motion.p
-            className="text-xl text-gray-300 mb-4 max-w-3xl mx-auto"
+            className="text-base md:text-xl text-gray-300 mb-3 md:mb-4 max-w-3xl mx-auto"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -233,7 +233,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             Expert insights on domain investing, valuation strategies, and market trends
           </motion.p>
           <motion.p
-            className="text-lg text-gray-400"
+            className="text-sm md:text-lg text-gray-400"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -246,10 +246,10 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
 
 
       {/* Category Filter */}
-      <section className="py-12 bg-gray-50 border-b border-gray-200">
-        <div className="container mx-auto px-6">
+      <section className="py-8 md:py-12 bg-gray-50 border-b border-gray-200">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
-            className="flex flex-wrap justify-center gap-4"
+            className="flex flex-wrap justify-center gap-2 md:gap-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -258,7 +258,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
               <motion.button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
+                className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-medium transition-all duration-200 text-sm md:text-base ${
                   selectedCategory === category.id
                     ? 'bg-primary text-white shadow-lg'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
@@ -275,13 +275,13 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Blog Posts */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
             {/* Main Content Area for Blog Posts */}
             <div className="lg:col-span-3">
               <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -293,50 +293,49 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                     className="block"
                   >
                     <motion.article
-                      className="group relative bg-white border-4 border-black rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                      className="group relative bg-white border-2 md:border-4 border-black rounded-2xl md:rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
                       variants={cardVariants}
                       whileHover={{ y: -5 }}
                     >
                     {/* Post Image Placeholder - Same style as About Us */}
-                    <div className="h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
+                    <div className="h-28 md:h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-5 group-hover:opacity-10 transition-opacity duration-500"></div>
-                      <div className="relative z-10 text-4xl text-primary/60">📝</div>
-                      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-bl-3xl"></div>
+                      <div className="relative z-10 text-2xl md:text-4xl text-primary/60">📝</div>
+                      <div className="absolute top-0 right-0 w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-bl-2xl md:rounded-bl-3xl"></div>
                     </div>
 
                     {/* Post Content */}
-                    <div className="p-6">
+                    <div className="p-1.5 md:p-6">
                       {/* Category Badge */}
-                      <div className="mb-4">
-                        <span className="inline-block px-3 py-1 text-xs font-semibold bg-black text-white rounded-full">
+                      <div className="mb-1 md:mb-4">
+                        <span className="inline-block px-1.5 md:px-3 py-0.5 md:py-1 text-xs md:text-xs font-semibold bg-black text-white rounded-full">
                           {post.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                         </span>
                       </div>
 
                       {/* Post Meta */}
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                        <span>{new Date(post.date).toLocaleDateString('en-US', { 
-                          year: 'numeric', 
-                          month: 'long', 
-                          day: 'numeric' 
+                      <div className="flex items-center gap-0.5 md:gap-4 text-xs md:text-sm text-gray-500 mb-1 md:mb-3 whitespace-nowrap overflow-hidden">
+                        <span className="text-xs md:text-sm flex-shrink-0">{new Date(post.date).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric'
                         })}</span>
-                        <span>•</span>
-                        <span>{post.readTime}</span>
+                        <span className="text-xs flex-shrink-0">•</span>
+                        <span className="text-xs md:text-sm flex-shrink-0">{post.readTime}</span>
                       </div>
 
                       {/* Post Title */}
-                      <h2 className="text-xl font-bold text-black mb-3 line-clamp-2">
+                      <h2 className="text-xs md:text-xl font-bold text-black mb-1 md:mb-3 line-clamp-2 leading-tight">
                         {post.title}
                       </h2>
 
                       {/* Post Excerpt */}
-                      <p className="text-gray-600 mb-4 line-clamp-3">
+                      <p className="text-xs md:text-base text-gray-600 mb-1 md:mb-4 line-clamp-2 md:line-clamp-3 leading-tight">
                         {post.excerpt}
                       </p>
                     </div>
 
                                       {/* Hover Effect Ring */}
-                      <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
+                      <div className="absolute inset-0 rounded-2xl md:rounded-3xl border-2 border-transparent group-hover:border-primary/20 transition-all duration-500"></div>
                     </motion.article>
                   </Link>
                 ))}

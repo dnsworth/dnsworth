@@ -1,4 +1,6 @@
 import SearchBar from './SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGem } from '@fortawesome/free-regular-svg-icons';
 
 const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Handle both prop names for backward compatibility
@@ -34,8 +36,14 @@ const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome, onNavigateT
             }}
             className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 hover:scale-105 transform shadow-lg"
           >
-            <span className="hidden sm:inline">💎 Domain Gems</span>
-            <span className="sm:hidden">💎 Gems</span>
+            <span className="hidden sm:flex items-center gap-2">
+              <FontAwesomeIcon icon={faGem} className="w-4 h-4" />
+              Domain Gems
+            </span>
+            <span className="sm:hidden flex items-center gap-1">
+              <FontAwesomeIcon icon={faGem} className="w-3 h-3" />
+              Gems
+            </span>
           </button>
 
           {/* Bulk Valuation Button */}

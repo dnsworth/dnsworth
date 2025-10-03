@@ -143,13 +143,13 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
       
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-gradient mb-6">
+            <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-gradient mb-4 md:mb-6">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto font-medium" style={{ color: '#ffffff' }}>
+            <p className="text-base md:text-xl lg:text-2xl leading-relaxed max-w-3xl mx-auto font-medium" style={{ color: '#ffffff' }}>
               Get answers to the most common questions about our free domain valuation service
             </p>
           </div>
@@ -157,21 +157,21 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* FAQ Content */}
-      <section className="py-20">
+      <section className="py-12 md:py-20">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             {/* FAQ List */}
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               {faqs.map((faq, index) => (
-                <div key={index} className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                  <div className="p-8">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-start">
-                      <span className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
+                <div key={index} className="bg-white rounded-xl md:rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <div className="p-4 md:p-8">
+                    <h3 className="text-base md:text-xl font-bold text-gray-900 mb-3 md:mb-4 flex items-start">
+                      <span className="bg-primary text-white rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center text-xs md:text-sm font-bold mr-3 md:mr-4 flex-shrink-0">
                         {index + 1}
                       </span>
                       {faq.question}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed text-lg ml-12">
+                    <p className="text-gray-600 leading-relaxed text-sm md:text-lg ml-6 md:ml-12">
                       {faq.answer}
                     </p>
                   </div>
@@ -180,8 +180,8 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
             </div>
 
             {/* CTA Section */}
-            <div className="mt-20 text-center">
-              <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 text-white relative overflow-hidden">
+            <div className="mt-12 md:mt-20 text-center">
+              <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl md:rounded-3xl p-6 md:p-12 text-white relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
@@ -189,10 +189,10 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
                 
                 <div className="relative z-10">
-                  <h3 className="text-4xl font-bold mb-6">
+                  <h3 className="text-2xl md:text-4xl font-bold mb-4 md:mb-6">
                     Ready to Get Started?
                   </h3>
-                  <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+                  <p className="text-base md:text-xl mb-6 md:mb-8 opacity-90 max-w-2xl mx-auto">
                     Try DNSWorth today and discover the true value of your domains with our AI-powered valuation technology
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">

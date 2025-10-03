@@ -34,11 +34,11 @@ class EnhancedDynadotService {
     
     console.log(`🔄 Checking FRESH availability for ${domains.length} domains (NO CACHE)`);
     
-    // Process in chunks of 500 (Dynadot batch limit)
-    const chunks = this.chunkArray(domains, 500);
+    // Process in chunks of 5 (Dynadot free account limit)
+    const chunks = this.chunkArray(domains, 5);
     const results = [];
     
-    console.log(`Processing ${domains.length} domains in ${chunks.length} chunks (up to 500 per batch)`);
+    console.log(`Processing ${domains.length} domains in ${chunks.length} chunks (up to 5 per batch)`);
     
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
@@ -47,10 +47,10 @@ class EnhancedDynadotService {
       const available = await this.checkDomainChunkWithBackoff(chunk);
       results.push(...available);
       
-      // Throttle requests - add 150ms delay between batches
+      // Throttle requests - add 2 second delay between batches for free account
       if (i < chunks.length - 1) {
-        console.log('⏳ Throttling: waiting 150ms before next batch...');
-        await this.delay(150);
+        console.log('⏳ Throttling: waiting 2s before next batch...');
+        await this.delay(2000);
       }
     }
     
@@ -137,10 +137,9 @@ class EnhancedDynadotService {
     if (response.data && response.data.domain_result_list) {
       response.data.domain_result_list.forEach(result => {
         if (result.available === 'yes') {
-          // Extract just the domain name without .com
-          const domainName = result.domain_name.replace('.com', '');
+          // Use the domain name as-is from Dynadot (already includes .com)
           availableDomains.push({
-            domain: `${domainName}.com`,
+            domain: result.domain_name,
             available: true,
             price: result.price || 'N/A',
             currency: result.currency || 'USD'

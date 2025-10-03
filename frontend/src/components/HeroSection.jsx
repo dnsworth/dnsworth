@@ -2,26 +2,26 @@ import ValuationForm from './ValuationForm';
 
 const HeroSection = ({ onResult, loading }) => {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center bg-black overflow-hidden">
+    <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center justify-center bg-black overflow-hidden pt-8 md:pt-0">
       {/* Pure Black Background - Original Design */}
       <div className="absolute inset-0 bg-black"></div>
 
       <div className="relative z-10 container-custom text-center px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           {/* Main Heading - Mobile optimized */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 leading-tight animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight animate-fade-in">
             <span className="text-gradient">Instant Domain Valuations</span>
             <br />
             <span className="text-text">100% Free Forever</span>
           </h1>
 
           {/* Subheading - Mobile optimized */}
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl text-text-muted mb-6 sm:mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-2 font-normal">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl text-text-muted mb-4 sm:mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed px-2 font-normal">
             Discover your domain's <span className="text-primary font-semibold">true market value</span> in seconds with our advanced AI technology.
           </h2>
 
           {/* Search Form */}
-          <div className="mb-6 sm:mb-8 md:mb-12">
+          <div className="mb-4 sm:mb-6 md:mb-8">
             <ValuationForm onResult={onResult} />
           </div>
 

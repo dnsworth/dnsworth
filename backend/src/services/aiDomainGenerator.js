@@ -90,7 +90,8 @@ Examples: stripe, shopify, airbnb, uber, slack, zoom, notion, figma, linear, ver
       
     } catch (error) {
       console.error('Error in generateDomainsBatch:', error);
-      throw error; // Don't use fallback, let it fail properly
+      console.log('🔄 Using fallback domain generation due to API error');
+      return this.generateFallbackDomains();
     }
   }
 
@@ -112,6 +113,27 @@ Examples: stripe, shopify, airbnb, uber, slack, zoom, notion, figma, linear, ver
   }
 
   /**
+   * Generate fallback domains when API fails
+   */
+  generateFallbackDomains() {
+    const fallbackDomains = [
+      'techflow', 'greenenergy', 'cryptotrade', 'datavault', 'cloudsync',
+      'smartlink', 'nexusai', 'quantumlab', 'cybercore', 'digitalwave',
+      'innovatex', 'techbridge', 'datastream', 'cloudforge', 'smartgrid',
+      'cybernet', 'quantumx', 'datapulse', 'cloudwise', 'techspark',
+      'innovate', 'cyberlink', 'quantum', 'datacore', 'cloudtech',
+      'smartbase', 'techwave', 'cyberflow', 'quantumai', 'databridge',
+      'cloudcore', 'smarttech', 'cyberai', 'quantumx', 'datapulse',
+      'cloudwise', 'techspark', 'innovate', 'cyberlink', 'quantum',
+      'datacore', 'cloudtech', 'smartbase', 'techwave', 'cyberflow'
+    ];
+    
+    // Shuffle and return a random selection (limited to 5 for Dynadot free account)
+    const shuffled = fallbackDomains.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 5);
+  }
+
+  /**
    * Generate domains using the adaptive generator
    */
   async generateFromPrompt(prompt) {
@@ -121,7 +143,7 @@ Examples: stripe, shopify, airbnb, uber, slack, zoom, notion, figma, linear, ver
 
     try {
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-4',
+        model: 'gpt-3.5-turbo',
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 2000,
         temperature: 0.8
@@ -236,7 +258,7 @@ Examples: stripe, shopify, airbnb, uber, slack, zoom, notion, figma, linear, ver
 
     try {
       const completion = await this.openai.chat.completions.create({
-        model: "gpt-4",
+        model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.9, // Higher creativity
         max_tokens: 1200

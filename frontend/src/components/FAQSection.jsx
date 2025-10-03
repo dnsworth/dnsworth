@@ -45,12 +45,12 @@ const FAQSection = () => {
   };
 
   return (
-    <section id="faq-section" className="py-16 bg-white">
+    <section id="faq-section" className="py-12 md:py-16 bg-white">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
+            className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 md:mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -58,7 +58,7 @@ const FAQSection = () => {
             Frequently Asked Questions
           </motion.h2>
           <motion.p
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -72,27 +72,27 @@ const FAQSection = () => {
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
-              className="mb-4"
+              className="mb-2 md:mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300">
                 {/* Question */}
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 transition-colors duration-200"
+                  className="w-full px-4 py-3 md:px-6 md:py-4 text-left flex items-center justify-between hover:bg-gray-100 transition-colors duration-200"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 pr-4">
+                  <h3 className="text-xs md:text-base font-semibold text-gray-900 pr-3 md:pr-4">
                     {faq.question}
                   </h3>
                   <div className="flex-shrink-0">
                     <motion.div
                       animate={{ rotate: openIndex === index ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
-                      className="w-5 h-5 text-primary"
+                      className="w-4 h-4 md:w-5 md:h-5 text-primary"
                     >
                       <svg
                         fill="none"
@@ -122,8 +122,8 @@ const FAQSection = () => {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-4">
-                        <p className="text-sm text-gray-700 leading-relaxed">
+                      <div className="px-4 pb-3 md:px-6 md:pb-4">
+                        <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
                           {faq.answer}
                         </p>
                       </div>

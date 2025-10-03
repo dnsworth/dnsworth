@@ -113,10 +113,10 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
         <div className="container mx-auto px-6 text-center">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            className="text-2xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -124,7 +124,7 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
             Cookie Policy
           </motion.h1>
           <motion.p
-            className="text-xl text-text-muted mb-4"
+            className="text-base md:text-xl text-text-muted mb-3 md:mb-4"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -132,7 +132,7 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
             Understanding how we use cookies to enhance your experience.
           </motion.p>
           <motion.p
-            className="text-lg text-text-muted/80"
+            className="text-sm md:text-lg text-text-muted/80"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -143,8 +143,8 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Main Content */}
-      <main className="py-20">
-        <div className="container mx-auto px-6 max-w-5xl">
+      <main className="py-12 md:py-20">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -152,11 +152,11 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
           >
             {/* Introduction */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">1. What Are Cookies & Why We Use Them</h2>
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">1. What Are Cookies & Why We Use Them</h2>
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   <strong>Cookies are small text files</strong> that are placed on your device when you visit our website. They serve essential functions for providing you with the best possible experience on DNSWorth.
                 </p>
@@ -171,18 +171,18 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Types of Cookies */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">2. Types of Cookies We Use & Their Purposes</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">2. Types of Cookies We Use & Their Purposes</h2>
               
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.1 Essential Cookies (Required)</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.1 Essential Cookies (Required)</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     These cookies are absolutely necessary for the website to function properly and cannot be disabled:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Authentication cookies:</strong> Secure access and session management</li>
                     <li><strong>Security cookies:</strong> Fraud prevention and threat detection</li>
                     <li><strong>Load balancing cookies:</strong> Ensuring optimal performance distribution</li>
@@ -195,11 +195,11 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.2 Performance & Analytics Cookies</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.2 Performance & Analytics Cookies</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     These cookies help us understand how visitors interact with our website and improve service quality:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Analytics cookies:</strong> Track page views, user journeys, and engagement metrics</li>
                     <li><strong>Performance monitoring:</strong> Monitor loading times and service responsiveness</li>
                     <li><strong>Error tracking:</strong> Identify and resolve technical issues quickly</li>
@@ -209,11 +209,11 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.3 Functionality & Preference Cookies</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.3 Functionality & Preference Cookies</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     These cookies enable enhanced functionality and personalization:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Language preference cookies:</strong> Remember your preferred language</li>
                     <li><strong>User interface customization:</strong> Store display preferences and settings</li>
                     <li><strong>Feature preference cookies:</strong> Remember your tool preferences</li>
@@ -223,8 +223,8 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.4 Third-Party Service Cookies</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.4 Third-Party Service Cookies</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     Some cookies are placed by trusted third-party services that help us provide better services, including domain valuation data providers, security services, and performance monitoring tools.
                   </p>
                 </div>
@@ -233,10 +233,10 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Specific Cookies Table */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">3. Specific Cookies We Use & Their Details</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">3. Specific Cookies We Use & Their Details</h2>
               
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse border border-gray-700 rounded-lg overflow-hidden">
@@ -301,18 +301,18 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* How We Use Cookies */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">4. How We Use Cookies & Their Benefits</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">4. How We Use Cookies & Their Benefits</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.1 Core Service Functionality</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.1 Core Service Functionality</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     We use cookies to provide essential domain valuation services:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Maintain your session across page visits and valuation requests</li>
                     <li>Remember your preferences and settings for personalized experience</li>
                     <li>Enable bulk valuation features and CSV export functionality</li>
@@ -322,11 +322,11 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.2 Analytics & Service Improvement</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.2 Analytics & Service Improvement</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     Cookies help us understand and improve our service:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Analyze how users interact with our valuation tools</li>
                     <li>Identify which features are most popular and useful</li>
                     <li>Detect performance issues and optimize service speed</li>
@@ -336,11 +336,11 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.3 Security & Fraud Prevention</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.3 Security & Fraud Prevention</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     We use cookies to maintain security and prevent abuse:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Detect and prevent fraudulent activities and bot attacks</li>
                     <li>Implement rate limiting to ensure fair usage for all users</li>
                     <li>Protect against security threats and unauthorized access</li>
@@ -352,18 +352,18 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Third-Party Cookies */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">5. Third-Party Cookies & External Services</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">5. Third-Party Cookies & External Services</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.1 Analytics & Performance Services</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.1 Analytics & Performance Services</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     We may use trusted third-party services that place cookies to help us provide better services:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Performance monitoring services:</strong> Track website speed and reliability</li>
                     <li><strong>User behavior analytics:</strong> Understand how users interact with our platform</li>
                     <li><strong>Error tracking and reporting:</strong> Quickly identify and resolve technical issues</li>
@@ -372,11 +372,11 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.2 Domain Valuation Services</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.2 Domain Valuation Services</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     Our domain valuation partners may place cookies to ensure accurate and reliable service delivery:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>HumbleWorth API integration cookies for valuation accuracy</li>
                     <li>Market data provider cookies for real-time information</li>
                     <li>Domain registry cookies for ownership verification</li>
@@ -385,8 +385,8 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.3 Third-Party Cookie Control</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.3 Third-Party Cookie Control</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     <strong>All third-party services are carefully vetted</strong> and contractually bound to maintain the same level of data protection as outlined in our Privacy Policy. You can control third-party cookies through your browser settings.
                   </p>
                 </div>
@@ -395,18 +395,18 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Cookie Management */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">6. Managing Your Cookie Preferences & Control</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">6. Managing Your Cookie Preferences & Control</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.1 Browser Settings & Controls</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.1 Browser Settings & Controls</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     You can control cookies through your browser settings:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Block all cookies:</strong> May affect website functionality</li>
                     <li><strong>Block third-party cookies only:</strong> Allow essential cookies while blocking external ones</li>
                     <li><strong>Delete existing cookies:</strong> Remove stored cookie data</li>
@@ -416,11 +416,11 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.2 Our Cookie Management Tools</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.2 Our Cookie Management Tools</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     We provide options to manage your cookie preferences:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Opt out of non-essential cookies:</strong> Control performance and functionality cookies</li>
                     <li><strong>Manage performance tracking preferences:</strong> Control analytics and monitoring</li>
                     <li><strong>Control functionality cookies:</strong> Manage personalization features</li>
@@ -429,8 +429,8 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.3 Impact of Disabling Cookies</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.3 Impact of Disabling Cookies</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     <strong>Important:</strong> Disabling certain cookies may affect service functionality, personalization, and performance monitoring. Essential cookies cannot be disabled without breaking core website functions.
                   </p>
                 </div>
@@ -439,18 +439,18 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Data Collection and Privacy */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">7. Data Collection & Privacy Protection</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">7. Data Collection & Privacy Protection</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">7.1 Information Collected Through Cookies</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">7.1 Information Collected Through Cookies</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     Cookies may collect the following types of information:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Device and browser information:</strong> Browser type, version, and operating system</li>
                     <li><strong>Usage patterns and preferences:</strong> How you interact with our services</li>
                     <li><strong>Session and interaction data:</strong> Your activity during visits</li>
@@ -460,8 +460,8 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">7.2 Data Protection & Security</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">7.2 Data Protection & Security</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     <strong>All data collected through cookies is protected</strong> according to our Privacy Policy and applicable data protection laws. We implement appropriate security measures and never sell or share your data with unauthorized third parties.
                   </p>
                 </div>
@@ -470,12 +470,12 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Updates to Policy */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">8. Updates to This Cookie Policy</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">8. Updates to This Cookie Policy</h2>
               
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   We may update this Cookie Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors.
                 </p>
@@ -499,18 +499,18 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
               className="mb-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-3xl p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">9. Contact Information & Support</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">9. Contact Information & Support</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">9.1 Cookie Policy Team</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">9.1 Cookie Policy Team</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     If you have questions about our use of cookies or this Cookie Policy, please contact our dedicated team:
                   </p>
                   <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-text-muted">
+                        <p className="text-text-muted text-sm md:text-base">
                           <strong>Email:</strong><br />
                           <a href="mailto:cookies@dnsworth.com" className="text-primary hover:text-primary/80 transition-colors">
                             cookies@dnsworth.com
@@ -518,7 +518,7 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                         </p>
                       </div>
                       <div>
-                        <p className="text-text-muted">
+                        <p className="text-text-muted text-sm md:text-base">
                           <strong>Response Time:</strong><br />
                           Within 30 days for policy inquiries
                         </p>
@@ -528,8 +528,8 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">9.2 Technical Support</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">9.2 Technical Support</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     For technical issues related to cookies or website functionality, contact us at <strong>info@dnsworth.com</strong>.
                   </p>
                 </div>

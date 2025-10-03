@@ -1207,17 +1207,17 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Blog Post Content */}
-      <article className="py-20">
-        <div className="container mx-auto px-6 max-w-4xl">
+      <article className="py-12 md:py-20">
+        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           {/* Back to Blog Button */}
           <motion.button
             onClick={() => navigate('/blog')}
-            className="flex items-center gap-2 text-black hover:text-gray-700 mb-8 transition-colors duration-200 font-semibold"
+            className="flex items-center gap-2 text-black hover:text-gray-700 mb-6 md:mb-8 transition-colors duration-200 font-semibold text-sm md:text-base"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Blog
@@ -1225,33 +1225,33 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
 
           {/* Post Header */}
           <motion.header
-            className="mb-12"
+            className="mb-8 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             {/* Category Badge */}
-            <div className="mb-6">
-              <span className="inline-block px-4 py-2 text-sm font-medium bg-primary/20 text-primary rounded-full">
+            <div className="mb-4 md:mb-6">
+              <span className="inline-block px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium bg-primary/20 text-primary rounded-full">
                 {post.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
               {post.title}
             </h1>
 
             {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex flex-wrap items-center gap-3 md:gap-6 text-gray-600 mb-6 md:mb-8 text-sm md:text-base">
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
                 <span>{post.author}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span>{new Date(post.date).toLocaleDateString('en-US', { 
@@ -1260,8 +1260,8 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
                   day: 'numeric' 
                 })}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex items-center gap-1.5 md:gap-2">
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span>{post.readTime}</span>
@@ -1269,7 +1269,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
             </div>
 
             {/* Excerpt */}
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-base md:text-xl text-gray-600 leading-relaxed">
               {post.excerpt}
             </p>
           </motion.header>
@@ -1285,18 +1285,18 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
 
           {/* Call to Action */}
           <motion.div
-            className="mt-16 p-8 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl border border-primary/20 text-center"
+            className="mt-12 md:mt-16 p-4 md:p-8 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl md:rounded-2xl border border-primary/20 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <h3 className="text-lg md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">
               Ready to Value Your Domains?
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
               Use DNSWorth's free AI-powered tool to get instant, accurate domain valuations.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
               <button
                 onClick={() => {
                   navigate('/');
@@ -1305,13 +1305,13 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }, 100);
                 }}
-                className="btn-primary text-lg px-8 py-4"
+                className="btn-primary text-sm md:text-lg px-6 md:px-8 py-3 md:py-4"
               >
                 Start Valuing Domains
               </button>
               <button
                 onClick={() => navigate('/bulk-valuation')}
-                className="btn-secondary text-lg px-8 py-4"
+                className="btn-secondary text-sm md:text-lg px-6 md:px-8 py-3 md:py-4"
               >
                 Bulk Valuation
               </button>

@@ -113,10 +113,10 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
         <div className="container mx-auto px-6 text-center">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            className="text-2xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -124,7 +124,7 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
             Privacy Policy
           </motion.h1>
           <motion.p
-            className="text-xl text-text-muted mb-4"
+            className="text-base md:text-xl text-text-muted mb-3 md:mb-4"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -132,7 +132,7 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
             Your privacy is our priority. Learn how we protect your information.
           </motion.p>
           <motion.p
-            className="text-lg text-text-muted/80"
+            className="text-sm md:text-lg text-text-muted/80"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -143,8 +143,8 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Main Content */}
-      <main className="py-20">
-        <div className="container mx-auto px-6 max-w-5xl">
+      <main className="py-12 md:py-20">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -152,11 +152,11 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
           >
             {/* Introduction */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">1. Introduction & Legal Framework</h2>
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">1. Introduction & Legal Framework</h2>
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   <strong>DNSWorth</strong> ("we," "our," "us," or "the Company") is committed to protecting your privacy while providing exceptional domain valuation services. This Privacy Policy ("Policy") is legally binding and governs how we collect, use, disclose, and safeguard your information.
                 </p>
@@ -171,18 +171,18 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Information Collection */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">2. Information Collection & Legal Basis</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">2. Information Collection & Legal Basis</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.1 Personal Information Collection</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.1 Personal Information Collection</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     We collect information that you voluntarily provide and information automatically collected during service usage:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Domain names submitted for valuation (essential for service provision)</li>
                     <li>IP addresses and device information (security and fraud prevention)</li>
                     <li>Browser type, version, and operating system (service optimization)</li>
@@ -192,8 +192,8 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.2 Legal Basis for Processing</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.2 Legal Basis for Processing</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     We process your data based on: <strong>Contract performance</strong> (providing valuation services), <strong>Legitimate interests</strong> (service improvement and security), and <strong>Legal obligations</strong> (compliance with applicable laws).
                   </p>
                 </div>
@@ -202,15 +202,15 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Data Usage */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">3. How We Use Your Information</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">3. How We Use Your Information</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">3.1 Primary Service Functions</h3>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">3.1 Primary Service Functions</h3>
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Providing accurate domain valuations using our AI-powered algorithms</li>
                     <li>Processing bulk valuation requests and generating comprehensive reports</li>
                     <li>Ensuring service reliability, performance, and security</li>
@@ -219,8 +219,8 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">3.2 Service Enhancement & Analytics</h3>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">3.2 Service Enhancement & Analytics</h3>
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Analyzing usage patterns to optimize user experience</li>
                     <li>Developing new features based on user needs and feedback</li>
                     <li>Monitoring service performance and identifying improvement opportunities</li>
@@ -232,25 +232,25 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Data Sharing */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">4. Information Sharing & Third-Party Services</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">4. Information Sharing & Third-Party Services</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.1 Strict No-Sale Policy</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.1 Strict No-Sale Policy</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>DNSWorth absolutely does not sell, trade, or rent your personal information to third parties for marketing purposes.</strong> Your data is valuable and we protect it accordingly.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.2 Essential Service Providers</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.2 Essential Service Providers</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     We may share information only with trusted third-party service providers who assist in:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Hosting and infrastructure services (ensuring service availability)</li>
                     <li>Domain valuation data providers (HumbleWorth API integration)</li>
                     <li>Analytics and performance monitoring (service optimization)</li>
@@ -260,18 +260,20 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                     <strong>All third-party providers are contractually bound to maintain the same level of data protection as outlined in this Policy.</strong>
                   </p>
                   
-                  <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-                    <h4 className="text-lg font-semibold text-white mb-3">4.2.1 Google Analytics Notice</h4>
-                    <p className="text-text-muted mb-3">
+                  <div className="mt-4 md:mt-6 p-3 md:p-4 bg-gray-800/50 rounded-lg border border-gray-700">
+                    <h4 className="text-base md:text-lg font-semibold text-white mb-2 md:mb-3">4.2.1 Google Analytics Notice</h4>
+                    <p className="text-text-muted mb-2 md:mb-3 text-sm md:text-base">
                       We use Google Analytics to better understand how visitors interact with our website. This tool may collect data such as your IP address and usage behavior during your visit.
                     </p>
-                    <p className="text-text-muted mb-3">
+                    <p className="text-text-muted mb-2 md:mb-3 text-sm md:text-base">
                       For more information on how Google Analytics collects and processes data, please visit: 
+                    </p>
+                    <p className="text-text-muted mb-2 md:mb-3 text-sm md:text-base">
                       <a 
                         href="https://www.google.com/policies/privacy/partners/" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-primary hover:text-secondary underline ml-1"
+                        className="text-primary hover:text-secondary underline break-all"
                       >
                         https://www.google.com/policies/privacy/partners/
                       </a>
@@ -280,8 +282,8 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.3 Legal Compliance</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.3 Legal Compliance</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     We may disclose information only when legally required by court order, government request, or to protect our rights, property, or safety, or that of our users or the public.
                   </p>
                 </div>
@@ -290,15 +292,15 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Data Security */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">5. Data Security & Protection Measures</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">5. Data Security & Protection Measures</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.1 Comprehensive Security Implementation</h3>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.1 Comprehensive Security Implementation</h3>
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>End-to-end encryption for all data transmission (TLS 1.3)</li>
                     <li>Secure server infrastructure with enterprise-grade firewalls</li>
                     <li>Regular security audits, penetration testing, and vulnerability assessments</li>
@@ -309,8 +311,8 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.2 Data Retention & Disposal</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.2 Data Retention & Disposal</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     We retain your information only as long as necessary to provide our services and comply with legal obligations. Data is securely disposed of using industry-standard methods when no longer required.
                   </p>
                 </div>
@@ -319,18 +321,18 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* User Rights */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">6. Your Privacy Rights & Control</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">6. Your Privacy Rights & Control</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.1 Comprehensive User Rights</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.1 Comprehensive User Rights</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     You have the following rights regarding your personal information:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li><strong>Access:</strong> Request a copy of your personal data</li>
                     <li><strong>Rectification:</strong> Correct inaccurate or incomplete information</li>
                     <li><strong>Erasure:</strong> Request deletion of your data (subject to legal requirements)</li>
@@ -341,9 +343,9 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.2 Exercise Your Rights</h3>
-                  <p className="text-text-muted">
-                    To exercise any of these rights, contact us at <strong>privacy@dnsworth.com</strong>. We will respond to all requests within 30 days as required by law.
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.2 Exercise Your Rights</h3>
+                  <p className="text-text-muted text-sm md:text-base">
+                    To exercise any of these rights, contact us at <strong>info@dnsworth.com</strong>. We will respond to all requests within 30 days as required by law.
                   </p>
                 </div>
               </div>
@@ -351,18 +353,18 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Cookies */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">7. Cookies & Tracking Technologies</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">7. Cookies & Tracking Technologies</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">7.1 Essential Service Cookies</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">7.1 Essential Service Cookies</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     We use cookies and similar technologies to:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Maintain your session and preferences</li>
                     <li>Ensure service functionality and security</li>
                     <li>Analyze service performance and user experience</li>
@@ -371,8 +373,8 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">7.2 Cookie Management</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">7.2 Cookie Management</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     You can control cookies through your browser settings. However, disabling essential cookies may affect service functionality. For detailed information, see our <strong>Cookie Policy</strong>.
                   </p>
                 </div>
@@ -381,12 +383,12 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* International Transfers */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">8. International Data Transfers & Compliance</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">8. International Data Transfers & Compliance</h2>
               
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place for such transfers, including:
                 </p>
@@ -404,12 +406,12 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Children's Privacy */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">9. Children's Privacy & Age Restrictions</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">9. Children's Privacy & Age Restrictions</h2>
               
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   <strong>DNSWorth is not intended for children under 13 years of age.</strong> We do not knowingly collect personal information from children under 13.
                 </p>
@@ -424,12 +426,12 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Policy Updates */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">10. Policy Updates & Notification</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">10. Policy Updates & Notification</h2>
               
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors.
                 </p>
@@ -450,29 +452,29 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Contact Information */}
             <motion.section
-              className="mb-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">11. Contact Information & Support</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">11. Contact Information & Support</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">11.1 Privacy Team Contact</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">11.1 Privacy Team Contact</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact our dedicated privacy team:
                   </p>
                   <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-text-muted">
+                        <p className="text-text-muted text-sm md:text-base">
                           <strong>Email:</strong><br />
-                          <a href="mailto:privacy@dnsworth.com" className="text-primary hover:text-primary/80 transition-colors">
-                            privacy@dnsworth.com
+                          <a href="mailto:info@dnsworth.com" className="text-primary hover:text-primary/80 transition-colors">
+                            info@dnsworth.com
                           </a>
                         </p>
                       </div>
                       <div>
-                        <p className="text-text-muted">
+                        <p className="text-text-muted text-sm md:text-base">
                           <strong>Response Time:</strong><br />
                           Within 30 days as required by law
                         </p>
@@ -482,9 +484,9 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">11.2 Data Protection Officer</h3>
-                  <p className="text-text-muted">
-                    For complex privacy matters or regulatory inquiries, our Data Protection Officer is available at <strong>dpo@dnsworth.com</strong>.
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">11.2 Data Protection Officer</h3>
+                  <p className="text-text-muted text-sm md:text-base">
+                    For complex privacy matters or regulatory inquiries, our Data Protection Officer is available at <strong>info@dnsworth.com</strong>.
                   </p>
                 </div>
               </div>
@@ -492,12 +494,12 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Legal Disclaimer */}
             <motion.section
-              className="mb-16 bg-red-900/20 border border-red-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-red-900/20 border border-red-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-red-400 mb-6">⚠️ Important Legal Disclaimer</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-red-400 mb-4 md:mb-6">⚠️ Important Legal Disclaimer</h2>
               
-              <div className="space-y-4 text-red-300 leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-red-300 leading-relaxed text-sm md:text-base">
                 <p>
                   <strong>This Privacy Policy is a legally binding document.</strong> By using our services, you acknowledge that you have read, understood, and agreed to all terms and conditions outlined herein.
                 </p>

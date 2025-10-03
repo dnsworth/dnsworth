@@ -144,97 +144,58 @@ const SectionWhyUs = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-secondary to-secondary/90 text-black overflow-hidden">
+    <section className="py-12 md:py-20 bg-gradient-to-br from-secondary to-secondary/90 text-black overflow-hidden">
       <div className="container-custom">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-6">
             Trusted by Domain Enthusiasts
           </h2>
           
-          <p className="text-xl text-black/90 leading-relaxed mb-8 max-w-3xl mx-auto">
+          <p className="text-sm md:text-xl text-black/90 leading-relaxed mb-6 md:mb-8 max-w-3xl mx-auto">
             Join thousands of domain investors, entrepreneurs, and businesses who trust DNSWorth 
             for accurate, instant valuations that drive real business decisions.
           </p>
           
 
           
-          {/* Rolling Testimonials Carousel */}
-          <div className="relative">
-            {/* First row of testimonials */}
-            <div className="flex animate-scroll-left mb-8">
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className="flex-shrink-0 mx-6 text-center group">
-                  <div className="mx-auto mb-4 relative group">
-                    <div className="relative">
-                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
-                        <img 
-                          src={testimonial.avatar} 
-                          alt={testimonial.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      {/* Hover effect ring */}
-                      <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-white/20 transition-all duration-300"></div>
-                      
-                      {/* Name and title overlay on portrait */}
-                      <div className="absolute inset-0 rounded-full bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <h3 className="text-sm font-bold text-white text-center leading-tight mb-1 px-2">
-                          {testimonial.name}
-                        </h3>
-                        <p className="text-xs text-white/90 text-center leading-tight px-2">
-                          {testimonial.role}
-                        </p>
-                      </div>
+          {/* Testimonials Grid - Mobile: 2 columns, Desktop: 3 columns */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+            {testimonials.slice(0, 8).map((testimonial) => (
+              <div key={testimonial.id} className="text-center group">
+                <div className="mx-auto mb-4 relative group">
+                  <div className="relative">
+                    <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src={testimonial.avatar} 
+                        alt={testimonial.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    {/* Hover effect ring */}
+                    <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-white/20 transition-all duration-300"></div>
+                    
+                    {/* Name and title overlay on portrait */}
+                    <div className="absolute inset-0 rounded-full bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 className="text-xs md:text-sm font-bold text-white text-center leading-tight mb-1 px-1 md:px-2">
+                        {testimonial.name}
+                      </h3>
+                      <p className="text-xs text-white/90 text-center leading-tight px-1 md:px-2">
+                        {testimonial.role}
+                      </p>
                     </div>
                   </div>
-                  <div className="max-w-xs mx-auto">
-                    <blockquote className="text-sm text-black/80 italic leading-relaxed group-hover:text-black transition-colors duration-300">
-                      "{testimonial.quote}"
-                    </blockquote>
-                  </div>
                 </div>
-              ))}
-            </div>
-            
-            {/* Second row of testimonials (offset for continuous flow) */}
-            <div className="flex animate-scroll-left-reverse">
-              {testimonials.slice(10).concat(testimonials.slice(0, 10)).map((testimonial, index) => (
-                                 <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 mx-6 text-center group">
-                   <div className="mx-auto mb-4 relative group">
-                     <div className="relative">
-                       <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
-                         <img
-                           src={testimonial.avatar}
-                           alt={testimonial.name}
-                           className="w-full h-full object-cover"
-                         />
-                       </div>
-                       {/* Hover effect ring */}
-                       <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-white/20 transition-all duration-300"></div>
-                       
-                       {/* Name and title overlay on portrait */}
-                       <div className="absolute inset-0 rounded-full bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                         <h3 className="text-sm font-bold text-white text-center leading-tight mb-1 px-2">
-                           {testimonial.name}
-                         </h3>
-                         <p className="text-xs text-white/90 text-center leading-tight px-2">
-                           {testimonial.role}
-                         </p>
-                       </div>
-                     </div>
-                   </div>
-                  <div className="max-w-xs mx-auto">
-                    <blockquote className="text-sm text-black/80 italic leading-relaxed group-hover:text-black transition-colors duration-300">
-                      "{testimonial.quote}"
-                    </blockquote>
-                  </div>
+                <div className="max-w-xs mx-auto">
+                  <blockquote className="text-xs md:text-sm text-black/80 italic leading-relaxed group-hover:text-black transition-colors duration-300">
+                    "{testimonial.quote}"
+                  </blockquote>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
           
           {/* Trust indicators */}
-          <div className="mt-16 flex flex-wrap justify-center items-center gap-8 text-black/70">
+          <div className="mt-8 md:mt-16 flex flex-wrap justify-center items-center gap-6 md:gap-8 text-black/70">
             <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-black/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

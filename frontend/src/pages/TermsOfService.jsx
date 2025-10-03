@@ -113,10 +113,10 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">
         <div className="container mx-auto px-6 text-center">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+            className="text-2xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -124,7 +124,7 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
             Terms of Service
           </motion.h1>
           <motion.p
-            className="text-xl text-text-muted mb-4"
+            className="text-base md:text-xl text-text-muted mb-3 md:mb-4"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -132,7 +132,7 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
             Legal terms governing your use of DNSWorth services.
           </motion.p>
           <motion.p
-            className="text-lg text-text-muted/80"
+            className="text-sm md:text-lg text-text-muted/80"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
@@ -143,8 +143,8 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Main Content */}
-      <main className="py-20">
-        <div className="container mx-auto px-6 max-w-5xl">
+      <main className="py-12 md:py-20">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -152,11 +152,11 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
           >
             {/* Introduction */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">1. Acceptance & Legal Agreement</h2>
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">1. Acceptance & Legal Agreement</h2>
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   <strong>IMPORTANT:</strong> By accessing and using DNSWorth ("the Service," "we," "our," or "us"), you accept and agree to be bound by these Terms of Service ("Terms") which constitute a legally binding contract between you and DNSWorth.
                 </p>
@@ -171,18 +171,18 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Service Description */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">2. Service Description & Scope</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">2. Service Description & Scope</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.1 What We Provide</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.1 What We Provide</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     DNSWorth provides the following services:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>AI-powered domain valuation analysis using HumbleWorth API</li>
                     <li>Single domain valuation with comprehensive market insights</li>
                     <li>Bulk portfolio valuation tools for multiple domains</li>
@@ -192,11 +192,11 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">2.2 Service Availability & Limitations</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">2.2 Service Availability & Limitations</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>Service Availability:</strong> We strive to provide 24/7 service availability but cannot guarantee uninterrupted access due to:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Scheduled maintenance and system updates</li>
                     <li>Technical issues beyond our control</li>
                     <li>Third-party service provider outages</li>
@@ -211,18 +211,18 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* User Responsibilities */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">3. User Responsibilities & Acceptable Use</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">3. User Responsibilities & Acceptable Use</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">3.1 Acceptable Use Requirements</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">3.1 Acceptable Use Requirements</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     You agree to use the Service only for lawful purposes and in accordance with these Terms:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Submit only legitimate domain names for valuation</li>
                     <li>Use the service for personal, business, or research purposes</li>
                     <li>Respect rate limits and fair usage policies</li>
@@ -233,11 +233,11 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">3.2 Strictly Prohibited Activities</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">3.2 Strictly Prohibited Activities</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>You may NOT:</strong>
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Use automated systems, bots, or scripts to abuse the service</li>
                     <li>Attempt to reverse engineer our algorithms or systems</li>
                     <li>Submit malicious, harmful, or inappropriate content</li>
@@ -249,8 +249,8 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">3.3 Rate Limiting & Fair Usage</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">3.3 Rate Limiting & Fair Usage</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     We implement rate limiting to ensure fair usage for all users. Excessive requests may result in temporary restrictions, account suspension, or permanent termination. We reserve the right to determine what constitutes abuse.
                   </p>
                 </div>
@@ -259,18 +259,18 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Intellectual Property */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">4. Intellectual Property Rights & Ownership</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">4. Intellectual Property Rights & Ownership</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.1 Our Intellectual Property</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.1 Our Intellectual Property</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>DNSWorth owns and retains all rights to:</strong>
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>The DNSWorth brand, trademarks, and service marks</li>
                     <li>Our proprietary algorithms and AI systems</li>
                     <li>Website design, layout, and user interface</li>
@@ -284,11 +284,11 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.2 Your Rights & License</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.2 Your Rights & License</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>You retain ownership of:</strong>
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Domain names you submit for valuation</li>
                     <li>Your business information and proprietary data</li>
                     <li>Valuation reports generated for your use</li>
@@ -300,8 +300,8 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">4.3 License Restrictions</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">4.3 License Restrictions</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     You may not: copy, modify, distribute, sell, lease, or create derivative works of our Service; remove or alter copyright notices; or use our Service for any unauthorized commercial purposes.
                   </p>
                 </div>
@@ -310,18 +310,18 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Disclaimers */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">5. Disclaimers & Service Limitations</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">5. Disclaimers & Service Limitations</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.1 Service "As Is" Disclaimer</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.1 Service "As Is" Disclaimer</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</strong> We disclaim all warranties including but not limited to:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Warranties of merchantability or fitness for a particular purpose</li>
                     <li>Warranties of non-infringement or title</li>
                     <li>Warranties that the service will be uninterrupted or error-free</li>
@@ -331,11 +331,11 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.2 Valuation Accuracy Disclaimers</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.2 Valuation Accuracy Disclaimers</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>CRITICAL:</strong> While we strive for accuracy, domain valuations are estimates based on available market data and should NOT be considered as:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Professional financial advice or investment recommendations</li>
                     <li>Guaranteed sale prices or market values</li>
                     <li>Legal appraisals or tax assessment values</li>
@@ -348,8 +348,8 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">5.3 Market Conditions & External Factors</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">5.3 Market Conditions & External Factors</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     Domain values fluctuate based on market conditions, trends, economic factors, and other variables beyond our control. We are not responsible for market changes or their impact on domain values.
                   </p>
                 </div>
@@ -358,18 +358,18 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Limitation of Liability */}
             <motion.section
-              className="mb-16 bg-red-900/20 border border-red-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-red-900/20 border border-red-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
               <h2 className="text-3xl font-bold text-red-400 mb-6">6. Limitation of Liability & Risk Allocation</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.1 Comprehensive Liability Limitation</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.1 Comprehensive Liability Limitation</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, DNSWORTH SHALL NOT BE LIABLE FOR:</strong>
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Any indirect, incidental, special, consequential, or punitive damages</li>
                     <li>Loss of profits, revenue, data, use, goodwill, or other intangible losses</li>
                     <li>Business interruption, loss of business opportunities, or reputation damage</li>
@@ -380,15 +380,15 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.2 Maximum Liability Cap</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.2 Maximum Liability Cap</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     <strong>Our total liability to you for any claims arising from the use of our Service shall not exceed the amount you paid, if any, for using the Service, or $100 USD, whichever is less.</strong>
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">6.3 Essential Purpose</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">6.3 Essential Purpose</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     The limitations in this section are fundamental to the agreement and would have been a significant factor in our decision to provide the Service. These limitations apply even if we have been advised of the possibility of such damages.
                   </p>
                 </div>
@@ -397,12 +397,12 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Indemnification */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">7. Indemnification & Defense Obligations</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">7. Indemnification & Defense Obligations</h2>
               
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   <strong>You agree to defend, indemnify, and hold harmless DNSWorth, its officers, directors, employees, agents, and affiliates from and against any and all claims, damages, obligations, losses, liabilities, costs, debt, and expenses (including attorney's fees) arising from:</strong>
                 </p>
@@ -422,25 +422,25 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Privacy and Data */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">8. Privacy & Data Protection</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">8. Privacy & Data Protection</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">8.1 Data Collection & Processing</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">8.1 Data Collection & Processing</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     Your privacy is important to us. Our collection, use, and protection of your data is governed by our Privacy Policy, which is incorporated into these Terms by reference.
                   </p>
-                  <p className="text-text-muted">
+                  <p className="text-text-muted text-sm md:text-base">
                     <strong>By using our Service, you consent to the collection and use of your information as described in our Privacy Policy.</strong>
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">8.2 Data Security & Breach Notification</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">8.2 Data Security & Breach Notification</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     We implement appropriate security measures to protect your data, but cannot guarantee absolute security. In the event of a data breach affecting your information, we will notify you and relevant authorities as required by applicable law.
                   </p>
                 </div>
@@ -449,25 +449,25 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Termination */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">9. Termination & Service Cessation</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">9. Termination & Service Cessation</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">9.1 Termination by You</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">9.1 Termination by You</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     You may stop using our Service at any time by simply discontinuing use. No formal termination process is required.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">9.2 Termination by Us</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">9.2 Termination by Us</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     We may terminate or suspend your access immediately, without prior notice, for any reason including but not limited to:
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Breach of these Terms or applicable laws</li>
                     <li>Abuse of our Service or violation of fair usage policies</li>
                     <li>Fraudulent or illegal activities</li>
@@ -477,8 +477,8 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">9.3 Effect of Termination</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">9.3 Effect of Termination</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     Upon termination, your right to use the Service ceases immediately. We may delete your data and account information, though we may retain certain information as required by law or for legitimate business purposes.
                   </p>
                 </div>
@@ -487,25 +487,25 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Governing Law */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">10. Governing Law & Dispute Resolution</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">10. Governing Law & Dispute Resolution</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">10.1 Governing Law</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">10.1 Governing Law</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     These Terms shall be governed by and construed in accordance with the laws of the jurisdiction where DNSWorth operates, without regard to conflict of law principles.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">10.2 Dispute Resolution Process</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">10.2 Dispute Resolution Process</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     <strong>Before pursuing legal action, you agree to:</strong>
                   </p>
-                  <ul className="list-disc list-inside text-text-muted space-y-2 ml-4">
+                  <ul className="list-disc list-inside text-text-muted space-y-1 md:space-y-2 ml-2 md:ml-4 text-sm md:text-base">
                     <li>Attempt good faith negotiations to resolve disputes</li>
                     <li>Participate in mediation if negotiations fail</li>
                     <li>Provide written notice of intent to pursue legal action</li>
@@ -514,8 +514,8 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">10.3 Jurisdiction & Venue</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">10.3 Jurisdiction & Venue</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     Any legal action shall be brought in the courts of the jurisdiction where DNSWorth operates. You consent to personal jurisdiction and venue in such courts.
                   </p>
                 </div>
@@ -524,12 +524,12 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Changes to Terms */}
             <motion.section
-              className="mb-16 bg-surface border border-gray-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-surface border border-gray-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">11. Changes to Terms & Notification</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">11. Changes to Terms & Notification</h2>
               
-              <div className="space-y-4 text-text-muted leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-text-muted leading-relaxed text-sm md:text-base">
                 <p>
                   <strong>We reserve the right to modify or replace these Terms at any time.</strong> Changes may be made for various reasons including legal compliance, service improvements, or business operations.
                 </p>
@@ -550,21 +550,21 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Contact Information */}
             <motion.section
-              className="mb-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
-              <h2 className="text-3xl font-bold text-primary mb-6">12. Contact Information & Legal Support</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">12. Contact Information & Legal Support</h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">12.1 Legal Team Contact</h3>
-                  <p className="text-text-muted mb-4">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">12.1 Legal Team Contact</h3>
+                  <p className="text-text-muted mb-3 md:mb-4 text-sm md:text-base">
                     For questions about these Terms of Service or legal matters, please contact our legal team:
                   </p>
                   <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-text-muted">
+                        <p className="text-text-muted text-sm md:text-base">
                           <strong>Email:</strong><br />
                           <a href="mailto:legal@dnsworth.com" className="text-primary hover:text-primary/80 transition-colors">
                             legal@dnsworth.com
@@ -572,7 +572,7 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                         </p>
                       </div>
                       <div>
-                        <p className="text-text-muted">
+                        <p className="text-text-muted text-sm md:text-base">
                           <strong>Response Time:</strong><br />
                           Within 30 days for legal inquiries
                         </p>
@@ -582,8 +582,8 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-3">12.2 General Support</h3>
-                  <p className="text-text-muted">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">12.2 General Support</h3>
+                  <p className="text-text-muted text-sm md:text-base">
                     For general service questions or technical support, contact us at <strong>info@dnsworth.com</strong>.
                   </p>
                 </div>
@@ -592,7 +592,7 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
 
             {/* Final Legal Disclaimer */}
             <motion.section
-              className="mb-16 bg-red-900/20 border border-red-800 rounded-3xl p-8 shadow-2xl"
+              className="mb-8 md:mb-16 bg-red-900/20 border border-red-800 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl"
               variants={cardVariants}
             >
               <h2 className="text-3xl font-bold text-red-400 mb-6">⚠️ Final Legal Disclaimer & Acknowledgment</h2>

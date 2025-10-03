@@ -96,28 +96,28 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
         
         <div className="container-custom relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-surface border border-primary/20 rounded-full mb-12">
-              <div className="w-2 h-2 bg-primary rounded-full mr-3 animate-pulse"></div>
-              <span className="text-text font-medium">Premium Support Available 24/7</span>
+            <div className="inline-flex items-center px-4 md:px-6 py-2 md:py-3 bg-surface border border-primary/20 rounded-full mb-8 md:mb-12">
+              <div className="w-2 h-2 bg-primary rounded-full mr-2 md:mr-3 animate-pulse"></div>
+              <span className="text-text font-medium text-sm md:text-base">Premium Support Available 24/7</span>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold text-text mb-12 leading-tight">
+            <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold text-text mb-8 md:mb-12 leading-tight">
               Expert Support
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">
                 When You Need It
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-text-muted leading-relaxed max-w-4xl mx-auto mb-16">
+            <p className="text-base md:text-xl lg:text-2xl text-text-muted leading-relaxed max-w-4xl mx-auto mb-12 md:mb-16">
               Access our world-class domain valuation experts for personalized guidance, technical support, and comprehensive assistance with all your domain needs.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
               <a 
                 href="mailto:info@dnsworth.com"
-                className="group bg-gradient-to-r from-primary to-secondary hover:from-gold-light hover:to-orange-light text-background font-bold px-10 py-5 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-primary/25 flex items-center gap-3 text-lg"
+                className="group bg-gradient-to-r from-primary to-secondary hover:from-gold-light hover:to-orange-light text-background font-bold px-6 md:px-10 py-3 md:py-5 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-primary/25 flex items-center gap-2 md:gap-3 text-sm md:text-lg"
               >
-                <svg className="w-7 h-7 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 md:w-7 md:h-7 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 Contact Our Experts
@@ -125,9 +125,9 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
               
               <button 
                 onClick={() => window.location.href = '/faq'}
-                className="group bg-surface hover:bg-gray-800 text-text font-semibold px-10 py-5 rounded-2xl transition-all duration-300 border border-primary/20 hover:border-primary/40 flex items-center gap-3 text-lg"
+                className="group bg-surface hover:bg-gray-800 text-text font-semibold px-6 md:px-10 py-3 md:py-5 rounded-xl md:rounded-2xl transition-all duration-300 border border-primary/20 hover:border-primary/40 flex items-center gap-2 md:gap-3 text-sm md:text-lg"
               >
-                <svg className="w-7 h-7 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 md:w-7 md:h-7 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Browse Knowledge Base

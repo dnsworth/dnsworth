@@ -124,7 +124,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
 
       {/* Hero Section - Black Background */}
-      <section className="relative py-20 overflow-hidden bg-black">
+      <section className="relative py-12 md:py-20 overflow-hidden bg-black">
         {/* Animated Background Elements */}
         <motion.div
           className="absolute top-20 left-10 w-24 h-24 bg-primary/10 rounded-full blur-2xl"
@@ -144,7 +144,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
           style={{ animationDelay: '2s' }}
         />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <motion.div
             className="text-center max-w-4xl mx-auto"
             variants={containerVariants}
@@ -152,13 +152,13 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             animate="visible"
           >
             <motion.h1
-              className="text-5xl md:text-7xl font-bold mb-6"
+              className="text-2xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6"
               variants={itemVariants}
             >
               <span className="text-gradient">About DNSWorth</span>
             </motion.h1>
             <motion.p
-              className="text-xl md:text-2xl text-text-muted mb-8 leading-relaxed"
+              className="text-base md:text-xl lg:text-2xl text-text-muted mb-6 md:mb-8 leading-relaxed"
               variants={itemVariants}
             >
               Free, Unlimited Domain Valuations Powered by Intelligence, Built for You
@@ -169,7 +169,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             >
               <Link
                 to="/"
-                className="btn-primary text-lg px-8 py-4"
+                className="btn-primary text-sm md:text-lg px-6 md:px-8 py-3 md:py-4"
               >
                 Start Valuing Domains
               </Link>
@@ -179,8 +179,8 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Mission Statement Section - White Background */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
             className="max-w-4xl mx-auto"
             variants={containerVariants}
@@ -188,19 +188,19 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             animate="visible"
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-900"
+              className="text-xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center text-gray-900"
               variants={itemVariants}
             >
               Our Mission
             </motion.h2>
             <motion.p
-              className="text-lg text-gray-700 leading-relaxed mb-6"
+              className="text-sm md:text-lg text-gray-700 leading-relaxed mb-4 md:mb-6"
               variants={itemVariants}
             >
               At DNSWorth, we believe knowledge should be accessible to everyone. The domain world is fast moving, competitive, and often clouded by guesswork. We exist to remove that barrier by giving domain investors from beginners to professionals a clear, reliable, and completely free way to understand the true value of their digital assets.
             </motion.p>
             <motion.p
-              className="text-lg text-gray-700 leading-relaxed"
+              className="text-sm md:text-lg text-gray-700 leading-relaxed"
               variants={itemVariants}
             >
               Unlike traditional valuation services that limit you with paywalls, quotas, or subscription tiers, DNSWorth offers unlimited domain valuations at no cost. Every day. Every search. No hidden fees.
@@ -210,8 +210,8 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Why DNSWorth Exists Section - Black Background */}
-      <section className="py-20 bg-black">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-20 bg-black">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
             className="max-w-4xl mx-auto"
             variants={containerVariants}
@@ -219,19 +219,19 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             animate="visible"
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-8 text-center text-white"
+              className="text-xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center text-white"
               variants={itemVariants}
             >
               Why DNSWorth Exists
             </motion.h2>
             <motion.p
-              className="text-lg text-text-muted leading-relaxed mb-6"
+              className="text-sm md:text-lg text-text-muted leading-relaxed mb-4 md:mb-6"
               variants={itemVariants}
             >
               Domain names are the building blocks of the internet. For investors, entrepreneurs, and businesses alike, knowing the value of a domain is critical to making the right decisions whether it is buying, selling, or building.
             </motion.p>
             <motion.p
-              className="text-lg text-text-muted leading-relaxed"
+              className="text-sm md:text-lg text-text-muted leading-relaxed"
               variants={itemVariants}
             >
               Our platform was created with one simple mission: To democratize access to domain intelligence, giving every investor the tools they need to compete and succeed.
@@ -241,22 +241,22 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* What Makes Us Different Section - White Background with Comic Style Cards */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-12 text-center text-gray-900"
+              className="text-xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-12 text-center text-gray-900"
               variants={itemVariants}
             >
               What Makes Us Different
             </motion.h2>
             
             {/* Features with Creative Comic Portraits */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
               {[
                 {
                   id: 1,
@@ -357,8 +357,8 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Our Commitment Section - Black Background */}
-      <section className="py-20 bg-black">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-20 bg-black">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
             className="max-w-4xl mx-auto"
             variants={containerVariants}
@@ -366,7 +366,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             animate="visible"
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-8 text-center text-white"
+              className="text-xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center text-white"
               variants={itemVariants}
             >
               Our Commitment
@@ -382,8 +382,8 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Who We Serve Section - White Background */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -397,7 +397,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             </motion.h2>
             
             {/* Features with Creative Comic Portraits */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
               {[
                 {
                   id: 1,
@@ -505,8 +505,8 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Future Vision Section - Black Background */}
-      <section className="py-20 bg-black">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-20 bg-black">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -526,7 +526,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             </motion.p>
             
             {/* Features with Creative Comic Portraits */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
               {[
                 {
                   id: 1,
@@ -634,8 +634,8 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
       </section>
 
       {/* Owner Section - Orange Background with Comic Portrait Style */}
-      <section className="py-20 bg-gradient-to-br from-secondary to-secondary/90">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-secondary to-secondary/90">
+        <div className="container mx-auto px-4 md:px-6">
           <motion.div
             variants={containerVariants}
             initial="hidden"

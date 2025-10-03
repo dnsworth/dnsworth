@@ -44,31 +44,31 @@ const SectionFeatures = () => {
   ];
 
   return (
-    <section id="why-choose-section" className="py-20 bg-white">
+    <section id="why-choose-section" className="py-12 md:py-20 bg-white">
       <div className="container-custom">
-        <div className="max-w-6xl mx-auto text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+        <div className="max-w-6xl mx-auto text-center mb-8 md:mb-16">
+          <h2 className="text-2xl md:text-4xl font-bold text-black mb-3 md:mb-6">
             Why Choose <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">DNSWorth</span>?
           </h2>
-          <p className="text-xl text-gray-600 leading-relaxed">
+          <p className="text-sm md:text-xl text-gray-600 leading-relaxed">
             Discover why thousands of domain investors trust DNSWorth for instant, accurate valuations
           </p>
         </div>
 
         {/* Features with Creative Comic Portraits */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-12">
           {features.map((feature) => (
             <div key={feature.id} className="group relative">
-                             <div className="bg-white border-4 border-black rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
+                             <div className="bg-white border-4 border-black rounded-3xl p-4 md:p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
                 
                 {/* Background Gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
                 
                                  {/* Header with Avatar */}
-                 <div className="relative z-10 flex items-center gap-6 mb-6">
+                 <div className="relative z-10 flex items-center gap-3 md:gap-6 mb-4 md:mb-6">
                    {/* Comic Portrait */}
                    <div className="relative">
-                     <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                     <div className="w-12 h-12 md:w-20 md:h-20 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                        <img 
                          src={feature.avatar} 
                          alt={feature.name}
@@ -79,19 +79,19 @@ const SectionFeatures = () => {
                    
                    {/* Character Info */}
                    <div className="flex-1">
-                     <h4 className="text-xl font-bold text-black">
+                     <h4 className="text-xs md:text-xl font-bold text-black">
                        {feature.name}
                      </h4>
-                     <p className="text-sm text-gray-600 font-medium">{feature.role}</p>
+                     <p className="text-xs md:text-sm text-gray-600 font-medium">{feature.role}</p>
                    </div>
                  </div>
 
                 {/* Content */}
                 <div className="relative z-10">
-                                     <h3 className="text-2xl font-bold text-black mb-4">
+                                     <h3 className="text-base md:text-2xl font-bold text-black mb-3 md:mb-4">
                      {feature.title}
                    </h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">
+                  <p className="text-gray-600 leading-relaxed text-xs md:text-lg">
                     {feature.description}
                   </p>
                 </div>
@@ -109,15 +109,15 @@ const SectionFeatures = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-20 text-center">
+        <div className="mt-12 md:mt-20 text-center">
           <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border border-primary/20 rounded-2xl p-8 inline-block">
-            <h3 className="text-2xl font-bold text-black mb-4">
+            <h3 className="text-lg md:text-2xl font-bold text-black mb-3 md:mb-4">
               Ready to Discover Your Domain's True Value?
             </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6 max-w-2xl mx-auto">
               Join thousands of domain investors, entrepreneurs, and businesses who trust DNSWorth for accurate, instant valuations.
             </p>
-            <button className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-primary/90 hover:to-secondary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold text-sm md:text-lg hover:from-primary/90 hover:to-secondary/90 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               Start Valuing Now
             </button>
           </div>

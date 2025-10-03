@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import DiamondIcon from '../components/DiamondIcon';
 import { domainValuation, handleApiError } from '../utils/api';
 
 const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
@@ -13,6 +14,8 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   const [lastUpdated, setLastUpdated] = useState(null);
   const [availabilityCount, setAvailabilityCount] = useState(0);
   const [registrationCount, setRegistrationCount] = useState(76);
+
+  // Debug: Log component state (removed to reduce console noise)
 
   // Utility function to get relative time
   const getRelativeTime = (timestamp) => {
@@ -43,6 +46,9 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
     loadRegistrationCount();
   }, []);
 
+  // Removed automatic refresh interval to prevent loading screen flash
+  // Domains are now refreshed only when user clicks refresh button or on page load
+
   // Load registration count
   const loadRegistrationCount = async () => {
     try {
@@ -57,27 +63,12 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
       }
     } catch (error) {
       console.error('Error loading registration count:', error);
-      // Keep default value of 76
+      // Set fallback count to avoid showing 0
+      setRegistrationCount(76);
     }
   };
 
-  // Set up periodic refresh to check availability changes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Only refresh if we have gems and it's been more than 30 minutes since last update
-      if (gems.length > 0 && lastUpdated) {
-        const now = new Date();
-        const updated = new Date(lastUpdated);
-        const diffInMinutes = (now - updated) / (1000 * 60);
-        
-        if (diffInMinutes > 30) {
-          checkAvailabilityStatus();
-        }
-      }
-    }, 300000); // Check every 5 minutes
-
-    return () => clearInterval(interval);
-  }, [gems.length, lastUpdated]);
+  // Removed duplicate interval to prevent rate limiting
 
   // Check availability status for current domains
   const checkAvailabilityStatus = async () => {
@@ -104,7 +95,7 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
             });
             
             // Update availability count
-            const availableCount = updatedGems.filter(gem => gem.availability).length;
+            const availableCount = updatedGems.filter(gem => gem.available !== false).length;
             setAvailabilityCount(availableCount);
             
             return updatedGems;
@@ -126,11 +117,18 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
       // Build query parameters
       const params = new URLSearchParams({
         count: '30',
-        refresh: 'true'
+        refresh: 'true',
+        _t: Date.now().toString(), // Cache busting
+        _v: '3.0' // Version cache busting - updated to force refresh
       });
 
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com');
+      const fullUrl = `${apiUrl}/api/ai-gems?${params}`;
+      
+      // Debug logging removed for production
+
       // Call the AI-generated gems API
-      const response = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com')}/api/ai-gems?${params}`, {
+      const response = await fetch(fullUrl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -138,13 +136,18 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
         }
       });
 
+      // Debug logging removed for production
+
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
       }
 
       const data = await response.json();
+      // Debug logging removed for production
       
       if (data.success && data.data.gems) {
+        // Debug logging removed for production
+        
         // Add unique IDs to the gems
         const gemsWithIds = data.data.gems.map((gem, index) => ({
           ...gem,
@@ -154,13 +157,14 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
         setLastUpdated(new Date().toISOString());
         
         // Count available domains
-        const availableCount = gemsWithIds.filter(gem => gem.availability).length;
+        const availableCount = gemsWithIds.filter(gem => gem.available !== false).length;
         setAvailabilityCount(availableCount);
       } else {
+        console.error('❌ Invalid response format:', data);
         throw new Error('Invalid response format');
       }
     } catch (err) {
-      console.error('Error loading domain gems:', err);
+      console.error('❌ Error loading domain gems:', err);
       
       // Fallback to mock data if API fails
       const mockGems = [
@@ -172,7 +176,6 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
           tld: '.com',
           estimatedValue: 1250,
           availability: true,
-          icon: '🔬',
           tags: []
         },
         {
@@ -183,7 +186,6 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
           tld: '.com',
           estimatedValue: 890,
           availability: true,
-          icon: '🌿',
           tags: []
         },
         {
@@ -194,14 +196,13 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
           tld: '.com',
           estimatedValue: 2100,
           availability: true,
-          icon: '💎',
           tags: []
         }
       ];
       
       setGems(mockGems);
       setLastUpdated(new Date().toISOString());
-      setAvailabilityCount(mockGems.filter(gem => gem.availability).length);
+      setAvailabilityCount(mockGems.filter(gem => gem.available !== false).length);
       setError('Using enhanced domain generation. All domains are carefully curated and available for registration.');
     } finally {
       setLoading(false);
@@ -239,11 +240,11 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
     // Mark domain as taken locally and update availability count
     setGems(prevGems => {
       const updatedGems = prevGems.map(gem => 
-        gem.domain === domain ? { ...gem, availability: false } : gem
+        gem.domain === domain ? { ...gem, available: false } : gem
       );
       
       // Update availability count
-      const availableCount = updatedGems.filter(gem => gem.availability).length;
+      const availableCount = updatedGems.filter(gem => gem.available !== false).length;
       setAvailabilityCount(availableCount);
       
       return updatedGems;
@@ -308,14 +309,14 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
       <section className="py-8 sm:py-12 bg-gradient-to-br from-purple-900/20 via-pink-900/20 to-blue-900/20">
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient mb-3 sm:mb-4">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gradient mb-2 sm:mb-3 md:mb-4">
               💎 Domain Gems
             </h1>
-            <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6">
+            <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-3 sm:mb-4 md:mb-6">
               Join <span className="font-semibold text-green-400">{registrationCount || 76}</span> developers and entrepreneurs who found their perfect domain through our platform in the last 24 hours. — Adee
             </p>
-            <p className="text-xs sm:text-sm text-gray-400 mb-4">
-              When you register through my links, you support ongoing development of our AI domain tools. <a href="#" className="text-blue-400 hover:text-blue-300 underline">Learn more</a>
+            <p className="text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4">
+              When you register through my links, you support ongoing development of our AI domain tools. <a href="/affiliate-disclosure" className="text-blue-400 hover:text-blue-300 underline">Learn more</a>
             </p>
           </div>
         </div>
@@ -330,43 +331,57 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
             {loading ? (
               <div className="text-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-                <p className="text-gray-400">Loading domain gems...</p>
+                <p className="text-gray-400 text-sm">Loading domain gems...</p>
               </div>
             ) : error ? (
               <div className="text-center py-20">
-                <div className="text-blue-500 text-xl mb-4">💎</div>
-                <p className="text-blue-400 mb-4">{error}</p>
+                <div className="text-blue-500 text-xl mb-4 flex justify-center">
+                  <DiamondIcon className="w-8 h-8" color="text-blue-500" />
+                </div>
+                <p className="text-blue-400 mb-4 text-sm">{error}</p>
                 <button
-                  onClick={loadDomainGems}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+                  onClick={handleRefresh}
+                  className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                    isRefreshing 
+                      ? 'bg-gray-400 cursor-not-allowed text-white' 
+                      : 'bg-purple-600 hover:bg-purple-700 text-white'
+                  }`}
+                  disabled={isRefreshing}
                 >
-                  Refresh Gems
+                  {isRefreshing ? 'Refreshing...' : 'Refresh Gems'}
                 </button>
               </div>
             ) : displayedGems.length === 0 ? (
               <div className="text-center py-20">
-                <div className="text-gray-400 text-xl mb-4">🔍</div>
-                <p className="text-gray-400 mb-4">No domain gems available at the moment.</p>
+                <div className="text-gray-400 text-xl mb-4 flex justify-center">
+                  <DiamondIcon className="w-8 h-8" color="text-gray-400" />
+                </div>
+                <p className="text-gray-400 mb-4 text-sm">No domain gems available at the moment.</p>
                 <button
-                  onClick={loadDomainGems}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+                  onClick={handleRefresh}
+                  className={`px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                    isRefreshing 
+                      ? 'bg-gray-400 cursor-not-allowed text-white' 
+                      : 'bg-purple-600 hover:bg-purple-700 text-white'
+                  }`}
+                  disabled={isRefreshing}
                 >
-                  Refresh Gems
+                  {isRefreshing ? 'Refreshing...' : 'Refresh Gems'}
                 </button>
               </div>
             ) : (
               <>
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-bold text-white">
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
                       Domain Gems
                     </h2>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2">
-                      <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 md:gap-4 mt-1 sm:mt-2">
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-300">
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                         <span>{availabilityCount} available</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-300">
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-300">
                         <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                         <span>Updated {getRelativeTime(lastUpdated)}</span>
                       </div>
@@ -409,20 +424,20 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
                           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3">
                             <div className="flex items-start gap-3">
                               <div className="text-xl sm:text-2xl leading-none">
-                                {gem.icon}
+                                <DiamondIcon className="w-6 h-6 sm:w-8 sm:h-8" color="text-purple-600" />
                               </div>
                               <div className="flex-1">
                                 <h3 className="text-sm sm:text-base font-bold text-gray-900 group-hover:text-purple-600 transition-colors leading-tight">
                                   {gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com
                                 </h3>
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1">
+                                <div className="flex flex-row items-center gap-2 mt-1">
                                   <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium w-fit">
                                     NEW
                                   </span>
                                   <div className="flex items-center gap-1">
-                                    <div className={`w-2 h-2 rounded-full ${gem.availability ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                                    <span className={`text-xs font-medium ${gem.availability ? 'text-green-600' : 'text-red-600'}`}>
-                                      {gem.availability ? 'Available' : 'Taken'}
+                                    <div className={`w-2 h-2 rounded-full ${gem.available !== false ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                                    <span className={`text-xs font-medium ${gem.available !== false ? 'text-green-600' : 'text-red-600'}`}>
+                                      {gem.available !== false ? 'Available' : 'Taken'}
                                     </span>
                                   </div>
                                 </div>
@@ -430,14 +445,14 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
                             </div>
                             <button
                               onClick={() => handleRegisterDomain(gem.domain)}
-                              disabled={!gem.availability}
+                              disabled={gem.available === false}
                               className={`px-3 py-1.5 rounded-md font-medium transition-all duration-200 text-xs shadow-md w-full sm:w-auto ${
-                                gem.availability 
+                                gem.available !== false 
                                   ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white hover:shadow-lg' 
                                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                               }`}
                             >
-                              {gem.availability ? 'Register' : 'Taken'}
+                              {gem.available !== false ? 'Register' : 'Taken'}
                             </button>
                           </div>
 
@@ -461,52 +476,52 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
                   <div className="space-y-3 sm:space-y-4">
                     {displayedGems.map((gem) => (
                       <div key={gem.id} className="bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300 group">
-                        <div className="p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                          {/* Left side - Icon, Domain, Status */}
-                          <div className="flex items-center gap-3 sm:gap-4 flex-1">
-                            <div className="text-xl sm:text-2xl">
-                              {gem.icon}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                        <div className="p-3 sm:p-4">
+                          {/* Top row - Domain name with icon and Register button */}
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                              <DiamondIcon className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 flex-shrink-0" />
+                              <div className="flex-1 min-w-0">
                                 <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors truncate">
                                   {gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com
                                 </h3>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium">
-                                    NEW
-                                  </span>
-                                  <div className="flex items-center gap-1">
-                                    <div className={`w-2 h-2 rounded-full ${gem.availability ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                                    <span className={`text-xs font-medium ${gem.availability ? 'text-green-600' : 'text-red-600'}`}>
-                                      {gem.availability ? 'Available' : 'Taken'}
-                                    </span>
-                                  </div>
-                                </div>
                               </div>
-                              <p className="text-gray-600 text-xs sm:text-sm mt-1 line-clamp-1">
-                                {gem.description}
-                              </p>
-                            </div>
-                          </div>
-                          
-                          {/* Right side - Value and Register button */}
-                          <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
-                            <div className="text-left sm:text-right">
-                              <div className="text-xs text-gray-500">EST. VALUE</div>
-                              <div className="text-lg sm:text-xl font-bold text-green-600">${gem.estimatedValue.toLocaleString()}</div>
                             </div>
                             <button
                               onClick={() => handleRegisterDomain(gem.domain)}
-                              disabled={!gem.availability}
-                              className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm shadow-md ${
-                                gem.availability 
+                              disabled={gem.available === false}
+                              className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all duration-200 text-xs sm:text-sm shadow-md flex-shrink-0 ${
+                                gem.available !== false 
                                   ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white hover:shadow-lg' 
                                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                               }`}
                             >
-                              {gem.availability ? 'Register' : 'Taken'}
+                              {gem.available !== false ? 'Register' : 'Taken'}
                             </button>
+                          </div>
+                          
+                          {/* Middle row - Status tags */}
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium">
+                              NEW
+                            </span>
+                            <div className="flex items-center gap-1">
+                              <div className={`w-2 h-2 rounded-full ${gem.available !== false ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                              <span className={`text-xs font-medium ${gem.available !== false ? 'text-green-600' : 'text-red-600'}`}>
+                                {gem.available !== false ? 'Available' : 'Taken'}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          {/* Bottom row - Description and Estimated Value */}
+                          <div className="flex items-center justify-between">
+                            <p className="text-gray-600 text-xs sm:text-sm line-clamp-1 flex-1 mr-4">
+                              {gem.description}
+                            </p>
+                            <div className="text-right flex-shrink-0">
+                              <div className="text-xs text-gray-500">EST. VALUE</div>
+                              <div className="text-lg sm:text-xl font-bold text-green-600">${gem.estimatedValue.toLocaleString()}</div>
+                            </div>
                           </div>
                         </div>
                       </div>

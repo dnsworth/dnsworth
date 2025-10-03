@@ -205,28 +205,28 @@ twitter.com`);
       
 
       {/* Main Content */}
-      <section className="py-16">
+      <section className="py-8 md:py-16">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
             {/* Page Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-6xl font-bold text-gradient mb-6">
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-gradient mb-4 md:mb-6">
                 Portfolio Valuation
               </h1>
-              <p className="text-xl text-text-muted max-w-3xl mx-auto">
+              <p className="text-base md:text-xl text-text-muted max-w-3xl mx-auto">
                 Evaluate up to 100 domains simultaneously with our AI-powered bulk valuation tool
               </p>
-              <div className="mt-4 text-sm text-text-muted">
+              <div className="mt-3 md:mt-4 text-xs md:text-sm text-text-muted">
                 Total searches performed: <span className="text-primary font-semibold">{totalSearches}</span>
               </div>
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center justify-center mb-8">
+            <div className="flex items-center justify-center mb-6 md:mb-8">
               <div className="flex bg-surface rounded-lg p-1 border border-gray-700">
                 <button
                   onClick={() => setActiveTab('input')}
-                  className={`px-6 py-3 rounded-md font-medium transition-all duration-200 ${
+                  className={`px-4 md:px-6 py-2 md:py-3 rounded-md font-medium transition-all duration-200 text-sm md:text-base ${
                     activeTab === 'input'
                       ? 'bg-primary text-background shadow-lg'
                       : 'text-text-muted hover:text-text'
@@ -236,7 +236,7 @@ twitter.com`);
                 </button>
                 <button
                   onClick={() => setActiveTab('results')}
-                  className={`px-6 py-3 rounded-md font-medium transition-all duration-200 relative ${
+                  className={`px-4 md:px-6 py-2 md:py-3 rounded-md font-medium transition-all duration-200 relative text-sm md:text-base ${
                     activeTab === 'results'
                       ? 'bg-secondary text-background shadow-lg'
                       : 'text-text-muted hover:text-text'
@@ -244,7 +244,7 @@ twitter.com`);
                 >
                   Results
                   {resultsCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-gray-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-gray-600 text-white text-xs rounded-full w-5 h-5 md:w-6 md:h-6 flex items-center justify-center">
                       {resultsCount}
                     </span>
                   )}
@@ -254,11 +254,11 @@ twitter.com`);
 
             {/* Input Domains Tab */}
             {activeTab === 'input' && (
-              <div className="card p-8 mb-8">
+              <div className="card p-4 md:p-8 mb-6 md:mb-8">
                 <form onSubmit={handleSubmit}>
                   {/* Domain Input */}
-                  <div className="mb-8">
-                    <label htmlFor="bulk-domains" className="block text-text font-bold text-xl mb-4">
+                  <div className="mb-6 md:mb-8">
+                    <label htmlFor="bulk-domains" className="block text-text font-bold text-lg md:text-xl mb-3 md:mb-4">
                       Enter Domain Names (One per line) - Up to 100 domains
                     </label>
                     <textarea
@@ -270,18 +270,18 @@ twitter.com`);
 example.com
 mydomain.org
 company.net"
-                      className="w-full h-80 px-6 py-4 text-lg border-2 border-gray-700 bg-surface text-text rounded-xl focus:border-primary focus:outline-none transition-all duration-300 placeholder-gray-500 resize-none"
+                      className="w-full h-60 md:h-80 px-4 md:px-6 py-3 md:py-4 text-sm md:text-lg border-2 border-gray-700 bg-surface text-text rounded-xl focus:border-primary focus:outline-none transition-all duration-300 placeholder-gray-500 resize-none"
                       disabled={loading}
                       maxLength={10000}
                     />
-                    <div className="flex justify-between items-center mt-4">
-                      <span className="text-text-muted">
+                    <div className="flex justify-between items-center mt-3 md:mt-4">
+                      <span className="text-text-muted text-xs md:text-sm">
                         {domainCount}/100 domains
                       </span>
                       <button
                         type="button"
                         onClick={handleExampleDomains}
-                        className="text-primary hover:text-gold-light transition-colors font-medium"
+                        className="text-primary hover:text-gold-light transition-colors font-medium text-xs md:text-sm"
                       >
                         Load Example Domains
                       </button>
@@ -290,22 +290,22 @@ company.net"
 
                   {/* Error Display */}
                   {error && (
-                    <div className="mb-6 p-4 bg-red-900/20 border border-red-800 rounded-lg">
-                      <p className="text-red-400 text-sm">{error}</p>
+                    <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-900/20 border border-red-800 rounded-lg">
+                      <p className="text-red-400 text-xs md:text-sm">{error}</p>
                     </div>
                   )}
 
                   {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                     <button
                       type="submit"
                       disabled={loading || domainCount === 0}
-                      className="btn-primary flex-1 text-xl py-5 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="btn-primary flex-1 text-sm md:text-xl py-3 md:py-5 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? (
-                        <div className="flex items-center justify-center gap-3">
-                          <div className="w-6 h-6 border-2 border-background border-t-transparent rounded-full animate-spin"></div>
-                          <span>Processing {domainCount} Domains...</span>
+                        <div className="flex items-center justify-center gap-2 md:gap-3">
+                          <div className="w-4 h-4 md:w-6 md:h-6 border-2 border-background border-t-transparent rounded-full animate-spin"></div>
+                          <span className="text-xs md:text-base">Processing {domainCount} Domains...</span>
                         </div>
                       ) : (
                         `Analyze ${domainCount} Domains`
@@ -314,7 +314,7 @@ company.net"
                     <button
                       type="button"
                       onClick={onBack}
-                      className="btn-secondary flex-1 text-xl py-5"
+                      className="btn-secondary flex-1 text-sm md:text-xl py-3 md:py-5"
                     >
                       Back to Home
                     </button>
@@ -327,31 +327,31 @@ company.net"
 
             {/* Results Tab */}
             {activeTab === 'results' && results && (
-              <div id="bulk-results" className="card overflow-hidden mb-8 animate-fade-in">
+              <div id="bulk-results" className="card overflow-hidden mb-6 md:mb-8 animate-fade-in">
                 {/* Results Header with Action Buttons */}
-                <div className="bg-gradient-to-r from-secondary to-accent px-8 py-6">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="bg-gradient-to-r from-secondary to-accent px-4 md:px-8 py-4 md:py-6">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 md:gap-4">
                     <div>
-                      <h2 className="text-3xl font-bold text-background mb-2">Valuation Results</h2>
-                      <p className="text-background/90 text-lg">
+                      <h2 className="text-xl md:text-3xl font-bold text-background mb-1 md:mb-2">Valuation Results</h2>
+                      <p className="text-background/90 text-sm md:text-lg">
                         Showing {resultsCount} domains, sorted by highest Brokerage value
                       </p>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
                       <button
                         onClick={handleDownloadCSV}
-                        className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 shadow-lg"
+                        className="bg-gray-800 hover:bg-gray-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 shadow-lg text-sm md:text-base"
                       >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         Download CSV
                       </button>
                       <button
                         onClick={handleClearAll}
-                        className="bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 shadow-lg"
+                        className="bg-white hover:bg-gray-100 text-gray-800 px-4 md:px-6 py-2 md:py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 shadow-lg text-sm md:text-base"
                       >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                         Clear All
@@ -365,29 +365,29 @@ company.net"
                   <table className="w-full">
                     <thead className="bg-surface border-b border-gray-700">
                       <tr>
-                        <th className="px-8 py-4 text-left text-sm font-bold text-primary uppercase tracking-wider">Domain</th>
-                        <th className="px-8 py-4 text-left text-sm font-bold text-secondary uppercase tracking-wider">Estimated Value</th>
-                        <th className="px-8 py-4 text-left text-sm font-bold text-accent uppercase tracking-wider">Auction</th>
-                        <th className="px-8 py-4 text-left text-sm font-bold text-primary uppercase tracking-wider">Marketplace</th>
-                        <th className="px-8 py-4 text-left text-sm font-bold text-secondary uppercase tracking-wider">Brokerage</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-primary uppercase tracking-wider">Domain</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-secondary uppercase tracking-wider">Est. Value</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-accent uppercase tracking-wider">Auction</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-primary uppercase tracking-wider">Market</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-secondary uppercase tracking-wider">Broker</th>
                       </tr>
                     </thead>
                     <tbody className="bg-background divide-y divide-gray-700">
                       {results.valuations?.map((item, index) => (
                         <tr key={index} className="hover:bg-surface transition-colors duration-200">
-                          <td className="px-8 py-4 whitespace-nowrap text-sm font-medium text-text">
+                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-text">
                             {item.domain}
                           </td>
-                          <td className="px-8 py-4 whitespace-nowrap text-sm text-primary font-semibold">
+                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-primary font-semibold">
                             {formatCurrency(item.valuation?.estimatedValue)}
                           </td>
-                          <td className="px-8 py-4 whitespace-nowrap text-sm text-accent">
+                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-accent">
                             {formatCurrency(item.valuation?.auctionValue)}
                           </td>
-                          <td className="px-8 py-4 whitespace-nowrap text-sm text-primary">
+                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-primary">
                             {formatCurrency(item.valuation?.marketplaceValue)}
                           </td>
-                          <td className="px-8 py-4 whitespace-nowrap text-sm text-secondary">
+                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-secondary">
                             {formatCurrency(item.valuation?.brokerageValue)}
                           </td>
                         </tr>
@@ -397,17 +397,17 @@ company.net"
                 </div>
 
                 {/* Results Actions */}
-                <div className="bg-surface border-t border-gray-700 px-8 py-6">
-                  <div className="flex flex-col sm:flex-row gap-4">
+                <div className="bg-surface border-t border-gray-700 px-4 md:px-8 py-4 md:py-6">
+                  <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                     <button
                       onClick={handleNewSearch}
-                      className="btn-primary flex-1"
+                      className="btn-primary flex-1 text-sm md:text-base py-3 md:py-4"
                     >
                       Analyze More Domains
                     </button>
                     <button
                       onClick={onBack}
-                      className="btn-secondary flex-1"
+                      className="btn-secondary flex-1 text-sm md:text-base py-3 md:py-4"
                     >
                       Back to Home
                     </button>

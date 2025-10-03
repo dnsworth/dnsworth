@@ -71,25 +71,27 @@ class DomainScheduler {
       const generatedDomains = await this.generator.generateDomainsBatch();
       console.log(`✅ Generated ${generatedDomains.length} AI domains`);
       
-      if (generatedDomains.length === 0) {
-        console.log('⚠️ No domains generated, skipping availability check');
-        return;
-      }
+      let domainsToProcess = generatedDomains;
       
-      // Step 2: Check availability
-      const availableDomains = await this.dynadot.checkBulkAvailability(generatedDomains);
-      console.log(`✅ Found ${availableDomains.length} available domains`);
-      
-      if (availableDomains.length === 0) {
-        console.log('⚠️ No available domains found');
-        return;
+      // Step 2: Check availability (but don't fail if it doesn't work)
+      try {
+        const availableDomains = await this.dynadot.checkBulkAvailability(generatedDomains);
+        console.log(`✅ Found ${availableDomains.length} available domains`);
+        
+        if (availableDomains.length > 0) {
+          domainsToProcess = availableDomains;
+        } else {
+          console.log('⚠️ No available domains found, using generated domains anyway');
+        }
+      } catch (error) {
+        console.log('⚠️ Availability check failed, using generated domains anyway:', error.message);
       }
       
       // Step 3: Score and rank domains
-      const scoredDomains = await this.scoreDomains(availableDomains);
+      const scoredDomains = await this.scoreDomains(domainsToProcess);
       console.log(`✅ Scored ${scoredDomains.length} domains`);
       
-      // Step 4: Store in Redis
+      // Step 4: Store in Redis (always store, even if availability check failed)
       await this.storeNewBatch(scoredDomains.slice(0, 100)); // Keep top 100
       
       this.lastGeneration = new Date();
@@ -156,50 +158,78 @@ class DomainScheduler {
     
     const scoredDomains = await Promise.all(domains.map(async (domain) => {
       try {
+        // Normalize domain input - handle both string and object formats
+        let domainName = typeof domain === 'string' ? domain : (domain.domain || domain);
+        
+        // Remove .com if it exists to avoid double .com issues
+        if (domainName && domainName.endsWith('.com')) {
+          domainName = domainName.replace(/\.com$/, '');
+        }
+        console.log(`🔍 Scoring domain: ${domainName}`);
+        
         // Get comprehensive valuation
-        const valuation = await this.valuationEngine.estimateDomainValue(domain.domain);
+        const valuation = await this.valuationEngine.estimateDomainValue(domainName);
+        console.log(`💰 Valuation for ${domainName}:`, valuation);
         
         // Get trend data
-        const trendScore = this.trendService.getTrendScore(domain.domain);
-        const trendCategories = this.trendService.getTrendCategories(domain.domain);
+        const trendScore = this.trendService.getTrendScore(domainName);
+        const trendCategories = this.trendService.getTrendCategories(domainName);
         
         // Calculate final score
         const finalScore = this.calculateFinalScore(valuation, trendScore, domain);
         
-        return {
-          ...domain,
+        // Ensure domain has .com suffix but avoid double .com
+        let finalDomain = domainName;
+        if (!finalDomain.endsWith('.com')) {
+          finalDomain = `${finalDomain}.com`;
+        }
+        
+        const scoredDomain = {
+          domain: finalDomain,
           score: finalScore,
           estimatedValue: valuation.estimatedValue,
           confidence: valuation.confidence,
           trendScore,
           trendCategories,
-          description: this.generateDescription(domain.domain),
-          category: this.categorizeDomain(domain.domain),
-          icon: this.getCategoryIcon(this.categorizeDomain(domain.domain)),
-          tags: this.generateTags(domain.domain),
+          description: this.generateDescription(domainName),
+          category: this.categorizeDomain(domainName),
+          icon: this.getCategoryIcon(this.categorizeDomain(domainName)),
+          tags: this.generateTags(domainName),
           generated_at: new Date().toISOString(),
           isAIGenerated: true,
-          valuation: valuation
+          valuation: valuation,
+          available: true  // Mark as available by default
         };
+        
+        console.log(`✅ Scored domain: ${domainName} with score ${finalScore}`);
+        return scoredDomain;
       } catch (error) {
-        console.error(`Error scoring domain ${domain.domain}:`, error);
+        console.error(`❌ Error scoring domain ${domainName}:`, error);
+        // Ensure domain has .com suffix but avoid double .com
+        let finalDomain = domainName;
+        if (finalDomain && !finalDomain.endsWith('.com')) {
+          finalDomain = `${finalDomain}.com`;
+        }
+        
         return {
-          ...domain,
+          domain: finalDomain,
           score: 50,
           estimatedValue: 500,
           confidence: 50,
           trendScore: 0,
           trendCategories: [],
-          description: this.generateDescription(domain.domain),
-          category: this.categorizeDomain(domain.domain),
-          icon: this.getCategoryIcon(this.categorizeDomain(domain.domain)),
-          tags: this.generateTags(domain.domain),
+          description: this.generateDescription(domainName),
+          category: this.categorizeDomain(domainName),
+          icon: this.getCategoryIcon(this.categorizeDomain(domainName)),
+          tags: this.generateTags(domainName),
           generated_at: new Date().toISOString(),
-          isAIGenerated: true
+          isAIGenerated: true,
+          available: true  // Mark as available by default
         };
       }
     }));
     
+    console.log(`✅ Successfully scored ${scoredDomains.length} domains`);
     return scoredDomains.sort((a, b) => b.score - a.score);
   }
 
@@ -297,7 +327,7 @@ class DomainScheduler {
       }
       
       // Update last generation time
-      await this.redis.set('last_generation', new Date().toISOString());
+      await this.redis.set('last_generation_time', new Date().toISOString());
       
     } catch (error) {
       console.error('Error storing domains in Redis:', error);
@@ -309,10 +339,35 @@ class DomainScheduler {
    */
   async getAvailableDomains(limit = 50) {
     try {
+      console.log('🔍 Checking Redis for cached domains...');
       const cached = await this.redis.get('available_domains');
+      const lastGeneration = await this.redis.get('last_generation_time');
+      
+      console.log(`🔍 Redis cached value: ${cached ? 'found' : 'not found'}`);
+      console.log(`🔍 Last generation time: ${lastGeneration || 'not found'}`);
+      
       if (cached) {
         const domains = JSON.parse(cached);
+        console.log(`📦 Found ${domains.length} cached domains in Redis`);
+        
+        if (lastGeneration) {
+          const lastGenTime = new Date(lastGeneration);
+          const now = new Date();
+          const timeDiff = now - lastGenTime;
+          const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+          
+          console.log(`⏰ Domains generated ${Math.round(timeDiff / 60000)} minutes ago`);
+          
+          // Return domains even if they're older than 1 hour, but log it
+          if (timeDiff >= oneHour) {
+            console.log(`⚠️ Cached domains are older than 1 hour, but returning them anyway`);
+          }
+        }
+        
+        console.log(`📦 Returning ${Math.min(domains.length, limit)} cached domains`);
         return domains.slice(0, limit);
+      } else {
+        console.log('❌ No cached domains found in Redis');
       }
       return [];
     } catch (error) {
@@ -326,7 +381,8 @@ class DomainScheduler {
    */
   generateDescription(domain) {
     const category = this.categorizeDomain(domain);
-    const domainName = domain.split('.')[0];
+    // Remove .com if it exists to get clean domain name
+    const domainName = domain.replace(/\.com$/, '').split('.')[0];
     switch (category) {
       case 'Technology': return `Cutting-edge ${domainName} platform for innovation`;
       case 'Business': return `Professional ${domainName} solutions for enterprise clients`;
@@ -341,7 +397,9 @@ class DomainScheduler {
    * Categorize domain based on content
    */
   categorizeDomain(domain) {
-    const domainLower = domain.toLowerCase();
+    // Remove .com if it exists to get clean domain name for categorization
+    const cleanDomain = domain.replace(/\.com$/, '');
+    const domainLower = cleanDomain.toLowerCase();
     if (domainLower.includes('ai') || domainLower.includes('tech') || domainLower.includes('data') || domainLower.includes('cloud')) return 'Technology';
     if (domainLower.includes('biz') || domainLower.includes('pro') || domainLower.includes('corporate') || domainLower.includes('solutions')) return 'Business';
     if (domainLower.includes('creative') || domainLower.includes('design') || domainLower.includes('brand') || domainLower.includes('studio')) return 'Creative';

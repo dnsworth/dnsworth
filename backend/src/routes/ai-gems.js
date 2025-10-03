@@ -32,65 +32,16 @@ router.get('/', async (req, res) => {
     
     let domains = [];
     
-    if (refresh === 'true' || refresh === true) {
-      // Generate fresh domains
-      console.log('🔄 Generating fresh AI domains...');
-      
-      if (keywords) {
-        // Custom generation based on keywords
-        const keywordList = keywords.split(',').map(k => k.trim());
-        domains = await aiGenerator.generateCustomDomains(keywordList, style, length);
-      } else {
-        // Standard batch generation
-        domains = await aiGenerator.generateDomainsBatch();
-      }
-      
-      // Check availability
-      const availableDomains = await dynadotService.checkBulkAvailability(domains);
-      
-      // Score and format
-      domains = await Promise.all(availableDomains.map(async (domain) => ({
-        domain: domain.domain,
-        description: generateDescription(domain.domain),
-        category: categorizeDomain(domain.domain),
-        tld: domain.tld || '.com',
-        estimatedValue: await estimateValue(domain.domain),
-        availability: domain.available,
-        price: domain.price,
-        score: calculateScore(domain.domain),
-        icon: getCategoryIcon(categorizeDomain(domain.domain)),
-        tags: generateTags(domain.domain),
-        generatedAt: new Date().toISOString(),
-        isAIGenerated: true
-      })));
-      domains.sort((a, b) => b.score - a.score);
-      
+    // Always get cached domains - no manual refresh allowed
+    domains = await scheduler.getAvailableDomains(parseInt(count));
+    console.log(`🔍 Retrieved ${domains.length} domains from scheduler`);
+    
+    // If no cached domains, return empty result (domains will be generated on schedule)
+    if (domains.length === 0) {
+      console.log('📦 No cached domains available - waiting for next generation cycle');
+      domains = [];
     } else {
-      // Get cached domains
-      domains = await scheduler.getAvailableDomains(parseInt(count));
-      
-      // If no cached domains, generate fresh ones
-      if (domains.length === 0) {
-        console.log('📦 No cached domains, generating fresh batch...');
-        const freshDomains = await aiGenerator.generateDomainsBatch();
-        const availableDomains = await dynadotService.checkBulkAvailability(freshDomains);
-        
-        domains = await Promise.all(availableDomains.map(async (domain) => ({
-          domain: domain.domain,
-          description: generateDescription(domain.domain),
-          category: categorizeDomain(domain.domain),
-          tld: domain.tld || '.com',
-          estimatedValue: await estimateValue(domain.domain),
-          availability: domain.available,
-          price: domain.price,
-          score: calculateScore(domain.domain),
-          icon: getCategoryIcon(categorizeDomain(domain.domain)),
-          tags: generateTags(domain.domain),
-          generatedAt: new Date().toISOString(),
-          isAIGenerated: true
-        })));
-        domains.sort((a, b) => b.score - a.score);
-      }
+      console.log(`✅ Found ${domains.length} cached domains, returning them`);
     }
     
     // Personalize domains if userId is provided
@@ -286,20 +237,27 @@ function categorizeDomain(domain) {
 
 async function estimateValue(domain) {
   try {
-    const response = await fetch(`${process.env.HUMBLEWORTH_API_URL}/api/value`, {
+    const cleanDomain = `${domain}.com`.replace(/^(https?:\/\/)?(www\.)?/, '');
+    const response = await fetch('https://valuation.humbleworth.com/api/valuation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'User-Agent': 'DNSWorth/2.0.0'
       },
-      body: JSON.stringify({ domain: `${domain}.com` })
+      body: JSON.stringify({ domains: [cleanDomain] })
     });
 
     if (response.ok) {
       const data = await response.json();
-      return data.estimatedValue || data.value || 1000;
+      console.log(`🔍 HumbleWorth API response for ${domain}.com:`, JSON.stringify(data, null, 2));
+      // Use auction value from the valuations array
+      const auctionValue = data.valuations?.[0]?.auction;
+      console.log(`💰 Using auction value: ${auctionValue} for ${domain}.com`);
+      return auctionValue || data.valuations?.[0]?.marketplace || data.valuations?.[0]?.brokerage || 1000;
     }
   } catch (error) {
-    console.log('HumbleWorth API not available, using fallback valuation');
+    console.log(`❌ HumbleWorth API error for ${domain}.com:`, error.message);
+    console.log('🔄 Using fallback valuation');
   }
   
   // Fallback to basic estimation if API fails
@@ -321,7 +279,9 @@ async function estimateValue(domain) {
     baseValue += 600;
   }
   
-  return Math.floor(baseValue + Math.random() * 1000);
+  const fallbackValue = Math.floor(baseValue + Math.random() * 1000);
+  console.log(`🎲 Using fallback value: ${fallbackValue} for ${domain}.com`);
+  return fallbackValue;
 }
 
 function calculateScore(domain) {
@@ -483,6 +443,27 @@ router.get('/test-dynadot', async (req, res) => {
           error: error.message,
           response: error.response?.data
         });
+  }
+});
+
+/**
+ * POST /api/ai-gems/trigger-generation - Manually trigger domain generation
+ */
+router.post('/trigger-generation', async (req, res) => {
+  try {
+    console.log('🔄 Manual domain generation triggered');
+    await scheduler.generateFreshBatch();
+    res.json({
+      success: true,
+      message: 'Domain generation triggered successfully'
+    });
+  } catch (error) {
+    console.error('Error triggering generation:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to trigger generation',
+      message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
   }
 });
 

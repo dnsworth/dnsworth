@@ -42,29 +42,29 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
   ];
 
   return (
-    <section className="py-20 bg-surface">
+    <section className="py-12 md:py-20 bg-surface">
       <div className="container-custom">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-gradient mb-6">
+          <h2 className="text-2xl md:text-4xl font-bold text-gradient mb-3 md:mb-6">
             Value Multiple Domains at Once
           </h2>
-          <p className="text-xl text-text-muted mb-12 max-w-3xl mx-auto">
+          <p className="text-sm md:text-xl text-text-muted mb-8 md:mb-12 max-w-3xl mx-auto">
             Use our bulk valuation tool to check up to 100 domains instantly. Perfect for portfolio owners, domain investors, and businesses managing multiple domains.
           </p>
           
           {/* Creative Comic Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
             {features.map((feature) => (
               <div key={feature.id} className="group relative">
-                <div className="bg-background border-2 border-gray-700 rounded-2xl p-8 hover:border-primary/30 transition-all duration-300 hover:shadow-2xl relative overflow-hidden">
+                <div className="bg-background border-2 border-gray-700 rounded-2xl p-4 md:p-8 hover:border-primary/30 transition-all duration-300 hover:shadow-2xl relative overflow-hidden">
                   
                   {/* Background Pattern */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.theme} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
                   
                   {/* Comic Character */}
-                  <div className="relative z-10 text-center mb-6">
-                    <div className="relative mx-auto mb-4">
-                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                  <div className="relative z-10 text-center mb-4 md:mb-6">
+                    <div className="relative mx-auto mb-3 md:mb-4">
+                      <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                         <img
                           src={feature.avatar}
                           alt={feature.name}
@@ -74,18 +74,18 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
                     </div>
                     
                     {/* Character Info */}
-                    <h4 className="text-lg font-bold text-text group-hover:text-primary transition-colors duration-300">
+                    <h4 className="text-sm md:text-lg font-bold text-text group-hover:text-primary transition-colors duration-300">
                       {feature.name}
                     </h4>
-                    <p className="text-sm text-text-muted">{feature.role}</p>
+                    <p className="text-xs md:text-sm text-text-muted">{feature.role}</p>
                   </div>
 
                   {/* Feature Content */}
                   <div className="relative z-10 text-center">
-                    <h3 className="text-lg font-bold text-text mb-2 group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-sm md:text-lg font-bold text-text mb-2 group-hover:text-primary transition-colors duration-300">
                       {feature.title}
                     </h3>
-                    <p className="text-text-muted text-sm leading-relaxed">
+                    <p className="text-text-muted text-xs md:text-sm leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -102,7 +102,7 @@ const SectionBulkSearch = ({ onBulkValuation }) => {
 
           <button
             onClick={onBulkValuation}
-            className="bg-gradient-to-r from-yellow-600 to-orange-600 text-white text-xl px-8 py-4 mb-8 rounded-xl font-semibold hover:from-yellow-700 hover:to-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            className="bg-gradient-to-r from-yellow-600 to-orange-600 text-white text-sm md:text-xl px-6 py-3 md:px-8 md:py-4 mb-6 md:mb-8 rounded-xl font-semibold hover:from-yellow-700 hover:to-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Use Bulk Valuation
           </button>
