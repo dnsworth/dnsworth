@@ -88,7 +88,7 @@ class EnhancedDynadotService {
 
       console.log('📡 Dynadot BULK_SEARCH Response:', response.data);
 
-      if (response.data.code === 200) {
+      if (response.data.code === '200' || response.data.code === 200) {
         return this.parseBulkResponse(response.data, domains);
       }
       console.error('❌ Dynadot API Error:', response.data);

@@ -18,7 +18,7 @@ const registrationLimiter = rateLimit({
 
 const countLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 30, // Limit each IP to 30 requests per minute
+  max: 100, // Limit each IP to 100 requests per minute (increased for normal usage)
   message: {
     success: false,
     error: 'Too many requests, please try again later'
