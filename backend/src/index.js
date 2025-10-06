@@ -464,7 +464,7 @@ app.post('/api/bulk-value', async (req, res) => {
     // Always use real API - no mock data
 
     // Process domains in batches with enhanced security and connection pooling
-    const batchSize = 5; // Reduced for security
+    const batchSize = process.env.NODE_ENV === 'production' ? 3 : 5; // Smaller batches for production
     const results = [];
     const errors = [];
 
@@ -475,7 +475,7 @@ app.post('/api/bulk-value', async (req, res) => {
         const batchPromises = batch.map(async (domain) => {
           try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 12000); // Increased timeout to 12 seconds
+            const timeoutId = setTimeout(() => controller.abort(), 8000); // Reduced timeout to 8 seconds for production
 
             const apiResponse = await fetch(`${process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com'}/api/valuation`, {
               method: 'POST',
@@ -488,7 +488,7 @@ app.post('/api/bulk-value', async (req, res) => {
               body: JSON.stringify({ domains: [domain] }),
               signal: controller.signal,
               agent: httpAgent, // Use connection pooling
-              timeout: 12000
+              timeout: 8000
             });
 
             clearTimeout(timeoutId);

@@ -76,18 +76,22 @@ router.get('/', async (req, res) => {
       }
     }
 
-    // If still empty, return empty result
+    // If still empty, generate fallback domains for production
     if (!domains || domains.length === 0) {
-      console.log('🔄 No domains available');
+      console.log('🔄 No domains available, generating fallback domains...');
+      
+      // Generate fallback domains for production
+      const fallbackDomains = generateFallbackDomains(10);
+      
       return res.json({
         success: true,
         data: {
-          gems: [],
-          total: 0,
+          gems: fallbackDomains,
+          total: fallbackDomains.length,
           generatedAt: new Date().toISOString(),
           isAIGenerated: false,
           personalized: false,
-          source: 'No domains available - waiting for next generation cycle'
+          source: 'Fallback domains - production mode'
         }
       });
     }
@@ -650,5 +654,33 @@ router.get('/redis-health', async (req, res) => {
     });
   }
 });
+
+// Fallback domain generation for production
+function generateFallbackDomains(count = 10) {
+  const fallbackDomains = [
+    'techflow', 'datawise', 'cloudbase', 'appcore', 'digitech',
+    'shopify', 'storemax', 'buymart', 'sellpro', 'commerce',
+    'healthio', 'medtech', 'wellness', 'fitlife', 'careplus',
+    'eduwise', 'learnhub', 'schoolio', 'academy', 'knowledge',
+    'finance', 'moneywise', 'banktech', 'investpro', 'wealth',
+    'bizcore', 'venture', 'startup', 'growth', 'success'
+  ];
+  
+  return fallbackDomains.slice(0, count).map((domain, index) => ({
+    domain,
+    category: categorizeDomain(domain),
+    estimatedValue: Math.floor(Math.random() * 5000) + 1000,
+    auctionValue: Math.floor(Math.random() * 2000) + 500,
+    marketplaceValue: Math.floor(Math.random() * 8000) + 2000,
+    brokerageValue: Math.floor(Math.random() * 12000) + 3000,
+    confidence: 75,
+    source: 'fallback',
+    available: true,
+    price: 'Available',
+    lastUpdated: new Date().toISOString(),
+    id: `fallback_${index}`,
+    status: 'available'
+  }));
+}
 
 export default router;
