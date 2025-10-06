@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 export const createTransporter = () => {
   const password = process.env.ZOHO_APP_PASSWORD;
   if (!password) {
-    throw new Error('ZOHO_APP_PASSWORD environment variable is required');
+    throw new Error('Email service configuration error. Please contact support.');
   }
   
   return nodemailer.createTransport({

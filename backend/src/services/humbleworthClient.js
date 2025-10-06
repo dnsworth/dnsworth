@@ -1,140 +1,149 @@
-import axios from 'axios';
+import Replicate from 'replicate';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 class HumbleworthClient {
   constructor() {
-    this.baseURL = process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com';
-    this.timeoutMs = 10000;
+    this.replicate = new Replicate({
+      auth: process.env.REPLICATE_API_TOKEN,
+    });
+    this.model = process.env.REPLICATE_MODEL || "humbleworth/price-predict-v1:a925db842c707850e4ca7b7e86b217692b0353a9ca05eb028802c4a85db93843";
   }
 
   async getValue(domain) {
-    // Try the original HumbleWorth API first
-    const url = `${this.baseURL}/value`;
-    const params = { domain };
-    const headers = {
-      'Accept': 'application/json',
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    };
-    
     try {
-      const resp = await axios.get(url, { params, headers, timeout: this.timeoutMs });
-      console.log(`🔍 HumbleWorth API response for ${domain}:`, resp.data);
+      console.log(`🔍 Using Replicate HumbleWorth API for ${domain}`);
       
-      // Handle the actual HumbleWorth API response format
-      if (resp.data && resp.data.valuations && resp.data.valuations.length > 0) {
-        const valuation = resp.data.valuations[0];
+      const output = await this.replicate.run(this.model, {
+        input: {
+          domains: domain
+        }
+      });
+
+      console.log(`📊 Replicate response for ${domain}:`, output);
+
+      if (output && output.valuations && output.valuations.length > 0) {
+        const valuation = output.valuations[0];
         const auctionValue = valuation.auction || 0;
-        console.log(`💰 Using auction value: ${auctionValue} for ${domain}`);
+        const marketplaceValue = valuation.marketplace || 0;
+        const brokerageValue = valuation.brokerage || 0;
+
+        console.log(`💰 Using Replicate value: ${auctionValue} for ${domain} (auction: ${auctionValue}, marketplace: ${marketplaceValue}, brokerage: ${brokerageValue})`);
         
         return {
           value_usd: auctionValue,
-          confidence: 85, // High confidence for HumbleWorth data
-          raw: resp.data
+          auctionValue: auctionValue,
+          marketplaceValue: marketplaceValue,
+          brokerageValue: brokerageValue,
+          confidence: 90,
+          source: 'replicate',
+          raw: output
         };
       }
-      
-      // Fallback if no valuations found
-      return {
-        value_usd: 500,
-        confidence: 50,
-        raw: resp.data
-      };
     } catch (error) {
-      console.error(`❌ HumbleWorth API error for ${domain}:`, error.message);
-      
-      // If the original API fails, try the Replicate endpoint
-      try {
-        console.log(`🔄 Trying Replicate endpoint for ${domain}...`);
-        const replicateUrl = 'https://api.replicate.com/v1/predictions';
-        const replicateHeaders = {
-          'Authorization': `Token ${process.env.REPLICATE_API_TOKEN || 'r8_placeholder'}`,
-          'Content-Type': 'application/json'
-        };
-        
-        const replicateData = {
-          version: "humbleworth/price-predict-v1:latest",
-          input: { domain: domain }
-        };
-        
-        const replicateResp = await axios.post(replicateUrl, replicateData, { 
-          headers: replicateHeaders, 
-          timeout: this.timeoutMs 
-        });
-        
-        console.log(`🔍 Replicate API response for ${domain}:`, replicateResp.data);
-        
-        // Handle Replicate response
-        if (replicateResp.data && replicateResp.data.output) {
-          const output = replicateResp.data.output;
-          if (output.valuations && output.valuations.length > 0) {
-            const valuation = output.valuations[0];
-            const auctionValue = valuation.auction || 0;
-            console.log(`💰 Using Replicate auction value: ${auctionValue} for ${domain}`);
-            
-            return {
-              value_usd: auctionValue,
-              confidence: 85,
-              raw: output
-            };
-          }
-        }
-      } catch (replicateError) {
-        console.error(`❌ Replicate API also failed for ${domain}:`, replicateError.message);
-      }
-      
-      // Return realistic fallback values based on domain characteristics
-      const fallbackValue = this.calculateFallbackValue(domain);
-      return {
-        value_usd: fallbackValue,
-        confidence: 40,
-        raw: { error: error.message, fallback: true }
-      };
+      console.log(`❌ Replicate API failed for ${domain}: ${error.message}`);
     }
+
+    // Fallback to calculated values if Replicate fails
+    const fallbackValues = this.calculateDetailedFallbackValue(domain);
+    console.log(`💰 Using fallback value: ${fallbackValues.auctionValue} for ${domain} (auction: ${fallbackValues.auctionValue}, marketplace: ${fallbackValues.marketplaceValue}, brokerage: ${fallbackValues.brokerageValue})`);
+    
+    return {
+      value_usd: fallbackValues.auctionValue,
+      auctionValue: fallbackValues.auctionValue,
+      marketplaceValue: fallbackValues.marketplaceValue,
+      brokerageValue: fallbackValues.brokerageValue,
+      confidence: 40,
+      source: 'fallback',
+      raw: { source: 'fallback' }
+    };
   }
 
-  /**
-   * Calculate realistic fallback value based on domain characteristics
-   */
-  calculateFallbackValue(domain) {
-    const domainName = domain.replace('.com', '').toLowerCase();
-    let baseValue = 100;
+  extractValueFromResponse(data) {
+    if (!data) return 0;
     
-    // Length-based pricing
+    // Format 1: Direct auction value
+    if (typeof data.auction === 'number') {
+      return data.auction;
+    }
+    // Format 2: Nested valuations array
+    if (data.valuations && Array.isArray(data.valuations) && data.valuations.length > 0) {
+      const valuation = data.valuations[0];
+      return valuation.auction || valuation.value || 0;
+    }
+    // Format 3: Direct value field
+    if (typeof data.value === 'number') {
+      return data.value;
+    }
+    // Format 4: Nested data object
+    if (data.data && typeof data.data.auction === 'number') {
+      return data.data.auction;
+    }
+    // Format 5: Check for any numeric value in the response
+    const findNumericValue = (obj) => {
+      if (typeof obj === 'number') return obj;
+      if (typeof obj === 'object' && obj !== null) {
+        for (const value of Object.values(obj)) {
+          const num = findNumericValue(value);
+          if (num > 0) return num;
+        }
+      }
+      return 0;
+    };
+    return findNumericValue(data);
+  }
+
+  calculateDetailedFallbackValue(domain) {
+    const domainName = domain.replace('.com', '').toLowerCase();
+    let baseValue = 200;
+    
+    // Length-based pricing (shorter = more valuable)
     if (domainName.length <= 4) {
-      baseValue += 2000; // Short domains are valuable
+      baseValue = 5000;
     } else if (domainName.length <= 6) {
-      baseValue += 1000; // Medium domains
+      baseValue = 2000;
     } else if (domainName.length <= 8) {
-      baseValue += 500; // Longer domains
+      baseValue = 1000;
+    } else if (domainName.length <= 10) {
+      baseValue = 500;
     }
     
-    // Premium keywords
-    const premiumKeywords = ['tech', 'ai', 'cloud', 'data', 'smart', 'cyber', 'quantum', 'digital', 'nexus', 'flow'];
+    // Premium keywords boost
+    const premiumKeywords = ['tech', 'ai', 'app', 'cloud', 'data', 'smart', 'digital', 'online', 'web', 'net'];
     const hasPremiumKeyword = premiumKeywords.some(keyword => domainName.includes(keyword));
     if (hasPremiumKeyword) {
-      baseValue += 800;
+      baseValue *= 1.5;
     }
     
-    // Brandable patterns
-    if (/^[a-z]{4,8}$/.test(domainName) && /[aeiou]/.test(domainName)) {
-      baseValue += 600; // Brandable domains
+    // Common words penalty
+    const commonWords = ['test', 'demo', 'sample', 'example', 'temp', 'new', 'old'];
+    const hasCommonWord = commonWords.some(word => domainName.includes(word));
+    if (hasCommonWord) {
+      baseValue *= 0.5;
     }
     
-    // Tech-related suffixes
-    const techSuffixes = ['tech', 'ai', 'io', 'app', 'dev', 'lab', 'hub', 'net', 'sys'];
-    const hasTechSuffix = techSuffixes.some(suffix => domainName.endsWith(suffix));
-    if (hasTechSuffix) {
-      baseValue += 400;
-    }
+    // Calculate realistic breakdown values based on HumbleWorth patterns
+    // Auction values are typically the lowest (base value)
+    const auctionValue = Math.round(baseValue * (0.8 + Math.random() * 0.4));
     
-    // Alliteration bonus
-    if (domainName.length >= 4 && domainName[0] === domainName[1]) {
-      baseValue += 300; // Alliterative domains
-    }
+    // Marketplace values are typically 10-50x higher than auction
+    const marketplaceValue = Math.round(auctionValue * (10 + Math.random() * 40));
     
-    // Random variation to make it more realistic
-    const variation = Math.random() * 0.4 + 0.8; // 80-120% of calculated value
+    // Brokerage values are typically 20-100x higher than auction
+    const brokerageValue = Math.round(auctionValue * (20 + Math.random() * 80));
     
-    return Math.round(baseValue * variation);
+    return {
+      auctionValue: Math.max(auctionValue, 1), // Ensure at least 1
+      marketplaceValue: Math.max(marketplaceValue, 1),
+      brokerageValue: Math.max(brokerageValue, 1)
+    };
+  }
+
+  calculateFallbackValue(domain) {
+    const detailed = this.calculateDetailedFallbackValue(domain);
+    return detailed.auctionValue;
   }
 }
 

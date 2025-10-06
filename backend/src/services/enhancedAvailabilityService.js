@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Redis from 'redis';
+// import Redis from 'redis'; // DISABLED
 
 class EnhancedDynadotService {
   constructor() {
@@ -13,38 +13,14 @@ class EnhancedDynadotService {
       console.warn('❌ Dynadot API key not configured. Set DYNADOT_API_KEY.');
     }
     
-    // Redis client for caching - handle invalid URLs gracefully
-    try {
-      const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-      
-      // Validate Redis URL format
-      if (redisUrl.includes('redis-cli') || redisUrl.includes(' ')) {
-        console.warn('⚠️ Invalid Redis URL detected, using localhost fallback');
-        this.redis = Redis.createClient({
-          url: 'redis://localhost:6379'
-        });
-      } else {
-        this.redis = Redis.createClient({
-          url: redisUrl
-        });
-      }
-      
-      this.redis.on('error', (err) => {
-        console.error('Redis Client Error:', err);
-      });
-      
-      this.redis.connect();
-    } catch (error) {
-      console.warn('⚠️ Redis connection failed, using in-memory fallback:', error.message);
-      // Create a mock Redis client for fallback
-      this.redis = {
-        get: () => Promise.resolve(null),
-        set: () => Promise.resolve('OK'),
-        del: () => Promise.resolve(1),
-        connect: () => Promise.resolve(),
-        disconnect: () => Promise.resolve()
-      };
-    }
+    // Redis DISABLED - using in-memory fallback
+    this.redis = {
+      get: () => Promise.resolve(null),
+      set: () => Promise.resolve('OK'),
+      del: () => Promise.resolve(1),
+      connect: () => Promise.resolve(),
+      disconnect: () => Promise.resolve()
+    };
   }
 
   /**
@@ -56,20 +32,20 @@ class EnhancedDynadotService {
     
     console.log(`🔄 Checking FRESH availability for ${domains.length} domains (NO CACHE)`);
     
-    // Process in chunks of 5 (Dynadot free account limit)
+    // Process in batches of 5 (Dynadot Regular account limit)
     const chunks = this.chunkArray(domains, 5);
     const results = [];
     
-    console.log(`Processing ${domains.length} domains in ${chunks.length} chunks (up to 5 per batch)`);
+    console.log(`Processing ${domains.length} domains in ${chunks.length} batches (up to 5 per batch)`);
     
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
-      console.log(`Processing chunk ${i + 1}/${chunks.length} (${chunk.length} domains)`);
+      console.log(`Processing batch ${i + 1}/${chunks.length} (${chunk.length} domains)`);
       
       const available = await this.checkDomainChunkWithBackoff(chunk);
       results.push(...available);
       
-      // Throttle requests - add 2 second delay between batches for free account
+      // Throttle requests - add 2 second delay between batches for rate limit safety
       if (i < chunks.length - 1) {
         console.log('⏳ Throttling: waiting 2s before next batch...');
         await this.delay(2000);
@@ -85,14 +61,20 @@ class EnhancedDynadotService {
    */
   async checkDomainChunk(domains) {
     if (!this.apiKey || this.apiKey === 'your_dynadot_api_key_here') {
-      throw new Error('❌ Dynadot API key not configured. Please add DYNADOT_API_KEY to your .env file');
+      throw new Error('❌ API configuration error. Please contact support.');
     }
 
     console.log('🔍 Calling Dynadot RESTful BULK_SEARCH for domains:', domains.slice(0, 3).join(', '), '...');
     
     try {
-      // Convert domains to full .com format
-      const domainList = domains.map(d => `${d}.com`).join(',');
+      // Ensure domains are in full .com format for Dynadot API
+      const domainsWithCom = domains.map(domain => {
+        if (!domain.includes('.')) {
+          return `${domain}.com`;
+        }
+        return domain;
+      });
+      const domainList = domainsWithCom.join(',');
       
       const response = await axios.get(
         'https://api.dynadot.com/restful/v1/domains/bulk_search',
@@ -110,9 +92,13 @@ class EnhancedDynadotService {
 
       console.log('📡 Dynadot BULK_SEARCH Response:', response.data);
 
-      if (response.data.code === '200' || response.data.code === 200) {
+      // Handle successful responses (200, '200', or 'Success')
+      if (response.data.code === '200' || response.data.code === 200 || response.data.message === 'Success') {
+        console.log('✅ Dynadot API call successful, parsing response...');
         return this.parseBulkResponse(response.data, domains);
       }
+      
+      // Handle error responses
       console.error('❌ Dynadot API Error:', response.data);
       throw new Error(`Dynadot error: ${response.data?.message || 'unknown'}`);
 
@@ -156,19 +142,81 @@ class EnhancedDynadotService {
   parseBulkResponse(response, originalDomains) {
     const availableDomains = [];
     
+    console.log('🔍 Parsing Dynadot response:', JSON.stringify(response, null, 2));
+    
+    // Handle different response formats
+    let domainResults = [];
+    
     if (response.data && response.data.domain_result_list) {
-      response.data.domain_result_list.forEach(result => {
-        if (result.available === 'yes') {
-          // Use the domain name as-is from Dynadot (already includes .com)
-          availableDomains.push({
-            domain: result.domain_name,
-            available: true,
-            price: result.price || 'N/A',
-            currency: result.currency || 'USD'
-          });
-        }
-      });
+      domainResults = response.data.domain_result_list;
+    } else if (response.domain_result_list) {
+      domainResults = response.domain_result_list;
+    } else if (Array.isArray(response)) {
+      domainResults = response;
     }
+    
+    console.log(`🔍 Found ${domainResults.length} domain results to parse`);
+    
+    domainResults.forEach((result, index) => {
+      console.log(`🔍 Processing result ${index + 1}:`, result);
+      
+      // Handle different result formats
+      let domainName = '';
+      let isAvailable = false;
+      let price = 'N/A';
+      let currency = 'USD';
+      
+      if (result.domain_name) {
+        domainName = result.domain_name;
+        // Ensure domain has .com extension if it doesn't already
+        if (!domainName.includes('.')) {
+          domainName = `${domainName}.com`;
+        }
+      } else if (result.domain) {
+        domainName = result.domain;
+        if (!domainName.includes('.')) {
+          domainName = `${domainName}.com`;
+        }
+      } else if (result.name) {
+        domainName = result.name;
+        if (!domainName.includes('.')) {
+          domainName = `${domainName}.com`;
+        }
+      }
+      
+      if (result.available === 'yes' || result.available === 'Yes' || result.available === true || result.available === 1) {
+        isAvailable = true;
+      } else if (result.available === 'no' || result.available === 'No' || result.available === false || result.available === 0) {
+        isAvailable = false;
+      } else if (result.status === 'available') {
+        isAvailable = true;
+      } else if (result.status === 'registered') {
+        isAvailable = false;
+      }
+      
+      if (result.price) {
+        price = result.price;
+      }
+      if (result.currency) {
+        currency = result.currency;
+      }
+      
+      console.log(`🔍 Domain: ${domainName}, Available: ${isAvailable}, Price: ${price}`);
+      
+      if (isAvailable && domainName) {
+        // Ensure domain has .com extension
+        if (!domainName.includes('.')) {
+          domainName = `${domainName}.com`;
+        }
+        
+        availableDomains.push({
+          domain: domainName,
+          available: true,
+          price: price,
+          currency: currency
+        });
+      }
+    });
     
     console.log(`✅ Found ${availableDomains.length} available domains from bulk search`);
     return availableDomains;
@@ -271,7 +319,7 @@ class EnhancedDynadotService {
    */
   async checkSingleDomain(domain, tld) {
     if (!this.apiKey || this.apiKey === 'your_dynadot_api_key_here') {
-      throw new Error('❌ Dynadot API key not configured. Set DYNADOT_API_KEY.');
+      throw new Error('❌ API configuration error. Please contact support.');
     }
 
     try {

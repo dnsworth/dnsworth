@@ -1,5 +1,5 @@
 # Render deployment configuration for DNSWorth backend
-# This file tells Render how to deploy the backend service
+# This file tells Render how to deploy the backend service and cron job
 
 services:
   - type: web
@@ -19,5 +19,68 @@ services:
         value: production
       - key: PORT
         value: 8000
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: REPLICATE_API_TOKEN
+        sync: false
+      - key: DYNADOT_API_KEY
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: MONTHLY_BUDGET
+        value: "5.00"
+      - key: CRON_SECRET
+        sync: false
     healthCheckPath: /health
     autoDeploy: true
+
+  - type: cron
+    name: hourly-domain-generation
+    env: node
+    plan: free
+    region: oregon
+    schedule: "0 * * * *"  # Every hour at minute 0
+    buildCommand: |
+      echo "Installing cron dependencies..."
+      npm install
+      echo "Cron dependencies installed successfully!"
+    runCommand: |
+      echo "Running hourly domain generation..."
+      node hourly-batch.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        fromService:
+          name: dnsworth-backend
+          type: web
+          envVarKey: OPENAI_API_KEY
+      - key: REPLICATE_API_TOKEN
+        fromService:
+          name: dnsworth-backend
+          type: web
+          envVarKey: REPLICATE_API_TOKEN
+      - key: DYNADOT_API_KEY
+        fromService:
+          name: dnsworth-backend
+          type: web
+          envVarKey: DYNADOT_API_KEY
+      - key: REDIS_URL
+        fromService:
+          name: dnsworth-backend
+          type: web
+          envVarKey: REDIS_URL
+      - key: DATABASE_URL
+        fromService:
+          name: dnsworth-backend
+          type: web
+          envVarKey: DATABASE_URL
+      - key: MONTHLY_BUDGET
+        value: "5.00"
+      - key: CRON_SECRET
+        fromService:
+          name: dnsworth-backend
+          type: web
+          envVarKey: CRON_SECRET

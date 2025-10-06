@@ -4,8 +4,12 @@ import axios from 'axios';
 import AIDomainGenerator from '../services/aiDomainGenerator.js';
 import EnhancedDynadotService from '../services/enhancedAvailabilityService.js';
 import DomainScheduler from '../services/domainScheduler.js';
+import UniversalScheduler from '../services/universalScheduler.js';
+import BudgetAwareScheduler from '../services/budgetAwareScheduler.js';
 import PersonalizationEngine from '../services/personalizationEngine.js';
 import MultiSourceAvailability from '../services/multiSourceAvailability.js';
+import HumbleworthClient from '../services/humbleworthClient.js';
+import redisService from '../services/redisService.js';
 import auditLogger from '../middleware/auditLogger.js';
 
 // Ensure environment variables are loaded
@@ -17,6 +21,8 @@ const router = express.Router();
 let aiGenerator = null;
 let dynadotService = null;
 let scheduler = null;
+let universalScheduler = null;
+let budgetAwareScheduler = null;
 let personalizationEngine = null;
 let multiSourceAvailability = null;
 
@@ -25,13 +31,15 @@ function getServices() {
     aiGenerator = new AIDomainGenerator();
     dynadotService = new EnhancedDynadotService();
     scheduler = new DomainScheduler();
+    universalScheduler = new UniversalScheduler();
+    budgetAwareScheduler = new BudgetAwareScheduler();
     personalizationEngine = new PersonalizationEngine();
     multiSourceAvailability = new MultiSourceAvailability();
     
-    // Start the scheduler
-    scheduler.start();
+    // Start the universal scheduler (generates 150 domains)
+    universalScheduler.start();
   }
-  return { aiGenerator, dynadotService, scheduler, personalizationEngine, multiSourceAvailability };
+  return { aiGenerator, dynadotService, scheduler, universalScheduler, budgetAwareScheduler, personalizationEngine, multiSourceAvailability };
 }
 
 /**
@@ -40,21 +48,53 @@ function getServices() {
 router.get('/', async (req, res) => {
   try {
     const { count = 30, refresh = false, keywords, style = 'tech', length = 'medium', userId } = req.query;
-    const { scheduler, personalizationEngine } = getServices();
+    const { universalScheduler, personalizationEngine } = getServices();
     
     let domains = [];
     
-    // Always get cached domains - no manual refresh allowed
-    domains = await scheduler.getAvailableDomains(parseInt(count));
-    console.log(`🔍 Retrieved ${domains.length} domains from scheduler`);
+    // Fast path: Get cached domains from Redis
+    console.log('🔍 Checking Redis for cached domains...');
+    domains = await redisService.getDomains('domains:universal');
+    console.log(`🔍 Redis returned ${domains ? domains.length : 0} domains`);
     
-    // If no cached domains, return empty result (domains will be generated on schedule)
-    if (domains.length === 0) {
-      console.log('📦 No cached domains available - waiting for next generation cycle');
-      domains = [];
-    } else {
-      console.log(`✅ Found ${domains.length} cached domains, returning them`);
+    // If empty, try the available pool key used by the scheduler
+    if (!domains || domains.length === 0) {
+      console.log('🔎 Checking available domains pool (domains:available)...');
+      domains = await redisService.getDomains('domains:available');
+      console.log(`🔎 Pool returned ${domains ? domains.length : 0} domains`);
     }
+
+    // If still empty, synchronously trigger generation in this process (no separate script)
+    if ((!domains || domains.length === 0) && (refresh === 'true' || refresh === true)) {
+      console.log('⚠️ No cached domains. Triggering in-process generation now...');
+      try {
+        await universalScheduler.generateHourlyBatch();
+        domains = await redisService.getDomains('domains:available');
+        console.log(`✅ After trigger, fetched ${domains ? domains.length : 0} domains`);
+      } catch (e) {
+        console.error('❌ In-process generation failed:', e.message);
+      }
+    }
+
+    // If still empty, return empty result
+    if (!domains || domains.length === 0) {
+      console.log('🔄 No domains available');
+      return res.json({
+        success: true,
+        data: {
+          gems: [],
+          total: 0,
+          generatedAt: new Date().toISOString(),
+          isAIGenerated: false,
+          personalized: false,
+          source: 'No domains available - waiting for next generation cycle'
+        }
+      });
+    }
+    
+    console.log(`🔍 Retrieved ${domains.length} universal domains`);
+    
+    console.log(`✅ Found ${domains.length} cached domains, returning them`);
     
     // Personalize domains if userId is provided
     if (userId) {
@@ -64,6 +104,9 @@ router.get('/', async (req, res) => {
     
     // Limit results
     const limitedDomains = domains.slice(0, parseInt(count));
+    
+    console.log(`📤 Sending ${limitedDomains.length} domains to frontend`);
+    console.log(`📤 Sample domain:`, limitedDomains[0]);
     
     res.json({
       success: true,
@@ -117,28 +160,88 @@ router.post('/custom', async (req, res) => {
     // Check availability
     const availableDomains = await dynadotService.checkBulkAvailability(generatedDomains);
     
-    // Format results
-    const domains = availableDomains.map(domain => ({
-      domain: domain.domain,
-      description: generateDescription(domain.domain),
-      category: categorizeDomain(domain.domain),
-      tld: domain.tld || '.com',
-      estimatedValue: estimateValue(domain.domain),
-      availability: domain.available,
-      price: domain.price,
-      score: calculateScore(domain.domain),
-      icon: getCategoryIcon(categorizeDomain(domain.domain)),
-      tags: generateTags(domain.domain),
-      generatedAt: new Date().toISOString(),
-      isAIGenerated: true,
-      customGenerated: true,
-      keywords: keywords
-    })).sort((a, b) => b.score - a.score).slice(0, parseInt(count));
+    // Format results with detailed valuation
+    const humbleworthClient = new HumbleworthClient();
+    const domains = await Promise.all(availableDomains.map(async (domain) => {
+      try {
+        const valuation = await humbleworthClient.getValue(domain.domain);
+        return {
+          domain: domain.domain,
+          description: generateDescription(domain.domain),
+          category: categorizeDomain(domain.domain),
+          tld: domain.tld || '.com',
+          estimatedValue: valuation.auctionValue || 0, // Use auction value as main value
+          auctionValue: valuation.auctionValue || 0,
+          marketplaceValue: valuation.marketplaceValue || 0,
+          brokerageValue: valuation.brokerageValue || 0,
+          availability: domain.available,
+          price: domain.price,
+          score: calculateScore(domain.domain),
+          icon: getCategoryIcon(categorizeDomain(domain.domain)),
+          tags: generateTags(domain.domain),
+          generatedAt: new Date().toISOString(),
+          isAIGenerated: true,
+          customGenerated: true,
+          keywords: keywords,
+          valuation: {
+            domain: domain.domain,
+            estimatedValue: valuation.auctionValue || 0,
+            auctionValue: valuation.auctionValue || 0,
+            marketplaceValue: valuation.marketplaceValue || 0,
+            brokerageValue: valuation.brokerageValue || 0,
+            confidence: valuation.confidence || 50,
+            source: valuation.source || 'fallback',
+            breakdown: valuation.breakdown || {
+              score: valuation.confidence || 50,
+              value: valuation.auctionValue || 0,
+              confidence: valuation.confidence || 50
+            },
+            raw: valuation.raw || {}
+          }
+        };
+      } catch (error) {
+        console.error(`Error getting valuation for ${domain.domain}:`, error.message);
+        // Fallback to simple estimation
+        const fallbackValue = estimateValue(domain.domain);
+        return {
+          domain: domain.domain,
+          description: generateDescription(domain.domain),
+          category: categorizeDomain(domain.domain),
+          tld: domain.tld || '.com',
+          estimatedValue: fallbackValue,
+          auctionValue: fallbackValue,
+          marketplaceValue: Math.floor(fallbackValue * (10 + Math.random() * 40)),
+          brokerageValue: Math.floor(fallbackValue * (20 + Math.random() * 80)),
+          availability: domain.available,
+          price: domain.price,
+          score: calculateScore(domain.domain),
+          icon: getCategoryIcon(categorizeDomain(domain.domain)),
+          tags: generateTags(domain.domain),
+          generatedAt: new Date().toISOString(),
+          isAIGenerated: true,
+          customGenerated: true,
+          keywords: keywords,
+          valuation: {
+            domain: domain.domain,
+            estimatedValue: fallbackValue,
+            auctionValue: fallbackValue,
+            marketplaceValue: Math.floor(fallbackValue * (10 + Math.random() * 40)),
+            brokerageValue: Math.floor(fallbackValue * (20 + Math.random() * 80)),
+            confidence: 30,
+            source: 'fallback',
+            breakdown: { score: 30, value: fallbackValue, confidence: 30 },
+            raw: { error: error.message, fallback: true }
+          }
+        };
+      }
+    }));
+    
+    const sortedDomains = domains.sort((a, b) => b.score - a.score).slice(0, parseInt(count));
     
     res.json({
       success: true,
       data: {
-        gems: domains,
+        gems: sortedDomains,
         total: domains.length,
         generatedAt: new Date().toISOString(),
         isAIGenerated: true,
@@ -164,7 +267,9 @@ router.post('/custom', async (req, res) => {
  */
 router.get('/status', async (req, res) => {
   try {
-    const status = await scheduler.getStatus();
+    const { budgetAwareScheduler } = getServices();
+    const status = await budgetAwareScheduler.getStatus();
+    const budgetStatus = await budgetAwareScheduler.getBudgetStatus();
     
     res.json({
       success: true,
@@ -173,7 +278,8 @@ router.get('/status', async (req, res) => {
         lastGeneration: status.lastGeneration,
         domainCount: status.domainCount,
         uptime: process.uptime(),
-        memoryUsage: process.memoryUsage()
+        memoryUsage: process.memoryUsage(),
+        budget: budgetStatus
       }
     });
     
@@ -183,6 +289,50 @@ router.get('/status', async (req, res) => {
       success: false,
       error: 'Failed to get status',
       message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+});
+
+/**
+ * GET /api/ai-gems/budget - Get budget status
+ */
+router.get('/budget', async (req, res) => {
+  try {
+    const { budgetAwareScheduler } = getServices();
+    const budgetStatus = await budgetAwareScheduler.getBudgetStatus();
+    
+    res.json({
+      success: true,
+      data: budgetStatus
+    });
+    
+  } catch (error) {
+    console.error('Error getting budget status:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to get budget status'
+    });
+  }
+});
+
+/**
+ * POST /api/ai-gems/budget/reset - Reset monthly budget
+ */
+router.post('/budget/reset', async (req, res) => {
+  try {
+    const { budgetAwareScheduler } = getServices();
+    await budgetAwareScheduler.resetMonthlyBudget();
+    
+    res.json({
+      success: true,
+      message: 'Monthly budget reset successfully'
+    });
+    
+  } catch (error) {
+    console.error('Error resetting budget:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to reset budget'
     });
   }
 });
@@ -464,9 +614,9 @@ router.get('/test-dynadot', async (req, res) => {
  */
 router.post('/trigger-generation', async (req, res) => {
   try {
-    const { scheduler } = getServices();
+    const { universalScheduler } = getServices();
     console.log('🔄 Manual domain generation triggered');
-    await scheduler.generateFreshBatch();
+    await universalScheduler.generateHourlyBatch();
     res.json({
       success: true,
       message: 'Domain generation triggered successfully'
@@ -476,6 +626,26 @@ router.post('/trigger-generation', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to trigger generation',
+      message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+});
+
+/**
+ * GET /api/ai-gems/redis-health - Check Redis health
+ */
+router.get('/redis-health', async (req, res) => {
+  try {
+    const health = await redisService.healthCheck();
+    res.json({
+      success: true,
+      data: health
+    });
+  } catch (error) {
+    console.error('Error checking Redis health:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to check Redis health',
       message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
   }

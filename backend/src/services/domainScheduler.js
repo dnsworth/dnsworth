@@ -5,7 +5,7 @@ import EnhancedDynadotService from './enhancedAvailabilityService.js';
 import DomainValuationEngine from './valuationEngine.js';
 import HumbleworthClient from './humbleworthClient.js';
 import TrendService from './trendService.js';
-import Redis from 'redis';
+import redisService from './redisService.js';
 
 // Ensure environment variables are loaded
 dotenv.config();
@@ -17,39 +17,7 @@ class DomainScheduler {
     this.humbleworth = new HumbleworthClient();
     this.valuationEngine = new DomainValuationEngine(this.humbleworth);
     this.trendService = new TrendService();
-    
-    // Redis client for storing generated domains - handle invalid URLs gracefully
-    try {
-      const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-      
-      // Validate Redis URL format
-      if (redisUrl.includes('redis-cli') || redisUrl.includes(' ')) {
-        console.warn('⚠️ Invalid Redis URL detected, using localhost fallback');
-        this.redis = Redis.createClient({
-          url: 'redis://localhost:6379'
-        });
-      } else {
-        this.redis = Redis.createClient({
-          url: redisUrl
-        });
-      }
-      
-      this.redis.on('error', (err) => {
-        console.error('Redis Client Error:', err);
-      });
-      
-      this.redis.connect();
-    } catch (error) {
-      console.warn('⚠️ Redis connection failed, using in-memory fallback:', error.message);
-      // Create a mock Redis client for fallback
-      this.redis = {
-        get: () => Promise.resolve(null),
-        set: () => Promise.resolve('OK'),
-        del: () => Promise.resolve(1),
-        connect: () => Promise.resolve(),
-        disconnect: () => Promise.resolve()
-      };
-    }
+    this.redis = redisService;
     
     this.isRunning = false;
     this.lastGeneration = null;
@@ -103,18 +71,24 @@ class DomainScheduler {
         if (availableDomains.length > 0) {
           domainsToProcess = availableDomains;
         } else {
-          console.log('⚠️ No available domains found, using generated domains anyway');
+          console.log('⚠️ No available domains found - returning empty result');
+          domainsToProcess = [];
         }
       } catch (error) {
-        console.log('⚠️ Availability check failed, using generated domains anyway:', error.message);
+        console.log('⚠️ Availability check failed - returning empty result:', error.message);
+        domainsToProcess = [];
       }
       
       // Step 3: Score and rank domains
       const scoredDomains = await this.scoreDomains(domainsToProcess);
       console.log(`✅ Scored ${scoredDomains.length} domains`);
       
-      // Step 4: Store in Redis (always store, even if availability check failed)
-      await this.storeNewBatch(scoredDomains.slice(0, 100)); // Keep top 100
+      // Step 4: Store in Redis (only if we have domains)
+      if (scoredDomains.length > 0) {
+        await this.storeNewBatch(scoredDomains.slice(0, 100)); // Keep top 100
+      } else {
+        console.log('📦 No domains to store - system will show empty state');
+      }
       
       this.lastGeneration = new Date();
       console.log('🎉 Domain generation cycle completed successfully');
@@ -340,16 +314,16 @@ class DomainScheduler {
   async storeNewBatch(domains) {
     try {
       // Clear old available domains
-      await this.redis.del('available_domains');
+      await this.redis.clearDomains('domains:available');
       
       // Store new batch
       if (domains.length > 0) {
-        await this.redis.setEx('available_domains', 3600, JSON.stringify(domains)); // 1 hour cache
+        await this.redis.storeDomains('domains:available', domains, 3600); // 1 hour TTL
         console.log(`💾 Stored ${domains.length} domains in Redis`);
       }
       
       // Update last generation time
-      await this.redis.set('last_generation_time', new Date().toISOString());
+      await this.redis.storeCache('last_generation_time', new Date().toISOString(), 3600);
       
     } catch (error) {
       console.error('Error storing domains in Redis:', error);
@@ -362,14 +336,14 @@ class DomainScheduler {
   async getAvailableDomains(limit = 50) {
     try {
       console.log('🔍 Checking Redis for cached domains...');
-      const cached = await this.redis.get('available_domains');
-      const lastGeneration = await this.redis.get('last_generation_time');
+      const domainData = await this.redis.getDomainData('domains:available');
+      const lastGeneration = await this.redis.getCache('last_generation_time');
       
-      console.log(`🔍 Redis cached value: ${cached ? 'found' : 'not found'}`);
+      console.log(`🔍 Redis cached value: ${domainData ? 'found' : 'not found'}`);
       console.log(`🔍 Last generation time: ${lastGeneration || 'not found'}`);
       
-      if (cached) {
-        const domains = JSON.parse(cached);
+      if (domainData && domainData.domains) {
+        const domains = domainData.domains;
         console.log(`📦 Found ${domains.length} cached domains in Redis`);
         
         if (lastGeneration) {
@@ -530,21 +504,23 @@ class DomainScheduler {
    */
   async getStatus() {
     try {
-      const lastGen = await this.redis.get('last_generation');
+      const lastGen = await this.redis.getCache('last_generation_time');
       const isRunning = this.isRunning;
-      const domainCount = await this.redis.get('available_domains');
+      const domainData = await this.redis.getDomainData('domains:available');
       
       return {
         isRunning,
         lastGeneration: lastGen ? new Date(lastGen) : null,
-        domainCount: domainCount ? JSON.parse(domainCount).length : 0
+        domainCount: domainData ? domainData.domains.length : 0,
+        redisStatus: this.redis.getSystemStatus()
       };
     } catch (error) {
       console.error('Error getting status:', error);
       return {
         isRunning: false,
         lastGeneration: null,
-        domainCount: 0
+        domainCount: 0,
+        redisStatus: this.redis.getSystemStatus()
       };
     }
   }
@@ -564,12 +540,12 @@ class DomainScheduler {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+
   /**
    * Stop the scheduler
    */
   async stop() {
     console.log('🛑 Stopping Domain Scheduler...');
-    await this.redis.quit();
     await this.generator.close();
     await this.dynadot.close();
   }

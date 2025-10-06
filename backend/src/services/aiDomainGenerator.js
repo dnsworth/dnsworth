@@ -1,5 +1,5 @@
 import { OpenAI } from 'openai';
-import Redis from 'redis';
+// import Redis from 'redis'; // DISABLED
 import AdaptiveDomainGenerator from './adaptiveGenerator.js';
 import CategoryDetector from './categoryDetector.js';
 
@@ -24,38 +24,14 @@ class AIDomainGenerator {
     this.adaptiveGenerator = new AdaptiveDomainGenerator(this);
     this.categoryDetector = new CategoryDetector();
     
-    // Redis client for caching - handle invalid URLs gracefully
-    try {
-      const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-      
-      // Validate Redis URL format
-      if (redisUrl.includes('redis-cli') || redisUrl.includes(' ')) {
-        console.warn('⚠️ Invalid Redis URL detected, using localhost fallback');
-        this.redis = Redis.createClient({
-          url: 'redis://localhost:6379'
-        });
-      } else {
-        this.redis = Redis.createClient({
-          url: redisUrl
-        });
-      }
-      
-      this.redis.on('error', (err) => {
-        console.error('Redis Client Error:', err);
-      });
-      
-      this.redis.connect();
-    } catch (error) {
-      console.warn('⚠️ Redis connection failed, using in-memory fallback:', error.message);
-      // Create a mock Redis client for fallback
-      this.redis = {
-        get: () => Promise.resolve(null),
-        set: () => Promise.resolve('OK'),
-        del: () => Promise.resolve(1),
-        connect: () => Promise.resolve(),
-        disconnect: () => Promise.resolve()
-      };
-    }
+    // Redis DISABLED - using in-memory fallback
+    this.redis = {
+      get: () => Promise.resolve(null),
+      set: () => Promise.resolve('OK'),
+      del: () => Promise.resolve(1),
+      connect: () => Promise.resolve(),
+      disconnect: () => Promise.resolve()
+    };
     
     this.previouslyGenerated = new Set();
     this.trends = [
@@ -68,7 +44,7 @@ class AIDomainGenerator {
     // Simple in-memory rate limiter (sliding 1h window)
     this.requestTimestamps = [];
     this.maxRequestsPerHour = parseInt(process.env.OPENAI_MAX_REQUESTS_PER_HOUR || (process.env.NODE_ENV === 'development' ? '2' : '10'), 10);
-    this.batchSize = parseInt(process.env.OPENAI_BATCH_SIZE || (process.env.NODE_ENV === 'development' ? '10' : '100'), 10);
+    this.batchSize = parseInt(process.env.OPENAI_BATCH_SIZE || (process.env.NODE_ENV === 'development' ? '150' : '150'), 10);
   }
 
   /**
@@ -77,7 +53,7 @@ class AIDomainGenerator {
   async generateDomainsBatch() {
     try {
       if (!this.openai) {
-        throw new Error('❌ OpenAI API key not configured. Please add OPENAI_API_KEY to your .env file');
+        throw new Error('❌ AI service configuration error. Please contact support.');
       }
 
       // Rate limit check
@@ -160,7 +136,7 @@ Examples: stripe, shopify, airbnb, uber, slack, zoom, notion, figma, linear, ver
    */
   async generateFromPrompt(prompt) {
     if (!this.openai) {
-      throw new Error('❌ OpenAI API key not configured. Please add OPENAI_API_KEY to your .env file');
+      throw new Error('❌ AI service configuration error. Please contact support.');
     }
 
     try {
@@ -275,7 +251,7 @@ Examples: stripe, shopify, airbnb, uber, slack, zoom, notion, figma, linear, ver
    */
   async generateWithPrompt(prompt) {
     if (!this.openai) {
-      throw new Error('❌ OpenAI API key not configured. Please add OPENAI_API_KEY to your .env file');
+      throw new Error('❌ AI service configuration error. Please contact support.');
     }
 
     try {

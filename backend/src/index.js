@@ -10,6 +10,7 @@ import gemsRoutes from './routes/gems.js';
 import aiGemsRoutes from './routes/ai-gems.js';
 import registrationsRoutes from './routes/registrations.js';
 import apiManagementRoutes from './routes/api-management.js';
+// import domainComparisonRoutes from './routes/domain-comparison.js';
 import auditLogger from './middleware/auditLogger.js';
 
 // Load environment variables - Fix the path to look in the correct location
@@ -124,7 +125,9 @@ const corsOrigins = process.env.NODE_ENV === 'production'
     ]
   : [
       'http://localhost:3000',
+      'http://localhost:3001',
       'http://127.0.0.1:3000',
+      'http://127.0.0.1:3001',
       'http://localhost:5173',
       'http://127.0.0.1:5173',
       'https://dnsworth.com',
@@ -366,6 +369,12 @@ app.use('/api/registrations', registrationsRoutes);
 // Use API management routes
 app.use('/api/management', apiManagementRoutes);
 
+// Use domain comparison routes (experimental)
+// domain-comparison routes removed (Gem Hunter rollback)
+
+// premium-domains routes removed (experimental rollback)
+
+
 // Single domain valuation endpoint with enhanced security and connection pooling
 app.post('/api/value', async (req, res) => {
   try {
@@ -380,50 +389,23 @@ app.post('/api/value', async (req, res) => {
       });
     }
 
-    // Always use real API - no mock data
-
-    // Production mode: Call HumbleWorth API with connection pooling
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000); // Increased timeout to 12 seconds
-
-    const apiResponse = await fetch(`${process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com'}/api/valuation`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'DNSWorth/2.0.0',
-        'X-Request-ID': req.requestId,
-        'Connection': 'keep-alive'
-      },
-      body: JSON.stringify({ domains: [domain] }),
-      signal: controller.signal,
-      agent: httpAgent, // Use connection pooling
-      timeout: 12000
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!apiResponse.ok) {
-      throw new Error(`HumbleWorth API error: ${apiResponse.status}`);
-    }
-
-    const data = await apiResponse.json();
-
+    // Use optimized HumbleWorth client with fallback mechanisms
+    const HumbleworthClient = (await import('./services/humbleworthClient.js')).default;
+    const humbleworthClient = new HumbleworthClient();
+    const valuation = await humbleworthClient.getValue(domain);
+    
     // Transform response to match expected format
-    // HumbleWorth API returns {"valuations": [{"auction": X, "brokerage": Y, "domain": Z, "marketplace": W}]}
-    const result = data.valuations && data.valuations.length > 0 ? data.valuations[0] : {};
-    
-    // Calculate estimated value as average of auction, marketplace, and brokerage
-    const estimatedValue = Math.round((result.auction + result.marketplace + result.brokerage) / 3);
-    
     const transformedData = {
       domain: domain,
       valuation: {
-        estimatedValue: estimatedValue,
-        auctionValue: result.auction || 0,
-        marketplaceValue: result.marketplace || 0,
-        brokerageValue: result.brokerage || 0
+        estimatedValue: valuation.value_usd || valuation.estimatedValue || 0,
+        auctionValue: valuation.auctionValue || 0,
+        marketplaceValue: valuation.marketplaceValue || 0,
+        brokerageValue: valuation.brokerageValue || 0
       },
-      confidence: 85, // Default confidence since API doesn't provide it
+      confidence: valuation.confidence || 50,
+      source: valuation.source || 'fallback',
+      isRealAPI: valuation.source === 'humbleworth' || valuation.source === 'backup_endpoint',
       timestamp: new Date().toISOString(),
       requestId: req.requestId
     };

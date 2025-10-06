@@ -103,7 +103,7 @@ class MultiSourceAvailability {
     try {
       const apiKey = process.env.DYNADOT_API_KEY;
       if (!apiKey || apiKey === 'your_dynadot_api_key_here') {
-        throw new Error('Dynadot API key not configured');
+        throw new Error('API configuration error. Please contact support.');
       }
 
       const response = await axios.get(`https://api.dynadot.com/restful/v1/domains/${domain}/search`, {

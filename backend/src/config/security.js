@@ -11,7 +11,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 export const SECURITY_CONFIG = {
   // Rate limiting
   RATE_LIMIT_WINDOW_MS: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
-  RATE_LIMIT_MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || (isProduction ? 50 : 500),
+  RATE_LIMIT_MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || (isProduction ? 200 : 500),
   
   // CORS origins - use environment variables
   ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS?.split(',') || [
