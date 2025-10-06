@@ -41,7 +41,7 @@ class RedisManager {
       this.connectionAttempts++;
       console.log(`🔄 Attempting Redis connection (${this.connectionAttempts}/${this.maxRetries})...`);
 
-      // Configure TLS/SNI for Redis Cloud when using rediss://
+      // Configure TLS/SNI for Redis Cloud; enforce even if URL scheme is wrong
       let tlsOptions = undefined;
       try {
         const urlObj = new URL(redisUrl);
@@ -54,10 +54,12 @@ class RedisManager {
           port,
           isTLS
         };
-        if (isTLS) {
+        const isRedisCloudHost = /redis-cloud\.com$/.test(host) || /redns\.redis-cloud\.com$/.test(host);
+        if (isTLS || isRedisCloudHost) {
           // Many managed Redis providers require SNI servername; some environments need relaxed CA
           tlsOptions = {
             servername: host,
+            minVersion: 'TLSv1.2',
             rejectUnauthorized: false
           };
         }
