@@ -403,6 +403,24 @@ app.post('/api/gems/refresh', async (req, res) => {
   }
 });
 
+// Secure admin endpoint to inspect Redis status (temporary, guarded)
+app.post('/api/admin/redis-status', async (req, res) => {
+  try {
+    const providedSecret = req.get('x-cron-secret') || (req.get('authorization') || '').replace(/^Bearer\s+/i, '') || req.query.secret;
+    if (!process.env.CRON_SECRET || providedSecret !== process.env.CRON_SECRET) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    const { default: redisManager } = await import('./services/redisManager.js');
+    const status = redisManager.getStatus();
+
+    return res.json({ success: true, data: { redis: status } });
+  } catch (error) {
+    console.error('Admin redis status failed:', error.message);
+    return res.status(500).json({ success: false, error: 'Status check failed' });
+  }
+});
+
 // Single domain valuation endpoint with enhanced security and connection pooling
 app.post('/api/value', async (req, res) => {
   try {
