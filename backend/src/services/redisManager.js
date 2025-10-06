@@ -13,6 +13,7 @@ class RedisManager {
     this.fallbackMode = false;
     this.memoryStore = new Map();
     this.lastError = null; // capture last connection/command error for diagnostics
+    this.connectionInfo = null; // parsed info for debugging (no secrets)
   }
 
   async connect() {
@@ -46,6 +47,13 @@ class RedisManager {
         const urlObj = new URL(redisUrl);
         const isTLS = urlObj.protocol === 'rediss:';
         const host = urlObj.hostname;
+        const port = Number(urlObj.port || (isTLS ? 6380 : 6379));
+        this.connectionInfo = {
+          protocol: urlObj.protocol.replace(':', ''),
+          host,
+          port,
+          isTLS
+        };
         if (isTLS) {
           // Many managed Redis providers require SNI servername; some environments need relaxed CA
           tlsOptions = {
@@ -221,7 +229,8 @@ class RedisManager {
       fallbackMode: this.fallbackMode,
       memoryStoreSize: this.memoryStore.size,
       connectionAttempts: this.connectionAttempts,
-      lastError: this.lastError
+      lastError: this.lastError,
+      connectionInfo: this.connectionInfo
     };
   }
 
