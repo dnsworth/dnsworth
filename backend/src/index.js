@@ -464,7 +464,7 @@ app.post('/api/bulk-value', async (req, res) => {
     // Always use real API - no mock data
 
     // Process domains in batches with enhanced security and connection pooling
-    const batchSize = process.env.NODE_ENV === 'production' ? 3 : 5; // Smaller batches for production
+    const batchSize = 1; // Process one domain at a time for maximum reliability
     const results = [];
     const errors = [];
 
@@ -474,48 +474,23 @@ app.post('/api/bulk-value', async (req, res) => {
       try {
         const batchPromises = batch.map(async (domain) => {
           try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000); // Reduced timeout to 8 seconds for production
-
-            const apiResponse = await fetch(`${process.env.HUMBLEWORTH_API_URL || 'https://valuation.humbleworth.com'}/api/valuation`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'User-Agent': 'DNSWorth/2.0.0',
-                'X-Request-ID': req.requestId,
-                'Connection': 'keep-alive'
-              },
-              body: JSON.stringify({ domains: [domain] }),
-              signal: controller.signal,
-              agent: httpAgent, // Use connection pooling
-              timeout: 8000
-            });
-
-            clearTimeout(timeoutId);
-
-            if (!apiResponse.ok) {
-              throw new Error(`API error: ${apiResponse.status}`);
-            }
-
-            const data = await apiResponse.json();
-
-            // HumbleWorth API returns {"valuations": [{"auction": X, "brokerage": Y, "domain": Z, "marketplace": W}]}
-            const result = data.valuations && data.valuations.length > 0 ? data.valuations[0] : {};
+            // Use the same HumbleworthClient that single valuation uses
+            const HumbleworthClient = (await import('./services/humbleworthClient.js')).default;
+            const humbleworthClient = new HumbleworthClient();
+            const valuation = await humbleworthClient.getValue(domain);
             
-            // Calculate estimated value as average of auction, marketplace, and brokerage
-            const estimatedValue = Math.round((result.auction + result.marketplace + result.brokerage) / 3);
-
             return {
               domain,
               valuation: {
-                estimatedValue: estimatedValue,
-                auctionValue: result.auction || 0,
-                marketplaceValue: result.marketplace || 0,
-                brokerageValue: result.brokerage || 0
+                estimatedValue: valuation.value_usd || valuation.estimatedValue || 0,
+                auctionValue: valuation.auctionValue || 0,
+                marketplaceValue: valuation.marketplaceValue || 0,
+                brokerageValue: valuation.brokerageValue || 0
               },
-              confidence: 85 // Default confidence since API doesn't provide it
+              confidence: valuation.confidence || 50
             };
           } catch (error) {
+            console.error(`❌ Bulk valuation failed for ${domain}:`, error.message);
             errors.push({
               domain,
               error: 'Valuation failed' // Generic error message for security

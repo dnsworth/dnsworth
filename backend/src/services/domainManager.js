@@ -124,6 +124,7 @@ class DomainManager {
       return false;
     }
   }
+
 }
 
 // Singleton instance

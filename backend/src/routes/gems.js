@@ -29,21 +29,6 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Error getting domain gems:', error);
-    
-    // Fallback to static domains for production
-    if (process.env.NODE_ENV === 'production') {
-      const fallbackDomains = generateFallbackDomains(10);
-      return res.json({
-        success: true,
-        data: {
-          gems: fallbackDomains,
-          total: fallbackDomains.length,
-          count: { total: fallbackDomains.length, display: fallbackDomains.length, maxDisplay: 30 },
-          generatedAt: new Date().toISOString()
-        }
-      });
-    }
-    
     res.status(500).json({
       success: false,
       error: 'Failed to get domain gems',
@@ -253,50 +238,5 @@ router.post('/refresh', async (req, res) => {
   }
 });
 
-// Fallback domain generation for production
-function generateFallbackDomains(count = 10) {
-  const fallbackDomains = [
-    'techflow', 'datawise', 'cloudbase', 'appcore', 'digitech',
-    'shopify', 'storemax', 'buymart', 'sellpro', 'commerce',
-    'healthio', 'medtech', 'wellness', 'fitlife', 'careplus',
-    'eduwise', 'learnhub', 'schoolio', 'academy', 'knowledge',
-    'finance', 'moneywise', 'banktech', 'investpro', 'wealth',
-    'bizcore', 'venture', 'startup', 'growth', 'success'
-  ];
-  
-  return fallbackDomains.slice(0, count).map((domain, index) => ({
-    domain,
-    category: categorizeDomain(domain),
-    estimatedValue: Math.floor(Math.random() * 5000) + 1000,
-    auctionValue: Math.floor(Math.random() * 2000) + 500,
-    marketplaceValue: Math.floor(Math.random() * 8000) + 2000,
-    brokerageValue: Math.floor(Math.random() * 12000) + 3000,
-    confidence: 75,
-    source: 'fallback',
-    available: true,
-    price: 'Available',
-    lastUpdated: new Date().toISOString(),
-    id: `fallback_${index}`,
-    status: 'available'
-  }));
-}
-
-function categorizeDomain(domain) {
-  const domainLower = domain.toLowerCase();
-  
-  if (domainLower.includes('ai') || domainLower.includes('tech') || domainLower.includes('data')) {
-    return 'Technology';
-  } else if (domainLower.includes('fin') || domainLower.includes('pay') || domainLower.includes('money')) {
-    return 'Finance';
-  } else if (domainLower.includes('health') || domainLower.includes('med') || domainLower.includes('wellness')) {
-    return 'Healthcare';
-  } else if (domainLower.includes('edu') || domainLower.includes('learn') || domainLower.includes('teach')) {
-    return 'Education';
-  } else if (domainLower.includes('shop') || domainLower.includes('market') || domainLower.includes('commerce')) {
-    return 'E-commerce';
-  } else {
-    return 'Business';
-  }
-}
 
 export default router;
