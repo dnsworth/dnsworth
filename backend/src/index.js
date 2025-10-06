@@ -375,6 +375,34 @@ app.use('/api/management', apiManagementRoutes);
 // premium-domains routes removed (experimental rollback)
 
 
+// Secure admin endpoint to trigger gems refresh (guarded by CRON_SECRET)
+app.post('/api/gems/refresh', async (req, res) => {
+  try {
+    const providedSecret = req.get('x-cron-secret') || (req.get('authorization') || '').replace(/^Bearer\s+/i, '') || req.query.secret;
+    if (!process.env.CRON_SECRET || providedSecret !== process.env.CRON_SECRET) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    // Lazy import to avoid increasing cold start for regular requests
+    const { default: UniversalScheduler } = await import('./services/universalScheduler.js');
+    const scheduler = new UniversalScheduler();
+
+    const startedAt = Date.now();
+    const domains = await scheduler.generateHourlyBatch();
+    const durationMs = Date.now() - startedAt;
+
+    return res.json({
+      success: true,
+      generated: Array.isArray(domains) ? domains.length : 0,
+      durationMs,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Admin gems refresh failed:', error.message);
+    return res.status(500).json({ success: false, error: 'Refresh failed' });
+  }
+});
+
 // Single domain valuation endpoint with enhanced security and connection pooling
 app.post('/api/value', async (req, res) => {
   try {
