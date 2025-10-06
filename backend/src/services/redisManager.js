@@ -41,65 +41,78 @@ class RedisManager {
       this.connectionAttempts++;
       console.log(`🔄 Attempting Redis connection (${this.connectionAttempts}/${this.maxRetries})...`);
 
-      // Configure TLS/SNI for Redis Cloud; enforce even if URL scheme is wrong
-      let tlsOptions = undefined;
+      // Parse REDIS_URL explicitly and build options
+      let clientOptions;
       try {
         const urlObj = new URL(redisUrl);
-        const isTLS = urlObj.protocol === 'rediss:';
+        const protocol = urlObj.protocol.replace(':', '');
         const host = urlObj.hostname;
-        const port = Number(urlObj.port || (isTLS ? 6380 : 6379));
+        const port = Number(urlObj.port || (protocol === 'rediss' ? 6380 : 6379));
+        const username = urlObj.username || 'default';
+        const password = urlObj.password || undefined;
+        const isRedisCloudHost = /redis-cloud\.com$/.test(host) || /redns\.redis-cloud\.com$/.test(host);
+        const useTLS = protocol === 'rediss' || isRedisCloudHost;
+
         this.connectionInfo = {
-          protocol: urlObj.protocol.replace(':', ''),
+          protocol,
           host,
           port,
-          isTLS
+          isTLS: useTLS
         };
-        const isRedisCloudHost = /redis-cloud\.com$/.test(host) || /redns\.redis-cloud\.com$/.test(host);
-        if (isTLS || isRedisCloudHost) {
-          // Many managed Redis providers require SNI servername; some environments need relaxed CA
-          tlsOptions = {
-            servername: host,
-            minVersion: 'TLSv1.2',
-            rejectUnauthorized: false
-          };
-        }
+
+        clientOptions = {
+          port,
+          host,
+          username,
+          password,
+          tls: useTLS ? { servername: host, minVersion: 'TLSv1.2', rejectUnauthorized: false } : undefined,
+          retryDelayOnFailover: 100,
+          maxRetriesPerRequest: 1,
+          lazyConnect: false,
+          keepAlive: 30000,
+          connectTimeout: 5000,
+          commandTimeout: 3000,
+          retryDelayOnClusterDown: 1000,
+          enableOfflineQueue: false,
+          maxLoadingTimeout: 3000,
+          maxMemoryPolicy: 'allkeys-lru',
+          onError: (err) => {
+            console.error('❌ Redis connection error:', err.message);
+            this.isConnected = false;
+            this.lastError = err.message;
+          },
+          onConnect: () => {
+            console.log('✅ Redis connected successfully');
+            this.isConnected = true;
+            this.connectionAttempts = 0;
+            this.fallbackMode = false;
+            this.lastError = null;
+          },
+          onReconnecting: () => {
+            console.log('🔄 Redis reconnecting...');
+          },
+          onClose: () => {
+            console.log('🔌 Redis connection closed');
+            this.isConnected = false;
+          }
+        };
       } catch (_) {
-        // ignore URL parse issues; fall back to ioredis defaults
+        // Fallback to URL string with basic TLS options if parsing fails
+        clientOptions = {
+          retryDelayOnFailover: 100,
+          maxRetriesPerRequest: 1,
+          lazyConnect: false,
+          keepAlive: 30000,
+          connectTimeout: 5000,
+          commandTimeout: 3000,
+          retryDelayOnClusterDown: 1000,
+          enableOfflineQueue: false,
+          maxLoadingTimeout: 3000,
+          maxMemoryPolicy: 'allkeys-lru'
+        };
       }
 
-      this.redis = new Redis(redisUrl, {
-        retryDelayOnFailover: 100,
-        maxRetriesPerRequest: 1, // Reduce retries to prevent connection spam
-        lazyConnect: false, // Connect immediately
-        keepAlive: 30000,
-        connectTimeout: 5000, // Shorter timeout
-        commandTimeout: 3000, // Shorter timeout
-        retryDelayOnClusterDown: 1000,
-        enableOfflineQueue: false,
-        maxLoadingTimeout: 3000,
-        maxMemoryPolicy: 'allkeys-lru', // Memory management
-        tls: tlsOptions,
-        onError: (err) => {
-          console.error('❌ Redis connection error:', err.message);
-          this.isConnected = false;
-          this.lastError = err.message;
-          // Don't retry on every error to prevent connection spam
-        },
-        onConnect: () => {
-          console.log('✅ Redis connected successfully');
-          this.isConnected = true;
-          this.connectionAttempts = 0;
-          this.fallbackMode = false;
-          this.lastError = null;
-        },
-        onReconnecting: () => {
-          console.log('🔄 Redis reconnecting...');
-        },
-        onClose: () => {
-          console.log('🔌 Redis connection closed');
-          this.isConnected = false;
-        }
-      });
+      this.redis = new Redis(clientOptions.port ? clientOptions : redisUrl, clientOptions.port ? undefined : clientOptions);
 
       // Wait for connection with timeout
       await Promise.race([
