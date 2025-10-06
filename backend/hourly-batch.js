@@ -37,16 +37,15 @@ for (const envPath of envPaths) {
   }
 }
 
+// In production on Render, env vars are injected by the platform; allow running without a local .env
 if (!envLoaded) {
-  console.error('❌ No .env file found. Please create one with required environment variables.');
-  process.exit(1);
+  console.log('ℹ️ No local .env file found. Proceeding with process.env from the environment.');
 }
 
 // Validate required environment variables
 const requiredEnvVars = [
   'OPENAI_API_KEY',
-  'DYNADOT_API_KEY',
-  'REDIS_URL'
+  'DYNADOT_API_KEY'
 ];
 
 const optionalEnvVars = [
@@ -58,6 +57,11 @@ const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
 if (missingVars.length > 0) {
   console.error(`❌ Missing required environment variables: ${missingVars.join(', ')}`);
   process.exit(1);
+}
+
+// Strongly recommend Redis for persistence in production
+if (!process.env.REDIS_URL) {
+  console.warn('⚠️ REDIS_URL not set. Using in-memory fallback (non-persistent). Configure REDIS_URL in production.');
 }
 
 // Check optional variables
@@ -98,7 +102,7 @@ class HourlyBatchProcessor {
         console.log(`📊 Category distribution:`, categories);
         
       } else {
-        console.log('⚠️ No domains generated - using fallback domains');
+        console.log('⚠️ No domains generated in this run.');
       }
 
       const duration = Date.now() - this.startTime;
