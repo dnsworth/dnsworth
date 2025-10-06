@@ -18,16 +18,16 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
         setTimeout(() => navigate('/bulk-valuation'), 300);
       }
     }},
-    { name: 'About Us', action: () => navigate('/about') },
-    { name: 'Blog', action: () => navigate('/blog') },
-    { name: 'FAQ', action: () => navigate('/faq') },
+    { name: 'About Us', action: () => navigate('/page/about') },
+    { name: 'Blog', action: () => navigate('/page/blog') },
+    { name: 'FAQ', action: () => navigate('/page/faq') },
     { name: 'Features', action: () => {
       const whyChooseSection = document.getElementById('why-choose-section');
       if (whyChooseSection) {
         whyChooseSection.scrollIntoView({ behavior: 'smooth' });
       }
     }},
-    { name: 'Support', action: () => navigate('/support') }
+    { name: 'Support', action: () => navigate('/page/contact') }
   ];
 
   const socialLinks = [
@@ -83,7 +83,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
             {/* Affiliate Disclosure Link */}
             <div className="mt-4">
               <button
-                onClick={() => navigate('/affiliate-disclosure')}
+                onClick={() => navigate('/page/legal/affiliate-disclosure')}
                 className="text-gray-400 hover:text-primary transition-colors duration-200 text-sm underline"
               >
                 Affiliate Disclosure
@@ -131,7 +131,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
             <ul className="space-y-2 md:space-y-3">
               <li>
                 <button
-                  onClick={() => navigate('/about')}
+                  onClick={() => navigate('/page/about')}
                   className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
                 >
                   About
@@ -139,7 +139,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
               </li>
               <li>
                 <button
-                  onClick={() => navigate('/blog')}
+                  onClick={() => navigate('/page/blog')}
                   className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
                 >
                   Blog
@@ -147,7 +147,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
               </li>
               <li>
                 <button
-                  onClick={() => navigate('/faq')}
+                  onClick={() => navigate('/page/faq')}
                   className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
                 >
                   FAQ
@@ -155,7 +155,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
               </li>
               <li>
                 <button
-                  onClick={() => navigate('/support')}
+                  onClick={() => navigate('/page/contact')}
                   className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
                 >
                   Contact
@@ -193,19 +193,19 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
             </p>
             <div className="flex gap-3 md:gap-6 mt-4 md:mt-0">
               <button
-                onClick={() => navigate('/privacy-policy')}
+                onClick={() => navigate('/page/legal/privacy-policy')}
                 className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm"
               >
                 Privacy Policy
               </button>
               <button
-                onClick={() => navigate('/terms-of-service')}
+                onClick={() => navigate('/page/legal/terms-of-service')}
                 className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm"
               >
                 Terms of Service
               </button>
               <button
-                onClick={() => navigate('/cookie-policy')}
+                onClick={() => navigate('/page/legal/cookie-policy')}
                 className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm"
               >
                 Cookie Policy

@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { renderSecureHTML } from '../utils/security';
 
-const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
+const BlogPost = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -1104,12 +1104,12 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
   if (!post) {
     return (
       <div className="min-h-screen bg-white">
-        <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+        <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
         <div className="container mx-auto px-6 py-20 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Blog Post Not Found</h1>
           <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
           <button
-            onClick={() => navigate('/blog')}
+            onClick={() => navigate('/page/blog')}
             className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-semibold"
           >
             Back to Blog
@@ -1130,15 +1130,15 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href={`https://dnsworth.com/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://dnsworth.com/page/blog/${post.slug}`} />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="article" />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
-        <meta property="og:url" content={`https://dnsworth.com/blog/${post.slug}`} />
+        <meta property="og:url" content={`https://dnsworth.com/page/blog/${post.slug}`} />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content={`https://dnsworth.com/blog/${post.slug}-og-image.jpg`} />
+        <meta property="og:image" content={`https://dnsworth.com/page/blog/${post.slug}-og-image.jpg`} />
         <meta property="article:published_time" content={post.date} />
         <meta property="article:author" content={post.author} />
         <meta property="article:section" content={post.category} />
@@ -1147,7 +1147,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.excerpt} />
-        <meta name="twitter:image" content={`https://dnsworth.com/blog/${post.slug}-twitter-image.jpg`} />
+        <meta name="twitter:image" content={`https://dnsworth.com/page/blog/${post.slug}-twitter-image.jpg`} />
         
         {/* JSON-LD Structured Data for Article */}
         <script type="application/ld+json">
@@ -1156,7 +1156,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
             "@type": "BlogPosting",
             "headline": post.title,
             "description": post.excerpt,
-            "image": `https://dnsworth.com/blog/${post.slug}-og-image.jpg`,
+            "image": `https://dnsworth.com/page/blog/${post.slug}-og-image.jpg`,
             "author": {
               "@type": "Organization",
               "name": post.author
@@ -1170,7 +1170,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
             "dateModified": post.date,
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://dnsworth.com/blog/${post.slug}`
+              "@id": `https://dnsworth.com/page/blog/${post.slug}`
             },
             "articleSection": post.category,
             "keywords": post.keywords || ['domain valuation', 'domain investing', 'domain appraisal']
@@ -1191,13 +1191,13 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Blog",
-                "item": "https://dnsworth.com/blog"
+                "item": "https://dnsworth.com/page/blog"
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": post.title,
-                "item": `https://dnsworth.com/blog/${slug}`
+                "item": `https://dnsworth.com/page/blog/${slug}`
               }
             ]
           })}
@@ -1211,7 +1211,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome }) => {
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           {/* Back to Blog Button */}
           <motion.button
-            onClick={() => navigate('/blog')}
+            onClick={() => navigate('/page/blog')}
             className="flex items-center gap-2 text-black hover:text-gray-700 mb-6 md:mb-8 transition-colors duration-200 font-semibold text-sm md:text-base"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}

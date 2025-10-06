@@ -53,16 +53,8 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
           <p className="text-background/90 text-sm md:text-lg">Domain Valuation Results</p>
         </div>
 
-        {/* Main Valuation */}
-        <div className="p-3 md:p-8">
-          <div className="text-center mb-4 md:mb-8">
-            <div className="text-2xl md:text-6xl font-bold text-gradient mb-1 md:mb-4">
-              {formatCurrency(valuation?.estimatedValue)}
-            </div>
-            <p className="text-text-muted text-xs md:text-xl">Estimated Market Value</p>
-          </div>
-
           {/* Valuation Breakdown */}
+          <div className="p-3 md:p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 mb-4 md:mb-8">
             <div className="bg-surface border border-gray-700 rounded-lg md:rounded-xl p-3 md:p-6 text-center hover:border-primary transition-all duration-300">
               <div className="text-sm md:text-2xl font-bold text-primary mb-1 md:mb-3">
@@ -152,10 +144,13 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
                   Domain
                 </th>
                 <th className="px-8 py-4 text-left text-sm font-bold text-secondary uppercase tracking-wider">
-                  Estimated Value
+                  Auction
                 </th>
                 <th className="px-8 py-4 text-left text-sm font-bold text-accent uppercase tracking-wider">
-                  Confidence
+                  Marketplace
+                </th>
+                <th className="px-8 py-4 text-left text-sm font-bold text-primary uppercase tracking-wider">
+                  Brokerage
                 </th>
               </tr>
             </thead>
@@ -166,10 +161,13 @@ const ValuationResults = ({ results, onNewSearch, loading }) => {
                     {item.domain}
                   </td>
                   <td className="px-8 py-4 whitespace-nowrap text-sm text-primary font-semibold">
-                    {formatCurrency(item.valuation?.estimatedValue)}
+                    {formatCurrency(item.valuation?.auctionValue)}
                   </td>
-                  <td className="px-8 py-4 whitespace-nowrap text-sm text-secondary">
-                    {item.confidence || 'N/A'}%
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-secondary font-semibold">
+                    {formatCurrency(item.valuation?.marketplaceValue)}
+                  </td>
+                  <td className="px-8 py-4 whitespace-nowrap text-sm text-accent font-semibold">
+                    {formatCurrency(item.valuation?.brokerageValue)}
                   </td>
                 </tr>
               ))}

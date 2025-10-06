@@ -13,7 +13,6 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const [lastUpdated, setLastUpdated] = useState(null);
   const [availabilityCount, setAvailabilityCount] = useState(0);
-  const [registrationCount, setRegistrationCount] = useState(76);
 
   // Debug: Log component state (removed to reduce console noise)
 
@@ -40,33 +39,13 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Load domain gems and registration count on component mount
+  // Load domain gems on component mount
   useEffect(() => {
     loadDomainGems();
-    loadRegistrationCount();
   }, []);
 
   // Removed automatic refresh interval to prevent loading screen flash
   // Domains are now refreshed only when user clicks refresh button or on page load
-
-  // Load registration count
-  const loadRegistrationCount = async () => {
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com');
-      const response = await fetch(`${apiUrl}/api/registrations/count`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.count !== undefined) {
-          setRegistrationCount(data.count);
-        }
-      }
-    } catch (error) {
-      console.error('Error loading registration count:', error);
-      // Set fallback count to avoid showing 0
-      setRegistrationCount(76);
-    }
-  };
 
   // Removed duplicate interval to prevent rate limiting
 
@@ -123,7 +102,7 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
       });
 
       const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : 'https://dnsworth.onrender.com');
-      const fullUrl = `${apiUrl}/api/ai-gems?${params}`;
+      const fullUrl = `${apiUrl}/api/gems?${params}`;
       
       // Debug logging removed for production
 
@@ -175,6 +154,9 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
           category: 'Technology',
           tld: '.com',
           estimatedValue: 1250,
+          auctionValue: 1250,
+          marketplaceValue: 4500,
+          brokerageValue: 8900,
           availability: true,
           tags: []
         },
@@ -185,6 +167,9 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
           category: 'Environment',
           tld: '.com',
           estimatedValue: 890,
+          auctionValue: 890,
+          marketplaceValue: 3200,
+          brokerageValue: 6500,
           availability: true,
           tags: []
         },
@@ -195,6 +180,9 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
           category: 'Finance',
           tld: '.com',
           estimatedValue: 2100,
+          auctionValue: 2100,
+          marketplaceValue: 7800,
+          brokerageValue: 15200,
           availability: true,
           tags: []
         }
@@ -310,13 +298,10 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gradient mb-2 sm:mb-3 md:mb-4">
-              💎 Domain Gems
+              Domain Gems
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-3 sm:mb-4 md:mb-6">
-              Join <span className="font-semibold text-green-400">{registrationCount || 76}</span> developers and entrepreneurs who found their perfect domain through our platform in the last 24 hours. — Adee
-            </p>
             <p className="text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4">
-              When you register through my links, you support ongoing development of our AI domain tools. <a href="/affiliate-disclosure" className="text-blue-400 hover:text-blue-300 underline">Learn more</a>
+              By registering through our links, you help support the continued development of our AI domain tools. <a href="/page/legal/affiliate-disclosure" className="text-blue-400 hover:text-blue-300 underline">Learn more</a>
             </p>
           </div>
         </div>
@@ -428,7 +413,7 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
                               </div>
                               <div className="flex-1">
                                 <h3 className="text-sm sm:text-base font-bold text-gray-900 group-hover:text-purple-600 transition-colors leading-tight">
-                                  {gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com
+                                  {gem.domain.includes('.com') ? gem.domain : `${gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com`}
                                 </h3>
                                 <div className="flex flex-row items-center gap-2 mt-1">
                                   <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-medium w-fit">
@@ -465,7 +450,7 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
                           <div className="mt-auto pt-4 border-t-2 border-gray-200 bg-gray-50 -mx-6 px-6 py-3">
                             <div className="flex items-center justify-between">
                               <div className="text-sm font-medium text-gray-600">EST. VALUE</div>
-                              <div className="text-xl font-bold text-green-600">${gem.estimatedValue.toLocaleString()}</div>
+                              <div className="text-xl font-bold text-green-600">${(gem.auctionValue || gem.estimatedValue).toLocaleString()}</div>
                             </div>
                           </div>
                         </div>
@@ -483,7 +468,7 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
                               <DiamondIcon className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 flex-shrink-0" />
                               <div className="flex-1 min-w-0">
                                 <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors truncate">
-                                  {gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com
+                                  {gem.domain.includes('.com') ? gem.domain : `${gem.domain.charAt(0).toUpperCase() + gem.domain.slice(1)}.com`}
                                 </h3>
                               </div>
                             </div>
@@ -520,7 +505,7 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
                             </p>
                             <div className="text-right flex-shrink-0">
                               <div className="text-xs text-gray-500">EST. VALUE</div>
-                              <div className="text-lg sm:text-xl font-bold text-green-600">${gem.estimatedValue.toLocaleString()}</div>
+                              <div className="text-lg sm:text-xl font-bold text-green-600">${(gem.auctionValue || gem.estimatedValue).toLocaleString()}</div>
                             </div>
                           </div>
                         </div>

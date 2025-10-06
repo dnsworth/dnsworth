@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const Support = ({ onNavigateToBulk, onNavigateHome }) => {
+const Support = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Force scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,21 +26,21 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://dnsworth.com/support" />
+        <link rel="canonical" href="https://dnsworth.com/page/contact" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Premium Support - DNSWorth Expert Customer Service" />
         <meta property="og:description" content="Get premium support from DNSWorth's expert team for personalized domain valuation assistance." />
-        <meta property="og:url" content="https://dnsworth.com/support" />
+        <meta property="og:url" content="https://dnsworth.com/page/contact" />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content="https://dnsworth.com/support-og-image.jpg" />
+        <meta property="og:image" content="https://dnsworth.com/page/contact-og-image.jpg" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="DNSWorth Premium Support - Expert Service" />
         <meta name="twitter:description" content="Get premium support from DNSWorth's expert team." />
-        <meta name="twitter:image" content="https://dnsworth.com/support-twitter-image.jpg" />
+        <meta name="twitter:image" content="https://dnsworth.com/page/contact-twitter-image.jpg" />
         
         {/* JSON-LD Structured Data for Contact Page */}
         <script type="application/ld+json">
@@ -49,7 +49,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
             "@type": "ContactPage",
             "name": "DNSWorth Premium Support",
             "description": "Get premium support from DNSWorth's expert team",
-            "url": "https://dnsworth.com/support",
+            "url": "https://dnsworth.com/page/contact",
             "mainEntity": {
               "@type": "Organization",
               "name": "DNSWorth",
@@ -77,13 +77,13 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Support",
-                "item": "https://dnsworth.com/support"
+                "item": "https://dnsworth.com/page/contact"
               }
             ]
           })}
         </script>
       </Helmet>
-      <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
+      <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
       
       {/* Hero Section - Made Full Height */}
       <section className="flex-1 flex items-center justify-center py-32 bg-gradient-to-br from-background via-surface to-background relative overflow-hidden">
@@ -124,7 +124,7 @@ const Support = ({ onNavigateToBulk, onNavigateHome }) => {
               </a>
               
               <button 
-                onClick={() => window.location.href = '/faq'}
+                onClick={() => window.location.href = '/page/faq'}
                 className="group bg-surface hover:bg-gray-800 text-text font-semibold px-6 md:px-10 py-3 md:py-5 rounded-xl md:rounded-2xl transition-all duration-300 border border-primary/20 hover:border-primary/40 flex items-center gap-2 md:gap-3 text-sm md:text-lg"
               >
                 <svg className="w-5 h-5 md:w-7 md:h-7 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

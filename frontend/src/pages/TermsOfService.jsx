@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
-const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
+const TermsOfService = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Force scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,21 +58,21 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://dnsworth.com/terms-of-service" />
+        <link rel="canonical" href="https://dnsworth.com/page/legal/terms-of-service" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Terms of Service - DNSWorth User Agreement & Conditions" />
         <meta property="og:description" content="DNSWorth Terms of Service - Read our comprehensive terms and conditions for using our domain valuation platform and services." />
-        <meta property="og:url" content="https://dnsworth.com/terms-of-service" />
+        <meta property="og:url" content="https://dnsworth.com/page/legal/terms-of-service" />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content="https://dnsworth.com/terms-of-service-og-image.jpg" />
+        <meta property="og:image" content="https://dnsworth.com/page/legal/terms-of-service-og-image.jpg" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Terms of Service - DNSWorth User Agreement" />
         <meta name="twitter:description" content="DNSWorth Terms of Service - Read our comprehensive terms and conditions." />
-        <meta name="twitter:image" content="https://dnsworth.com/terms-of-service-twitter-image.jpg" />
+        <meta name="twitter:image" content="https://dnsworth.com/page/legal/terms-of-service-twitter-image.jpg" />
         
         {/* JSON-LD Structured Data for Legal Document */}
         <script type="application/ld+json">
@@ -81,7 +81,7 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
             "@type": "WebPage",
             "name": "DNSWorth Terms of Service",
             "description": "DNSWorth Terms of Service - Read our comprehensive terms and conditions",
-            "url": "https://dnsworth.com/terms-of-service",
+            "url": "https://dnsworth.com/page/legal/terms-of-service",
             "publisher": {
               "@type": "Organization",
               "name": "DNSWorth"
@@ -103,14 +103,14 @@ const TermsOfService = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Terms of Service",
-                "item": "https://dnsworth.com/terms-of-service"
+                "item": "https://dnsworth.com/page/legal/terms-of-service"
               }
             ]
           })}
         </script>
       </Helmet>
       {/* Header */}
-      <Header onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Header onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
 
       {/* Hero Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">

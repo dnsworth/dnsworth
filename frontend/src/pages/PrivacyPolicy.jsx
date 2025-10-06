@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
-const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
+const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Force scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,21 +58,21 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://dnsworth.com/privacy-policy" />
+        <link rel="canonical" href="https://dnsworth.com/page/legal/privacy-policy" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Privacy Policy - DNSWorth Data Protection & Privacy" />
         <meta property="og:description" content="DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy while using our domain valuation services." />
-        <meta property="og:url" content="https://dnsworth.com/privacy-policy" />
+        <meta property="og:url" content="https://dnsworth.com/page/legal/privacy-policy" />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content="https://dnsworth.com/privacy-policy-og-image.jpg" />
+        <meta property="og:image" content="https://dnsworth.com/page/legal/privacy-policy-og-image.jpg" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Privacy Policy - DNSWorth Data Protection" />
         <meta name="twitter:description" content="DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy." />
-        <meta name="twitter:image" content="https://dnsworth.com/privacy-policy-twitter-image.jpg" />
+        <meta name="twitter:image" content="https://dnsworth.com/page/legal/privacy-policy-twitter-image.jpg" />
         
         {/* JSON-LD Structured Data for Legal Document */}
         <script type="application/ld+json">
@@ -81,7 +81,7 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
             "@type": "WebPage",
             "name": "DNSWorth Privacy Policy",
             "description": "DNSWorth Privacy Policy - Learn how we protect your information and maintain your privacy",
-            "url": "https://dnsworth.com/privacy-policy",
+            "url": "https://dnsworth.com/page/legal/privacy-policy",
             "publisher": {
               "@type": "Organization",
               "name": "DNSWorth"
@@ -103,14 +103,14 @@ const PrivacyPolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Privacy Policy",
-                "item": "https://dnsworth.com/privacy-policy"
+                "item": "https://dnsworth.com/page/legal/privacy-policy"
               }
             ]
           })}
         </script>
       </Helmet>
       {/* Header */}
-      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
 
       {/* Hero Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">

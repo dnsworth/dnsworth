@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
+const AboutUs = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   const [typedText, setTypedText] = useState('');
   const ownerVision = "My vision is to democratize domain intelligence and make professional-grade valuations accessible to everyone. Every domain investor deserves the tools they need to compete and succeed.";
 
@@ -83,21 +83,21 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://dnsworth.com/about" />
+        <link rel="canonical" href="https://dnsworth.com/page/about" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="About DNSWorth - Our Mission & Domain Valuation Technology" />
         <meta property="og:description" content="Learn about DNSWorth's mission to democratize domain intelligence. Discover our AI-powered technology and commitment to providing free, professional-grade domain valuations." />
-        <meta property="og:url" content="https://dnsworth.com/about" />
+        <meta property="og:url" content="https://dnsworth.com/page/about" />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content="https://dnsworth.com/about-og-image.jpg" />
+        <meta property="og:image" content="https://dnsworth.com/page/about-og-image.jpg" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About DNSWorth - Our Mission & Technology" />
         <meta name="twitter:description" content="Learn about DNSWorth's mission to democratize domain intelligence." />
-        <meta name="twitter:image" content="https://dnsworth.com/about-twitter-image.jpg" />
+        <meta name="twitter:image" content="https://dnsworth.com/page/about-twitter-image.jpg" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -114,14 +114,14 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "About Us",
-                "item": "https://dnsworth.com/about"
+                "item": "https://dnsworth.com/page/about"
               }
             ]
           })}
         </script>
       </Helmet>
       {/* Header */}
-      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
 
       {/* Hero Section - Black Background */}
       <section className="relative py-12 md:py-20 overflow-hidden bg-black">
@@ -256,7 +256,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             </motion.h2>
             
             {/* Features with Creative Comic Portraits */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-12">
               {[
                 {
                   id: 1,
@@ -306,16 +306,16 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="bg-white border-4 border-black rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
+                  <div className="bg-white border-4 border-black rounded-3xl p-3 md:p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
                     
                     {/* Background Gradient */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
                     
                     {/* Header with Avatar */}
-                    <div className="relative z-10 flex items-center gap-6 mb-6">
+                    <div className="relative z-10 flex items-center gap-1 md:gap-6 mb-1 md:mb-6">
                       {/* Comic Portrait */}
                       <div className="relative">
-                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-6 h-6 md:w-20 md:h-20 rounded-full overflow-hidden border-2 md:border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                           <img 
                             src={feature.avatar} 
                             alt={feature.name}
@@ -326,19 +326,19 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                       
                       {/* Character Info */}
                       <div className="flex-1">
-                        <h4 className="text-xl font-bold text-black">
+                        <h4 className="text-xs md:text-sm font-bold text-black">
                           {feature.name}
                         </h4>
-                        <p className="text-sm text-gray-600 font-medium">{feature.role}</p>
+                        <p className="text-xs md:text-xs text-gray-600 font-medium">{feature.role}</p>
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="relative z-10">
-                      <h3 className="text-2xl font-bold text-black mb-4">
+                      <h3 className="text-xs md:text-base font-bold text-black mb-1 md:mb-4">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed text-lg">
+                      <p className="text-gray-600 leading-relaxed text-xs md:text-xs">
                         {feature.description}
                       </p>
                     </div>
@@ -397,7 +397,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             </motion.h2>
             
             {/* Features with Creative Comic Portraits */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-12">
               {[
                 {
                   id: 1,
@@ -447,16 +447,16 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="bg-white border-4 border-black rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
+                  <div className="bg-white border-4 border-black rounded-3xl p-3 md:p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 hover:animate-giggle relative overflow-hidden">
                     
                     {/* Background Gradient */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
                     
                     {/* Header with Avatar */}
-                    <div className="relative z-10 flex items-center gap-6 mb-6">
+                    <div className="relative z-10 flex items-center gap-1 md:gap-6 mb-1 md:mb-6">
                       {/* Comic Portrait */}
                       <div className="relative">
-                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-6 h-6 md:w-20 md:h-20 rounded-full overflow-hidden border-2 md:border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                           <img 
                             src={feature.avatar} 
                             alt={feature.name}
@@ -467,19 +467,19 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                       
                       {/* Character Info */}
                       <div className="flex-1">
-                        <h4 className="text-xl font-bold text-black">
+                        <h4 className="text-xs md:text-sm font-bold text-black">
                           {feature.name}
                         </h4>
-                        <p className="text-sm text-gray-600 font-medium">{feature.role}</p>
+                        <p className="text-xs md:text-xs text-gray-600 font-medium">{feature.role}</p>
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="relative z-10">
-                      <h3 className="text-2xl font-bold text-black mb-4">
+                      <h3 className="text-xs md:text-base font-bold text-black mb-1 md:mb-4">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed text-lg">
+                      <p className="text-gray-600 leading-relaxed text-xs md:text-xs">
                         {feature.description}
                       </p>
                     </div>
@@ -513,20 +513,20 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             animate="visible"
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-12 text-center text-white"
+              className="text-base md:text-3xl font-bold mb-4 text-center text-white"
               variants={itemVariants}
             >
               Our Future Vision
             </motion.h2>
             <motion.p
-              className="text-lg text-text-muted leading-relaxed mb-8 text-center"
+              className="text-xs md:text-sm text-text-muted leading-relaxed mb-3 text-center"
               variants={itemVariants}
             >
               DNSWorth is more than a valuation tool it is a growing ecosystem. Our roadmap is built on innovation, accessibility, and community:
             </motion.p>
             
             {/* Features with Creative Comic Portraits */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-12">
               {[
                 {
                   id: 1,
@@ -576,16 +576,16 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="bg-gray-900/70 border-4 border-gray-700 rounded-3xl p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(255,255,255,0.1)] transition-all duration-500 hover:animate-giggle relative overflow-hidden backdrop-blur-sm">
+                  <div className="bg-gray-900/70 border-4 border-gray-700 rounded-3xl p-4 md:p-8 shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(255,255,255,0.1)] transition-all duration-500 hover:animate-giggle relative overflow-hidden backdrop-blur-sm">
                     
                     {/* Background Gradient */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-10 group-hover:opacity-20 transition-opacity duration-500`}></div>
                     
                     {/* Header with Avatar */}
-                    <div className="relative z-10 flex items-center gap-6 mb-6">
+                    <div className="relative z-10 flex items-center gap-1 md:gap-6 mb-1 md:mb-6">
                       {/* Comic Portrait */}
                       <div className="relative">
-                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-gray-600 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-8 h-8 md:w-20 md:h-20 rounded-full overflow-hidden border-2 md:border-4 border-gray-600 shadow-xl group-hover:scale-110 transition-transform duration-300">
                           <img 
                             src={feature.avatar} 
                             alt={feature.name}
@@ -596,19 +596,19 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                       
                       {/* Character Info */}
                       <div className="flex-1">
-                        <h4 className="text-xl font-bold text-white">
+                        <h4 className="text-xs md:text-xl font-bold text-white">
                           {feature.name}
                         </h4>
-                        <p className="text-sm text-gray-300 font-medium">{feature.role}</p>
+                        <p className="text-xs md:text-sm text-gray-300 font-medium">{feature.role}</p>
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="relative z-10">
-                      <h3 className="text-2xl font-bold text-primary mb-4">
+                      <h3 className="text-sm md:text-2xl font-bold text-primary mb-2 md:mb-4">
                         {feature.title}
                       </h3>
-                      <p className="text-text-muted text-lg leading-relaxed">
+                      <p className="text-xs md:text-lg text-text-muted leading-relaxed">
                         {feature.description}
                       </p>
                     </div>
@@ -642,7 +642,7 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
             animate="visible"
           >
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-12 text-center text-black"
+              className="text-xl md:text-4xl font-bold mb-8 text-center text-black"
               variants={itemVariants}
             >
               Meet Our Founder
@@ -662,10 +662,10 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-5 group-hover:opacity-10 transition-opacity duration-500"></div>
                   
                   {/* Header with Avatar */}
-                  <div className="relative z-10 flex items-center gap-6 mb-6">
+                  <div className="relative z-10 flex items-center gap-3 md:gap-6 mb-4 md:mb-6">
                     {/* Comic Portrait */}
                     <div className="relative">
-                      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 md:border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                         <img 
                           src="https://api.dicebear.com/7.x/adventurer/svg?seed=Adee&backgroundColor=b6e3f4,c0aede,d1d4f9"
                           alt="Adeé A."
@@ -676,18 +676,18 @@ const AboutUs = ({ onNavigateToBulk, onNavigateHome }) => {
                     
                     {/* Character Info */}
                     <div className="flex-1">
-                      <h4 className="text-2xl font-bold text-black">
+                      <h4 className="text-lg md:text-2xl font-bold text-black">
                         Adeé A.
                       </h4>
-                      <p className="text-lg text-gray-600 font-medium">Technical Support and Founder</p>
+                      <p className="text-sm md:text-lg text-gray-600 font-medium">Technical Support and Founder</p>
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="relative z-10">
 
-                    <div className="bg-gray-100 p-6 rounded-xl border border-gray-200">
-                      <p className="text-gray-700 text-lg leading-relaxed max-w-2xl mx-auto">
+                    <div className="bg-gray-100 p-4 md:p-6 rounded-xl border border-gray-200">
+                      <p className="text-gray-700 text-sm md:text-lg leading-relaxed max-w-2xl mx-auto">
                         "{typedText}
                         <span className="animate-pulse text-primary">|</span>"
                       </p>

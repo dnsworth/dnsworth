@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 
-const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
+const CookiePolicy = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Force scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,21 +58,21 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://dnsworth.com/cookie-policy" />
+        <link rel="canonical" href="https://dnsworth.com/page/legal/cookie-policy" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Cookie Policy - DNSWorth Cookie Usage & Tracking" />
         <meta property="og:description" content="DNSWorth Cookie Policy - Understand how we use cookies and similar technologies to enhance your experience on our domain valuation platform." />
-        <meta property="og:url" content="https://dnsworth.com/cookie-policy" />
+        <meta property="og:url" content="https://dnsworth.com/page/legal/cookie-policy" />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content="https://dnsworth.com/cookie-policy-og-image.jpg" />
+        <meta property="og:image" content="https://dnsworth.com/page/legal/cookie-policy-og-image.jpg" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Cookie Policy - DNSWorth Cookie Usage" />
         <meta name="twitter:description" content="DNSWorth Cookie Policy - Understand how we use cookies and similar technologies." />
-        <meta name="twitter:image" content="https://dnsworth.com/cookie-policy-twitter-image.jpg" />
+        <meta name="twitter:image" content="https://dnsworth.com/page/legal/cookie-policy-twitter-image.jpg" />
         
         {/* JSON-LD Structured Data for Legal Document */}
         <script type="application/ld+json">
@@ -81,7 +81,7 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
             "@type": "WebPage",
             "name": "DNSWorth Cookie Policy",
             "description": "DNSWorth Cookie Policy - Understand how we use cookies and similar technologies",
-            "url": "https://dnsworth.com/cookie-policy",
+            "url": "https://dnsworth.com/page/legal/cookie-policy",
             "publisher": {
               "@type": "Organization",
               "name": "DNSWorth"
@@ -103,14 +103,14 @@ const CookiePolicy = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Cookie Policy",
-                "item": "https://dnsworth.com/cookie-policy"
+                "item": "https://dnsworth.com/page/legal/cookie-policy"
               }
             ]
           })}
         </script>
       </Helmet>
       {/* Header */}
-      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
 
       {/* Hero Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20">

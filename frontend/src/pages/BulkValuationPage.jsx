@@ -366,10 +366,9 @@ company.net"
                     <thead className="bg-surface border-b border-gray-700">
                       <tr>
                         <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-primary uppercase tracking-wider">Domain</th>
-                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-secondary uppercase tracking-wider">Est. Value</th>
-                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-accent uppercase tracking-wider">Auction</th>
-                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-primary uppercase tracking-wider">Market</th>
-                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-secondary uppercase tracking-wider">Broker</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-secondary uppercase tracking-wider">Auction</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-accent uppercase tracking-wider">Marketplace</th>
+                        <th className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 text-left text-xs md:text-sm font-bold text-primary uppercase tracking-wider">Brokerage</th>
                       </tr>
                     </thead>
                     <tbody className="bg-background divide-y divide-gray-700">
@@ -379,15 +378,12 @@ company.net"
                             {item.domain}
                           </td>
                           <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-primary font-semibold">
-                            {formatCurrency(item.valuation?.estimatedValue)}
-                          </td>
-                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-accent">
                             {formatCurrency(item.valuation?.auctionValue)}
                           </td>
-                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-primary">
+                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-secondary font-semibold">
                             {formatCurrency(item.valuation?.marketplaceValue)}
                           </td>
-                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-secondary">
+                          <td className="px-2 md:px-4 lg:px-8 py-2 md:py-3 lg:py-4 whitespace-nowrap text-xs md:text-sm text-accent font-semibold">
                             {formatCurrency(item.valuation?.brokerageValue)}
                           </td>
                         </tr>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
+const Blog = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   // Scroll to top when component mounts
@@ -142,21 +142,21 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://dnsworth.com/blog" />
+        <link rel="canonical" href="https://dnsworth.com/page/blog" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="DNSWorth Blog - Domain Investing Insights & Valuation Strategies" />
         <meta property="og:description" content="Expert insights on domain investing, valuation strategies, and market trends. Stay ahead with comprehensive domain industry coverage." />
-        <meta property="og:url" content="https://dnsworth.com/blog" />
+        <meta property="og:url" content="https://dnsworth.com/page/blog" />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content="https://dnsworth.com/blog-og-image.jpg" />
+        <meta property="og:image" content="https://dnsworth.com/page/blog-og-image.jpg" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="DNSWorth Blog - Domain Investing Insights" />
         <meta name="twitter:description" content="Expert insights on domain investing, valuation strategies, and market trends." />
-        <meta name="twitter:image" content="https://dnsworth.com/blog-twitter-image.jpg" />
+        <meta name="twitter:image" content="https://dnsworth.com/page/blog-twitter-image.jpg" />
         
         {/* JSON-LD Structured Data for Blog */}
         <script type="application/ld+json">
@@ -165,7 +165,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
             "@type": "Blog",
             "name": "DNSWorth Blog",
             "description": "Expert insights on domain investing, valuation strategies, and market trends",
-            "url": "https://dnsworth.com/blog",
+            "url": "https://dnsworth.com/page/blog",
             "publisher": {
               "@type": "Organization",
               "name": "DNSWorth",
@@ -175,7 +175,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
               "@type": "BlogPosting",
               "headline": post.title,
               "description": post.excerpt,
-              "url": `https://dnsworth.com/blog/${post.slug}`,
+              "url": `https://dnsworth.com/page/blog/${post.slug}`,
               "datePublished": post.date,
               "author": {
                 "@type": "Organization",
@@ -203,14 +203,14 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Blog",
-                "item": "https://dnsworth.com/blog"
+                "item": "https://dnsworth.com/page/blog"
               }
             ]
           })}
         </script>
       </Helmet>
       {/* Header */}
-      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
 
       {/* Hero Section */}
       <section className="py-12 md:py-20 bg-black">
@@ -288,7 +288,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome }) => {
               >
                 {filteredPosts.map((post) => (
                   <Link 
-                    to={`/blog/${post.slug}`}
+                    to={`/page/blog/${post.slug}`}
                     key={post.id}
                     className="block"
                   >

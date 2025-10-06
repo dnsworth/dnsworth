@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
+const FAQ = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Force scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -70,21 +70,21 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
         <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://dnsworth.com/faq" />
+        <link rel="canonical" href="https://dnsworth.com/page/faq" />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Frequently Asked Questions - DNSWorth Domain Valuation" />
         <meta property="og:description" content="Get answers to the most common questions about DNSWorth's free domain valuation service." />
-        <meta property="og:url" content="https://dnsworth.com/faq" />
+        <meta property="og:url" content="https://dnsworth.com/page/faq" />
         <meta property="og:site_name" content="DNSWorth" />
-        <meta property="og:image" content="https://dnsworth.com/faq-og-image.jpg" />
+        <meta property="og:image" content="https://dnsworth.com/page/faq-og-image.jpg" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="DNSWorth FAQ - Domain Valuation Questions" />
         <meta name="twitter:description" content="Get answers to common questions about DNSWorth's free domain valuation service." />
-        <meta name="twitter:image" content="https://dnsworth.com/faq-twitter-image.jpg" />
+        <meta name="twitter:image" content="https://dnsworth.com/page/faq-twitter-image.jpg" />
         
         {/* JSON-LD Structured Data for FAQ */}
         <script type="application/ld+json">
@@ -134,13 +134,13 @@ const FAQ = ({ onNavigateToBulk, onNavigateHome }) => {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "FAQ",
-                "item": "https://dnsworth.com/faq"
+                "item": "https://dnsworth.com/page/faq"
               }
             ]
           })}
         </script>
       </Helmet>
-      <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} />
+      <Header onBulkValuation={handleBulkValuation} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
       
       {/* Hero Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
