@@ -12,6 +12,7 @@ class RedisManager {
     this.retryDelay = 1000;
     this.fallbackMode = false;
     this.memoryStore = new Map();
+    this.lastError = null; // capture last connection/command error for diagnostics
   }
 
   async connect() {
@@ -39,6 +40,23 @@ class RedisManager {
       this.connectionAttempts++;
       console.log(`🔄 Attempting Redis connection (${this.connectionAttempts}/${this.maxRetries})...`);
 
+      // Configure TLS/SNI for Redis Cloud when using rediss://
+      let tlsOptions = undefined;
+      try {
+        const urlObj = new URL(redisUrl);
+        const isTLS = urlObj.protocol === 'rediss:';
+        const host = urlObj.hostname;
+        if (isTLS) {
+          // Many managed Redis providers require SNI servername; some environments need relaxed CA
+          tlsOptions = {
+            servername: host,
+            rejectUnauthorized: false
+          };
+        }
+      } catch (_) {
+        // ignore URL parse issues; fall back to ioredis defaults
+      }
+
       this.redis = new Redis(redisUrl, {
         retryDelayOnFailover: 100,
         maxRetriesPerRequest: 1, // Reduce retries to prevent connection spam
@@ -50,9 +68,11 @@ class RedisManager {
         enableOfflineQueue: false,
         maxLoadingTimeout: 3000,
         maxMemoryPolicy: 'allkeys-lru', // Memory management
+        tls: tlsOptions,
         onError: (err) => {
           console.error('❌ Redis connection error:', err.message);
           this.isConnected = false;
+          this.lastError = err.message;
           // Don't retry on every error to prevent connection spam
         },
         onConnect: () => {
@@ -60,6 +80,7 @@ class RedisManager {
           this.isConnected = true;
           this.connectionAttempts = 0;
           this.fallbackMode = false;
+          this.lastError = null;
         },
         onReconnecting: () => {
           console.log('🔄 Redis reconnecting...');
@@ -82,6 +103,7 @@ class RedisManager {
 
     } catch (error) {
       console.error('❌ Redis connection failed:', error.message);
+      this.lastError = error.message;
       
       if (this.connectionAttempts < this.maxRetries) {
         console.log(`🔄 Retrying Redis connection in ${this.retryDelay}ms...`);
@@ -198,7 +220,8 @@ class RedisManager {
       connected: this.isConnected,
       fallbackMode: this.fallbackMode,
       memoryStoreSize: this.memoryStore.size,
-      connectionAttempts: this.connectionAttempts
+      connectionAttempts: this.connectionAttempts,
+      lastError: this.lastError
     };
   }
 
