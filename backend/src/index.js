@@ -421,6 +421,69 @@ app.post('/api/admin/redis-status', async (req, res) => {
   }
 });
 
+// Secure admin endpoint to test Redis connection directly (temporary, guarded)
+app.post('/api/admin/redis-test', async (req, res) => {
+  try {
+    const providedSecret = req.get('x-cron-secret') || (req.get('authorization') || '').replace(/^Bearer\s+/i, '') || req.query.secret;
+    if (!process.env.CRON_SECRET || providedSecret !== process.env.CRON_SECRET) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    const Redis = (await import('ioredis')).default;
+    const redisUrl = process.env.REDIS_URL;
+    
+    if (!redisUrl) {
+      return res.json({ success: false, error: 'No REDIS_URL found' });
+    }
+
+    const url = new URL(redisUrl);
+    const isRedisCloud = url.hostname.includes('redis-cloud.com');
+    const useTLS = url.protocol === 'rediss:' || isRedisCloud;
+    
+    const options = {
+      port: Number(url.port || 6379),
+      host: url.hostname,
+      username: url.username || 'default',
+      password: url.password,
+      tls: useTLS ? {
+        servername: url.hostname,
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: false
+      } : undefined,
+      connectTimeout: 10000,
+      commandTimeout: 5000,
+      retryDelayOnFailover: 100,
+      maxRetriesPerRequest: 1,
+      lazyConnect: false
+    };
+
+    const redis = new Redis(options);
+    
+    // Test basic operations
+    await redis.set('test', 'hello');
+    const value = await redis.get('test');
+    await redis.disconnect();
+    
+    return res.json({ 
+      success: true, 
+      data: { 
+        connectionDetails: {
+          protocol: url.protocol,
+          host: url.hostname,
+          port: url.port,
+          useTLS,
+          isRedisCloud
+        },
+        testResult: value
+      } 
+    });
+    
+  } catch (error) {
+    console.error('Redis test failed:', error.message);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Single domain valuation endpoint with enhanced security and connection pooling
 app.post('/api/value', async (req, res) => {
   try {
