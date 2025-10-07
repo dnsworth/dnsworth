@@ -202,6 +202,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Trust proxy for rate limiting on Render
+app.set('trust proxy', 1);
+
 // Enhanced rate limiting with Redis support
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
