@@ -377,6 +377,34 @@ app.use('/api/management', apiManagementRoutes);
 
 // premium-domains routes removed (experimental rollback)
 
+// Health check endpoint for Redis
+app.get('/health/redis', async (req, res) => {
+  try {
+    const { default: redisManager } = await import('./services/redisManager.js');
+    const status = redisManager.getStatus();
+    let pingResult = 'not-connected';
+    
+    if (redisManager.redis && redisManager.isConnected) {
+      try {
+        const ping = await redisManager.redis.ping();
+        pingResult = ping === 'PONG' ? 'connected' : 'no-pong';
+      } catch (pingError) {
+        pingResult = `ping-error: ${pingError.message}`;
+      }
+    }
+    
+    res.json({
+      redis: {
+        ...status,
+        ping: pingResult,
+        readyState: redisManager.redis?.status || 'no-client'
+      },
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Secure admin endpoint to trigger gems refresh (guarded by CRON_SECRET)
 app.post('/api/gems/refresh', async (req, res) => {

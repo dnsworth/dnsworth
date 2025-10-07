@@ -18,21 +18,30 @@ class RedisManager {
   }
 
   async connect() {
-    // Always create a fresh Redis client to avoid stuck connections
-    console.log('🔄 Creating fresh Redis connection...');
-    
-    // Destroy any existing connection
-    if (this.redis) {
+    // Prevent multiple simultaneous connection attempts
+    if (this.isConnecting) {
+      console.log('⏳ Redis connection already in progress, waiting...');
+      return this.redis;
+    }
+
+    // If already connected and healthy, return it
+    if (this.redis && this.isConnected && this.redis.status === 'ready') {
+      return this.redis;
+    }
+
+    // Destroy any existing problematic connection
+    if (this.redis && !this.isConnected) {
       try {
-        this.redis.removeAllListeners();
         this.redis.disconnect();
         this.redis.quit();
       } catch (e) {
-        // Ignore disconnect errors
+        // Ignore errors during cleanup
       }
       this.redis = null;
-      this.isConnected = false;
     }
+
+    this.isConnecting = true;
+    console.log('🔄 Creating fresh Redis connection...');
 
     try {
       const redisUrl = process.env.REDIS_URL || process.env.REDISCLOUD_URL;
@@ -47,127 +56,132 @@ class RedisManager {
       if (!redisUrl) {
         console.log('⚠️ No Redis URL found, using memory fallback');
         this.fallbackMode = true;
+        this.isConnecting = false;
         return null;
       }
 
-      console.log('🔄 Attempting fresh Redis connection...');
-
       // Parse REDIS_URL explicitly and build options
-      let clientOptions;
-      try {
-        const urlObj = new URL(redisUrl);
-        const protocol = urlObj.protocol.replace(':', '');
-        const host = urlObj.hostname;
-        const port = Number(urlObj.port || (protocol === 'rediss' ? 6380 : 6379));
-        const username = urlObj.username || 'default';
-        const password = urlObj.password || undefined;
-        const isRedisCloudHost = /redis-cloud\.com$/.test(host) || /redns\.redis-cloud\.com$/.test(host);
-        const useTLS = protocol === 'rediss' || isRedisCloudHost;
+      const urlObj = new URL(redisUrl);
+      const protocol = urlObj.protocol.replace(':', '');
+      const host = urlObj.hostname;
+      const port = Number(urlObj.port || (protocol === 'rediss' ? 6380 : 6379));
+      const password = urlObj.password;
 
-        this.connectionInfo = {
-          protocol,
-          host,
-          port,
-          isTLS: useTLS
-        };
+      this.connectionInfo = {
+        protocol,
+        host,
+        port,
+        isTLS: protocol === 'rediss'
+      };
 
-        // Upstash Redis connection configuration
-        clientOptions = {
-          host,
-          port,
-          password,
-          db: 0,
-          tls: useTLS ? {
-            rejectUnauthorized: false,
-            servername: host,
-            checkServerIdentity: () => undefined
-          } : undefined,
-          connectTimeout: 15000,
-          commandTimeout: 10000,
-          retryDelayOnFailover: 100,
-          maxRetriesPerRequest: 1,
-          lazyConnect: false,
-          keepAlive: 30000,
-          family: 4,
-          onError: (err) => {
-            console.error('❌ Redis connection error:', err.message);
-            this.isConnected = false;
-            this.isConnecting = false;
-            this.lastError = err.message;
-          },
-          onConnect: () => {
-            console.log('✅ Redis connected successfully');
-            this.isConnected = true;
-            this.isConnecting = false;
-            this.connectionAttempts = 0;
-            this.fallbackMode = false;
-            this.lastError = null;
-          },
-          onReconnecting: () => {
-            console.log('🔄 Redis reconnecting...');
-          },
-          onClose: () => {
-            console.log('🔌 Redis connection closed');
-            this.isConnected = false;
+      const clientOptions = {
+        host,
+        port,
+        password,
+        db: 0,
+        lazyConnect: false,
+        connectTimeout: 10000,
+        commandTimeout: 5000,
+        retryDelayOnFailover: 100,
+        maxRetriesPerRequest: 1,
+        // CRITICAL: Add connection event handlers
+        retryStrategy: (times) => {
+          if (times > 3) {
+            console.log('❌ Max Redis connection retries exceeded');
+            return null;
           }
-        };
-      } catch (_) {
-        // Fallback to URL string with basic TLS options if parsing fails
-        clientOptions = {
-          retryDelayOnFailover: 100,
-          maxRetriesPerRequest: 1,
-          lazyConnect: false,
-          keepAlive: 30000,
-          connectTimeout: 5000,
-          commandTimeout: 3000,
-          retryDelayOnClusterDown: 1000,
-          enableOfflineQueue: false,
-          maxLoadingTimeout: 3000,
-          maxMemoryPolicy: 'allkeys-lru'
+          return Math.min(times * 100, 3000);
+        }
+      };
+
+      // Add TLS for rediss protocol
+      if (protocol === 'rediss') {
+        clientOptions.tls = {
+          rejectUnauthorized: false,
+          servername: host
         };
       }
 
-      this.redis = new Redis(clientOptions.port ? clientOptions : redisUrl, clientOptions.port ? undefined : clientOptions);
+      this.redis = new Redis(clientOptions);
 
-      // For lazy connect, we need to explicitly connect
-      if (clientOptions.lazyConnect) {
-        console.log('🔄 Connecting to Redis (lazy connect)...');
-        await this.redis.connect();
-      }
+      // Set up event listeners BEFORE connecting
+      this.redis.on('connect', () => {
+        console.log('✅ Redis connected successfully');
+        this.isConnected = true;
+        this.isConnecting = false;
+        this.fallbackMode = false;
+        this.lastError = null;
+      });
+
+      this.redis.on('error', (err) => {
+        console.error('❌ Redis connection error:', err.message);
+        this.isConnected = false;
+        this.isConnecting = false;
+        this.lastError = err.message;
+      });
+
+      this.redis.on('close', () => {
+        console.log('🔌 Redis connection closed');
+        this.isConnected = false;
+      });
+
+      this.redis.on('ready', () => {
+        console.log('✅ Redis ready for commands');
+        this.isConnected = true;
+      });
 
       // Wait for connection with timeout
-      await Promise.race([
-        this.redis.connect(),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Connection timeout')), 15000)
-        )
-      ]);
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          reject(new Error('Redis connection timeout after 10s'));
+        }, 10000);
+
+        this.redis.once('ready', () => {
+          clearTimeout(timeout);
+          resolve();
+        });
+
+        this.redis.once('error', (err) => {
+          clearTimeout(timeout);
+          reject(err);
+        });
+      });
 
       return this.redis;
 
     } catch (error) {
+      this.isConnecting = false;
       console.error('❌ Redis connection failed:', error.message);
       this.lastError = error.message;
       this.fallbackMode = true;
+      
+      // Clean up failed connection
+      if (this.redis) {
+        this.redis.disconnect();
+        this.redis = null;
+      }
+      
       return null;
     }
   }
 
   async get(key) {
-    if (!this.isConnected) {
-      await this.connect();
-    }
-    
-    if (!this.isConnected) {
-      throw new Error('Redis not connected - cannot retrieve data');
-    }
-
     try {
+      // Ensure we have a connection
+      if (!this.isConnected || !this.redis || this.redis.status !== 'ready') {
+        await this.connect();
+      }
+      
+      if (!this.isConnected || this.fallbackMode) {
+        throw new Error('Redis not connected - cannot retrieve data');
+      }
+
       const value = await this.redis.get(key);
       return value ? JSON.parse(value) : null;
     } catch (error) {
       console.error('❌ Redis GET error:', error.message);
-      throw error;
+      // Don't throw here - let the caller handle empty data
+      return null;
     }
   }
 

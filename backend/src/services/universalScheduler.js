@@ -189,6 +189,17 @@ class UniversalScheduler {
     // Redis service is shared, don't close it here
     console.log('🔌 Universal scheduler closed (Redis service remains active)');
   }
+
+  // Static method for external calls
+  static async generateHourlyBatch(count = 30) {
+    try {
+      const scheduler = new UniversalScheduler();
+      return await scheduler.generateHourlyBatch();
+    } catch (error) {
+      console.error('❌ Static generateHourlyBatch failed:', error);
+      return [];
+    }
+  }
 }
 
 export default UniversalScheduler;
