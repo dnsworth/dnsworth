@@ -5,8 +5,6 @@ import Home from './pages/Home';
 import BulkValuationPage from './pages/BulkValuationPage';
 import DomainGems from './pages/DomainGems';
 import AboutUs from './pages/AboutUs';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CookiePolicy from './pages/CookiePolicy';
@@ -48,8 +46,6 @@ function AppContent() {
         <Route path="/bulk-valuation" element={<BulkValuationPage onBack={navigateToHome} />} />
         <Route path="/domain-gems" element={<DomainGems onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/about" element={<AboutUs onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
-        <Route path="/page/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
-        <Route path="/page/blog/:slug" element={<BlogPost onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/legal/privacy-policy" element={<PrivacyPolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/legal/terms-of-service" element={<TermsOfService onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/legal/cookie-policy" element={<CookiePolicy onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />

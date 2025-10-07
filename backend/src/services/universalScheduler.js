@@ -101,7 +101,7 @@ class UniversalScheduler {
         domainsWithValuations.push({
           domain: cleanDomain,
           category: domainData.category || 'lifestyle',
-          estimatedValue: valuation.auctionValue || valuation.value_usd || Math.max(valuation.marketplaceValue || 0, valuation.brokerageValue || 0),
+          estimatedValue: valuation.auctionValue !== undefined ? valuation.auctionValue : (valuation.value_usd || Math.max(valuation.marketplaceValue || 0, valuation.brokerageValue || 0)),
           auctionValue: valuation.auctionValue || 0,
           marketplaceValue: valuation.marketplaceValue || 0,
           brokerageValue: valuation.brokerageValue || 0,
@@ -176,6 +176,7 @@ class UniversalScheduler {
       return [];
     }
   }
+
 
 
   async start() {
