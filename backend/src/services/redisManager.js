@@ -84,17 +84,23 @@ class RedisManager {
           host,
           username,
           password,
-          tls: useTLS ? { servername: host, minVersion: 'TLSv1.2', rejectUnauthorized: false } : undefined,
+          tls: useTLS ? { 
+            servername: host, 
+            minVersion: 'TLSv1.2', 
+            rejectUnauthorized: false,
+            checkServerIdentity: () => undefined // Skip hostname verification for Redis Cloud
+          } : undefined,
           retryDelayOnFailover: 100,
           maxRetriesPerRequest: 1,
-          lazyConnect: false,
+          lazyConnect: true, // Use lazy connect to avoid immediate connection issues
           keepAlive: 30000,
-          connectTimeout: 5000,
-          commandTimeout: 3000,
+          connectTimeout: 15000, // Increased timeout for Redis Cloud
+          commandTimeout: 10000, // Increased timeout
           retryDelayOnClusterDown: 1000,
           enableOfflineQueue: false,
-          maxLoadingTimeout: 3000,
+          maxLoadingTimeout: 5000,
           maxMemoryPolicy: 'allkeys-lru',
+          family: 4, // Force IPv4
           onError: (err) => {
             console.error('❌ Redis connection error:', err.message);
             this.isConnected = false;
@@ -133,11 +139,17 @@ class RedisManager {
 
       this.redis = new Redis(clientOptions.port ? clientOptions : redisUrl, clientOptions.port ? undefined : clientOptions);
 
+      // For lazy connect, we need to explicitly connect
+      if (clientOptions.lazyConnect) {
+        console.log('🔄 Connecting to Redis (lazy connect)...');
+        await this.redis.connect();
+      }
+
       // Wait for connection with timeout
       await Promise.race([
         this.redis.connect(),
         new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Connection timeout')), 5000)
+          setTimeout(() => reject(new Error('Connection timeout')), 15000)
         )
       ]);
 
