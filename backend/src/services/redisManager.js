@@ -30,14 +30,15 @@ class RedisManager {
     }
 
     // If we have a stale connection, reset it
-    if (this.redis && !this.isConnected) {
-      console.log('🔄 Resetting stale Redis connection...');
+    if (this.redis) {
+      console.log('🔄 Resetting Redis connection...');
       try {
         await this.redis.disconnect();
       } catch (e) {
         // Ignore disconnect errors
       }
       this.redis = null;
+      this.isConnected = false;
     }
 
       try {
