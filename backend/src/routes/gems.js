@@ -12,27 +12,33 @@ const domainGenerator = new DomainGenerator();
  */
 router.get('/', async (req, res) => {
   try {
-    console.log('🔄 Generating fresh domains directly (bypassing Redis)...');
+    // Get domains using domainManager (implements your logic)
+    let gems = await domainManager.getDisplayDomains();
     
-    // Generate domains directly without Redis dependency
-    const gems = await domainGenerator.generateFreshDomains(30, {
-      categories: ['tech', 'business', 'startup', 'ai', 'crypto', 'finance'],
-      tlds: ['.com', '.io', '.ai', '.co', '.app'],
-      length: { min: 4, max: 12 }
-    });
+    // If no gems available and Redis is not working, generate some on-demand
+    if (gems.length === 0) {
+      console.log('🔄 No gems in cache, generating on-demand...');
+      try {
+        const { default: UniversalScheduler } = await import('../services/universalScheduler.js');
+        await UniversalScheduler.generateHourlyBatch();
+        gems = await domainManager.getDisplayDomains();
+        console.log(`✅ Generated ${gems.length} domains on-demand`);
+      } catch (error) {
+        console.error('❌ On-demand generation failed:', error.message);
+        // Return empty array if generation fails
+        gems = [];
+      }
+    }
     
-    console.log(`✅ Generated ${gems.length} domains directly`);
+    // Get domain count for monitoring
+    const count = await domainManager.getDomainCount();
 
     res.json({
       success: true,
       data: {
         gems,
         total: gems.length,
-        count: {
-          total: gems.length,
-          display: gems.length,
-          maxDisplay: 30
-        },
+        count: count,
         generatedAt: new Date().toISOString()
       }
     });

@@ -18,31 +18,11 @@ class RedisManager {
   }
 
   async connect() {
-    // Return existing connection if available
-    if (this.redis && this.isConnected) {
-      return this.redis;
-    }
-
-    // Prevent multiple simultaneous connection attempts
-    if (this.isConnecting) {
-      console.log('⚠️ Redis connection already in progress, waiting...');
-      // Wait for current connection attempt to complete
-      while (this.isConnecting) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-      return this.redis && this.isConnected ? this.redis : null;
-    }
-
-    // Check if we've exceeded max retries
-    if (this.connectionAttempts >= this.maxRetries) {
-      console.log('⚠️ Max Redis connection attempts reached, using memory fallback');
-      this.fallbackMode = true;
-      return null;
-    }
-
-    // If we have a stale connection, completely destroy it
+    // Always create a fresh Redis client to avoid stuck connections
+    console.log('🔄 Creating fresh Redis connection...');
+    
+    // Destroy any existing connection
     if (this.redis) {
-      console.log('🔄 Destroying stale Redis connection...');
       try {
         this.redis.removeAllListeners();
         this.redis.disconnect();
@@ -52,30 +32,25 @@ class RedisManager {
       }
       this.redis = null;
       this.isConnected = false;
-      
-      // Small delay to ensure previous connection is fully destroyed
-      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-      try {
-        const redisUrl = process.env.REDIS_URL || process.env.REDISCLOUD_URL;
-        
-        console.log('🔍 Redis URL check:', {
-          hasRedisUrl: !!process.env.REDIS_URL,
-          hasRedisCloudUrl: !!process.env.REDISCLOUD_URL,
-          redisUrlLength: redisUrl ? redisUrl.length : 0,
-          redisUrlPrefix: redisUrl ? redisUrl.substring(0, 20) + '...' : 'none'
-        });
-        
-        if (!redisUrl) {
-          console.log('⚠️ No Redis URL found, using memory fallback');
-          this.fallbackMode = true;
-          return null;
-        }
+    try {
+      const redisUrl = process.env.REDIS_URL || process.env.REDISCLOUD_URL;
+      
+      console.log('🔍 Redis URL check:', {
+        hasRedisUrl: !!process.env.REDIS_URL,
+        hasRedisCloudUrl: !!process.env.REDISCLOUD_URL,
+        redisUrlLength: redisUrl ? redisUrl.length : 0,
+        redisUrlPrefix: redisUrl ? redisUrl.substring(0, 20) + '...' : 'none'
+      });
+      
+      if (!redisUrl) {
+        console.log('⚠️ No Redis URL found, using memory fallback');
+        this.fallbackMode = true;
+        return null;
+      }
 
-      this.connectionAttempts++;
-      this.isConnecting = true;
-      console.log(`🔄 Attempting Redis connection (${this.connectionAttempts}/${this.maxRetries})...`);
+      console.log('🔄 Attempting fresh Redis connection...');
 
       // Parse REDIS_URL explicitly and build options
       let clientOptions;
@@ -173,18 +148,8 @@ class RedisManager {
     } catch (error) {
       console.error('❌ Redis connection failed:', error.message);
       this.lastError = error.message;
-      this.isConnecting = false;
-      
-      if (this.connectionAttempts < this.maxRetries) {
-        console.log(`🔄 Retrying Redis connection in ${this.retryDelay}ms...`);
-        await new Promise(resolve => setTimeout(resolve, this.retryDelay));
-        return this.connect();
-      } else {
-        console.log('⚠️ Redis connection failed after retries, using memory fallback');
-        this.fallbackMode = true;
-        this.connectionAttempts = 0; // Reset for future attempts
-        return null;
-      }
+      this.fallbackMode = true;
+      return null;
     }
   }
 
