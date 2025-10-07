@@ -22,11 +22,22 @@ class RedisManager {
       return this.redis;
     }
 
-    // Simple connection - no complex retry logic
-    if (this.connectionAttempts > 0) {
-      console.log('⏳ Redis connection in progress, waiting...');
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return this.redis;
+    // Check if we've exceeded max retries
+    if (this.connectionAttempts >= this.maxRetries) {
+      console.log('⚠️ Max Redis connection attempts reached, using memory fallback');
+      this.fallbackMode = true;
+      return null;
+    }
+
+    // If we have a stale connection, reset it
+    if (this.redis && !this.isConnected) {
+      console.log('🔄 Resetting stale Redis connection...');
+      try {
+        await this.redis.disconnect();
+      } catch (e) {
+        // Ignore disconnect errors
+      }
+      this.redis = null;
     }
 
       try {
