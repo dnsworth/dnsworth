@@ -14,12 +14,23 @@ class RedisManager {
     this.memoryStore = new Map();
     this.lastError = null; // capture last connection/command error for diagnostics
     this.connectionInfo = null; // parsed info for debugging (no secrets)
+    this.isConnecting = false; // prevent multiple simultaneous connection attempts
   }
 
   async connect() {
     // Return existing connection if available
     if (this.redis && this.isConnected) {
       return this.redis;
+    }
+
+    // Prevent multiple simultaneous connection attempts
+    if (this.isConnecting) {
+      console.log('⚠️ Redis connection already in progress, waiting...');
+      // Wait for current connection attempt to complete
+      while (this.isConnecting) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      return this.redis && this.isConnected ? this.redis : null;
     }
 
     // Check if we've exceeded max retries
@@ -63,6 +74,7 @@ class RedisManager {
         }
 
       this.connectionAttempts++;
+      this.isConnecting = true;
       console.log(`🔄 Attempting Redis connection (${this.connectionAttempts}/${this.maxRetries})...`);
 
       // Parse REDIS_URL explicitly and build options
@@ -105,11 +117,13 @@ class RedisManager {
           onError: (err) => {
             console.error('❌ Redis connection error:', err.message);
             this.isConnected = false;
+            this.isConnecting = false;
             this.lastError = err.message;
           },
           onConnect: () => {
             console.log('✅ Redis connected successfully');
             this.isConnected = true;
+            this.isConnecting = false;
             this.connectionAttempts = 0;
             this.fallbackMode = false;
             this.lastError = null;
@@ -159,6 +173,7 @@ class RedisManager {
     } catch (error) {
       console.error('❌ Redis connection failed:', error.message);
       this.lastError = error.message;
+      this.isConnecting = false;
       
       if (this.connectionAttempts < this.maxRetries) {
         console.log(`🔄 Retrying Redis connection in ${this.retryDelay}ms...`);
