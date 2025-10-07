@@ -3,128 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Simple HTTP-based Redis client for Upstash as fallback
-class UpstashHttpClient {
-  constructor(redisUrl) {
-    const url = new URL(redisUrl);
-    this.baseUrl = `https://${url.hostname}`;
-    this.password = url.password;
-    this.username = url.username;
-  }
-
-  async get(key) {
-    try {
-      const response = await fetch(`${this.baseUrl}/get/${key}`, {
-        headers: {
-          'Authorization': `Basic ${Buffer.from(`${this.username}:${this.password}`).toString('base64')}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      return data.result ? JSON.parse(data.result) : null;
-    } catch (error) {
-      console.error('Upstash HTTP GET error:', error.message);
-      return null;
-    }
-  }
-
-  async set(key, value, ttl = 3600) {
-    try {
-      const response = await fetch(`${this.baseUrl}/setex/${key}/${ttl}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Basic ${Buffer.from(`${this.username}:${this.password}`).toString('base64')}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(value)
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      return data.result === 'OK';
-    } catch (error) {
-      console.error('Upstash HTTP SET error:', error.message);
-      return false;
-    }
-  }
-
-  async del(key) {
-    try {
-      const response = await fetch(`${this.baseUrl}/del/${key}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Basic ${Buffer.from(`${this.username}:${this.password}`).toString('base64')}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      return data.result > 0;
-    } catch (error) {
-      console.error('Upstash HTTP DEL error:', error.message);
-      return false;
-    }
-  }
-
-  async exists(key) {
-    try {
-      const response = await fetch(`${this.baseUrl}/exists/${key}`, {
-        headers: {
-          'Authorization': `Basic ${Buffer.from(`${this.username}:${this.password}`).toString('base64')}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      return data.result > 0;
-    } catch (error) {
-      console.error('Upstash HTTP EXISTS error:', error.message);
-      return false;
-    }
-  }
-
-  async keys(pattern) {
-    try {
-      const response = await fetch(`${this.baseUrl}/keys/${pattern}`, {
-        headers: {
-          'Authorization': `Basic ${Buffer.from(`${this.username}:${this.password}`).toString('base64')}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      return data.result || [];
-    } catch (error) {
-      console.error('Upstash HTTP KEYS error:', error.message);
-      return [];
-    }
-  }
-}
-
 class RedisManager {
   constructor() {
     this.redis = null;
-    this.httpClient = null;
     this.isConnected = false;
     this.connectionAttempts = 0;
     this.maxRetries = 3;
@@ -134,50 +15,12 @@ class RedisManager {
     this.lastError = null; // capture last connection/command error for diagnostics
     this.connectionInfo = null; // parsed info for debugging (no secrets)
     this.isConnecting = false; // prevent multiple simultaneous connection attempts
-    this.useHttpClient = false; // flag to use HTTP client instead of ioredis
   }
 
   async connect() {
-    const redisUrl = process.env.REDIS_URL || process.env.REDISCLOUD_URL;
+    // Always create a fresh Redis client to avoid stuck connections
+    console.log('🔄 Creating fresh Redis connection...');
     
-    console.log('🔍 Redis URL check:', {
-      hasRedisUrl: !!process.env.REDIS_URL,
-      hasRedisCloudUrl: !!process.env.REDISCLOUD_URL,
-      redisUrlLength: redisUrl ? redisUrl.length : 0,
-      redisUrlPrefix: redisUrl ? redisUrl.substring(0, 20) + '...' : 'none'
-    });
-    
-    if (!redisUrl) {
-      console.log('⚠️ No Redis URL found, using memory fallback');
-      this.fallbackMode = true;
-      return null;
-    }
-
-    // Try ioredis first
-    try {
-      console.log('🔄 Attempting ioredis connection...');
-      await this.connectWithIoredis(redisUrl);
-      this.useHttpClient = false;
-      return this.redis;
-    } catch (error) {
-      console.log('⚠️ ioredis connection failed, trying HTTP client...', error.message);
-      
-      // Fall back to HTTP client
-      try {
-        this.httpClient = new UpstashHttpClient(redisUrl);
-        this.useHttpClient = true;
-        this.isConnected = true;
-        console.log('✅ HTTP Redis client connected successfully');
-        return this.httpClient;
-      } catch (httpError) {
-        console.error('❌ HTTP Redis client also failed:', httpError.message);
-        this.fallbackMode = true;
-        return null;
-      }
-    }
-  }
-
-  async connectWithIoredis(redisUrl) {
     // Destroy any existing connection
     if (this.redis) {
       try {
@@ -191,7 +34,23 @@ class RedisManager {
       this.isConnected = false;
     }
 
-    console.log('🔄 Creating fresh ioredis connection...');
+    try {
+      const redisUrl = process.env.REDIS_URL || process.env.REDISCLOUD_URL;
+      
+      console.log('🔍 Redis URL check:', {
+        hasRedisUrl: !!process.env.REDIS_URL,
+        hasRedisCloudUrl: !!process.env.REDISCLOUD_URL,
+        redisUrlLength: redisUrl ? redisUrl.length : 0,
+        redisUrlPrefix: redisUrl ? redisUrl.substring(0, 20) + '...' : 'none'
+      });
+      
+      if (!redisUrl) {
+        console.log('⚠️ No Redis URL found, using memory fallback');
+        this.fallbackMode = true;
+        return null;
+      }
+
+      console.log('🔄 Attempting fresh Redis connection...');
 
       // Parse REDIS_URL explicitly and build options
       let clientOptions;
@@ -304,12 +163,8 @@ class RedisManager {
     }
 
     try {
-      if (this.useHttpClient) {
-        return await this.httpClient.get(key);
-      } else {
-        const value = await this.redis.get(key);
-        return value ? JSON.parse(value) : null;
-      }
+      const value = await this.redis.get(key);
+      return value ? JSON.parse(value) : null;
     } catch (error) {
       console.error('❌ Redis GET error:', error.message);
       throw error;
@@ -326,15 +181,9 @@ class RedisManager {
     }
 
     try {
-      if (this.useHttpClient) {
-        const result = await this.httpClient.set(key, value, ttl);
-        console.log(`✅ Stored in Redis (HTTP): ${key}`);
-        return result;
-      } else {
-        await this.redis.setex(key, ttl, JSON.stringify(value));
-        console.log(`✅ Stored in Redis: ${key}`);
-        return true;
-      }
+      await this.redis.setex(key, ttl, JSON.stringify(value));
+      console.log(`✅ Stored in Redis: ${key}`);
+      return true;
     } catch (error) {
       console.error('❌ Redis SET error:', error.message);
       throw error;
@@ -347,11 +196,7 @@ class RedisManager {
         return this.memoryStore.delete(key);
       }
 
-      if (this.useHttpClient) {
-        return await this.httpClient.del(key);
-      } else {
-        return await this.redis.del(key);
-      }
+      return await this.redis.del(key);
     } catch (error) {
       console.error('❌ Redis DEL error:', error.message);
       return this.memoryStore.delete(key);
@@ -364,11 +209,7 @@ class RedisManager {
         return this.memoryStore.has(key);
       }
 
-      if (this.useHttpClient) {
-        return await this.httpClient.exists(key);
-      } else {
-        return await this.redis.exists(key);
-      }
+      return await this.redis.exists(key);
     } catch (error) {
       console.error('❌ Redis EXISTS error:', error.message);
       return this.memoryStore.has(key);
@@ -382,11 +223,7 @@ class RedisManager {
         return memoryKeys.filter(key => key.includes(pattern.replace('*', '')));
       }
 
-      if (this.useHttpClient) {
-        return await this.httpClient.keys(pattern);
-      } else {
-        return await this.redis.keys(pattern);
-      }
+      return await this.redis.keys(pattern);
     } catch (error) {
       console.error('❌ Redis KEYS error:', error.message);
       const memoryKeys = Array.from(this.memoryStore.keys());
