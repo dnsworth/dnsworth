@@ -29,14 +29,21 @@ class RedisManager {
       return this.redis;
     }
 
-    try {
-      const redisUrl = process.env.REDIS_URL || process.env.REDISCLOUD_URL;
-      
-      if (!redisUrl) {
-        console.log('⚠️ No Redis URL found, using memory fallback');
-        this.fallbackMode = true;
-        return null;
-      }
+      try {
+        const redisUrl = process.env.REDIS_URL || process.env.REDISCLOUD_URL;
+        
+        console.log('🔍 Redis URL check:', {
+          hasRedisUrl: !!process.env.REDIS_URL,
+          hasRedisCloudUrl: !!process.env.REDISCLOUD_URL,
+          redisUrlLength: redisUrl ? redisUrl.length : 0,
+          redisUrlPrefix: redisUrl ? redisUrl.substring(0, 20) + '...' : 'none'
+        });
+        
+        if (!redisUrl) {
+          console.log('⚠️ No Redis URL found, using memory fallback');
+          this.fallbackMode = true;
+          return null;
+        }
 
       this.connectionAttempts++;
       console.log(`🔄 Attempting Redis connection (${this.connectionAttempts}/${this.maxRetries})...`);
