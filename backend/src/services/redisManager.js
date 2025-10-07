@@ -79,28 +79,21 @@ class RedisManager {
           isTLS: useTLS
         };
 
+        // Simplified Redis connection for Redis Cloud
         clientOptions = {
-          port,
           host,
-          username,
+          port,
           password,
-          tls: useTLS ? { 
-            servername: host, 
-            minVersion: 'TLSv1.2', 
+          db: 0,
+          tls: useTLS ? {
             rejectUnauthorized: false,
-            checkServerIdentity: () => undefined // Skip hostname verification for Redis Cloud
+            servername: host
           } : undefined,
+          connectTimeout: 10000,
+          commandTimeout: 5000,
           retryDelayOnFailover: 100,
-          maxRetriesPerRequest: 1,
-          lazyConnect: true, // Use lazy connect to avoid immediate connection issues
-          keepAlive: 30000,
-          connectTimeout: 15000, // Increased timeout for Redis Cloud
-          commandTimeout: 10000, // Increased timeout
-          retryDelayOnClusterDown: 1000,
-          enableOfflineQueue: false,
-          maxLoadingTimeout: 5000,
-          maxMemoryPolicy: 'allkeys-lru',
-          family: 4, // Force IPv4
+          maxRetriesPerRequest: 3,
+          lazyConnect: false,
           onError: (err) => {
             console.error('❌ Redis connection error:', err.message);
             this.isConnected = false;
@@ -173,43 +166,39 @@ class RedisManager {
   }
 
   async get(key) {
-    try {
-      if (!this.isConnected) {
-        await this.connect();
-      }
-      
-      if (this.fallbackMode || !this.isConnected) {
-        console.warn('⚠️ Using memory fallback for GET');
-        return this.memoryStore.get(key) || null;
-      }
+    if (!this.isConnected) {
+      await this.connect();
+    }
+    
+    if (!this.isConnected) {
+      throw new Error('Redis not connected - cannot retrieve data');
+    }
 
+    try {
       const value = await this.redis.get(key);
       return value ? JSON.parse(value) : null;
     } catch (error) {
       console.error('❌ Redis GET error:', error.message);
-      return this.memoryStore.get(key) || null;
+      throw error;
     }
   }
 
   async set(key, value, ttl = 3600) {
-    try {
-      if (!this.isConnected) {
-        await this.connect();
-      }
-      
-      if (this.fallbackMode || !this.isConnected) {
-        console.warn('⚠️ Using memory fallback for SET');
-        this.memoryStore.set(key, value);
-        return true;
-      }
+    if (!this.isConnected) {
+      await this.connect();
+    }
+    
+    if (!this.isConnected) {
+      throw new Error('Redis not connected - cannot store data');
+    }
 
+    try {
       await this.redis.setex(key, ttl, JSON.stringify(value));
       console.log(`✅ Stored in Redis: ${key}`);
       return true;
     } catch (error) {
       console.error('❌ Redis SET error:', error.message);
-      this.memoryStore.set(key, value);
-      return true;
+      throw error;
     }
   }
 
