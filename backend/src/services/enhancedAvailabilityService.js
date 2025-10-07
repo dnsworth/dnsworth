@@ -113,7 +113,7 @@ class EnhancedDynadotService {
    */
   async checkDomainChunkWithBackoff(domains, retryCount = 0) {
     const maxRetries = 3;
-    const baseDelay = 30000; // 30 seconds base delay
+    const baseDelay = 15000; // 15 seconds base delay to reduce wall time
     
     try {
       return await this.checkDomainChunk(domains);

@@ -74,23 +74,25 @@ class RedisManager {
         isTLS: protocol === 'rediss'
       };
 
+      const isDev = (process.env.NODE_ENV || '').toLowerCase() === 'development';
       const clientOptions = {
         host,
         port,
         password,
         db: 0,
         lazyConnect: false,
-        connectTimeout: 10000,
-        commandTimeout: 5000,
+        connectTimeout: isDev ? 3000 : 10000,
+        commandTimeout: isDev ? 3000 : 5000,
         retryDelayOnFailover: 100,
         maxRetriesPerRequest: 1,
         // CRITICAL: Add connection event handlers
         retryStrategy: (times) => {
-          if (times > 3) {
+          const maxTimes = isDev ? 1 : 3;
+          if (times > maxTimes) {
             console.log('❌ Max Redis connection retries exceeded');
             return null;
           }
-          return Math.min(times * 100, 3000);
+          return Math.min(times * 100, isDev ? 1000 : 3000);
         }
       };
 
@@ -132,9 +134,10 @@ class RedisManager {
 
       // Wait for connection with timeout
       await new Promise((resolve, reject) => {
+        const ms = isDev ? 3000 : 10000;
         const timeout = setTimeout(() => {
-          reject(new Error('Redis connection timeout after 10s'));
-        }, 10000);
+          reject(new Error(`Redis connection timeout after ${ms}ms`));
+        }, ms);
 
         this.redis.once('ready', () => {
           clearTimeout(timeout);

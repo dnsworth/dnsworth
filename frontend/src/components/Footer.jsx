@@ -8,26 +8,13 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
   const handleBulkValuation = onBulkValuation || onNavigateToBulk;
   
   const quickLinks = [
-    { name: 'Home', action: () => navigate('/') },
-    { name: 'Domain Gems', action: () => navigate('/domain-gems') },
-    { name: 'Bulk Valuation', action: () => {
-      if (handleBulkValuation) {
-        handleBulkValuation();
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => navigate('/bulk-valuation'), 300);
-      }
-    }},
-    { name: 'About Us', action: () => navigate('/page/about') },
-    { name: 'Blog', action: () => navigate('/page/blog') },
-    { name: 'FAQ', action: () => navigate('/page/faq') },
-    { name: 'Features', action: () => {
-      const whyChooseSection = document.getElementById('why-choose-section');
-      if (whyChooseSection) {
-        whyChooseSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }},
-    { name: 'Support', action: () => navigate('/page/contact') }
+    { name: 'Home', href: '/' },
+    { name: 'Domain Gems', href: '/domain-gems' },
+    { name: 'Bulk Valuation', href: '/bulk-valuation' },
+    { name: 'About Us', href: '/page/about' },
+    { name: 'Blog', href: '/page/blog' },
+    { name: 'FAQ', href: '/page/faq' },
+    { name: 'Support', href: '/page/contact' }
   ];
 
   const socialLinks = [
@@ -96,31 +83,14 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
             <h4 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4">Product</h4>
             <ul className="space-y-2 md:space-y-3">
               <li>
-                <button
-                  onClick={() => {
-                    if (handleBulkValuation) {
-                      handleBulkValuation();
-                    } else {
-                      navigate('/bulk-valuation');
-                    }
-                  }}
-                  className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
-                >
+                <a href="/bulk-valuation" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">
                   Bulk Valuation
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => {
-                    const featuresSection = document.getElementById('features-section');
-                    if (featuresSection) {
-                      featuresSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                  className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
-                >
-                  Features
-                </button>
+                <a href="/domain-gems" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">
+                  Domain Gems
+                </a>
               </li>
             </ul>
           </div>
@@ -129,38 +99,10 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
           <div className="flex flex-col items-start">
             <h4 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4">Company</h4>
             <ul className="space-y-2 md:space-y-3">
-              <li>
-                <button
-                  onClick={() => navigate('/page/about')}
-                  className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
-                >
-                  About
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => navigate('/page/blog')}
-                  className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
-                >
-                  Blog
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => navigate('/page/faq')}
-                  className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
-                >
-                  FAQ
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => navigate('/page/contact')}
-                  className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base"
-                >
-                  Contact
-                </button>
-              </li>
+              <li><a href="/page/about" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">About</a></li>
+              <li><a href="/page/blog" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">Blog</a></li>
+              <li><a href="/page/faq" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">FAQ</a></li>
+              <li><a href="/page/contact" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">Contact</a></li>
             </ul>
           </div>
 
@@ -192,24 +134,9 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
               © {currentYear} DNSWorth. All Rights Reserved.
             </p>
             <div className="flex gap-3 md:gap-6 mt-4 md:mt-0">
-              <button
-                onClick={() => navigate('/page/legal/privacy-policy')}
-                className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm"
-              >
-                Privacy Policy
-              </button>
-              <button
-                onClick={() => navigate('/page/legal/terms-of-service')}
-                className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm"
-              >
-                Terms of Service
-              </button>
-              <button
-                onClick={() => navigate('/page/legal/cookie-policy')}
-                className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm"
-              >
-                Cookie Policy
-              </button>
+              <a href="/page/legal/privacy-policy" className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm">Privacy Policy</a>
+              <a href="/page/legal/terms-of-service" className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm">Terms of Service</a>
+              <a href="/page/legal/cookie-policy" className="text-gray-400 hover:text-primary transition-colors duration-200 text-xs md:text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>

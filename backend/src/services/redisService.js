@@ -32,6 +32,8 @@ class RedisService {
     await this.initialize();
     
     const data = await this.redis.get(key);
+    // Guard for legacy plain-array writes (defensive)
+    if (Array.isArray(data)) return data;
     return data ? data.domains : [];
   }
 

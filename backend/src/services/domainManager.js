@@ -19,7 +19,9 @@ class DomainManager {
       console.log(`📦 Found ${existingDomains.length} existing available domains`);
       
       // Combine new and existing domains
-      const allDomains = [...existingDomains, ...newDomains];
+      const seen = new Set(existingDomains.map(d => d.domain));
+      const dedupNew = newDomains.filter(d => !seen.has(d.domain));
+      const allDomains = [...dedupNew, ...existingDomains];
       console.log(`📦 Total domains after adding: ${allDomains.length}`);
       
       // Store all available domains in Redis

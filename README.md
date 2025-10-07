@@ -104,6 +104,37 @@ X-Client-Version: 2.0.0
 }
 ```
 
+---
+
+## **Runbook (Production and Local)**
+
+### Environment
+- Backend required vars (server-side only):
+  - `REDIS_URL` (prod). Dev recommended: `redis://localhost:6379`
+  - `DYNADOT_API_KEY`, `OPENAI_API_KEY`
+  - `CRON_SECRET` for admin endpoints
+  - `AFFILIATE_WEBHOOK_SECRET` for `/api/registrations/webhook`
+
+### Health and diagnostics
+- `GET /health/redis` → Redis connection state
+- `GET /api/gems/diagnostics` → stored counts, sample items
+
+### Generation
+- Hourly cron runs `backend/hourly-batch.js` to populate `domains:available`.
+- Request paths do not generate on-demand.
+
+### Registration verification
+- Frontend opens affiliate link. Backend does not mark taken on click.
+- Verification paths:
+  - Affiliate postback → `POST /api/registrations/webhook` (requires `x-webhook-secret`)
+  - Post-click recheck → `POST /api/gems/recheck` (removes if unavailable)
+
+### Local development
+- Prefer a local Redis instance. If unreachable, Redis dev fast-fails to avoid UI hangs.
+
+### Tests
+- Availability parser test: `node tests/test-availability-parse.js`
+
 ### **Bulk Domain Valuation**
 ```bash
 POST /api/bulk-value

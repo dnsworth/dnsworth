@@ -21,6 +21,7 @@ class UniversalScheduler {
       
       // Single call for 150 universal domains
       const allDomains = await this.generator.generatePremiumDomains();
+      console.log(`🧮 Stage: generated=${allDomains.length}`);
       
       // Analyze category distribution
       this.generator.analyzeCategoryDistribution(allDomains);
@@ -32,6 +33,7 @@ class UniversalScheduler {
       
       // Use Dynadot service with 5 domains per batch (account limit)
       const availabilityResults = await this.availabilityService.checkBulkAvailability(domainsWithSuffix);
+      console.log(`🧮 Stage: availability_checked=${availabilityResults.length}`);
       
       // Filter available domains and preserve category information
       const availableDomains = availabilityResults
@@ -47,7 +49,7 @@ class UniversalScheduler {
           };
         });
       
-      console.log(`🎯 Universal Results: ${availableDomains.length}/150 available`);
+      console.log(`🎯 Universal Results: available=${availableDomains.length} of 150`);
       
       if (availableDomains.length === 0) {
         console.log('⚠️ No available domains found in this batch');
@@ -57,9 +59,11 @@ class UniversalScheduler {
       // Get valuations for available domains
       console.log('💰 Getting valuations for available domains...');
       const domainsWithValuations = await this.getValuationsForDomains(availableDomains.slice(0, 30));
+      console.log(`🧮 Stage: valued=${domainsWithValuations.length}`);
       
       // Store in Redis
       await this.storeDomainsInRedis(domainsWithValuations);
+      console.log('🧮 Stage: stored_to_redis', { key: 'domains:available', count: domainsWithValuations.length, ttlSeconds: 86400 });
       
       console.log(`✅ Successfully processed ${domainsWithValuations.length} universal premium domains`);
       return domainsWithValuations;
@@ -145,6 +149,13 @@ class UniversalScheduler {
       // Use domainManager to add domains (implements your logic)
       const allDomains = await domainManager.addAvailableDomains(domains);
       console.log(`💾 Successfully managed ${allDomains.length} total available domains`);
+      try {
+        const current = await this.redis.getDomainData('domains:available');
+        console.log('🧪 Redis verification:', {
+          storedCount: current?.count || (current?.domains?.length || 0),
+          generatedAt: current?.generatedAt || null
+        });
+      } catch {}
       
       return allDomains;
     } catch (error) {

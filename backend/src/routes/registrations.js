@@ -1,6 +1,7 @@
 import express from 'express';
 import { Pool } from 'pg';
 import rateLimit from 'express-rate-limit';
+import domainManager from '../services/domainManager.js';
 
 const router = express.Router();
 
@@ -214,3 +215,30 @@ router.get('/stats', countLimiter, async (req, res) => {
 });
 
 export default router;
+
+/**
+ * POST /api/registrations/webhook
+ * Secure webhook to mark a domain as registered (affiliate postback)
+ * Requires header x-webhook-secret to match AFFILIATE_WEBHOOK_SECRET
+ */
+router.post('/webhook', async (req, res) => {
+  try {
+    const provided = req.get('x-webhook-secret') || (req.get('authorization') || '').replace(/^Bearer\s+/i, '');
+    if (!process.env.AFFILIATE_WEBHOOK_SECRET || provided !== process.env.AFFILIATE_WEBHOOK_SECRET) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    const { domain } = req.body || {};
+    if (!domain || typeof domain !== 'string') {
+      return res.status(400).json({ success: false, error: 'Domain is required' });
+    }
+
+    const clean = domain.toLowerCase().replace(/\s+/g, '').replace(/^https?:\/\//, '').replace(/\/$/, '').replace(/^www\./, '');
+    const name = clean.replace('.com', '').replace(/[^a-z0-9.-]/g, '');
+    await domainManager.removeRegisteredDomain(name);
+    return res.json({ success: true, removed: name });
+  } catch (error) {
+    console.error('Affiliate webhook failed:', error.message);
+    return res.status(500).json({ success: false, error: 'Webhook processing failed' });
+  }
+});

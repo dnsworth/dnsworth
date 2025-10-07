@@ -204,8 +204,10 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   };
 
   const handleRegisterDomain = async (domain) => {
-    // Open Dynadot registration page with the domain pre-filled
-    const dynadotUrl = `https://www.tkqlhce.com/click-101518597-12527405?url=https://dynadot.com/domain/search?domain=${domain}`;
+    // Open Dynadot registration page with the domain pre-filled (.com ensured)
+    const domainParam = domain.includes('.') ? domain : `${domain}.com`;
+    const target = `https://dynadot.com/domain/search?domain=${encodeURIComponent(domainParam)}`;
+    const dynadotUrl = `https://www.tkqlhce.com/click-101518597-12527405?url=${encodeURIComponent(target)}`;
     window.open(dynadotUrl, '_blank', 'noopener,noreferrer');
     
     // Track registration
@@ -216,27 +218,21 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ domain: `${domain}.com` })
+        body: JSON.stringify({ domain: domainParam })
       });
       
-      // Update registration count
-      setRegistrationCount(prev => prev + 1);
+      // Trigger a server-side availability recheck in the background
+      await fetch(`${apiUrl}/api/gems/recheck`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ domain: domainParam })
+      });
     } catch (error) {
       console.error('Error tracking registration:', error);
     }
     
-    // Mark domain as taken locally and update availability count
-    setGems(prevGems => {
-      const updatedGems = prevGems.map(gem => 
-        gem.domain === domain ? { ...gem, available: false } : gem
-      );
-      
-      // Update availability count
-      const availableCount = updatedGems.filter(gem => gem.available !== false).length;
-      setAvailabilityCount(availableCount);
-      
-      return updatedGems;
-    });
+    // Note: We don't mark domain as taken locally anymore since clicking register
+    // doesn't guarantee the user actually purchased the domain
   };
 
   const handleValuateDomain = async (domain) => {
@@ -285,6 +281,16 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
         <meta name="twitter:title" content="Domain Gems - Discover Valuable Available Domains" />
         <meta name="twitter:description" content="Discover valuable domain names that are currently available for registration." />
         <meta name="twitter:image" content="https://dnsworth.com/domain-gems-twitter-image.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://dnsworth.com' },
+              { '@type': 'ListItem', position: 2, name: 'Domain Gems', item: 'https://dnsworth.com/domain-gems' }
+            ]
+          })}
+        </script>
       </Helmet>
       
       <Header 
@@ -301,7 +307,7 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
               Domain Gems
             </h1>
             <p className="text-xs sm:text-sm text-gray-400 mb-3 sm:mb-4">
-              By registering through our links, you help support the continued development of our AI domain tools. <a href="/page/legal/affiliate-disclosure" className="text-blue-400 hover:text-blue-300 underline">Learn more</a>
+              By registering through our links, you help support the continued development of our domain tools. <a href="/page/legal/affiliate-disclosure" className="text-blue-400 hover:text-blue-300 underline">Learn more</a>
             </p>
           </div>
         </div>

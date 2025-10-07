@@ -15,20 +15,7 @@ router.get('/', async (req, res) => {
     // Get domains using domainManager (implements your logic)
     let gems = await domainManager.getDisplayDomains();
     
-    // If no gems available and Redis is not working, generate some on-demand
-    if (gems.length === 0) {
-      console.log('🔄 No gems in cache, generating on-demand...');
-      try {
-        const { default: UniversalScheduler } = await import('../services/universalScheduler.js');
-        await UniversalScheduler.generateHourlyBatch();
-        gems = await domainManager.getDisplayDomains();
-        console.log(`✅ Generated ${gems.length} domains on-demand`);
-      } catch (error) {
-        console.error('❌ On-demand generation failed:', error.message);
-        // Return empty array if generation fails
-        gems = [];
-      }
-    }
+    // Do NOT generate on-demand here. Request path must not generate to avoid masking issues.
     
     // Get domain count for monitoring
     const count = await domainManager.getDomainCount();
@@ -87,6 +74,65 @@ router.post('/register', async (req, res) => {
       error: 'Failed to register domain',
       message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
     });
+  }
+});
+
+/**
+ * POST /api/gems/recheck
+ * Trigger a delayed availability re-check and remove if registered
+ */
+router.post('/recheck', async (req, res) => {
+  try {
+    const { domain } = req.body;
+    if (!domain || typeof domain !== 'string') {
+      return res.status(400).json({ success: false, error: 'Domain is required' });
+    }
+
+    // Fire-and-forget background task (no await to keep request fast)
+    (async () => {
+      try {
+        const { default: EnhancedAvailabilityService } = await import('../services/enhancedAvailabilityService.js');
+        const svc = new EnhancedAvailabilityService();
+        const results = await svc.checkBulkAvailability([domain.includes('.') ? domain : `${domain}.com`]);
+        const stillAvailable = Array.isArray(results) && results.some(r => (r.domain || '').includes(domain) && r.available);
+        if (!stillAvailable) {
+          await domainManager.removeRegisteredDomain(domain.replace('.com', ''));
+        }
+      } catch (err) {
+        console.error('Recheck task error:', err.message);
+      }
+    })();
+
+    return res.json({ success: true, message: 'Recheck scheduled' });
+  } catch (error) {
+    console.error('Error scheduling recheck:', error);
+    return res.status(500).json({ success: false, error: 'Failed to schedule recheck' });
+  }
+});
+
+/**
+ * GET /api/gems/diagnostics
+ * Admin diagnostics: counts and metadata (no secrets)
+ */
+router.get('/diagnostics', async (req, res) => {
+  try {
+    const { default: redisService } = await import('../services/redisService.js');
+    const key = 'domains:available';
+    const data = await redisService.getDomainData(key);
+    const count = await domainManager.getDomainCount();
+    const sample = (data?.domains || []).slice(0, 3).map(d => ({ domain: d.domain, lastUpdated: d.lastUpdated, category: d.category }));
+    return res.json({
+      success: true,
+      data: {
+        key,
+        meta: { generatedAt: data?.generatedAt || null, storedCount: data?.count || (data?.domains?.length || 0) },
+        display: count,
+        sample
+      }
+    });
+  } catch (error) {
+    console.error('Diagnostics failed:', error.message);
+    return res.status(500).json({ success: false, error: 'Diagnostics failed' });
   }
 });
 

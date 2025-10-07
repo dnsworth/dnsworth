@@ -1,6 +1,7 @@
 import SearchBar from './SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGem } from '@fortawesome/free-regular-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   // Handle both prop names for backward compatibility
@@ -13,27 +14,19 @@ const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome, onNavigateT
       <div className="flex items-center justify-between py-3 px-4 sm:py-4 sm:px-6 lg:px-8">
         {/* Logo - Mobile optimized sizing */}
         <div className="flex-shrink-0">
-          <button
-            onClick={onNavigateHome}
+          <Link
+            to="/"
             className="mobile-logo-size sm:text-2xl lg:text-3xl font-bold text-gradient hover:scale-105 transition-transform duration-200 cursor-pointer sm:px-0 sm:py-0"
           >
             DNSWorth
-          </button>
+          </Link>
         </div>
 
         {/* Action Buttons */}
         <div className="flex-shrink-0 flex gap-2 sm:gap-3">
           {/* Domain Gems Button */}
-          <button
-            onClick={() => {
-              if (typeof onNavigateToGems === 'function') {
-                try {
-                  onNavigateToGems();
-                } catch (error) {
-                  // Handle error silently in production
-                }
-              }
-            }}
+          <Link
+            to="/domain-gems"
             className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 hover:scale-105 transform shadow-lg"
           >
             <span className="hidden sm:flex items-center gap-2">
@@ -44,24 +37,16 @@ const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome, onNavigateT
               <FontAwesomeIcon icon={faGem} className="w-3 h-3" />
               Gems
             </span>
-          </button>
+          </Link>
 
           {/* Bulk Valuation Button */}
-          <button
-            onClick={() => {
-              if (typeof handleBulkValuation === 'function') {
-                try {
-                  handleBulkValuation();
-                } catch (error) {
-                  // Handle error silently in production
-                }
-              }
-            }}
+          <Link
+            to="/bulk-valuation"
             className="btn-accent-mobile sm:btn-accent animate-glow text-sm sm:text-base px-3 py-2 sm:px-6 sm:py-3"
           >
             <span className="hidden sm:inline">Bulk Valuation</span>
             <span className="sm:hidden">Bulk</span>
-          </button>
+          </Link>
         </div>
       </div>
     </header>

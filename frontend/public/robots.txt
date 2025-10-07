@@ -11,13 +11,17 @@ Crawl-delay: 1
 Allow: /about
 Allow: /blog
 Allow: /bulk-valuation
+Allow: /domain-gems
+Allow: /page/faq
+Allow: /page/blog
 Allow: /privacy-policy
 Allow: /terms-of-service
 Allow: /cookie-policy
 
 # Disallow admin or private areas (if any in the future)
-# Disallow: /admin/
-# Disallow: /private/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /dnsworth-logo
 
 # Allow CSS, JS, and images
 Allow: /assets/
