@@ -29,17 +29,21 @@ class RedisManager {
       return null;
     }
 
-    // If we have a stale connection, reset it completely
+    // If we have a stale connection, completely destroy it
     if (this.redis) {
-      console.log('🔄 Resetting Redis connection...');
+      console.log('🔄 Destroying stale Redis connection...');
       try {
         this.redis.removeAllListeners();
-        await this.redis.disconnect();
+        this.redis.disconnect();
+        this.redis.quit();
       } catch (e) {
         // Ignore disconnect errors
       }
       this.redis = null;
       this.isConnected = false;
+      
+      // Small delay to ensure previous connection is fully destroyed
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
       try {
