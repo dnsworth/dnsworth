@@ -12,33 +12,27 @@ const domainGenerator = new DomainGenerator();
  */
 router.get('/', async (req, res) => {
   try {
-    // Get domains using domainManager (implements your logic)
-    let gems = await domainManager.getDisplayDomains();
+    console.log('🔄 Generating fresh domains directly (bypassing Redis)...');
     
-    // If no gems available and Redis is not working, generate some on-demand
-    if (gems.length === 0) {
-      console.log('🔄 No gems in cache, generating on-demand...');
-      try {
-        const { default: UniversalScheduler } = await import('../services/universalScheduler.js');
-        await UniversalScheduler.generateHourlyBatch();
-        gems = await domainManager.getDisplayDomains();
-        console.log(`✅ Generated ${gems.length} domains on-demand`);
-      } catch (error) {
-        console.error('❌ On-demand generation failed:', error.message);
-        // Return empty array if generation fails
-        gems = [];
-      }
-    }
+    // Generate domains directly without Redis dependency
+    const gems = await domainGenerator.generateFreshDomains(30, {
+      categories: ['tech', 'business', 'startup', 'ai', 'crypto', 'finance'],
+      tlds: ['.com', '.io', '.ai', '.co', '.app'],
+      length: { min: 4, max: 12 }
+    });
     
-    // Get domain count for monitoring
-    const count = await domainManager.getDomainCount();
+    console.log(`✅ Generated ${gems.length} domains directly`);
 
     res.json({
       success: true,
       data: {
         gems,
         total: gems.length,
-        count: count,
+        count: {
+          total: gems.length,
+          display: gems.length,
+          maxDisplay: 30
+        },
         generatedAt: new Date().toISOString()
       }
     });
@@ -231,8 +225,16 @@ router.post('/refresh', async (req, res) => {
   try {
     const { count = 50 } = req.body;
 
+    console.log(`🔄 Refreshing ${count} domains directly (bypassing Redis)...`);
+
     // Generate a larger batch for refresh
-    const gems = await domainGenerator.generateFreshDomains(parseInt(count));
+    const gems = await domainGenerator.generateFreshDomains(parseInt(count), {
+      categories: ['tech', 'business', 'startup', 'ai', 'crypto', 'finance', 'health', 'education'],
+      tlds: ['.com', '.io', '.ai', '.co', '.app', '.net', '.org'],
+      length: { min: 3, max: 15 }
+    });
+
+    console.log(`✅ Refreshed ${gems.length} domains successfully`);
 
     res.json({
       success: true,
