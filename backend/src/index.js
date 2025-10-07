@@ -399,7 +399,7 @@ app.get('/health/redis', async (req, res) => {
 });
 
 // Secure admin endpoint to trigger gems refresh (guarded by CRON_SECRET)
-app.post('/api/gems/refresh', async (req, res) => {
+app.post('/api/admin/gems/refresh', async (req, res) => {
   try {
     const providedSecret = req.get('x-cron-secret') || (req.get('authorization') || '').replace(/^Bearer\s+/i, '') || req.query.secret;
     if (!process.env.CRON_SECRET || providedSecret !== process.env.CRON_SECRET) {
@@ -423,6 +423,24 @@ app.post('/api/gems/refresh', async (req, res) => {
   } catch (error) {
     console.error('Admin gems refresh failed:', error.message);
     return res.status(500).json({ success: false, error: 'Refresh failed' });
+  }
+});
+
+// Test endpoint to check if scheduler is running
+app.get('/api/admin/scheduler/status', async (req, res) => {
+  try {
+    // Check if we have a scheduler instance running
+    const hasScheduler = global.universalScheduler !== undefined;
+    const currentTime = new Date().toISOString();
+    
+    res.json({
+      success: true,
+      schedulerRunning: hasScheduler,
+      currentTime,
+      message: hasScheduler ? 'Scheduler is running' : 'Scheduler not detected'
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -824,9 +842,21 @@ app.use('*', (req, res) => {
 });
 
 // Start server with enhanced security logging
-const server = app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, async () => {
   console.log(`🚀 DNSWorth API server running on ${HOST}:${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  
+  // Start the Universal Scheduler for hourly domain generation
+  try {
+    const { default: UniversalScheduler } = await import('./services/universalScheduler.js');
+    const scheduler = new UniversalScheduler();
+    await scheduler.start();
+    global.universalScheduler = scheduler; // Store globally for status checking
+    console.log('✅ Universal Scheduler started - hourly generation enabled');
+  } catch (error) {
+    console.error('❌ Failed to start Universal Scheduler:', error.message);
+    console.log('⚠️  Hourly domain generation will not work automatically');
+  }
   
   // Perform security audit on startup
   try {

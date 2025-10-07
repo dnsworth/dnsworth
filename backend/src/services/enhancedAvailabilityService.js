@@ -1,5 +1,9 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
 // import Redis from 'redis'; // DISABLED
+
+// Load environment variables
+dotenv.config();
 
 class EnhancedDynadotService {
   constructor() {
