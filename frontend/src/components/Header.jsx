@@ -27,7 +27,7 @@ const Header = ({ onBulkValuation, onNavigateToBulk, onNavigateHome, onNavigateT
           {/* Domain Gems Button */}
           <Link
             to="/domain-gems"
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 hover:scale-105 transform shadow-lg"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm transition-all duration-200 hover:scale-105 transform shadow-lg"
           >
             <span className="hidden sm:flex items-center gap-2">
               <FontAwesomeIcon icon={faGem} className="w-4 h-4" />

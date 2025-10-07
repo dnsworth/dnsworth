@@ -13,6 +13,8 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const [lastUpdated, setLastUpdated] = useState(null);
   const [availabilityCount, setAvailabilityCount] = useState(0);
+  const [dataSignature, setDataSignature] = useState('');
+  const [updatedNotice, setUpdatedNotice] = useState(false);
 
   // Debug: Log component state (removed to reduce console noise)
 
@@ -132,6 +134,12 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
           ...gem,
           id: index + 1
         }));
+        // Compute a simple signature to detect changes across polls
+        const signature = gemsWithIds.slice(0, 10).map(g => `${g.domain}:${g.estimatedValue || g.auctionValue || ''}`).join('|');
+        if (dataSignature && signature !== dataSignature) {
+          setUpdatedNotice(true);
+        }
+        setDataSignature(signature);
         setGems(gemsWithIds);
         setLastUpdated(new Date().toISOString());
         
@@ -196,6 +204,33 @@ const DomainGems = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
       setLoading(false);
     }
   };
+
+  // Light auto-refresh: poll every 12 minutes when the tab is visible
+  useEffect(() => {
+    const POLL_MS = 12 * 60 * 1000; // 12 minutes
+    let timer;
+
+    const tick = () => {
+      if (document.visibilityState === 'visible') {
+        loadDomainGems();
+      }
+    };
+
+    timer = setInterval(tick, POLL_MS);
+
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        // Optional: light debounce by delaying a bit
+        setTimeout(tick, 500);
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [dataSignature]);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
