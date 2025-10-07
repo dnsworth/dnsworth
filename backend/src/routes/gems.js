@@ -13,7 +13,22 @@ const domainGenerator = new DomainGenerator();
 router.get('/', async (req, res) => {
   try {
     // Get domains using domainManager (implements your logic)
-    const gems = await domainManager.getDisplayDomains();
+    let gems = await domainManager.getDisplayDomains();
+    
+    // If no gems available and Redis is not working, generate some on-demand
+    if (gems.length === 0) {
+      console.log('🔄 No gems in cache, generating on-demand...');
+      try {
+        const { default: UniversalScheduler } = await import('../services/universalScheduler.js');
+        await UniversalScheduler.generateHourlyBatch();
+        gems = await domainManager.getDisplayDomains();
+        console.log(`✅ Generated ${gems.length} domains on-demand`);
+      } catch (error) {
+        console.error('❌ On-demand generation failed:', error.message);
+        // Return empty array if generation fails
+        gems = [];
+      }
+    }
     
     // Get domain count for monitoring
     const count = await domainManager.getDomainCount();
