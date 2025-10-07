@@ -29,10 +29,11 @@ class RedisManager {
       return null;
     }
 
-    // If we have a stale connection, reset it
+    // If we have a stale connection, reset it completely
     if (this.redis) {
       console.log('🔄 Resetting Redis connection...');
       try {
+        this.redis.removeAllListeners();
         await this.redis.disconnect();
       } catch (e) {
         // Ignore disconnect errors
@@ -79,7 +80,7 @@ class RedisManager {
           isTLS: useTLS
         };
 
-        // Simplified Redis connection for Redis Cloud
+        // Upstash Redis connection configuration
         clientOptions = {
           host,
           port,
@@ -87,13 +88,16 @@ class RedisManager {
           db: 0,
           tls: useTLS ? {
             rejectUnauthorized: false,
-            servername: host
+            servername: host,
+            checkServerIdentity: () => undefined
           } : undefined,
-          connectTimeout: 10000,
-          commandTimeout: 5000,
+          connectTimeout: 15000,
+          commandTimeout: 10000,
           retryDelayOnFailover: 100,
-          maxRetriesPerRequest: 3,
+          maxRetriesPerRequest: 1,
           lazyConnect: false,
+          keepAlive: 30000,
+          family: 4,
           onError: (err) => {
             console.error('❌ Redis connection error:', err.message);
             this.isConnected = false;
