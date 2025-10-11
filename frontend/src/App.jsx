@@ -11,8 +11,6 @@ import CookiePolicy from './pages/CookiePolicy';
 import AffiliateDisclosure from './pages/AffiliateDisclosure';
 import FAQ from './pages/FAQ';
 import Support from './pages/Support';
-import APIOverview from './pages/APIOverview';
-import ExpiredDomains from './pages/ExpiredDomains';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 
@@ -54,8 +52,6 @@ function AppContent() {
         <Route path="/page/legal/affiliate-disclosure" element={<AffiliateDisclosure onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/faq" element={<FAQ onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/contact" element={<Support onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
-        <Route path="/page/api" element={<APIOverview onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
-        <Route path="/page/expired-domains" element={<ExpiredDomains onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/blog/:slug" element={<BlogPost onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />

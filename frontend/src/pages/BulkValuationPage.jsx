@@ -160,6 +160,7 @@ twitter.com`);
         <meta name="description" content="Value hundreds of domains simultaneously with DNSWorth's bulk valuation tool. Perfect for serious investors and portfolio managers. Free AI-powered portfolio analysis." />
         <meta name="keywords" content="bulk domain valuation, portfolio analysis, domain portfolio, multiple domain valuation, domain investor tools" />
         <meta name="author" content="DNSWorth" />
+        <meta name="robots" content="index, follow" />
         
         {/* Canonical URL */}
         <link rel="canonical" href="https://dnsworth.com/bulk-valuation" />

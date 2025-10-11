@@ -210,7 +210,7 @@ const Blog = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
         </script>
       </Helmet>
       {/* Header */}
-      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateToHome} onNavigateToGems={onNavigateToGems} />
 
       {/* Hero Section */}
       <section className="py-12 md:py-20 bg-black">

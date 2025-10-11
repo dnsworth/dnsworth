@@ -168,7 +168,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
   if (!post) {
     return (
       <div className="min-h-screen bg-white">
-        <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} onNavigateToGems={onNavigateToGems} />
+        <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateToHome} onNavigateToGems={onNavigateToGems} />
         <div className="container mx-auto px-6 py-20 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Blog Post Not Found</h1>
           <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
@@ -179,7 +179,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
             Back to Blog
           </button>
         </div>
-        <Footer onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+        <Footer onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateToHome} />
       </div>
     );
   }
@@ -268,7 +268,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
         </script>
       </Helmet>
       {/* Header */}
-      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Header onNavigateToBulk={onNavigateToBulk} onNavigateHome={onNavigateToHome} />
 
       {/* Blog Post Content */}
       <article className="py-12 md:py-20">
@@ -385,7 +385,7 @@ const BlogPost = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
       </article>
 
       {/* Footer */}
-      <Footer onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateHome} />
+      <Footer onBulkValuation={onNavigateToBulk} onNavigateHome={onNavigateToHome} />
     </div>
   );
 };
