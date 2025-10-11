@@ -14,7 +14,7 @@ DNSWorth is a cutting-edge web application that provides instant, accurate domai
 ### **Key Features**
 - 🚀 **Instant Valuations**: Get domain appraisals in under 3 seconds
 - 📊 **Bulk Portfolio Analysis**: Evaluate up to 100 domains simultaneously
-- 🤖 **AI-Powered Domain Generation**: Generate unique, brandable domains using GPT-4
+- 🤖 **AI-Powered Domain Generation**: Generate unique, brandable domains using GPT-3.5 Turbo
 - 🔍 **Real-Time Availability**: Check domain availability with Dynadot API
 - 💰 **100% Free Forever**: No hidden costs or premium tiers
 - 🔒 **Enterprise Security**: Comprehensive security with audit logging and API key rotation
@@ -27,7 +27,7 @@ DNSWorth is a cutting-edge web application that provides instant, accurate domai
 - **Backend**: Node.js 18+, Express.js, Helmet.js
 - **Database**: PostgreSQL with SSL encryption
 - **Caching**: Redis for performance optimization
-- **AI Services**: OpenAI GPT-4 for domain generation
+- **AI Services**: OpenAI GPT-3.5 Turbo for domain generation
 - **Domain Services**: Dynadot API for availability checks
 - **Deployment**: Vercel (Frontend), Render (Backend)
 - **Security**: Enterprise-grade security with audit logging and API key rotation

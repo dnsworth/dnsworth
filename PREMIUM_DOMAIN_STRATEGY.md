@@ -25,7 +25,7 @@ Transform DNSWorth from generating low-value domains ($0-50) to premium domains 
 1. **Replace current generator** with `EnhancedPremiumGenerator`
 2. **Reduce quantity**: 50 domains instead of 150 (quality over quantity)
 3. **Focus on 4-8 characters**: Premium length range
-4. **Use GPT-4**: Better quality than GPT-3.5-turbo
+4. **Use GPT-3.5 Turbo**: Cost-effective with good quality
 5. **Implement quality scoring**: Filter out low-value domains
 
 ### **Phase 2: Smart Categorization**

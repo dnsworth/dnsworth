@@ -31,7 +31,7 @@ class UltraPremiumGenerator {
         console.log(`📝 Attempt ${attempts}/${this.maxRetries} - Generating ultra-premium domains...`);
         const openai = this.getOpenAI();
         const response = await openai.chat.completions.create({
-          model: "gpt-4", // Using GPT-4 for highest quality
+          model: "gpt-3.5-turbo", // Using GPT-3.5 Turbo for cost efficiency
           messages: [{ role: "user", content: ULTRA_PREMIUM_PROMPT }],
           max_tokens: 4000,
           temperature: 0.7 // Balanced creativity for ultra-premium names

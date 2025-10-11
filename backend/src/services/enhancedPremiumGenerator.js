@@ -29,7 +29,7 @@ class EnhancedPremiumGenerator {
       
       try {
         const response = await this.getOpenAI().chat.completions.create({
-          model: "gpt-4", // Use GPT-4 for better quality
+          model: "gpt-3.5-turbo", // Use GPT-3.5 Turbo for cost efficiency
           messages: [{ role: "user", content: PREMIUM_DOMAIN_PROMPT }],
           max_tokens: 3000,
           temperature: 0.8 // Higher creativity for premium names

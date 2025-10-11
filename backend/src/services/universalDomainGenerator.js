@@ -26,7 +26,7 @@ class UniversalDomainGenerator {
       console.log(`📝 Generating universal domains (single attempt to save tokens)...`);
       const openai = this.getOpenAI();
       const response = await openai.chat.completions.create({
-        model: "gpt-4", // Using GPT-4 for highest quality
+        model: "gpt-3.5-turbo", // Using GPT-3.5 Turbo for cost efficiency
         messages: [{ role: "user", content: UNIVERSAL_DOMAIN_PROMPT }],
         max_tokens: 2000,
         temperature: 0.7 // Balanced creativity for universal names

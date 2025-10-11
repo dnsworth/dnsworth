@@ -8,7 +8,7 @@ This system implements AI-powered domain generation similar to HumbleWorth's "Ge
 
 ### 1. **AI Domain Generation Process**
 
-The system uses OpenAI's GPT-4 to generate domain names based on:
+The system uses OpenAI's GPT-3.5 Turbo to generate domain names based on:
 - **Trending Keywords**: AI analyzes current market trends and popular terms
 - **User Preferences**: Keywords, length constraints, preferred TLDs
 - **Category Focus**: Technology, Healthcare, Finance, Environment, etc.

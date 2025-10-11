@@ -43,7 +43,7 @@ function getServices() {
 router.get('/', async (req, res) => {
   try {
     const { count = 30, refresh = false, keywords, style = 'tech', length = 'medium', userId } = req.query;
-    const { universalScheduler, personalizationEngine } = getServices();
+    const { personalizationEngine } = getServices();
     
     let domains = [];
     
@@ -59,16 +59,9 @@ router.get('/', async (req, res) => {
       console.log(`🔎 Pool returned ${domains ? domains.length : 0} domains`);
     }
 
-    // If still empty, synchronously trigger generation in this process (no separate script)
+    // If still empty, return empty result (generation handled by CostEffectiveScheduler)
     if ((!domains || domains.length === 0) && (refresh === 'true' || refresh === true)) {
-      console.log('⚠️ No cached domains. Triggering in-process generation now...');
-      try {
-        await universalScheduler.generateHourlyBatch();
-        domains = await redisService.getDomains('domains:available');
-        console.log(`✅ After trigger, fetched ${domains ? domains.length : 0} domains`);
-      } catch (e) {
-        console.error('❌ In-process generation failed:', e.message);
-      }
+      console.log('⚠️ No cached domains. Generation is handled by CostEffectiveScheduler.');
     }
 
     // If still empty, return empty result
@@ -609,9 +602,8 @@ router.get('/test-dynadot', async (req, res) => {
  */
 router.post('/trigger-generation', async (req, res) => {
   try {
-    const { universalScheduler } = getServices();
-    console.log('🔄 Manual domain generation triggered');
-    await universalScheduler.generateHourlyBatch();
+    console.log('🔄 Manual domain generation triggered - handled by CostEffectiveScheduler');
+    // Generation is handled by CostEffectiveScheduler, not this route
     res.json({
       success: true,
       message: 'Domain generation triggered successfully'
