@@ -12,5 +12,22 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "https://dnsworth.onrender.com/api/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "redirects": [
+    {
+      "source": "http://dnsworth.com/(.*)",
+      "destination": "https://dnsworth.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "http://www.dnsworth.com/(.*)",
+      "destination": "https://dnsworth.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "https://www.dnsworth.com/(.*)",
+      "destination": "https://dnsworth.com/$1",
+      "permanent": true
+    }
   ]
 }

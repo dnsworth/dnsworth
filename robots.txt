@@ -13,6 +13,10 @@ Disallow: /admin/
 Disallow: /internal/
 Disallow: /health
 
+# Disallow search parameter URLs
+Disallow: /?search=*
+Disallow: /*?search=*
+
 # Allow important pages
 Allow: /
 Allow: /about

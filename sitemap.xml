@@ -13,12 +13,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dnsworth.com/blog</loc>
-    <lastmod>2025-08-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://dnsworth.com/support</loc>
     <lastmod>2025-08-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -49,9 +43,21 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://dnsworth.com/blog/how-to-value-domain-free-guide-2025</loc>
+    <loc>https://dnsworth.com/blog</loc>
     <lastmod>2025-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dnsworth.com/domain-gems</loc>
+    <lastmod>2025-08-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dnsworth.com/bulk-valuation</loc>
+    <lastmod>2025-08-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>
