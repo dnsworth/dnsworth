@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
+import DomainTicker from '../components/DomainTicker';
 import HeroSection from '../components/HeroSection';
 import ValuationResults from '../components/ValuationResults';
 import SectionFeatures from '../components/SectionFeatures';
@@ -150,6 +151,7 @@ const Home = ({ onNavigateToBulk, shouldScrollToTop, onNavigateToGems }) => {
           })}
         </script>
       </Helmet>
+      <DomainTicker />
       <Header onBulkValuation={handleBulkValuation} onNavigateHome={handleNewSearch} onNavigateToGems={onNavigateToGems} />
       <HeroSection
         onResult={handleValuationResult}
