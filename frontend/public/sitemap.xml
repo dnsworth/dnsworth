@@ -32,6 +32,13 @@
   </url>
 
   <url>
+    <loc>https://dnsworth.com/blog</loc>
+    <lastmod>2025-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://dnsworth.com/page/faq</loc>
     <lastmod>2025-10-07</lastmod>
     <changefreq>weekly</changefreq>

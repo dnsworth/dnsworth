@@ -11,6 +11,7 @@ Crawl-delay: 1
 Allow: /about
 Allow: /bulk-valuation
 Allow: /domain-gems
+Allow: /blog
 Allow: /page/faq
 Allow: /privacy-policy
 Allow: /terms-of-service

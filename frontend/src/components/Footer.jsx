@@ -11,6 +11,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
     { name: 'Home', href: '/' },
     { name: 'Domain Gems', href: '/domain-gems' },
     { name: 'Bulk Valuation', href: '/bulk-valuation' },
+    { name: 'Blog', href: '/blog' },
     { name: 'About Us', href: '/page/about' },
     { name: 'FAQ', href: '/page/faq' },
     { name: 'Support', href: '/page/contact' }
