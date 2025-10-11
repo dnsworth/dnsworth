@@ -1,4 +1,4 @@
-import UniversalPremiumGenerator from './universalPremiumGenerator.js';
+import UniversalDomainGenerator from './universalDomainGenerator.js';
 import EnhancedAvailabilityService from './enhancedAvailabilityService.js';
 import HumbleworthClient from './humbleworthClient.js';
 import redisService from './redisService.js';
@@ -6,7 +6,7 @@ import domainManager from './domainManager.js';
 
 class UniversalScheduler {
   constructor() {
-    this.generator = new UniversalPremiumGenerator();
+    this.generator = new UniversalDomainGenerator();
     this.availabilityService = new EnhancedAvailabilityService();
     this.valuationClient = new HumbleworthClient();
     this.redis = redisService;
@@ -17,14 +17,14 @@ class UniversalScheduler {
       // Initialize Redis service
       await this.redis.initialize();
 
-      console.log('🔄 Generating universal premium domains (150 domains)...');
+      console.log('🔄 Generating universal business domains (50 domains)...');
       
-      // Single call for 150 universal domains
-      const allDomains = await this.generator.generatePremiumDomains();
+      // Single call for 50 universal domains
+      const allDomains = await this.generator.generateUniversalDomains();
       console.log(`🧮 Stage: generated=${allDomains.length}`);
       
-      // Analyze category distribution
-      this.generator.analyzeCategoryDistribution(allDomains);
+      // Log category distribution
+      console.log(`📊 Generated ${allDomains.length} universal domains`);
       
       // Add .com suffix for availability check
       const domainsWithSuffix = allDomains.map(domain => `${domain}.com`);
@@ -65,7 +65,7 @@ class UniversalScheduler {
       await this.storeDomainsInRedis(domainsWithValuations);
       console.log('🧮 Stage: stored_to_redis', { key: 'domains:available', count: domainsWithValuations.length, ttlSeconds: 86400 });
       
-      console.log(`✅ Successfully processed ${domainsWithValuations.length} universal premium domains`);
+      console.log(`✅ Successfully processed ${domainsWithValuations.length} universal domains`);
       return domainsWithValuations;
       
     } catch (error) {
@@ -98,22 +98,28 @@ class UniversalScheduler {
         // Ensure domain is stored without .com suffix for consistency
         const cleanDomain = domain.replace('.com', '');
         
-        domainsWithValuations.push({
-          domain: cleanDomain,
-          category: domainData.category || 'lifestyle',
-          estimatedValue: valuation.auctionValue !== undefined ? valuation.auctionValue : (valuation.value_usd || Math.max(valuation.marketplaceValue || 0, valuation.brokerageValue || 0)),
-          auctionValue: valuation.auctionValue || 0,
-          marketplaceValue: valuation.marketplaceValue || 0,
-          brokerageValue: valuation.brokerageValue || 0,
-          confidence: valuation.confidence || 40,
-          source: valuation.source || 'fallback',
-          available: true,
-          price: 'Available',
-          lastUpdated: new Date().toISOString(),
-          // Add required fields for frontend
-          id: Math.random().toString(36).substr(2, 9),
-          status: 'available'
-        });
+        // Only include domains with auction value >= $50
+        const auctionValue = valuation.auctionValue || 0;
+        if (auctionValue >= 50) {
+          domainsWithValuations.push({
+            domain: cleanDomain,
+            category: domainData.category || 'lifestyle',
+            estimatedValue: auctionValue,
+            auctionValue: auctionValue,
+            marketplaceValue: valuation.marketplaceValue || 0,
+            brokerageValue: valuation.brokerageValue || 0,
+            confidence: valuation.confidence || 40,
+            source: valuation.source || 'fallback',
+            available: true,
+            price: 'Available',
+            lastUpdated: new Date().toISOString(),
+            // Add required fields for frontend
+            id: Math.random().toString(36).substr(2, 9),
+            status: 'available'
+          });
+        } else {
+          console.log(`❌ Filtered out ${cleanDomain} - auction value $${auctionValue} below $50 threshold`);
+        }
       } catch (error) {
         console.log(`❌ Valuation failed for ${domain}: ${error.message}`);
         // Add domain with fallback valuation

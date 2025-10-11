@@ -12,7 +12,6 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
     { name: 'Domain Gems', href: '/domain-gems' },
     { name: 'Bulk Valuation', href: '/bulk-valuation' },
     { name: 'About Us', href: '/page/about' },
-    { name: 'Blog', href: '/page/blog' },
     { name: 'FAQ', href: '/page/faq' },
     { name: 'Support', href: '/page/contact' }
   ];
@@ -100,7 +99,6 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
             <h4 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4">Company</h4>
             <ul className="space-y-2 md:space-y-3">
               <li><a href="/page/about" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">About</a></li>
-              <li><a href="/page/blog" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">Blog</a></li>
               <li><a href="/page/faq" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">FAQ</a></li>
               <li><a href="/page/contact" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">Contact</a></li>
             </ul>
