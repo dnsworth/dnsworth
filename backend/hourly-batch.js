@@ -79,6 +79,7 @@ class HourlyBatchProcessor {
 
   async run() {
     console.log('🚀 Starting hourly domain generation batch...');
+    console.log('💰 Using cost-effective Universal Domain Generator (50 domains max)');
     console.log(`⏰ Started at: ${new Date().toISOString()}`);
     
     try {
