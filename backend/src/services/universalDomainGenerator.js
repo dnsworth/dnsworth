@@ -22,41 +22,26 @@ class UniversalDomainGenerator {
   }
 
   async generateUniversalDomains() {
-    let bestDomains = [];
-    for (let attempts = 1; attempts <= this.maxRetries; attempts++) {
-      try {
-        console.log(`📝 Attempt ${attempts}/${this.maxRetries} - Generating universal domains...`);
-        const openai = this.getOpenAI();
-        const response = await openai.chat.completions.create({
-          model: "gpt-4", // Using GPT-4 for highest quality
-          messages: [{ role: "user", content: UNIVERSAL_DOMAIN_PROMPT }],
-          max_tokens: 2000,
-          temperature: 0.7 // Balanced creativity for universal names
-        });
+    try {
+      console.log(`📝 Generating universal domains (single attempt to save tokens)...`);
+      const openai = this.getOpenAI();
+      const response = await openai.chat.completions.create({
+        model: "gpt-4", // Using GPT-4 for highest quality
+        messages: [{ role: "user", content: UNIVERSAL_DOMAIN_PROMPT }],
+        max_tokens: 2000,
+        temperature: 0.7 // Balanced creativity for universal names
+      });
 
-        console.log('🔍 Raw AI response length:', response.choices[0].message.content.length);
-        console.log('🔍 Raw AI response preview:', response.choices[0].message.content.substring(0, 200) + '...');
-        
-        const domains = this.parseAndFilterResponse(response.choices[0].message.content);
-        
-        if (domains.length > 0) {
-          bestDomains = [...bestDomains, ...domains];
-          console.log(`✅ Generated ${domains.length} universal domains (total: ${bestDomains.length})`);
-        }
-      } catch (error) {
-        console.error(`❌ Attempt ${attempts} failed:`, error.message);
-      }
+      console.log('🔍 Raw AI response length:', response.choices[0].message.content.length);
+      console.log('🔍 Raw AI response preview:', response.choices[0].message.content.substring(0, 200) + '...');
+      
+      const domains = this.parseAndFilterResponse(response.choices[0].message.content);
+      console.log(`✅ Generated ${domains.length} universal domains`);
+      return domains;
+    } catch (error) {
+      console.error(`❌ Generation failed:`, error.message);
+      return []; // Return empty array instead of retrying
     }
-    
-    // Sort by quality score and take the best 50
-    const sortedDomains = bestDomains
-      .sort((a, b) => b.qualityScore - a.qualityScore)
-      .slice(0, 50);
-    
-    console.log(`🎯 Final result: ${sortedDomains.length} universal domains generated`);
-    console.log(`📊 Quality distribution:`, this.getQualityDistribution(sortedDomains));
-    
-    return sortedDomains.map(d => d.domain);
   }
 
   parseAndFilterResponse(rawResponse) {

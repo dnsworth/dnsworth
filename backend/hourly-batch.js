@@ -10,7 +10,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import UniversalScheduler from './src/services/universalScheduler.js';
+import CostEffectiveScheduler from './src/services/costEffectiveScheduler.js';
 
 // Load environment variables
 const __filename = fileURLToPath(import.meta.url);
@@ -73,7 +73,7 @@ if (missingOptional.length > 0) {
 
 class HourlyBatchProcessor {
   constructor() {
-    this.scheduler = new UniversalScheduler();
+    this.scheduler = new CostEffectiveScheduler();
     this.startTime = Date.now();
   }
 
@@ -83,9 +83,9 @@ class HourlyBatchProcessor {
     console.log(`⏰ Started at: ${new Date().toISOString()}`);
     
     try {
-      // Generate fresh domains using the existing working scheduler
+      // Generate fresh domains using the cost-effective scheduler
       console.log('🔄 Generating fresh domain gems...');
-      const domains = await this.scheduler.generateHourlyBatch();
+      const domains = await this.scheduler.generateCostEffectiveBatch();
       
       if (domains && domains.length > 0) {
         console.log(`✅ Successfully generated ${domains.length} domain gems`);

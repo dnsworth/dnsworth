@@ -4,8 +4,7 @@ import axios from 'axios';
 import AIDomainGenerator from '../services/aiDomainGenerator.js';
 import EnhancedDynadotService from '../services/enhancedAvailabilityService.js';
 import DomainScheduler from '../services/domainScheduler.js';
-import UniversalScheduler from '../services/universalScheduler.js';
-import BudgetAwareScheduler from '../services/budgetAwareScheduler.js';
+// Removed old schedulers to prevent multiple schedulers running
 import PersonalizationEngine from '../services/personalizationEngine.js';
 import MultiSourceAvailability from '../services/multiSourceAvailability.js';
 import HumbleworthClient from '../services/humbleworthClient.js';
@@ -21,8 +20,7 @@ const router = express.Router();
 let aiGenerator = null;
 let dynadotService = null;
 let scheduler = null;
-let universalScheduler = null;
-let budgetAwareScheduler = null;
+// Removed scheduler variables to prevent multiple schedulers
 let personalizationEngine = null;
 let multiSourceAvailability = null;
 
@@ -31,15 +29,12 @@ function getServices() {
     aiGenerator = new AIDomainGenerator();
     dynadotService = new EnhancedDynadotService();
     scheduler = new DomainScheduler();
-    universalScheduler = new UniversalScheduler();
-    budgetAwareScheduler = new BudgetAwareScheduler();
     personalizationEngine = new PersonalizationEngine();
     multiSourceAvailability = new MultiSourceAvailability();
     
-    // Start the universal scheduler (generates 150 domains)
-    universalScheduler.start();
+    // Removed scheduler startup to prevent multiple schedulers running
   }
-  return { aiGenerator, dynadotService, scheduler, universalScheduler, budgetAwareScheduler, personalizationEngine, multiSourceAvailability };
+  return { aiGenerator, dynadotService, scheduler, personalizationEngine, multiSourceAvailability };
 }
 
 /**
