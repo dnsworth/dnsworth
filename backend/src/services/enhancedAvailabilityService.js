@@ -49,10 +49,10 @@ class EnhancedDynadotService {
       const available = await this.checkDomainChunkWithBackoff(chunk);
       results.push(...available);
       
-      // Throttle requests - add 2 second delay between batches for rate limit safety
+      // Throttle requests - add 10 second delay between batches for rate limit safety
       if (i < chunks.length - 1) {
-        console.log('⏳ Throttling: waiting 2s before next batch...');
-        await this.delay(2000);
+        console.log('⏳ Throttling: waiting 10s before next batch...');
+        await this.delay(10000);
       }
     }
     
@@ -117,7 +117,7 @@ class EnhancedDynadotService {
    */
   async checkDomainChunkWithBackoff(domains, retryCount = 0) {
     const maxRetries = 3;
-    const baseDelay = 15000; // 15 seconds base delay to reduce wall time
+    const baseDelay = 30000; // 30 seconds base delay for rate limit safety
     
     try {
       return await this.checkDomainChunk(domains);
