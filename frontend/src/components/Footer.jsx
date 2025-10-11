@@ -92,11 +92,6 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
                   Domain Gems
                 </a>
               </li>
-              <li>
-                <a href="/blog" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">
-                  Blog
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -105,6 +100,7 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
             <h4 className="text-base md:text-lg font-semibold text-white mb-3 md:mb-4">Company</h4>
             <ul className="space-y-2 md:space-y-3">
               <li><a href="/page/about" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">About</a></li>
+              <li><a href="/blog" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">Blog</a></li>
               <li><a href="/page/faq" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">FAQ</a></li>
               <li><a href="/page/contact" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">Contact</a></li>
             </ul>
