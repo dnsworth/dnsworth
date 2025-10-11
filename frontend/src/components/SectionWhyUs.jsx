@@ -161,9 +161,10 @@ const SectionWhyUs = () => {
           {/* Testimonials Grid - Mobile: 2 columns, Desktop: 3 columns */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
             {testimonials.slice(0, 8).map((testimonial) => (
-              <div key={testimonial.id} className="text-center group">
-                <div className="mx-auto mb-4 relative group">
-                  <div className="relative">
+              <div key={testimonial.id} className="group">
+                <div className="flex items-start gap-4 mb-4">
+                  {/* Avatar */}
+                  <div className="relative flex-shrink-0">
                     <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                       <img 
                         src={testimonial.avatar} 
@@ -175,19 +176,21 @@ const SectionWhyUs = () => {
                     <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-white/20 transition-all duration-300"></div>
                   </div>
                   
-                  {/* Permanent name and title display */}
-                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 z-10">
-                    <div className="bg-gradient-to-br from-secondary to-secondary/90 border-2 border-black/20 rounded-2xl px-3 py-2 shadow-lg">
-                      <h3 className="text-xs md:text-sm font-bold text-black text-center leading-tight mb-1">
+                  {/* Name and title next to avatar */}
+                  <div className="flex-1 flex items-center">
+                    <div className="px-0.5 py-0.5 sm:px-2 sm:py-1">
+                      <div className="text-xs sm:text-sm font-bold text-black leading-none whitespace-nowrap" style={{ fontSize: '0.65rem' }}>
                         {testimonial.name}
-                      </h3>
-                      <p className="text-xs text-black/80 text-center leading-tight">
+                      </div>
+                      <div className="text-xs sm:text-sm text-black/80 leading-none whitespace-nowrap" style={{ fontSize: '0.6rem' }}>
                         {testimonial.role}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="max-w-xs mx-auto mt-6">
+                
+                {/* Quote below */}
+                <div className="max-w-xs mx-auto">
                   <blockquote className="text-xs md:text-sm text-black/80 italic leading-relaxed group-hover:text-black transition-colors duration-300">
                     "{testimonial.quote}"
                   </blockquote>
