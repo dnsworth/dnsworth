@@ -175,3 +175,16 @@ kubeconfig
 monitoring/
 analytics/
 metrics/
+
+# Test files and temporary scripts
+test-*.js
+*-test.js
+*.test.js
+backend/test-*.js
+backend/*-test.js
+
+# Backup files with various extensions
+*.bak*
+*.backup*
+*.old*
+.env.*.bak*
