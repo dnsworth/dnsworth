@@ -173,19 +173,21 @@ const SectionWhyUs = () => {
                     </div>
                     {/* Hover effect ring */}
                     <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-white/20 transition-all duration-300"></div>
-                    
-                    {/* Name and title overlay on portrait */}
-                    <div className="absolute inset-0 rounded-full bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <h3 className="text-xs md:text-sm font-bold text-white text-center leading-tight mb-1 px-1 md:px-2">
+                  </div>
+                  
+                  {/* Permanent name and title display */}
+                  <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 z-10">
+                    <div className="bg-gradient-to-br from-secondary to-secondary/90 border-2 border-black/20 rounded-2xl px-3 py-2 shadow-lg">
+                      <h3 className="text-xs md:text-sm font-bold text-black text-center leading-tight mb-1">
                         {testimonial.name}
                       </h3>
-                      <p className="text-xs text-white/90 text-center leading-tight px-1 md:px-2">
+                      <p className="text-xs text-black/80 text-center leading-tight">
                         {testimonial.role}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="max-w-xs mx-auto">
+                <div className="max-w-xs mx-auto mt-6">
                   <blockquote className="text-xs md:text-sm text-black/80 italic leading-relaxed group-hover:text-black transition-colors duration-300">
                     "{testimonial.quote}"
                   </blockquote>
