@@ -54,6 +54,11 @@ function AppContent() {
         <Route path="/page/contact" element={<Support onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/api" element={<APIOverview onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/expired-domains" element={<ExpiredDomains onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
+        {/* Redirect blog routes to home page since blog feature was removed */}
+        <Route path="/blog" element={<Home onNavigateToBulk={navigateToBulk} onNavigateToGems={navigateToGems} shouldScrollToTop={true} />} />
+        <Route path="/page/blog" element={<Home onNavigateToBulk={navigateToBulk} onNavigateToGems={navigateToGems} shouldScrollToTop={true} />} />
+        {/* Catch-all route for any undefined pages */}
+        <Route path="*" element={<Home onNavigateToBulk={navigateToBulk} onNavigateToGems={navigateToGems} shouldScrollToTop={true} />} />
       </Routes>
     </div>
   );

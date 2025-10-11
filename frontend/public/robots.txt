@@ -9,11 +9,9 @@ Crawl-delay: 1
 
 # Allow all important pages
 Allow: /about
-Allow: /blog
 Allow: /bulk-valuation
 Allow: /domain-gems
 Allow: /page/faq
-Allow: /page/blog
 Allow: /privacy-policy
 Allow: /terms-of-service
 Allow: /cookie-policy
