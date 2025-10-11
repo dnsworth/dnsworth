@@ -14,6 +14,7 @@ import Support from './pages/Support';
 import APIOverview from './pages/APIOverview';
 import ExpiredDomains from './pages/ExpiredDomains';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 function AppContent() {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ function AppContent() {
         <Route path="/page/expired-domains" element={<ExpiredDomains onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         <Route path="/page/blog" element={<Blog onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
+        <Route path="/page/blog/:slug" element={<BlogPost onNavigateToBulk={navigateToBulk} onNavigateHome={navigateToHome} onNavigateToGems={navigateToGems} />} />
         {/* Catch-all route for any undefined pages */}
         <Route path="*" element={<Home onNavigateToBulk={navigateToBulk} onNavigateToGems={navigateToGems} shouldScrollToTop={true} />} />
       </Routes>
