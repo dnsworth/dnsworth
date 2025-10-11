@@ -92,6 +92,11 @@ const Footer = ({ onBulkValuation, onNavigateToBulk, onNavigateHome }) => {
                   Domain Gems
                 </a>
               </li>
+              <li>
+                <a href="/blog" className="text-gray-300 hover:text-primary transition-colors duration-200 text-left w-full text-sm md:text-base">
+                  Blog
+                </a>
+              </li>
             </ul>
           </div>
 
