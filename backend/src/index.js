@@ -407,11 +407,11 @@ app.post('/api/admin/gems/refresh', async (req, res) => {
     }
 
     // Lazy import to avoid increasing cold start for regular requests
-    const { default: UniversalScheduler } = await import('./services/universalScheduler.js');
-    const scheduler = new UniversalScheduler();
+    const { default: CostEffectiveScheduler } = await import('./services/costEffectiveScheduler.js');
+    const scheduler = new CostEffectiveScheduler();
 
     const startedAt = Date.now();
-    const domains = await scheduler.generateHourlyBatch();
+    const domains = await scheduler.generateCostEffectiveBatch();
     const durationMs = Date.now() - startedAt;
 
     return res.json({
@@ -430,7 +430,7 @@ app.post('/api/admin/gems/refresh', async (req, res) => {
 app.get('/api/admin/scheduler/status', async (req, res) => {
   try {
     // Check if we have a scheduler instance running
-    const hasScheduler = global.universalScheduler !== undefined;
+    const hasScheduler = global.costEffectiveScheduler !== undefined;
     const currentTime = new Date().toISOString();
     
     res.json({
@@ -846,15 +846,15 @@ const server = app.listen(PORT, HOST, async () => {
   console.log(`🚀 DNSWorth API server running on ${HOST}:${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   
-  // Start the Universal Scheduler for hourly domain generation
+  // Start the Cost-Effective Scheduler for hourly domain generation
   try {
-    const { default: UniversalScheduler } = await import('./services/universalScheduler.js');
-    const scheduler = new UniversalScheduler();
+    const { default: CostEffectiveScheduler } = await import('./services/costEffectiveScheduler.js');
+    const scheduler = new CostEffectiveScheduler();
     await scheduler.start();
-    global.universalScheduler = scheduler; // Store globally for status checking
-    console.log('✅ Universal Scheduler started - hourly generation enabled');
+    global.costEffectiveScheduler = scheduler; // Store globally for status checking
+    console.log('✅ Cost-Effective Scheduler started - 80% cost reduction enabled');
   } catch (error) {
-    console.error('❌ Failed to start Universal Scheduler:', error.message);
+    console.error('❌ Failed to start Cost-Effective Scheduler:', error.message);
     console.log('⚠️  Hourly domain generation will not work automatically');
   }
   
