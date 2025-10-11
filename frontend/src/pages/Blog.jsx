@@ -134,6 +134,10 @@ const Blog = ({ onNavigateToBulk, onNavigateHome, onNavigateToGems }) => {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <div className="p-8 text-center">
+        <h1 className="text-4xl font-bold text-red-600 mb-4">BLOG TEST - IS THIS VISIBLE?</h1>
+        <p className="text-lg">If you can see this, the Blog component is rendering.</p>
+      </div>
       <Helmet>
         <title>DNSWorth Blog - Domain Investing Insights & Valuation Strategies</title>
         <meta name="description" content="Expert insights on domain investing, valuation strategies, and market trends. Stay ahead with comprehensive domain industry coverage from DNSWorth." />
